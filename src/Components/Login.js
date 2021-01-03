@@ -21,7 +21,7 @@ const Login = () => {
 
         <div className="input-group">
           <input
-            autofocus
+            autoFocus
             className="form-control"
             required
             id="email"
@@ -39,7 +39,7 @@ const Login = () => {
             name="password"
             type="password"
             placeholder="Password"
-            minlength="8"
+            minLength="8"
           />
         </div>
 

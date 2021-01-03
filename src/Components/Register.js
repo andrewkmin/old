@@ -9,7 +9,7 @@ const Register = () => {
         className="form-register"
         action="/auth/register"
         method="POST"
-        enctype="multipart/form-data"
+        encType="multipart/form-data"
       >
         <h1 align="center">
           <img
@@ -25,7 +25,6 @@ const Register = () => {
         </h1>
         <div className="d-flex mt-3">
           <input
-            autocomplete="given-name"
             className="form-control w-50"
             aria-label="firstName"
             required
@@ -36,7 +35,6 @@ const Register = () => {
           />
           &nbsp; &nbsp;
           <input
-            autocomplete="given-name"
             className="form-control w-50"
             aria-label="lastName"
             required
@@ -52,7 +50,6 @@ const Register = () => {
             <i className="far fa-envelope"></i>
           </span>
           <input
-            autocomplete="email"
             className="form-control"
             aria-label="email"
             required
@@ -70,7 +67,6 @@ const Register = () => {
             <i className="fas fa-lock"></i>
           </span>
           <input
-            autocomplete="current-password"
             className="form-control"
             aria-label="password"
             required
@@ -78,7 +74,7 @@ const Register = () => {
             name="password"
             type="password"
             placeholder="Password"
-            minlength="8"
+            minLength="8"
           />
         </div>
 
@@ -108,7 +104,7 @@ const Register = () => {
 
         <div id="imgError" className="imgError"></div>
 
-        <label className="mt-3 mb-3" for="privateCheck">
+        <label className="mt-3 mb-3" htmlFor="privateCheck">
           Private Account
           <input
             className="ms-2"
