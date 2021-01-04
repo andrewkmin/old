@@ -48,31 +48,32 @@ const Navbar = () => {
         <div className="dropdown-menu dropdown-menu-end">
           {/* Account */}
           {/* TODO: Add a redirect to user's page */}
-          <Link to="/" className="dropdown-item">
+          <Link to="/users" className="dropdown-item">
             <i className="fas fa-user"></i>
             My account
           </Link>
 
           {/* Notifications */}
-          <a href="/notifications" className="dropdown-item">
+          <Link to="/notifications" className="dropdown-item">
             <i className="fas fa-bell">
               <span className="badge rounded-pill bg-danger"></span>
             </i>
             Notifications
-          </a>
+          </Link>
 
           {/* Settings */}
-          <a href="/settings" className="dropdown-item" type="button">
+          <Link to="/settings" className="dropdown-item">
             <i className="fas fa-cog"></i>
             User Settings
-          </a>
+          </Link>
 
           {/* Logout */}
+          {/* TODO: Maybe we don't need the Link tag in here */}
           <hr className="solid" />
-          <a
+          <Link
             className="dropdown-item text-dark"
             type="button"
-            href="#!"
+            to="#!"
             id="submitLogout"
           >
             <i className="fas fa-sign-out-alt">
@@ -84,7 +85,7 @@ const Navbar = () => {
               ></form>
             </i>
             Logout
-          </a>
+          </Link>
         </div>
       </div>
 

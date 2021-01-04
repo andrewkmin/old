@@ -1,10 +1,10 @@
-import "../Styles/App.scss";
+import "../styles/App.scss";
 
-import Home from "../Components/Home";
+import Home from "../components/Home";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Register from "../Components/Register";
-import Login from "../Components/Login";
+import Register from "../components/Register";
+import Login from "../components/Login";
 
 function App() {
   return (

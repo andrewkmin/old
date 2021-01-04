@@ -13,9 +13,7 @@ const PostsList = () => {
 
   useEffect(() => {
     async function fetchAll() {
-      const { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos"
-      );
+      const { data } = await axios.get("https://api-armsocial.herokuapp.com");
       setPosts(data);
       return data;
     }
