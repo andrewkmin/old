@@ -1,11 +1,34 @@
 import "../styles/Login.scss";
 
-import { Link } from "react-router-dom";
+import isLoggedIn from "../helpers/isLoggedIn";
+import _axios from "../helpers/_axios";
+import { Link, useHistory } from "react-router-dom";
 
 const Login = () => {
+  const history = useHistory();
+
+  const Credentials = {
+    email: "",
+    password: "",
+  };
+
+  const logIn = async () => {
+    const { data } = await _axios.post("/auth/login", Credentials);
+    localStorage.setItem("token", data.token);
+    const loggedInStatus = await isLoggedIn();
+
+    if (
+      loggedInStatus === true &&
+      Credentials.email.length !== 0 &&
+      Credentials.password.length !== 0
+    ) {
+      history.push("/");
+    }
+  };
+
   return (
     <div className="Login">
-      <form id="form" className="form-signin" action="login" method="POST">
+      <div className="form-signin">
         <h1 align="center">
           <img
             className="mb-4"
@@ -23,6 +46,12 @@ const Login = () => {
           <input
             autoFocus
             className="form-control"
+            onKeyUp={(event) => {
+              Credentials.email = event.target.value;
+            }}
+            onChange={(event) => {
+              Credentials.email = event.target.value;
+            }}
             required
             id="email"
             name="email"
@@ -34,6 +63,12 @@ const Login = () => {
         <div className="input-group">
           <input
             className="form-control"
+            onKeyUp={(event) => {
+              Credentials.password = event.target.value;
+            }}
+            onChange={(event) => {
+              Credentials.password = event.target.value;
+            }}
             required
             id="password"
             name="password"
@@ -43,18 +78,20 @@ const Login = () => {
           />
         </div>
 
-        <input
+        <button
           className="btn btn-lg btn-primary w-100 mt-2"
-          type="submit"
-          value="Sign In"
-        />
+          type="button"
+          onClick={logIn}
+        >
+          Sign In
+        </button>
         <p className="mt-3">
-          Don't have an account?{" "}
+          Don't have an account? &nbsp;
           <Link to="/register" className="text-link">
             Register
           </Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,21 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import fetchUserData from "../api/fetchUserData";
 
 const Navbar = () => {
+  const [data, setData] = useState({});
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      const data = await fetchUserData(token, "token");
+      setData(data);
+      return data;
+    };
+    fetchAccount();
+  }, [token]);
+
   return (
     <div className="navbar navbar-light d-flex bg-white sticky-top shadow-sm mb-5">
       {/* Logo */}
@@ -36,19 +51,19 @@ const Navbar = () => {
           aria-expanded="false"
         >
           <img
-            src="https://picsum.photos/34/34"
+            src={data.pictureUrl}
             className="rounded-circle shadow-sm"
             height="34"
             width="34"
-            alt="User Avatar"
+            alt={data.fullName}
           />
-          <span className="nav-account-name ms-1">John Doe</span>
+          <span className="nav-account-name ms-1">{data.fullName}</span>
         </button>
 
         <div className="dropdown-menu dropdown-menu-end">
           {/* Account */}
           {/* TODO: Add a redirect to user's page */}
-          <Link to="/users" className="dropdown-item">
+          <Link to={`/users/${data._id}`} className="dropdown-item">
             <i className="fas fa-user"></i>
             My account
           </Link>
@@ -68,7 +83,6 @@ const Navbar = () => {
           </Link>
 
           {/* Logout */}
-          {/* TODO: Maybe we don't need the Link tag in here */}
           <hr className="solid" />
           <Link
             className="dropdown-item text-dark"

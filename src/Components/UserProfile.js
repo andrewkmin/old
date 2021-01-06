@@ -1,6 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import PostsList from "./PostsList";
+
+import fetchUserData from "../api/fetchUserData";
+import { useEffect, useState } from "react";
 
 const UserProfile = () => {
+  const { accountId } = useParams();
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      const data = await fetchUserData(accountId, "id");
+      setData(data);
+      return data;
+    };
+    fetchAccount();
+  }, [accountId]);
+
   const Styles = {
     alignItems: "center",
     justifyContent: "center",
@@ -17,14 +33,14 @@ const UserProfile = () => {
           className="rounded-circle"
           height="128"
           width="128"
-          src="https://picsum.photos/128/128"
-          alt="User Avatar"
+          src={data.pictureUrl}
+          alt={data.fullName}
         />
         <br />
         <div
           className="modal fade"
           id="user_image_modal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="imageModal"
           aria-hidden="true"
@@ -33,7 +49,7 @@ const UserProfile = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="imageModal">
-                  John Doe
+                  {data.fullName}
                 </h5>
                 <button
                   type="button"
@@ -43,11 +59,7 @@ const UserProfile = () => {
                 ></button>
               </div>
               <div className="modal-body">
-                <img
-                  src="https://picsum.photos/150/150"
-                  height="150"
-                  alt="User Avatar"
-                />
+                <img src={data.pictureUrl} height="150" alt={data.fullName} />
               </div>
             </div>
           </div>
@@ -56,16 +68,15 @@ const UserProfile = () => {
 
       <div className="account-name container">
         <h2 align="center" className="mt-2" id="fullName">
-          John Doe
+          {data.fullName}
         </h2>
       </div>
 
       <div className="account-info container">
         <p align="center" className="account-id">
           ID
-          {/* TODO: Not yet implemented */}
           <Link id="accountId" to="!#">
-            1234567890
+            {data._id}
           </Link>
         </p>
         <p align="center" className="buttons">
@@ -74,9 +85,10 @@ const UserProfile = () => {
           </button>
         </p>
         <p align="center" className="account-bio pr-5 pl-5 pb-1" id="bio">
-          Account Bio
+          {data.bio}
         </p>
       </div>
+      <PostsList accountId={data.posts} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import UserProfile from "./UserProfile";
 import MainPage from "./MainPage";
+import NotFound from "./NotFound";
 
 function Home() {
   return (
@@ -11,7 +12,8 @@ function Home() {
 
       <Switch>
         <Route exact path="/" component={MainPage} />
-        <Route exact path="/users" component={UserProfile} />
+        <Route path="/users/:accountId" component={UserProfile} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   );

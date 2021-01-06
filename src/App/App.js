@@ -1,21 +1,35 @@
 import "../styles/App.scss";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Home from "../components/Home";
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Register from "../components/Register";
 import Login from "../components/Login";
+import NotFound from "../components/NotFound";
+import PrivateRoute from "../routes/PrivateRoute";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
+        <PrivateRoute exact Component={Home} path="/" redirectPath="/login" />
+        <PrivateRoute
+          exact
+          swap
+          Component={Register}
+          path="/register"
+          redirectPath="/"
+        />
+        <PrivateRoute
+          exact
+          swap
+          Component={Login}
+          path="/login"
+          redirectPath="/"
+        />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

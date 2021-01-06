@@ -5,7 +5,7 @@ function MainPage() {
   return (
     <>
       <CreatePost />
-      <PostsList />
+      <PostsList posts={[]} />
     </>
   );
 }
