@@ -1,8 +1,8 @@
-import { Link, useParams } from "react-router-dom";
-import PostsList from "./PostsList";
-
+import PostsList from "./Posts";
 import fetchUserData from "../api/fetchUserData";
+
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const UserProfile = () => {
   const { accountId } = useParams();
@@ -74,10 +74,7 @@ const UserProfile = () => {
 
       <div className="account-info container">
         <p align="center" className="account-id">
-          ID
-          <Link id="accountId" to="!#">
-            {data._id}
-          </Link>
+          User ID: {data._id}
         </p>
         <p align="center" className="buttons">
           <button id="add_friend" className="btn btn-success">

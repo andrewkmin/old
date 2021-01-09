@@ -6,7 +6,8 @@ const isLoggedIn = async () => {
   } else {
     const token = localStorage.getItem("token");
     const { data } = await _axios.get(`/auth/verify/?token=${token}`);
-    return data.isLegit;
+    if (!data.error) return true;
+    else return false;
   }
 };
 

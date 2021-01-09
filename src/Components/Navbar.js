@@ -1,114 +1,120 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {
+  Image,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+  Flex,
+  Spacer,
+  Box,
+  Text,
+  Center,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 import fetchUserData from "../api/fetchUserData";
 
 const Navbar = () => {
   const [data, setData] = useState({});
-  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const fetchAccount = async () => {
       const data = await fetchUserData(token, "token");
       setData(data);
       return data;
     };
     fetchAccount();
-  }, [token]);
+  }, []);
 
   return (
-    <div className="navbar navbar-light d-flex bg-white sticky-top shadow-sm mb-5">
-      {/* Logo */}
-      <Link to="/" className="navbar-brand ms-3">
-        <img
-          src="/favicon.ico"
-          width="30"
-          height="30"
-          className="d-inline-block align-top rounded-3 me-2"
-          alt="Logo"
-        />
-        <span className="logo-text">Armenia Social</span>
-      </Link>
+    <Flex
+      pos="sticky"
+      top="0"
+      borderBottom="1px"
+      borderColor="gray.200"
+      mb={10}
+      p={2}
+      bgColor="white"
+    >
+      <Box me={1}>
+        <Link to="/">
+          <Flex>
+            <Center>
+              <Image src="/favicon.ico" h={35} alt="Website Logo" />
+            </Center>
+          </Flex>
+        </Link>
+      </Box>
 
-      {/* Search Box */}
-      <input
-        style={{
-          width: "45%",
-        }}
-        className="form-control ms-2 me-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
+      <Spacer />
 
-      <div className="btn-group me-3">
-        <button
-          type="button"
-          id="profileContainer"
-          className="btn dropdown-toggle border"
-          data-bs-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <img
-            src={data.pictureUrl}
-            className="rounded-circle shadow-sm"
-            height="34"
-            width="34"
-            alt={data.fullName}
-          />
-          <span className="nav-account-name ms-1">{data.fullName}</span>
-        </button>
+      <Box width="md" ms={1} me={1}>
+        <Center>
+          <InputGroup>
+            <Input placeholder="Search" />
+            <InputLeftElement children={<SearchIcon color="gray.500" />} />
+          </InputGroup>
+        </Center>
+      </Box>
 
-        <div className="dropdown-menu dropdown-menu-end">
-          {/* Account */}
-          {/* TODO: Add a redirect to user's page */}
-          <Link to={`/users/${data._id}`} className="dropdown-item">
-            <i className="fas fa-user"></i>
-            My account
-          </Link>
+      <Spacer />
 
-          {/* Notifications */}
-          <Link to="/notifications" className="dropdown-item">
-            <i className="fas fa-bell">
-              <span className="badge rounded-pill bg-danger"></span>
-            </i>
-            Notifications
-          </Link>
+      <Box ms={1}>
+        <Center>
+          <Menu>
+            <MenuButton
+              _focusVisible={false}
+              _focus={false}
+              colorScheme="teal"
+              size="md"
+              as={Button}
+            >
+              <Text fontSize="sm" isTruncated>
+                {data.fullName}
+              </Text>
+            </MenuButton>
+            <MenuList mt={1}>
+              <MenuGroup title="General">
+                <MenuItem as={Link} to={`/users/${data._id}`}>
+                  My account
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/notifications">Notifications</Link>
+                </MenuItem>
+              </MenuGroup>
 
-          {/* Settings */}
-          <Link to="/settings" className="dropdown-item">
-            <i className="fas fa-cog"></i>
-            User Settings
-          </Link>
+              <MenuDivider />
 
-          {/* Logout */}
-          <hr className="solid" />
-          <Link
-            className="dropdown-item text-dark"
-            type="button"
-            to="#!"
-            id="submitLogout"
-          >
-            <i className="fas fa-sign-out-alt">
-              <form
-                id="logout"
-                method="POST"
-                className="bg-transparent"
-                action="/logout"
-              ></form>
-            </i>
-            Logout
-          </Link>
-        </div>
-      </div>
+              <MenuGroup title="Misc">
+                <MenuItem>
+                  <Link to="/settings">User Settings</Link>
+                </MenuItem>
 
-      <div
-        role="listbox"
-        className="container list-group"
-        id="foundItems"
-      ></div>
-    </div>
+                <Center p={2}>
+                  <Button colorScheme="red" w="full" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </Center>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
+        </Center>
+      </Box>
+    </Flex>
   );
 };
 
