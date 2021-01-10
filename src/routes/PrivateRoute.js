@@ -1,4 +1,4 @@
-import { Skeleton, Box } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route } from "react-router-dom";

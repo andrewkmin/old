@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import PostsList from "./Posts";
@@ -27,6 +27,10 @@ const Platform = () => {
 
       <Route exact path="/notifications">
         <Notifications />
+      </Route>
+
+      <Route exact path="/logout">
+        <Redirect to="/" />
       </Route>
     </Router>
   );

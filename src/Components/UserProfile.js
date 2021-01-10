@@ -1,4 +1,3 @@
-import PostsList from "./Posts";
 import fetchUserData from "../api/fetchUserData";
 
 import { useEffect, useState } from "react";

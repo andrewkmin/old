@@ -18,16 +18,17 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
-
 import fetchUserData from "../api/fetchUserData";
 
 const Navbar = () => {
   const [data, setData] = useState({});
+  const History = useHistory();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    History.push("/logout");
   };
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const Navbar = () => {
 
   return (
     <Flex
+      zIndex="tooltip"
       pos="sticky"
       top="0"
       borderBottom="1px"
@@ -92,16 +94,16 @@ const Navbar = () => {
                 <MenuItem as={Link} to={`/users/${data._id}`}>
                   My account
                 </MenuItem>
-                <MenuItem>
-                  <Link to="/notifications">Notifications</Link>
+                <MenuItem as={Link} to="/notifications">
+                  Notifications
                 </MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
               <MenuGroup title="Misc">
-                <MenuItem>
-                  <Link to="/settings">User Settings</Link>
+                <MenuItem as={Link} to="/settings">
+                  User Settings
                 </MenuItem>
 
                 <Center p={2}>
