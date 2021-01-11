@@ -23,15 +23,25 @@ import {
   Flex,
   Container,
   Slide,
+  Link,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
+import _AuthApi from "../utils/AuthApi";
 
 const Welcome = () => {
   const History = useHistory();
+  const AuthApi = useContext(_AuthApi);
   const [isLoading, setLoading] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const {
+    isOpen: registrationIsOpen,
+    onOpen: registrationOnOpen,
+    onClose: registrationOnClose,
+  } = useDisclosure();
+
+  const { isOpen: welcomeInfoIsOpen } = useDisclosure({ isOpen: true });
 
   const Credentials = {};
 
@@ -41,17 +51,13 @@ const Welcome = () => {
       const { data } = await _axios.post("/auth/login", Credentials);
       if (!data.error) {
         localStorage.setItem("token", data.token);
-        const loggedInStatus = await isLoggedIn();
-        if (loggedInStatus === true) {
+        AuthApi.setAuthenticated(true);
+        if (AuthApi.authenticated === true) {
           return History.push("/");
         }
       }
     }
   };
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   return (
     <>
@@ -62,7 +68,7 @@ const Welcome = () => {
       <Box overflow="hidden">
         <Container overflow="hidden">
           <Center>
-            <Box pos="absolute" top="50" height="full" width="full">
+            <Box pos="absolute" top="150" height="full" width="full">
               <Box>
                 <Center>
                   <Text fontSize="6xl" fontWeight="bold" color="teal.500">
@@ -128,8 +134,7 @@ const Welcome = () => {
                           _focusVisible={false}
                           _focus={false}
                           _focusWithin={false}
-                          onClick={onOpen}
-                          m={1}
+                          onClick={registrationOnOpen}
                           size="md"
                           colorScheme="teal"
                         >
@@ -142,13 +147,11 @@ const Welcome = () => {
               </Box>
             </Box>
 
-            <Box pos="fixed" bottom="0" p={5}>
-              <Text fontSize="md" fontWeight="semibold" color="gray.600">
-                Usocial &copy; 2021
-              </Text>
-            </Box>
-
-            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <Modal
+              onClose={registrationOnClose}
+              registrationIsOpen={registrationIsOpen}
+              isCentered
+            >
               <ModalOverlay />
               <ModalContent m={2}>
                 <ModalHeader>
@@ -224,6 +227,28 @@ const Welcome = () => {
           </Center>
         </Container>
       </Box>
+
+      <Slide direction="bottom" in={welcomeInfoIsOpen} style={{ zIndex: 10 }}>
+        <Box
+          p="40px"
+          color="white"
+          mt="4"
+          bg="teal.500"
+          rounded="md"
+          shadow="md"
+        >
+          <Center>
+            <Text fontWeight="semibold">Welcome to Usocial!</Text>
+          </Center>
+          <Center>
+            <Text fontWeight="semibold">
+              We highly encourage you reading our{" "}
+              <Link textDecor="underline">Terms of Service</Link> and{" "}
+              <Link textDecor="underline">Privacy Policy</Link>
+            </Text>
+          </Center>
+        </Box>
+      </Slide>
     </>
   );
 };

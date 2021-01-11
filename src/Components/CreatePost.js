@@ -21,9 +21,15 @@ import {
 
 const CreatePost = () => {
   const {
-    /*isOpen*/ imageUploadIsOpen,
-    /*onOpen*/ imageUploadOnOpen,
-    /*onClose*/ imageUploadOnClose,
+    isOpen: imageUploadIsOpen,
+    onOpen: imageUploadOnOpen,
+    onClose: imageUploadOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: videoUploadIsOpen,
+    onOpen: videoUploadOnOpen,
+    onClose: videoUploadOnClose,
   } = useDisclosure();
 
   return (
@@ -78,6 +84,7 @@ const CreatePost = () => {
               _focusWithin={false}
               w="full"
               ms={1}
+              onClick={videoUploadOnOpen}
             >
               Video
             </Button>
@@ -87,14 +94,46 @@ const CreatePost = () => {
 
       <Modal onClose={imageUploadOnClose} isOpen={imageUploadIsOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Input type="file" />
-          </ModalBody>
+        <ModalContent m={2}>
+          <ModalHeader>Upload Images</ModalHeader>
+          <ModalCloseButton
+            _focus={false}
+            _focusVisible={false}
+            _focusWithin={false}
+          />
+          <ModalBody></ModalBody>
           <ModalFooter>
-            <Button onClick={imageUploadOnClose}>Close</Button>
+            <Button
+              _focus={false}
+              _focusVisible={false}
+              _focusWithin={false}
+              onClick={imageUploadOnClose}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal onClose={videoUploadOnClose} isOpen={videoUploadIsOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent m={2}>
+          <ModalHeader>Upload Videos</ModalHeader>
+          <ModalCloseButton
+            _focus={false}
+            _focusVisible={false}
+            _focusWithin={false}
+          />
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              _focus={false}
+              _focusVisible={false}
+              _focusWithin={false}
+              onClick={videoUploadOnClose}
+            >
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

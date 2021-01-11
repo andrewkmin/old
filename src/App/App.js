@@ -1,33 +1,16 @@
-import Welcome from "../components/Welcome";
-import Platform from "../components/Platform";
-import NotFound from "../components/NotFound";
-import PrivateRoute from "../routes/PrivateRoute";
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import Routes from "../routes/routes";
+import { BrowserRouter as Router } from "react-router-dom";
+import AuthApi from "../utils/AuthApi";
+import { useState } from "react";
 
 const App = () => {
+  const [authenticated, setAuthenticated] = useState(false);
   return (
-    <ChakraProvider>
+    <AuthApi.Provider value={{ authenticated, setAuthenticated }}>
       <Router>
-        <Switch>
-          <PrivateRoute
-            exact
-            Component={Platform}
-            path="/"
-            redirectPath="/welcome"
-          />
-          <PrivateRoute
-            exact
-            swap
-            Component={Welcome}
-            path="/welcome"
-            redirectPath="/"
-          />
-          <Route path="*" component={NotFound} />
-        </Switch>
+        <Routes />
       </Router>
-    </ChakraProvider>
+    </AuthApi.Provider>
   );
 };
 
