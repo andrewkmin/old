@@ -1,5 +1,4 @@
 import _axios from "../helpers/_axios";
-import isLoggedIn from "../helpers/isLoggedIn";
 
 import {
   Input,
