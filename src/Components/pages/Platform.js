@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import Navbar from "../Navbar";
+import PostsList from "../Posts";
+import CreatePost from "../CreatePost";
+import UserProfile from "../UserProfile";
+import Notifications from "../Notifications";
 
-import Navbar from "./Navbar";
-import PostsList from "./Posts";
-import CreatePost from "./CreatePost";
-import UserProfile from "./UserProfile";
-import Notifications from "./Notifications";
 import { Helmet } from "react-helmet-async";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 
 const Platform = () => {
   return (

@@ -1,6 +1,8 @@
+import "./styles/index.scss";
+
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/index.scss";
+
 import App from "./app/App";
 
 import { ChakraProvider } from "@chakra-ui/react";

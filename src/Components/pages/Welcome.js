@@ -1,4 +1,4 @@
-import _axios from "../helpers/_axios";
+import _axios from "../../helpers/_axios";
 
 import {
   Input,
@@ -27,11 +27,11 @@ import {
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useState, useContext } from "react";
-import _AuthApi from "../utils/AuthApi";
+import _authContext from "../../auth/auth.context";
 
 const Welcome = () => {
   const History = useHistory();
-  const AuthApi = useContext(_AuthApi);
+  const authContext = useContext(_authContext);
   const [isLoading, setLoading] = useState(false);
 
   const {
@@ -50,8 +50,8 @@ const Welcome = () => {
       const { data } = await _axios.post("/auth/login", Credentials);
       if (!data.error) {
         localStorage.setItem("token", data.token);
-        AuthApi.setAuthenticated(true);
-        if (AuthApi.authenticated === true) {
+        authContext.setAuthenticated(true);
+        if (authContext.authenticated === true) {
           return History.push("/");
         }
       }

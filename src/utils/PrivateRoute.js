@@ -1,26 +1,13 @@
 import { Skeleton } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { useContext, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import _AuthApi from "../utils/AuthApi";
-import isLoggedIn from "../helpers/isLoggedIn";
+import _authContext from "../auth/auth.context";
 
 const PrivateRoute = ({ Component, path, redirectPath, exact, swap }) => {
-  const AuthApi = useContext(_AuthApi);
+  const AuthContext = useContext(_authContext);
   const [isLoading, setLoadingState] = useState(true);
-
-  useEffect(() => {
-    isLoggedIn()
-      .then((state) => {
-        setLoadingState(false);
-        return AuthApi.setAuthenticated(state);
-      })
-      .catch((err) => {
-        setLoadingState(true);
-        return console.error(err);
-      });
-  });
 
   return (
     <>
@@ -41,7 +28,7 @@ const PrivateRoute = ({ Component, path, redirectPath, exact, swap }) => {
               />
             );
           }
-          if (AuthApi.authenticated === true) {
+          if (AuthContext.authenticated === true) {
             return swap ? (
               <Redirect to={redirectPath} />
             ) : (

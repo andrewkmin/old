@@ -1,7 +1,7 @@
-import Welcome from "../components/Welcome";
-import Platform from "../components/Platform";
+import Welcome from "../components/pages/Welcome";
+import Platform from "../components/pages/Platform";
 import NotFound from "../components/NotFound";
-import PrivateRoute from "../routes/PrivateRoute";
+import PrivateRoute from "../utils/PrivateRoute";
 import { Route, Switch } from "react-router-dom";
 
 const Routes = () => {
