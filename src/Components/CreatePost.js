@@ -25,7 +25,6 @@ const CreatePost = () => {
     onOpen: imageUploadOnOpen,
     onClose: imageUploadOnClose,
   } = useDisclosure();
-
   const {
     isOpen: videoUploadIsOpen,
     onOpen: videoUploadOnOpen,

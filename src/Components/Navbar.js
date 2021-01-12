@@ -20,21 +20,22 @@ import {
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
-import fetchUserData from "../api/fetchUserData";
+
+import _axios from "../helpers/_axios";
+import AuthContext from "../auth/auth.context";
 
 const Navbar = () => {
   const [data, setData] = useState({});
   const History = useHistory();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    History.push("/logout");
+    AuthContext.setAuthenticated(false);
+    return History.push("/logout");
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const fetchAccount = async () => {
-      const data = await fetchUserData(token, "token");
+      const data = await _axios.get("/api/accounts/fetch");
       setData(data);
       return data;
     };

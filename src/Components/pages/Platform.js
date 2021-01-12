@@ -1,5 +1,5 @@
+import Posts from "../Posts";
 import Navbar from "../Navbar";
-import PostsList from "../Posts";
 import CreatePost from "../CreatePost";
 import UserProfile from "../UserProfile";
 import Notifications from "../Notifications";
@@ -18,7 +18,7 @@ const Platform = () => {
 
       <Route exact path="/">
         <CreatePost />
-        <PostsList />
+        <Posts />
       </Route>
 
       <Route exact path="/users/:accountId">

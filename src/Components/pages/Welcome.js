@@ -1,5 +1,3 @@
-import _axios from "../../helpers/_axios";
-
 import {
   Input,
   Text,
@@ -27,32 +25,38 @@ import {
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useState, useContext } from "react";
+
+import _axios from "../../helpers/_axios";
+import verification from "../../auth/verify.token";
 import _authContext from "../../auth/auth.context";
 
 const Welcome = () => {
   const History = useHistory();
-  const authContext = useContext(_authContext);
+  const AuthContext = useContext(_authContext);
   const [isLoading, setLoading] = useState(false);
-
+  const { isOpen: welcomeInfoIsOpen } = useDisclosure({ isOpen: true });
   const {
     isOpen: registrationIsOpen,
     onOpen: registrationOnOpen,
     onClose: registrationOnClose,
   } = useDisclosure();
 
-  const { isOpen: welcomeInfoIsOpen } = useDisclosure({ isOpen: true });
-
-  const Credentials = {};
+  const Credentials = {
+    email: "",
+    password: "",
+  };
 
   const submit = async () => {
     if (Credentials.email.length !== 0 && Credentials.password.length !== 0) {
       setLoading(true);
-      const { data } = await _axios.post("/auth/login", Credentials);
+      const { data } = await _axios.post("/auth/login", Credentials, {
+        withCredentials: true,
+      });
       if (!data.error) {
-        localStorage.setItem("token", data.token);
-        authContext.setAuthenticated(true);
-        if (authContext.authenticated === true) {
-          return History.push("/");
+        const isValid = await verification.verify();
+        if (isValid) {
+          AuthContext.setAuthenticated(isValid);
+          History.push("/");
         }
       }
     }
