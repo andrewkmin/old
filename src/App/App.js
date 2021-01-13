@@ -7,17 +7,21 @@ import verification from "../auth/verify.token";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const isValid = await verification.verify();
-      console.log(isValid);
       setAuthenticated(isValid);
+      setLoading(false);
+      return isValid;
     })();
   });
 
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
+    <AuthContext.Provider
+      value={{ authenticated, loading, setAuthenticated, setLoading }}
+    >
       <Router>
         <Routes />
       </Router>

@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import {
-  Image,
   Button,
   Menu,
   MenuButton,
@@ -17,26 +14,29 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Image,
 } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
+import { useHistory, Link } from "react-router-dom";
 
 import _axios from "../helpers/_axios";
-import AuthContext from "../auth/auth.context";
 
 const Navbar = () => {
-  const [data, setData] = useState({});
+  const [userData, setUserData] = useState({});
   const History = useHistory();
 
-  const handleLogout = () => {
-    AuthContext.setAuthenticated(false);
-    return History.push("/logout");
+  const handleLogout = async () => {
+    const { data } = await _axios.post("/auth/logout");
+    if (data) {
+      History.push("/logout");
+    }
   };
 
   useEffect(() => {
     const fetchAccount = async () => {
-      const data = await _axios.get("/api/accounts/fetch");
-      setData(data);
+      const { data } = await _axios.get("/api/accounts/fetch");
+      setUserData(data);
       return data;
     };
     fetchAccount();
@@ -44,7 +44,7 @@ const Navbar = () => {
 
   return (
     <Flex
-      zIndex="tooltip"
+      zIndex="sticky"
       pos="sticky"
       top="0"
       borderBottom="1px"
@@ -62,9 +62,7 @@ const Navbar = () => {
           </Flex>
         </Link>
       </Box>
-
       <Spacer />
-
       <Box width="md" ms={1} me={1}>
         <Center>
           <InputGroup>
@@ -73,9 +71,7 @@ const Navbar = () => {
           </InputGroup>
         </Center>
       </Box>
-
       <Spacer />
-
       <Box ms={1}>
         <Center>
           <Menu>
@@ -87,12 +83,12 @@ const Navbar = () => {
               as={Button}
             >
               <Text fontSize="sm" isTruncated>
-                {data.fullName}
+                {userData.fullName}
               </Text>
             </MenuButton>
             <MenuList mt={1}>
               <MenuGroup title="General">
-                <MenuItem as={Link} to={`/users/${data._id}`}>
+                <MenuItem as={Link} to={`/users/${userData._id}`}>
                   My account
                 </MenuItem>
                 <MenuItem as={Link} to="/notifications">

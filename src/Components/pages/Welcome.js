@@ -49,9 +49,7 @@ const Welcome = () => {
   const submit = async () => {
     if (Credentials.email.length !== 0 && Credentials.password.length !== 0) {
       setLoading(true);
-      const { data } = await _axios.post("/auth/login", Credentials, {
-        withCredentials: true,
-      });
+      const { data } = await _axios.post("/auth/login", Credentials);
       if (!data.error) {
         const isValid = await verification.verify();
         if (isValid) {

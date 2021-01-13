@@ -1,13 +1,25 @@
 import Posts from "../Posts";
 import Navbar from "../Navbar";
 import CreatePost from "../CreatePost";
-import UserProfile from "../UserProfile";
+import UserProfile from "../Profile";
 import Notifications from "../Notifications";
 
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 const Platform = () => {
+  useEffect(() => {
+    if (navigator.onLine) {
+      const wss = new WebSocket(
+        `ws://${process.env.REACT_APP_HOST_NAME}/api/network`
+      );
+      wss.onopen = (event) => {
+        wss.send("");
+      };
+    }
+  }, []);
+
   return (
     <Router>
       <Helmet>
@@ -29,9 +41,13 @@ const Platform = () => {
         <Notifications />
       </Route>
 
-      <Route exact path="/logout">
-        <Redirect to="/" />
-      </Route>
+      <Route
+        exact
+        path="/logout"
+        render={(...props) => {
+          return <Redirect {...props} to="/welcome" />;
+        }}
+      />
     </Router>
   );
 };
