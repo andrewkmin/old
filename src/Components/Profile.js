@@ -15,9 +15,16 @@ import {
   Tr,
   Th,
   Td,
+  Button,
 } from "@chakra-ui/react";
 
+import Posts from "./Posts";
 import _axios from "../helpers/_axios";
+import verification from "../auth/verify.token";
+
+import { RiMessage2Fill } from "react-icons/ri";
+import { BsPersonPlusFill, BsFillGearFill } from "react-icons/bs";
+import { AiTwotoneEdit } from "react-icons/ai";
 
 const UserProfile = () => {
   const [userData, setUserData] = useState({});
@@ -74,7 +81,59 @@ const UserProfile = () => {
             </Center>
           </Flex>
 
-          <Box mt={10}>
+          {!verification.id ? (
+            verification.verify()
+          ) : verification.id === userData._id ? (
+            <Center mt={5}>
+              <Flex>
+                <Box me={1}>
+                  <Button
+                    leftIcon={<AiTwotoneEdit />}
+                    colorScheme="gray"
+                    _focus={false}
+                  >
+                    Edit Profile
+                  </Button>
+                </Box>
+
+                <Box ms={1}>
+                  <Button
+                    leftIcon={<BsFillGearFill />}
+                    colorScheme="gray"
+                    _focus={false}
+                  >
+                    Settings
+                  </Button>
+                </Box>
+              </Flex>
+            </Center>
+          ) : (
+            <Center mt={5}>
+              <Flex>
+                <Box me={1}>
+                  <Button
+                    leftIcon={<BsPersonPlusFill />}
+                    colorScheme="green"
+                    _focus={false}
+                  >
+                    Add friend
+                  </Button>
+                </Box>
+
+                <Box ms={1}>
+                  <Button
+                    leftIcon={<RiMessage2Fill />}
+                    colorScheme="blue"
+                    _focus={false}
+                  >
+                    Message
+                  </Button>
+                </Box>
+              </Flex>
+            </Center>
+          )}
+
+          <Box mt={6}>
             <Center>
               <Table variant="simple">
                 <Thead>
@@ -100,6 +159,10 @@ const UserProfile = () => {
               </Table>
             </Center>
           </Box>
+        </Container>
+
+        <Container mt={10}>
+          <Posts />
         </Container>
       </Box>
     </>

@@ -23,7 +23,7 @@ import {
   AlertDialogOverlay,
   Button,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -51,6 +51,7 @@ const PostSkeleton = () => {
 
 const Posts = () => {
   const cancelRef = useRef();
+  const { accountId } = useParams();
   const [posts, setPosts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -59,13 +60,15 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const { data } = await _axios.get("/api/posts/fetch");
+      const { data } = await _axios.get(
+        `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
+      );
       setPosts(data);
       setLoading(false);
       return data;
     };
     fetchPosts();
-  }, []);
+  }, [accountId]);
 
   return (
     <Box overflow="none" w="full" mt={5}>
@@ -87,63 +90,61 @@ const Posts = () => {
             ) : (
               posts.map((post) => {
                 return (
-                  <>
-                    <Box
-                      key={post._id}
-                      mb={1}
-                      padding="4"
-                      boxShadow="lg"
-                      bg="white"
-                      borderRadius="md"
-                    >
-                      <Box>
-                        <Flex>
-                          <Box>
-                            <Center>
-                              <Avatar src={post.authorImage} />
-                              <Link to={`/users/${post.authorId}`}>
-                                <Text ms={2} color="blue.500">
-                                  {trunk(post.author, 15, "...")}
-                                </Text>
-                              </Link>
-                            </Center>
-                          </Box>
-
-                          <Spacer />
-
+                  <Box
+                    key={post._id}
+                    mb={1}
+                    padding="4"
+                    boxShadow="lg"
+                    bg="white"
+                    borderRadius="md"
+                  >
+                    <Box>
+                      <Flex>
+                        <Box>
                           <Center>
-                            <Menu>
-                              <IconButton
-                                as={MenuButton}
-                                isRound
-                                _focus={false}
-                                _focusVisible={false}
-                                _focusWithin={false}
-                              >
-                                <Center>
-                                  <FiMoreHorizontal />
-                                </Center>
-                              </IconButton>
-                              <MenuList>
-                                <MenuGroup title="Actions">
-                                  {post.authorId === verification.id && (
-                                    <MenuItem
-                                      fontWeight="semibold"
-                                      onClick={() => setIsOpen(true)}
-                                    >
-                                      <FaTrash color="red" />
-                                      Delete Post
-                                    </MenuItem>
-                                  )}
-                                </MenuGroup>
-                              </MenuList>
-                            </Menu>
+                            <Avatar src={post.authorImage} />
+                            <Link to={`/users/${post.authorId}`}>
+                              <Text ms={2} color="blue.500">
+                                {trunk(post.author, 15, "...")}
+                              </Text>
+                            </Link>
                           </Center>
-                        </Flex>
-                      </Box>
-                      <Box mt={2} textAlign="left" alignContent="center">
-                        <PostRenderer input={post.text} />
-                      </Box>
+                        </Box>
+
+                        <Spacer />
+
+                        <Center>
+                          <Menu>
+                            <IconButton
+                              as={MenuButton}
+                              isRound
+                              _focus={false}
+                              _focusVisible={false}
+                              _focusWithin={false}
+                            >
+                              <Center>
+                                <FiMoreHorizontal />
+                              </Center>
+                            </IconButton>
+                            <MenuList>
+                              <MenuGroup title="Actions">
+                                {post.authorId === verification.id && (
+                                  <MenuItem
+                                    fontWeight="semibold"
+                                    onClick={() => setIsOpen(true)}
+                                  >
+                                    <FaTrash color="red" />
+                                    Delete Post
+                                  </MenuItem>
+                                )}
+                              </MenuGroup>
+                            </MenuList>
+                          </Menu>
+                        </Center>
+                      </Flex>
+                    </Box>
+                    <Box mt={2} textAlign="left" alignContent="center">
+                      <PostRenderer input={post.text} />
                     </Box>
                     <AlertDialog
                       isOpen={isOpen}
@@ -171,7 +172,7 @@ const Posts = () => {
                         </AlertDialogContent>
                       </AlertDialogOverlay>
                     </AlertDialog>
-                  </>
+                  </Box>
                 );
               })
             )}
