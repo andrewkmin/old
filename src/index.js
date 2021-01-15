@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { HelmetProvider } from "react-helmet-async";
 
-import "./styles/index.scss";
 import App from "./app/App";
 
 ReactDOM.render(
