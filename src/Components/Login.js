@@ -13,26 +13,25 @@ import {
 } from "@chakra-ui/react";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+
 import _axios from "../helpers/_axios";
 import verification from "../auth/verify.token";
 import _authContext from "../auth/auth.context";
 
-function Login({ registrationOnOpen }) {
+const Login = ({ registrationOnOpen }) => {
   const History = useHistory();
   const AuthContext = useContext(_authContext);
   const [isLoading, setLoading] = useState(false);
-  const loginCredentials = {
+
+  const credentials = {
     email: "",
     password: "",
   };
 
   const submit = async () => {
-    if (
-      loginCredentials.email.length !== 0 &&
-      loginCredentials.password.length !== 0
-    ) {
+    if (credentials.email.length !== 0 && credentials.password.length !== 0) {
       setLoading(true);
-      const { data } = await _axios.post("/auth/login", loginCredentials);
+      const { data } = await _axios.post("/auth/login", credentials);
       if (!data.error) {
         const isValid = await verification.verify();
         if (isValid) {
@@ -40,12 +39,6 @@ function Login({ registrationOnOpen }) {
           History.push("/");
         }
       }
-    }
-  };
-
-  const handleInput = (event, target) => {
-    if (event.target.value.length !== 0) {
-      target = event.target.value;
     }
   };
 
@@ -69,14 +62,14 @@ function Login({ registrationOnOpen }) {
                     name="email"
                     type="email"
                     onChange={(event) => {
-                      handleInput(event, loginCredentials.email);
+                      credentials.email = event.target.value;
                     }}
                     onKeyUp={(event) => {
-                      handleInput(event, loginCredentials.email);
+                      credentials.email = event.target.value;
                     }}
                   />
                 </InputGroup>
-                <FormErrorMessage>Here should be an error</FormErrorMessage>
+                <FormErrorMessage></FormErrorMessage>
               </FormControl>
 
               <FormControl isRequired>
@@ -87,13 +80,13 @@ function Login({ registrationOnOpen }) {
                   name="password"
                   type="password"
                   onChange={(event) => {
-                    handleInput(event, loginCredentials.password);
+                    credentials.password = event.target.value;
                   }}
                   onKeyUp={(event) => {
-                    handleInput(event, loginCredentials.password);
+                    credentials.password = event.target.value;
                   }}
                 />
-                <FormErrorMessage>Here should be an error</FormErrorMessage>
+                <FormErrorMessage></FormErrorMessage>
               </FormControl>
 
               <Button
@@ -129,6 +122,6 @@ function Login({ registrationOnOpen }) {
       </Box>
     </Box>
   );
-}
+};
 
 export default Login;

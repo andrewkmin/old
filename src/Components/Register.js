@@ -15,11 +15,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-function Register({
-  registrationIsOpen,
-  registrationOnOpen,
-  registrationOnClose,
-}) {
+function Register({ registrationIsOpen, registrationOnClose }) {
   return (
     <Modal onClose={registrationOnClose} isOpen={registrationIsOpen} isCentered>
       <ModalOverlay />
