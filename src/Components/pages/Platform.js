@@ -14,7 +14,7 @@ const Platform = () => {
       const wss = new WebSocket(
         `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
       );
-      wss.onopen = (event) => {
+      wss.onopen = (_event) => {
         wss.send("");
       };
     }
