@@ -12,7 +12,7 @@ const Platform = () => {
   useEffect(() => {
     if (navigator.onLine) {
       const wss = new WebSocket(
-        `ws://${process.env.REACT_APP_API_HOSTNAME}/api/network`
+        `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
       );
       wss.onopen = (event) => {
         wss.send("");
