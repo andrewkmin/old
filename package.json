@@ -18,7 +18,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "styled-components": "^5.2.1",
-    "trunk-js": "^1.1.0"
+    "trunk-js": "^1.1.0",
+    "validator": "^13.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

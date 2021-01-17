@@ -16,6 +16,9 @@ import {
   Th,
   Td,
   Button,
+  Skeleton,
+  SkeletonCircle,
+  Stack,
 } from "@chakra-ui/react";
 
 import Posts from "./Posts";
@@ -27,6 +30,7 @@ import { BsPersonPlusFill, BsFillGearFill } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 
 const UserProfile = () => {
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [userIsActive, setUserIsActive] = useState(false);
   const { accountId } = useParams();
@@ -37,6 +41,7 @@ const UserProfile = () => {
         `/api/accounts/fetch/?accountId=${accountId}`
       );
       setUserData(data);
+      setLoading(false);
       return data;
     };
     return fetchAccount();
@@ -63,16 +68,24 @@ const UserProfile = () => {
       <Box>
         <Container>
           <Flex>
-            <Avatar
-              size="xl"
-              name={userData.fullName}
-              src={userData.pictureUrl}
-            >
-              <AvatarBadge
-                boxSize="1em"
-                bg={userIsActive ? "green.500" : "gray.500"}
-              />
-            </Avatar>
+            {loading ? (
+              <SkeletonCircle size="20">
+                <Avatar size="xl" isRound>
+                  <AvatarBadge boxSize="1em" />
+                </Avatar>
+              </SkeletonCircle>
+            ) : (
+              <Avatar
+                size="xl"
+                name={userData.fullName}
+                src={userData.pictureUrl}
+              >
+                <AvatarBadge
+                  boxSize="1em"
+                  bg={userIsActive ? "green.500" : "gray.500"}
+                />
+              </Avatar>
+            )}
 
             <Center>
               <Text ms={5} fontWeight="semibold" fontSize="2xl">
@@ -81,7 +94,12 @@ const UserProfile = () => {
             </Center>
           </Flex>
 
-          {!verification.id ? (
+          {loading ? (
+            <Skeleton mt={5} ms={2} me={2}>
+              <Button>Loading</Button>
+              <Button>Loading</Button>
+            </Skeleton>
+          ) : !verification.id ? (
             verification.verify()
           ) : verification.id === userData._id ? (
             <Center mt={5}>

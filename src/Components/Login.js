@@ -6,11 +6,11 @@ import {
   Stack,
   Center,
   FormControl,
-  FormErrorMessage,
   InputGroup,
   Container,
   Divider,
 } from "@chakra-ui/react";
+import _Validator from "../utils/Validator";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -20,8 +20,11 @@ import _authContext from "../auth/auth.context";
 
 const Login = ({ registrationOnOpen }) => {
   const History = useHistory();
+  const Validator = new _Validator();
   const AuthContext = useContext(_authContext);
   const [isLoading, setLoading] = useState(false);
+  const [emailIsValid, setEmailIsInvalid] = useState(false);
+  const [passwordIsValid, setPasswordIsInvalid] = useState(false);
 
   const credentials = {
     email: "",
@@ -29,8 +32,19 @@ const Login = ({ registrationOnOpen }) => {
   };
 
   const submit = async () => {
-    if (credentials.email.length !== 0 && credentials.password.length !== 0) {
+    setEmailIsInvalid(
+      Validator.validateEmail(credentials.email) ? false : true
+    );
+    setPasswordIsInvalid(
+      Validator.validatePassword(credentials.password) ? false : true
+    );
+    if (
+      Validator.validateEmail(credentials.email) &&
+      Validator.validatePassword(credentials.password)
+    ) {
       setLoading(true);
+      setEmailIsInvalid(true);
+      setPasswordIsInvalid(true);
       const { data } = await _axios.post("/auth/login", credentials);
       if (!data.error) {
         const isValid = await verification.verify();
@@ -38,6 +52,10 @@ const Login = ({ registrationOnOpen }) => {
           AuthContext.setAuthenticated(isValid);
           History.push("/");
         }
+      } else {
+        setLoading(false);
+        setEmailIsInvalid(true);
+        setPasswordIsInvalid(true);
       }
     }
   };
@@ -54,7 +72,7 @@ const Login = ({ registrationOnOpen }) => {
         <Container>
           <Center>
             <Stack p={7} spacing={3} boxSize="sm">
-              <FormControl isRequired>
+              <FormControl isRequired isInvalid={emailIsValid}>
                 <InputGroup>
                   <Input
                     placeholder="Email"
@@ -69,10 +87,9 @@ const Login = ({ registrationOnOpen }) => {
                     }}
                   />
                 </InputGroup>
-                <FormErrorMessage></FormErrorMessage>
               </FormControl>
 
-              <FormControl isRequired>
+              <FormControl isRequired isInvalid={passwordIsValid}>
                 <Input
                   placeholder="Password"
                   size="md"
@@ -86,7 +103,6 @@ const Login = ({ registrationOnOpen }) => {
                     credentials.password = event.target.value;
                   }}
                 />
-                <FormErrorMessage></FormErrorMessage>
               </FormControl>
 
               <Button
