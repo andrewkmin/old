@@ -11,20 +11,17 @@ import {
   Box,
   Text,
   Center,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Image,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { useHistory, Link } from "react-router-dom";
 
 import _axios from "../helpers/_axios";
 
 const Navbar = () => {
-  const [userData, setUserData] = useState({});
   const History = useHistory();
+  const [userData, setUserData] = useState({});
 
   const handleLogout = async () => {
     const { data } = await _axios.post("/auth/logout");
@@ -62,8 +59,10 @@ const Navbar = () => {
           </Flex>
         </Link>
       </Box>
+
       <Spacer />
-      <Box width="md" ms={1} me={1}>
+
+      {/* <Box w="xl" ms={1} me={1}>
         <Center>
           <InputGroup>
             <Input placeholder="Search" />
@@ -71,7 +70,9 @@ const Navbar = () => {
           </InputGroup>
         </Center>
       </Box>
-      <Spacer />
+
+      <Spacer /> */}
+
       <Box ms={1}>
         <Center>
           <Menu>

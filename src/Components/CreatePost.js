@@ -7,7 +7,6 @@ import {
   Divider,
   Flex,
   FormControl,
-  FormErrorMessage,
   Input,
   useDisclosure,
   Modal,
@@ -17,7 +16,9 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Textarea,
 } from "@chakra-ui/react";
+import { BiImage, BiVideo } from "react-icons/bi";
 
 const CreatePost = () => {
   const {
@@ -25,6 +26,7 @@ const CreatePost = () => {
     onOpen: imageUploadOnOpen,
     onClose: imageUploadOnClose,
   } = useDisclosure();
+
   const {
     isOpen: videoUploadIsOpen,
     onOpen: videoUploadOnOpen,
@@ -34,7 +36,13 @@ const CreatePost = () => {
   return (
     <>
       <Center>
-        <Container border="1px" borderColor="gray.200" borderRadius="lg" p={3}>
+        <Container
+          boxShadow="md"
+          border="1px"
+          borderColor="gray.200"
+          borderRadius="lg"
+          p={3}
+        >
           <Box m={2}>
             <Flex>
               <Center me={2}>
@@ -44,7 +52,6 @@ const CreatePost = () => {
               <Center w="full">
                 <FormControl>
                   <Input placeholder="Create post" />
-                  <FormErrorMessage></FormErrorMessage>
                 </FormControl>
               </Center>
 
@@ -68,6 +75,7 @@ const CreatePost = () => {
 
           <Flex m={2}>
             <Button
+              leftIcon={<BiImage />}
               _focus={false}
               _focusVisible={false}
               _focusWithin={false}
@@ -78,6 +86,7 @@ const CreatePost = () => {
               Image
             </Button>
             <Button
+              leftIcon={<BiVideo />}
               _focus={false}
               _focusVisible={false}
               _focusWithin={false}
