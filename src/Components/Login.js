@@ -9,54 +9,49 @@ import {
   InputGroup,
   Container,
   Divider,
+  useToast,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import _Validator from "../utils/Validator";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { MdEmail, MdLock } from "react-icons/md";
 
 import _axios from "../helpers/_axios";
-import verification from "../auth/verify.token";
 import _authContext from "../auth/auth.context";
 
+/**
+ * TODO: Fix the login bug (event.currentTarget is null)
+ * */
+
 const Login = ({ registrationOnOpen }) => {
+  const toast = useToast();
   const History = useHistory();
-  const Validator = new _Validator();
   const AuthContext = useContext(_authContext);
-  const [isLoading, setLoading] = useState(false);
-  const [emailIsValid, setEmailIsInvalid] = useState(false);
-  const [passwordIsValid, setPasswordIsInvalid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const credentials = {
-    email: "",
-    password: "",
-  };
+  const handleLogin = async (event) => {
+    setIsSubmitting(true);
 
-  const submit = async () => {
-    setEmailIsInvalid(
-      Validator.validateEmail(credentials.email) ? false : true
+    const { data } = await _axios.post(
+      "/auth/login",
+      new FormData(event.currentTarget)
     );
-    setPasswordIsInvalid(
-      Validator.validatePassword(credentials.password) ? false : true
-    );
-    if (
-      Validator.validateEmail(credentials.email) &&
-      Validator.validatePassword(credentials.password)
-    ) {
-      setLoading(true);
-      setEmailIsInvalid(true);
-      setPasswordIsInvalid(true);
-      const { data } = await _axios.post("/auth/login", credentials);
-      if (!data.error) {
-        const isValid = await verification.verify();
-        if (isValid) {
-          AuthContext.setAuthenticated(isValid);
-          History.push("/");
-        }
-      } else {
-        setLoading(false);
-        setEmailIsInvalid(true);
-        setPasswordIsInvalid(true);
-      }
+
+    if (!data.error) {
+      setIsSubmitting(false);
+      AuthContext.setAuthenticated(true);
+      History.push("/");
+    } else if (data.error) {
+      toast({
+        title: "Check your credentials",
+        description:
+          "There are no accounts associated with that email and password",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsSubmitting(false);
+      AuthContext.setAuthenticated(false);
     }
   };
 
@@ -71,68 +66,72 @@ const Login = ({ registrationOnOpen }) => {
 
         <Container>
           <Center>
-            <Stack p={7} spacing={3} boxSize="sm">
-              <FormControl isRequired isInvalid={emailIsValid}>
-                <InputGroup>
-                  <Input
-                    placeholder="Email"
-                    size="md"
-                    name="email"
-                    type="email"
-                    onChange={(event) => {
-                      credentials.email = event.target.value;
-                    }}
-                    onKeyUp={(event) => {
-                      credentials.email = event.target.value;
-                    }}
-                  />
-                </InputGroup>
-              </FormControl>
+            <form
+              encType="multipart/form-data"
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleLogin(event);
+              }}
+            >
+              <Stack p={7} spacing={3} boxSize="sm">
+                <FormControl>
+                  <InputGroup>
+                    <InputLeftElement>
+                      <MdEmail color="gray" />
+                    </InputLeftElement>
+                    <Input
+                      required
+                      placeholder="Email"
+                      size="md"
+                      name="email"
+                      type="email"
+                    />
+                  </InputGroup>
+                </FormControl>
 
-              <FormControl isRequired isInvalid={passwordIsValid}>
-                <Input
-                  placeholder="Password"
-                  size="md"
-                  min={8}
-                  name="password"
-                  type="password"
-                  onChange={(event) => {
-                    credentials.password = event.target.value;
-                  }}
-                  onKeyUp={(event) => {
-                    credentials.password = event.target.value;
-                  }}
-                />
-              </FormControl>
+                <FormControl>
+                  <InputGroup>
+                    <InputLeftElement>
+                      <MdLock color="gray" />
+                    </InputLeftElement>
+                    <Input
+                      placeholder="Password"
+                      size="md"
+                      min={8}
+                      name="password"
+                      type="password"
+                      required
+                    />
+                  </InputGroup>
+                </FormControl>
 
-              <Button
-                _focusVisible={false}
-                _focus={false}
-                _focusWithin={false}
-                type="submit"
-                loadingText="Signing In"
-                m={1}
-                onClick={submit}
-                isLoading={isLoading}
-                colorScheme="blue"
-                size="md"
-              >
-                Log In
-              </Button>
-              <Divider />
-              <Center>
                 <Button
                   _focusVisible={false}
                   _focus={false}
                   _focusWithin={false}
-                  onClick={registrationOnOpen}
+                  type="submit"
+                  loadingText="Logging you In"
+                  m={1}
+                  colorScheme="blue"
                   size="md"
+                  isLoading={isSubmitting}
+                >
+                  Log In
+                </Button>
+                <Divider />
+                <Button
+                  type="button"
+                  _focusVisible={false}
+                  _focus={false}
+                  _focusWithin={false}
+                  size="md"
+                  onClick={registrationOnOpen}
                   colorScheme="teal"
                 >
                   Create New Account
                 </Button>
-              </Center>
-            </Stack>
+              </Stack>
+            </form>
           </Center>
         </Container>
       </Box>
