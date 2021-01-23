@@ -17,14 +17,18 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { MdEmail, MdLock } from "react-icons/md";
+import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import { MdEmail, MdLock } from "react-icons/md";
 
 import _axios from "../helpers/_axios";
+import _AuthContext from "../auth/auth.context";
 
 const Register = ({ registrationIsOpen, registrationOnClose }) => {
   const toast = useToast();
+  const History = useHistory();
+  const AuthContext = useContext(_AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegistration = async (event) => {
@@ -43,11 +47,22 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
         duration: 5000,
         isClosable: true,
       });
+      AuthContext.setAuthenticated(true);
       setIsSubmitting(false);
-    } else if (data.error) {
+      History.push("/");
+    } else if (data.error === "Forbidden") {
       toast({
-        title: data.error,
+        title: "Forbidden",
         description: "There's already an account with that email",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsSubmitting(false);
+    } else if (data.error === "Invalid email") {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -62,7 +77,9 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
       <ModalContent m={2}>
         <ModalHeader>
           <Flex>
-            <Text color="gray.900">Sign Up</Text>
+            <Text color="gray.900" fontWeight="bold">
+              Sign Up
+            </Text>
           </Flex>
         </ModalHeader>
         <ModalCloseButton

@@ -1,7 +1,8 @@
 import Posts from "../Posts";
 import Navbar from "../Navbar";
+import Profile from "../Profile";
+import Settings from "../Settings";
 import CreatePost from "../CreatePost";
-import UserProfile from "../Profile";
 import Notifications from "../Notifications";
 
 import { useEffect } from "react";
@@ -24,24 +25,23 @@ const Platform = () => {
 
   return (
     <Router>
+      {/* Meta tags */}
       <Helmet>
-        <meta name="description" content="Usocial homepage" />
         <title>Homepage — Usocial</title>
       </Helmet>
+
+      {/* Navbar */}
       <Navbar />
 
+      {/* Routes */}
       <Route exact path="/">
         <CreatePost />
         <Posts />
       </Route>
 
-      <Route exact path="/users/:accountId">
-        <UserProfile />
-      </Route>
-
-      <Route exact path="/notifications">
-        <Notifications />
-      </Route>
+      <Route exact path="/users/:accountId" component={Profile} />
+      <Route exact path="/notifications" component={Notifications} />
+      <Route exact path="/settings" component={Settings} />
 
       <Route exact path="/logout">
         <Redirect to="/welcome" />

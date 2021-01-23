@@ -38,8 +38,6 @@ const Login = ({ registrationOnOpen }) => {
     const { data } = await _axios.post("/auth/login", PAYLOAD);
 
     if (!data.error) {
-      setIsSubmitting(false);
-      AuthContext.setAuthenticated(true);
       toast({
         title: "Successfully logged in",
         description: "Welcome to Usocial",
@@ -47,6 +45,8 @@ const Login = ({ registrationOnOpen }) => {
         duration: 5000,
         isClosable: true,
       });
+      AuthContext.setAuthenticated(true);
+      setIsSubmitting(false);
       History.push("/");
     } else if (data.error) {
       if (data.error === "No Accounts") {

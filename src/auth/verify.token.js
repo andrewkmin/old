@@ -7,11 +7,12 @@ class Verify {
 
   async verify() {
     const { data } = await _axios.get("/auth/verify");
-    if (!data.error) {
+    if (data.error) {
+      this.id = "";
+      return false;
+    } else {
       this.id = data.id;
       return true;
-    } else {
-      return false;
     }
   }
 }

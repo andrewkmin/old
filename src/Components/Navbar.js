@@ -31,6 +31,7 @@ const Navbar = () => {
     if (data) {
       AuthContext.setAuthenticated(false);
       toast({
+        position: "bottom-left",
         title: "You are now logged out",
         status: "info",
         duration: 5000,
