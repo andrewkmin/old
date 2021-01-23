@@ -19,10 +19,6 @@ import { MdEmail, MdLock } from "react-icons/md";
 import _axios from "../helpers/_axios";
 import _authContext from "../auth/auth.context";
 
-/**
- * TODO: Fix the login bug (event.currentTarget is null)
- * */
-
 const Login = ({ registrationOnOpen }) => {
   const toast = useToast();
   const History = useHistory();
@@ -32,10 +28,12 @@ const Login = ({ registrationOnOpen }) => {
   const handleLogin = async (event) => {
     setIsSubmitting(true);
 
-    const { data } = await _axios.post(
-      "/auth/login",
-      new FormData(event.currentTarget)
-    );
+    const PAYLOAD = {
+      email: event.currentTarget.elements.email.value,
+      password: event.currentTarget.elements.password.value,
+    };
+
+    const { data } = await _axios.post("/auth/login", PAYLOAD);
 
     if (!data.error) {
       setIsSubmitting(false);
@@ -67,7 +65,6 @@ const Login = ({ registrationOnOpen }) => {
         <Container>
           <Center>
             <form
-              encType="multipart/form-data"
               onSubmit={(event) => {
                 event.preventDefault();
                 handleLogin(event);
