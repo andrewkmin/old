@@ -12,11 +12,13 @@ import {
   useToast,
   InputLeftElement,
 } from "@chakra-ui/react";
+import { BiLogIn } from "react-icons/bi";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
 
 import _axios from "../helpers/_axios";
+import { RiUser3Line } from "react-icons/ri";
 import _authContext from "../auth/auth.context";
 
 const Login = ({ registrationOnOpen }) => {
@@ -38,6 +40,13 @@ const Login = ({ registrationOnOpen }) => {
     if (!data.error) {
       setIsSubmitting(false);
       AuthContext.setAuthenticated(true);
+      toast({
+        title: "Successfully logged in",
+        description: "Welcome to Usocial",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
       History.push("/");
     } else if (data.error) {
       toast({
@@ -112,6 +121,7 @@ const Login = ({ registrationOnOpen }) => {
                   colorScheme="blue"
                   size="md"
                   isLoading={isSubmitting}
+                  leftIcon={<BiLogIn />}
                 >
                   Log In
                 </Button>
@@ -124,6 +134,7 @@ const Login = ({ registrationOnOpen }) => {
                   size="md"
                   onClick={registrationOnOpen}
                   colorScheme="teal"
+                  leftIcon={<RiUser3Line />}
                 >
                   Create New Account
                 </Button>

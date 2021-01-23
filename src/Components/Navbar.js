@@ -12,20 +12,31 @@ import {
   Text,
   Center,
   Image,
-  Skeleton,
+  useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 
 import _axios from "../helpers/_axios";
+import _AuthContext from "../auth/auth.context";
 
 const Navbar = () => {
+  const toast = useToast();
   const History = useHistory();
   const [userData, setUserData] = useState({});
+  const AuthContext = useContext(_AuthContext);
 
   const handleLogout = async () => {
     const { data } = await _axios.post("/auth/logout");
+
     if (data) {
+      AuthContext.setAuthenticated(false);
+      toast({
+        title: "You are now logged out",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
       History.push("/logout");
     }
   };

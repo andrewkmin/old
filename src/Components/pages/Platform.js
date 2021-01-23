@@ -41,13 +41,9 @@ const Platform = () => {
         <Notifications />
       </Route>
 
-      <Route
-        exact
-        path="/logout"
-        render={(...props) => {
-          return <Redirect {...props} to="/welcome" />;
-        }}
-      />
+      <Route exact path="/logout">
+        <Redirect from="/logout" to="/welcome" />;
+      </Route>
     </Router>
   );
 };
