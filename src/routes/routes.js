@@ -1,8 +1,8 @@
+import { Route, Switch } from "react-router-dom";
+import PrivateRoute from "../utils/PrivateRoute";
 import Welcome from "../components/pages/Welcome";
 import Platform from "../components/pages/Platform";
-import NotFound from "../components/NotFound";
-import PrivateRoute from "../utils/PrivateRoute";
-import { Route, Switch } from "react-router-dom";
+import NotFound from "../components/pages/NotFound";
 
 const Routes = () => {
   return (

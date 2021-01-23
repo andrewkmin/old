@@ -14,7 +14,7 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
-import { useHistory, Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 
 import _axios from "../helpers/_axios";
@@ -22,7 +22,6 @@ import _AuthContext from "../auth/auth.context";
 
 const Navbar = () => {
   const toast = useToast();
-  const History = useHistory();
   const [userData, setUserData] = useState({});
   const AuthContext = useContext(_AuthContext);
 
@@ -37,7 +36,7 @@ const Navbar = () => {
         duration: 5000,
         isClosable: true,
       });
-      History.push("/logout");
+      return <Redirect to="/logout" />;
     }
   };
 

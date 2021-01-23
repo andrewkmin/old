@@ -15,7 +15,9 @@ const Platform = () => {
         `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
       );
       wss.onopen = (_event) => {
-        wss.send("");
+        setInterval(() => {
+          wss.send("");
+        }, 60 * 1000);
       };
     }
   }, []);
@@ -42,7 +44,7 @@ const Platform = () => {
       </Route>
 
       <Route exact path="/logout">
-        <Redirect from="/logout" to="/welcome" />;
+        <Redirect to="/welcome" />
       </Route>
     </Router>
   );
