@@ -18,7 +18,6 @@ import {
   Button,
   Skeleton,
   SkeletonCircle,
-  Stack,
 } from "@chakra-ui/react";
 
 import Posts from "./Posts";
