@@ -70,7 +70,7 @@ const UserProfile = () => {
           <Flex>
             {loading ? (
               <SkeletonCircle size="20">
-                <Avatar size="xl" isRound>
+                <Avatar size="xl">
                   <AvatarBadge boxSize="1em" />
                 </Avatar>
               </SkeletonCircle>

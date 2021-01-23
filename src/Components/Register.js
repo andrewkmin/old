@@ -14,8 +14,12 @@ import {
   Input,
   Button,
   useToast,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { MdEmail, MdLock } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
 
 import _axios from "../helpers/_axios";
 
@@ -57,7 +61,9 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
       <ModalOverlay />
       <ModalContent m={2}>
         <ModalHeader>
-          <Text color="gray.900">Sign Up</Text>
+          <Flex>
+            <Text color="gray.900">Sign Up</Text>
+          </Flex>
         </ModalHeader>
         <ModalCloseButton
           _focusVisible={false}
@@ -90,6 +96,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
                 <Box ms={1}>
                   <FormControl isRequired>
                     <FormLabel>Last Name</FormLabel>
+
                     <Input
                       required
                       type="text"
@@ -103,29 +110,44 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
 
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input
-                  required
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  size="md"
-                />
+                <InputGroup>
+                  <InputLeftElement>
+                    <MdEmail color="gray" />
+                  </InputLeftElement>
+                  <Input
+                    required
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    size="md"
+                  />
+                </InputGroup>
               </FormControl>
 
               <FormControl isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input
-                  required
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  size="md"
-                />
+                <InputGroup>
+                  <InputLeftElement>
+                    <MdLock color="gray" />
+                  </InputLeftElement>
+                  <Input
+                    required
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    size="md"
+                  />
+                </InputGroup>
               </FormControl>
 
               <FormControl>
                 <FormLabel>Profile picture(optional)</FormLabel>
-                <Input type="file" name="avatar" size="md" />
+                <InputGroup>
+                  <InputLeftElement>
+                    <FaUserCircle color="gray" />
+                  </InputLeftElement>
+                  <Input type="file" name="avatar" size="md" />
+                </InputGroup>
               </FormControl>
 
               <Button
@@ -139,7 +161,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
                 isLoading={isSubmitting}
                 loadingText="Creating an account"
               >
-                Sign Up
+                Create Account
               </Button>
             </Stack>
           </form>
