@@ -137,7 +137,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
                 mt={2}
                 mb={2}
                 isLoading={isSubmitting}
-                loadingText="Registering"
+                loadingText="Creating an account"
               >
                 Sign Up
               </Button>
