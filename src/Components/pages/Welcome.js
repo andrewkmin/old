@@ -38,7 +38,7 @@ const Welcome = () => {
         </Container>
       </Box>
 
-      <Slide direction="bottom" in={welcomeInfoIsOpen} style={{ zIndex: 10 }}>
+      <Slide direction="bottom" in={welcomeInfoIsOpen}>
         <Box
           p="40px"
           color="white"

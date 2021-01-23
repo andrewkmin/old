@@ -16,7 +16,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Textarea,
 } from "@chakra-ui/react";
 import { BiImage, BiVideo } from "react-icons/bi";
 

@@ -49,14 +49,24 @@ const Login = ({ registrationOnOpen }) => {
       });
       History.push("/");
     } else if (data.error) {
-      toast({
-        title: "Check your credentials",
-        description:
-          "There are no accounts associated with that email and password",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (data.error === "No Accounts") {
+        toast({
+          title: "No such account",
+          description: "There are no accounts associated with that email",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (data.error === "Forbidden") {
+        toast({
+          title: "Check your credentials",
+          description: "The password you have entered is incorrect",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+
       setIsSubmitting(false);
       AuthContext.setAuthenticated(false);
     }
