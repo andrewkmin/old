@@ -61,8 +61,7 @@ const UserProfile = () => {
   return (
     <>
       <Helmet>
-        <meta name="description" content="Homepage" />
-        <title>{`${userData.fullName} — Usocial`}</title>
+        <title>{`${userData?.fullName} — Usocial`}</title>
       </Helmet>
       <Box>
         <Container>
