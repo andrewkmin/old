@@ -16,6 +16,7 @@ const Platform = () => {
         `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
       );
       wss.onopen = (_event) => {
+        wss.send("");
         setInterval(() => {
           wss.send("");
         }, 60 * 1000);

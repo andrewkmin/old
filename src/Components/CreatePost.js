@@ -34,7 +34,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Center>
+      <Center m={2}>
         <Container
           boxShadow="md"
           border="1px"

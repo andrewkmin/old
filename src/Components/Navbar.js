@@ -17,6 +17,12 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 
+// Icons
+import { GrUser } from "react-icons/gr";
+import { RiBugLine } from "react-icons/ri";
+import { MdNotifications } from "react-icons/md";
+import { RiListSettingsFill } from "react-icons/ri";
+
 import _axios from "../helpers/_axios";
 import _AuthContext from "../auth/auth.context";
 
@@ -73,17 +79,6 @@ const Navbar = () => {
 
       <Spacer />
 
-      {/* <Box w="xl" ms={1} me={1}>
-        <Center>
-          <InputGroup>
-            <Input placeholder="Search" />
-            <InputLeftElement children={<SearchIcon color="gray.500" />} />
-          </InputGroup>
-        </Center>
-      </Box>
-
-      <Spacer /> */}
-
       <Box ms={1}>
         <Center>
           <Menu>
@@ -101,17 +96,43 @@ const Navbar = () => {
             <MenuList mt={1}>
               <MenuGroup title="General">
                 <MenuItem as={Link} to={`/users/${userData._id}`}>
+                  <Box mr="5px">
+                    <GrUser />
+                  </Box>
                   My account
                 </MenuItem>
                 <MenuItem as={Link} to="/notifications">
-                  Notifications
+                  <Box mr="5px">
+                    <MdNotifications
+                      color={
+                        userData?.friends?.pending?.length === 0 ? "" : "red"
+                      }
+                    />
+                  </Box>
+                  <span
+                    color={
+                      userData?.friends?.pending?.length === 0 ? "" : "red"
+                    }
+                  >
+                    Notifications
+                  </span>
                 </MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
-              <MenuGroup title="Misc">
+              <MenuGroup title="Other">
+                <MenuItem>
+                  <Box mr="5px">
+                    <RiBugLine />
+                  </Box>
+                  Report a bug
+                </MenuItem>
+
                 <MenuItem as={Link} to="/settings">
+                  <Box mr="5px">
+                    <RiListSettingsFill />
+                  </Box>
                   User Settings
                 </MenuItem>
 

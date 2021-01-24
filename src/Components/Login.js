@@ -16,15 +16,15 @@ import { BiLogIn } from "react-icons/bi";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
+import { RiUser3Line } from "react-icons/ri";
 
 import _axios from "../helpers/_axios";
-import { RiUser3Line } from "react-icons/ri";
-import _authContext from "../auth/auth.context";
+import _AuthContext from "../auth/auth.context";
 
 const Login = ({ registrationOnOpen }) => {
   const toast = useToast();
   const History = useHistory();
-  const AuthContext = useContext(_authContext);
+  const AuthContext = useContext(_AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLogin = async (event) => {

@@ -6,8 +6,8 @@ import AuthContext from "../auth/auth.context";
 import verification from "../auth/verify.token";
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     (async () => {
