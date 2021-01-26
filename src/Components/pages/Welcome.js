@@ -25,17 +25,15 @@ const Welcome = () => {
         <meta name="description" content="Welcome to Usocial" />
         <title>Welcome to Usocial</title>
       </Helmet>
-      <Box overflow="hidden">
-        <Container overflow="hidden">
-          <Center>
-            <Login registrationOnOpen={registrationOnOpen} />
-            <Register
-              registrationIsOpen={registrationIsOpen}
-              registrationOnClose={registrationOnClose}
-              registrationOnOpen={registrationOnOpen}
-            />
-          </Center>
-        </Container>
+      <Box>
+        <Center>
+          <Login registrationOnOpen={registrationOnOpen} />
+          <Register
+            registrationIsOpen={registrationIsOpen}
+            registrationOnClose={registrationOnClose}
+            registrationOnOpen={registrationOnOpen}
+          />
+        </Center>
       </Box>
 
       <Slide direction="bottom" in={welcomeInfoIsOpen}>

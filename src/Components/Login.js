@@ -73,7 +73,7 @@ const Login = ({ registrationOnOpen }) => {
   };
 
   return (
-    <Box pos="absolute" top="150" height="full" width="full">
+    <Box top="150" pos="absolute">
       <Box>
         <Center>
           <Text fontSize="6xl" fontWeight="bold" color="teal.500">
