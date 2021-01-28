@@ -3,7 +3,6 @@ import {
   Box,
   Center,
   useDisclosure,
-  Container,
   Slide,
   Link,
 } from "@chakra-ui/react";

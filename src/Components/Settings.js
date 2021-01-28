@@ -25,9 +25,6 @@ const Settings = () => {
   const [updatedConfig, setUpdatedConfig] = useState({});
 
   const checkForChanges = () => {
-    console.log(updatedConfig, "Updated");
-    console.log(currentConfig, "Current");
-
     if (currentConfig === updatedConfig) {
       if (Toast.isActive("settings-changed")) {
         Toast.close("settings-changed");

@@ -9,19 +9,15 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
+import WebSocket from "../../utils/WebSocket";
+
 const Platform = () => {
   useEffect(() => {
-    if (navigator.onLine) {
-      const wss = new WebSocket(
-        `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
-      );
-      wss.onopen = (_event) => {
-        wss.send("");
-        setInterval(() => {
-          wss.send("");
-        }, 60 * 1000);
-      };
-    }
+    WebSocket.open();
+    WebSocket.ping();
+    setInterval(() => {
+      WebSocket.ping();
+    }, 60 * 1000);
   }, []);
 
   return (

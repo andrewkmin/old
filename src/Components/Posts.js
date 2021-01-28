@@ -1,11 +1,8 @@
 import {
   Box,
   Container,
-  SkeletonCircle,
-  SkeletonText,
   Flex,
   Center,
-  Divider,
   Avatar,
   Text,
   Spacer,
@@ -22,32 +19,16 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
-import { useEffect, useState, useRef } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 
-import trunk from "trunk-js";
 import _axios from "../helpers/_axios";
 import verification from "../auth/verify.token";
 import PostRenderer from "../helpers/PostRenderer";
-
-const PostSkeleton = () => {
-  return (
-    <Box borderTopRadius="xl" padding="6" boxShadow="lg" bg="white" m={2}>
-      <Box>
-        <Flex>
-          <Center>
-            <SkeletonCircle size="10" />
-            <SkeletonText w="sm" ms={3} noOfLines={1} />
-          </Center>
-        </Flex>
-      </Box>
-      <SkeletonText mt="4" noOfLines={4} spacing="4" />
-    </Box>
-  );
-};
 
 const Posts = () => {
   const cancelRef = useRef();
@@ -74,11 +55,15 @@ const Posts = () => {
     <Box overflow="none" w="full" mt={5}>
       <Container>
         {loading ? (
-          <Box>
-            <PostSkeleton />
-            <Divider />
-            <PostSkeleton />
-          </Box>
+          <Center>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Center>
         ) : (
           <Box>
             {posts.length === 0 ? (
@@ -91,7 +76,7 @@ const Posts = () => {
               posts.map((post) => {
                 return (
                   <Box
-                    key={post._id}
+                    key={post?.postData?._id}
                     mb={1}
                     padding="4"
                     boxShadow="lg"
@@ -102,10 +87,10 @@ const Posts = () => {
                       <Flex>
                         <Box>
                           <Center>
-                            <Avatar src={post.authorImage} />
-                            <Link to={`/users/${post.authorId}`}>
+                            <Avatar src={post?.authorData?.pictureUrl} />
+                            <Link to={`/users/${post?.authorData?._id}`}>
                               <Text ms={2} color="blue.500">
-                                {trunk(post.author, 15, "...")}
+                                {post?.authorData?.fullName}
                               </Text>
                             </Link>
                           </Center>
@@ -128,7 +113,8 @@ const Posts = () => {
                             </IconButton>
                             <MenuList>
                               <MenuGroup title="Actions">
-                                {post.authorId === verification.id && (
+                                {post?.postData?.authorId ===
+                                  verification.id && (
                                   <MenuItem
                                     fontWeight="semibold"
                                     onClick={() => setIsOpen(true)}
@@ -144,7 +130,7 @@ const Posts = () => {
                       </Flex>
                     </Box>
                     <Box mt={2} textAlign="left" alignContent="center">
-                      <PostRenderer input={post.text} />
+                      <PostRenderer input={post?.postData?.text} />
                     </Box>
                     <AlertDialog
                       isOpen={isOpen}

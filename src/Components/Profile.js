@@ -29,10 +29,10 @@ import { BsPersonPlusFill, BsFillGearFill } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 
 const UserProfile = () => {
+  const { accountId } = useParams();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [userIsActive, setUserIsActive] = useState(false);
-  const { accountId } = useParams();
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -43,7 +43,7 @@ const UserProfile = () => {
       setLoading(false);
       return data;
     };
-    return fetchAccount();
+    fetchAccount();
   }, [accountId]);
 
   useEffect(() => {
@@ -55,8 +55,9 @@ const UserProfile = () => {
       setUserIsActive(response.message);
       return response;
     };
-    return checkWsConnection(userData);
-  });
+
+    checkWsConnection(userData);
+  }, [userData]);
 
   return (
     <>

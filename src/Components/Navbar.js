@@ -24,6 +24,7 @@ import { MdNotifications } from "react-icons/md";
 import { RiListSettingsFill } from "react-icons/ri";
 
 import _axios from "../helpers/_axios";
+import WebSocket from "../utils/WebSocket";
 import _AuthContext from "../auth/auth.context";
 
 const Navbar = () => {
@@ -35,6 +36,7 @@ const Navbar = () => {
     const { data } = await _axios.post("/auth/logout");
 
     if (data) {
+      WebSocket.close();
       AuthContext.setAuthenticated(false);
       toast({
         position: "bottom-left",
