@@ -20,12 +20,16 @@ import {
   AlertDialogOverlay,
   Button,
   Spinner,
+  Divider,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
+import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { BiBookmark, BiChat, BiHeart } from "react-icons/bi";
 
+// import Asyncoload from "asyncoload";
 import _axios from "../helpers/_axios";
 import verification from "../auth/verify.token";
 import PostRenderer from "../helpers/PostRenderer";
@@ -77,11 +81,12 @@ const Posts = () => {
                 return (
                   <Box
                     key={post?.postData?._id}
-                    mb={1}
-                    padding="4"
-                    boxShadow="lg"
-                    bg="white"
+                    mb={2}
+                    p={4}
+                    border="1px"
+                    boxShadow="md"
                     borderRadius="md"
+                    borderColor="gray.200"
                   >
                     <Box>
                       <Flex>
@@ -123,6 +128,12 @@ const Posts = () => {
                                     Delete Post
                                   </MenuItem>
                                 )}
+                                <MenuItem
+                                  icon={<BiBookmark />}
+                                  fontWeight="semibold"
+                                >
+                                  Save Post
+                                </MenuItem>
                               </MenuGroup>
                             </MenuList>
                           </Menu>
@@ -130,7 +141,52 @@ const Posts = () => {
                       </Flex>
                     </Box>
                     <Box mt={2} textAlign="left" alignContent="center">
-                      <PostRenderer input={post?.postData?.text} />
+                      <Box>
+                        <PostRenderer input={post?.postData?.text} />
+                        <Box>
+                          {post?.postData?.attachments.map((attachment) => {
+                            return (
+                              <Container>
+                                {/* <Asyncoload src={attachment.url} /> */}
+                              </Container>
+                            );
+                          })}
+                        </Box>
+                      </Box>
+
+                      {/* Like, comment, etc... */}
+                      <Box mt={3} mb={3}>
+                        <Flex>
+                          <Button
+                            leftIcon={<BiHeart />}
+                            colorScheme="red"
+                            size="sm"
+                            w="full"
+                            me={1}
+                            _focus={false}
+                          >
+                            {/* TODO: Implement hearted/unhearted states for both the text and the icon */}
+                            Heart
+                          </Button>
+                          <Button
+                            leftIcon={<BiChat />}
+                            colorScheme="blue"
+                            size="sm"
+                            w="full"
+                            _focus={false}
+                            ms={1}
+                          >
+                            Comment
+                          </Button>
+                        </Flex>
+                      </Box>
+                      <Divider />
+                      <Text color="gray.400">
+                        {formatDistanceToNow(
+                          new Date(post?.postData?.datefield),
+                          { addSuffix: true, includeSeconds: false }
+                        )}
+                      </Text>
                     </Box>
                     <AlertDialog
                       isOpen={isOpen}

@@ -1,6 +1,7 @@
+import Linkify from "react-linkify";
 import { Link } from "react-router-dom";
-import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";
 import { FaHashtag } from "react-icons/fa";
+import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";
 
 /**
  * Usage:
@@ -16,23 +17,27 @@ const PostRenderer = ({ input }) => {
     .split(" ")
     .map((text) => {
       return text.startsWith("#", 0) ? (
-        <Tag
-          ms={1}
-          me={1}
-          mt={0.2}
-          mb={0.2}
-          as={Link}
-          to={`/hashtags/${text.toLowerCase().replace("#", "")}`}
-          size="md"
-          key={input.indexOf(text)}
-          variant="solid"
-          colorScheme="teal"
-        >
-          <TagLeftIcon boxSize="12px" as={FaHashtag} />
-          <TagLabel>{text.replace("#", "")}</TagLabel>
-        </Tag>
+        <Linkify>
+          <Tag
+            ms={1}
+            me={1}
+            mt={0.2}
+            mb={0.2}
+            as={Link}
+            to={`/hashtags/${text.toLowerCase().replace("#", "")}`}
+            size="md"
+            key={input.indexOf(text)}
+            variant="solid"
+            colorScheme="teal"
+          >
+            <TagLeftIcon boxSize="12px" as={FaHashtag} />
+            <TagLabel>{text.replace("#", "")}</TagLabel>
+          </Tag>
+        </Linkify>
       ) : (
-        <span key={input.indexOf(text)}>{text}</span>
+        <Linkify>
+          <span key={input.indexOf(text)}>{text}</span>
+        </Linkify>
       );
     })
     .reduce((prev, curr) => [prev, " ", curr]);
