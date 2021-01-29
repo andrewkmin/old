@@ -1,4 +1,4 @@
-import Linkify from "react-linkify";
+// import Linkify from "react-linkify";
 import { Link } from "react-router-dom";
 import { FaHashtag } from "react-icons/fa";
 import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";

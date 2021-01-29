@@ -11,42 +11,23 @@ import {
   InputGroup,
   InputLeftElement,
   useToast,
+  Switch,
+  useColorMode,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdEmail, MdLock } from "react-icons/md";
 
-import _axios from "../helpers/_axios";
+import _DataContext from "../utils/data.context";
 
 const Settings = () => {
   const Toast = useToast();
-  const [currentConfig, setCurrentConfig] = useState({});
-  const [updatedConfig, setUpdatedConfig] = useState({});
+  const DataContext = useContext(_DataContext);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const checkForChanges = () => {
-    if (currentConfig === updatedConfig) {
-      if (Toast.isActive("settings-changed")) {
-        Toast.close("settings-changed");
-      }
-    } else {
-      if (!Toast.isActive("settings-changed")) {
-        Toast({
-          id: "settings-changed",
-          title: "You have unsaved changes",
-          status: "warning",
-          duration: null,
-          isClosable: false,
-        });
-      }
-    }
-  };
-
-  // TODO: Fix the infinite API call bug when using useEffect to set values
-  const fetchSettings = async () => {
-    const { data } = await _axios.get("/api/accounts/fetch");
-    setCurrentConfig(data);
-    setUpdatedConfig(currentConfig);
+    // TODO: Show a toast if settings have been changed
   };
 
   return (
@@ -55,14 +36,14 @@ const Settings = () => {
         <title>Settings — Usocial</title>
       </Helmet>
       <Box m={2}>
-        <Container border="1px" borderRadius={10} borderColor="gray.300" p={5}>
+        <Container p={5}>
           <Text fontSize="3xl" fontWeight="bold">
             Settings
           </Text>
           <Divider />
           <Box mt={5}>
             {/* Profile Settings */}
-            <Stack spacing={5}>
+            <Stack borderRadius="md" spacing={5} boxShadow="lg" p={5}>
               <Box>
                 <Text fontSize="2xl" fontWeight="bold">
                   Profile
@@ -77,14 +58,9 @@ const Settings = () => {
                       <Input
                         me={1}
                         name="firstName"
-                        placeholder={currentConfig.firstName}
+                        placeholder={DataContext.userData.firstName}
                         onChange={(event) => {
-                          if (event.currentTarget.value.length === 0) {
-                            updatedConfig.firstName = currentConfig.firstName;
-                          } else {
-                            updatedConfig.firstName = event.currentTarget.value;
-                          }
-                          checkForChanges();
+                          // TODO:
                         }}
                       />
                     </InputGroup>
@@ -93,7 +69,10 @@ const Settings = () => {
                       <Input
                         ms={1}
                         name="lastName"
-                        placeholder={currentConfig.lastName}
+                        placeholder={DataContext.userData.lastName}
+                        onChange={(event) => {
+                          // TODO:
+                        }}
                       />
                     </InputGroup>
                   </Flex>
@@ -115,7 +94,10 @@ const Settings = () => {
                           required
                           name="email"
                           type="email"
-                          placeholder={currentConfig.email}
+                          placeholder={DataContext.userData.email}
+                          onChange={(event) => {
+                            // TODO:
+                          }}
                         />
                       </InputGroup>
 
@@ -147,6 +129,19 @@ const Settings = () => {
                     <Radio value="private">Private</Radio>
                   </Stack>
                 </RadioGroup>
+              </Box>
+
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">
+                  Appearance
+                </Text>
+
+                <Box>
+                  <Text>
+                    Color Theme: {colorMode === "light" ? "🌞" : "🌚"}
+                  </Text>
+                  <Switch onChange={toggleColorMode} />
+                </Box>
               </Box>
             </Stack>
           </Box>

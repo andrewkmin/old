@@ -1,12 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Skeleton } from "@chakra-ui/react";
 import { Redirect, Route } from "react-router-dom";
 
-import _authContext from "../auth/auth.context";
+import verification from "../auth/verify.token";
+
+import _AuthContext from "../auth/auth.context";
+import _DataContext from "../utils/data.context";
 
 const PrivateRoute = ({ Component, path, redirectPath, exact, swap }) => {
-  const AuthContext = useContext(_authContext);
+  const AuthContext = useContext(_AuthContext);
+  const DataContext = useContext(_DataContext);
+
+  useEffect(() => {
+    DataContext.setUserData(verification.getUserData());
+  }, [DataContext]);
 
   return (
     <>

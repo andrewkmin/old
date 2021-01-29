@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
-import WebSocket from "../../utils/WebSocket";
+import WebSocket from "../../utils/websocket";
 
 const Platform = () => {
   useEffect(() => {

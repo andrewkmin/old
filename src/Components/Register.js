@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { MdEmail, MdLock } from "react-icons/md";
 
-import _axios from "../helpers/_axios";
+import _axios from "../utils/_axios";
 import _AuthContext from "../auth/auth.context";
 
 const Register = ({ registrationIsOpen, registrationOnClose }) => {

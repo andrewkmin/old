@@ -8,8 +8,9 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
+
+import _axios from "../utils/_axios";
 import { useState, useEffect } from "react";
-import _axios from "../helpers/_axios";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);

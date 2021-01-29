@@ -18,18 +18,21 @@ import { Link, Redirect } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 
 // Icons
-import { GrUser } from "react-icons/gr";
+import { BiUser } from "react-icons/bi";
 import { RiBugLine } from "react-icons/ri";
 import { MdNotifications } from "react-icons/md";
 import { RiListSettingsFill } from "react-icons/ri";
 
-import _axios from "../helpers/_axios";
-import WebSocket from "../utils/WebSocket";
+import _axios from "../utils/_axios";
+import WebSocket from "../utils/websocket";
+
 import _AuthContext from "../auth/auth.context";
+import _DataContext from "../utils/data.context";
 
 const Navbar = () => {
   const toast = useToast();
   const [userData, setUserData] = useState({});
+  const DataContext = useContext(_DataContext);
   const AuthContext = useContext(_AuthContext);
 
   const handleLogout = async () => {
@@ -50,33 +53,24 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const fetchAccount = async () => {
-      const { data } = await _axios.get("/api/accounts/fetch");
-      setUserData(data);
-      return data;
-    };
-    fetchAccount();
-  }, []);
+    setUserData(DataContext.userData);
+    return DataContext.userData;
+  }, [DataContext.userData]);
 
   return (
-    <Flex
-      zIndex="sticky"
-      pos="sticky"
-      top="0"
-      borderBottom="1px"
-      borderColor="gray.200"
-      mb={10}
-      p={2}
-      bgColor="white"
-    >
+    <Flex boxShadow="md" zIndex="sticky" pos="sticky" top="0" mb={10} p={2}>
       <Box me={1}>
-        <Link to="/">
-          <Flex>
-            <Center>
-              <Image src="/favicon.ico" h={35} alt="Website Logo" />
-            </Center>
-          </Flex>
-        </Link>
+        <Center>
+          <Link to="/">
+            <Image
+              src="/favicon.ico"
+              style={{
+                height: 40,
+              }}
+              alt="Website Logo"
+            />
+          </Link>
+        </Center>
       </Box>
 
       <Spacer />
@@ -92,14 +86,14 @@ const Navbar = () => {
               as={Button}
             >
               <Text fontSize="sm" isTruncated>
-                {userData.fullName}
+                {userData?.fullName}
               </Text>
             </MenuButton>
             <MenuList mt={1}>
               <MenuGroup title="General">
                 <MenuItem as={Link} to={`/users/${userData._id}`}>
                   <Box mr="5px">
-                    <GrUser />
+                    <BiUser />
                   </Box>
                   My account
                 </MenuItem>
@@ -124,7 +118,9 @@ const Navbar = () => {
               <MenuDivider />
 
               <MenuGroup title="Other">
-                <MenuItem>
+                <MenuItem
+                // TODO: Add a redirect to https://linear.app/usocial/team/USO
+                >
                   <Box mr="5px">
                     <RiBugLine />
                   </Box>

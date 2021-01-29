@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "../utils/PrivateRoute";
 import Welcome from "../components/pages/Welcome";
+import PrivateRoute from "../helpers/PrivateRoute";
 import Platform from "../components/pages/Platform";
 import NotFound from "../components/pages/NotFound";
 

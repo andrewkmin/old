@@ -10,15 +10,19 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
-import { BiImage } from "react-icons/bi";
+import { IoMdImages } from "react-icons/io";
+import { useState, useRef, useContext, useEffect } from "react";
 
-import _axios from "../helpers/_axios";
+import _axios from "../utils/_axios";
+import _DataContext from "../utils/data.context";
 
 const CreatePost = () => {
   const Toast = useToast();
   const AttachmentInputRef = useRef();
+  const [userData, setUserData] = useState({});
+  const DataContext = useContext(_DataContext);
   const [createDisabled, setCreateDisabled] = useState(true);
+  const [attachmentText, setAttachmentText] = useState("Photo/Video");
 
   const handleInput = (event) => {
     if (event.target.value.length === 0) {
@@ -46,44 +50,45 @@ const CreatePost = () => {
     }
   };
 
+  useEffect(() => {
+    setUserData(DataContext.userData);
+    return DataContext.userData;
+  }, [DataContext.userData]);
+
   return (
     <form
+      autoComplete="off"
       encType="multipart/form-data"
       onSubmit={(event) => {
         handleCreatePost(event);
       }}
     >
       <Center m={2}>
-        <Container
-          boxShadow="md"
-          border="1px"
-          borderColor="gray.200"
-          borderRadius="lg"
-          p={3}
-        >
+        <Container boxShadow="xl" borderRadius="lg" p={3}>
           <Box m={2}>
             <Flex>
-              <Center me={2}>
-                <Avatar />
+              <Center me={5}>
+                <Avatar name={userData?.fullName} src={userData?.pictureUrl} />
               </Center>
 
               <Center w="full">
                 <FormControl>
                   <Input
+                    size="lg"
+                    variant="flushed"
                     onChange={(event) => handleInput(event)}
-                    placeholder="Create post"
+                    placeholder="Write something..."
                     name="text"
                   />
                 </FormControl>
               </Center>
 
-              <Center ms={2}>
+              <Center ms={5}>
                 <Button
-                  colorScheme="teal"
+                  size="lg"
+                  colorScheme="blue"
                   disabled={createDisabled}
                   _focus={false}
-                  _focusVisible={false}
-                  _groupFocus={false}
                   isLoading={false}
                   type="submit"
                 >
@@ -93,30 +98,43 @@ const CreatePost = () => {
             </Flex>
           </Box>
 
-          <Divider />
+          <Box>
+            <Divider mt={3} mb={3} />
 
-          <Flex m={2}>
-            <Button
-              leftIcon={<BiImage />}
-              _focus={false}
-              _focusVisible={false}
-              _focusWithin={false}
-              w="full"
-              me={1}
-              onClick={() => {
-                AttachmentInputRef.current.click();
-              }}
-            >
-              Attach content
-              <Input
-                multiple
-                ref={AttachmentInputRef}
-                display="none"
-                type="file"
-                name="attachments"
-              />
-            </Button>
-          </Flex>
+            <Flex>
+              <Button
+                leftIcon={<IoMdImages color="green" />}
+                _focus={false}
+                _focusWithin={false}
+                _focusVisible={false}
+                variant="ghost"
+                w="full"
+                me={1}
+                onClick={() => {
+                  AttachmentInputRef.current.click();
+                }}
+              >
+                {attachmentText}
+                <Input
+                  onChange={(event) => {
+                    if (event.target.files.length === 0) {
+                      setAttachmentText("Photo/Video");
+                    } else {
+                      setAttachmentText(
+                        `Attached ${event.target.files.length} files`
+                      );
+                    }
+                  }}
+                  multiple
+                  accept="image/*, video/*"
+                  ref={AttachmentInputRef}
+                  display="none"
+                  type="file"
+                  name="attachments"
+                />
+              </Button>
+            </Flex>
+          </Box>
         </Container>
       </Center>
     </form>

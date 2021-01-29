@@ -1210,6 +1210,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@brainhubeu/react-carousel@^1.19.26":
+  version "1.19.26"
+  resolved "https://registry.yarnpkg.com/@brainhubeu/react-carousel/-/react-carousel-1.19.26.tgz#57de7b934596ede7a42ab07c46e5942574180447"
+  integrity sha512-+YO8cJrJEk+QDZTQM+i7ct5Ouy0LyoVHQD4fomdsV+3AQmWUkMVZNBYmxFMvhRQVFKreTTzyKuGPkhDKilL/CQ==
+
 "@chakra-ui/accordion@1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@chakra-ui/accordion/-/accordion-1.0.4.tgz#aab45c838a9a41c6bd00559feeac41f172c08d4d"
@@ -3183,10 +3188,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-asyncoload@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/asyncoload/-/asyncoload-1.2.0.tgz#a46da7198177ebfb5d8a4d5bb3917f7b685e3064"
-  integrity sha512-MOtXUQCy2gBFLoFY5eMhcC86mSguFNWsDVX5/HMZWvK4an/TRT5F+063oXXTeBgHz2p3Pmk9TRFgdZY0u4MFEg==
+asyncoload@1.21.0:
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/asyncoload/-/asyncoload-1.21.0.tgz#9616b8a2c8db91062058092b294845896171b1a7"
+  integrity sha512-iHs1/RAsFP0xluq462weQ3oyT8AtsrIGExV7rwz4Mi6R8K2WT/i7KCtVDcHClBWPeBg0rd2uofZrZFjgqBlMKw==
   dependencies:
     axios "^0.21.1"
     react "^17.0.1"

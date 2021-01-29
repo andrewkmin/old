@@ -1,3 +1,5 @@
+// The CSS for carousel
+import "@brainhubeu/react-carousel/lib/style.css";
 import {
   Box,
   Container,
@@ -26,16 +28,18 @@ import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { BiBookmark, BiChat, BiHeart } from "react-icons/bi";
 
+// Carousel
+import Carousel from "@brainhubeu/react-carousel";
+
 import Asyncoload from "asyncoload";
-import _axios from "../helpers/_axios";
+import _axios from "../utils/_axios";
 import verification from "../auth/verify.token";
 import PostRenderer from "../helpers/PostRenderer";
 
 const Posts = () => {
-  const cancelRef = useRef();
   const { accountId } = useParams();
   const [posts, setPosts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -143,15 +147,22 @@ const Posts = () => {
                     <Box mt={2} textAlign="left" alignContent="center">
                       <Box>
                         <PostRenderer input={post?.postData?.text} />
-                        <Box>
-                          {post?.postData?.attachments.map((attachment) => {
-                            return (
-                              <Container>
-                                <Asyncoload src={attachment.url} />
-                              </Container>
-                            );
-                          })}
-                        </Box>
+                        {post?.postData?.attachments.length !== 0 && (
+                          <Box mt={5} mb={5}>
+                            <Carousel
+                              plugins={["arrows", "centered", "infinite"]}
+                            >
+                              {post?.postData?.attachments.map((attachment) => {
+                                return (
+                                  <Asyncoload
+                                    key={attachment?.filename}
+                                    src={attachment.url}
+                                  />
+                                );
+                              })}
+                            </Carousel>
+                          </Box>
+                        )}
                       </Box>
 
                       {/* Like, comment, etc... */}
@@ -188,11 +199,7 @@ const Posts = () => {
                         )}
                       </Text>
                     </Box>
-                    <AlertDialog
-                      isOpen={isOpen}
-                      leastDestructiveRef={cancelRef}
-                      onClose={onClose}
-                    >
+                    <AlertDialog isOpen={isOpen} onClose={onClose}>
                       <AlertDialogOverlay>
                         <AlertDialogContent>
                           <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -204,10 +211,15 @@ const Posts = () => {
                           </AlertDialogBody>
 
                           <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
+                            <Button _focus={false} onClick={onClose}>
                               Cancel
                             </Button>
-                            <Button colorScheme="red" onClick={onClose} ml={3}>
+                            <Button
+                              _focus={false}
+                              colorScheme="red"
+                              onClick={onClose}
+                              ml={3}
+                            >
                               Delete
                             </Button>
                           </AlertDialogFooter>

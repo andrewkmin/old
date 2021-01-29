@@ -18,22 +18,30 @@ import { useHistory } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
 import { RiUser3Line } from "react-icons/ri";
 
-import _axios from "../helpers/_axios";
+import _axios from "../utils/_axios";
+
 import _AuthContext from "../auth/auth.context";
+import _DataContext from "../utils/data.context";
 
 const Login = ({ registrationOnOpen }) => {
   const toast = useToast();
   const History = useHistory();
+  const DataContext = useContext(_DataContext);
   const AuthContext = useContext(_AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = async (event) => {
-    setIsSubmitting(true);
+  const fetchUserData = async () => {
+    const { data } = await _axios.get("/api/accounts/fetch");
+    return data;
+  };
 
+  const handleLogin = async (event) => {
     const PAYLOAD = {
       email: event.currentTarget.elements.email.value,
       password: event.currentTarget.elements.password.value,
     };
+
+    setIsSubmitting(true);
 
     const { data } = await _axios.post("/auth/login", PAYLOAD);
 
@@ -45,7 +53,10 @@ const Login = ({ registrationOnOpen }) => {
         duration: 5000,
         isClosable: true,
       });
+
+      const UserData = await fetchUserData();
       AuthContext.setAuthenticated(true);
+      DataContext.setUserData(UserData);
       setIsSubmitting(false);
       History.push("/");
     } else if (data.error) {
@@ -67,8 +78,8 @@ const Login = ({ registrationOnOpen }) => {
         });
       }
 
-      setIsSubmitting(false);
       AuthContext.setAuthenticated(false);
+      setIsSubmitting(false);
     }
   };
 

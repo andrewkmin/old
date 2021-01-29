@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 import Posts from "./Posts";
-import _axios from "../helpers/_axios";
+import _axios from "../utils/_axios";
 import verification from "../auth/verify.token";
 
 import { RiMessage2Fill } from "react-icons/ri";
