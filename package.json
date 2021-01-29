@@ -7,6 +7,7 @@
     "@chakra-ui/react": "^1.1.2",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "asyncoload": "^1.2.0",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",

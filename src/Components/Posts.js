@@ -29,7 +29,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { BiBookmark, BiChat, BiHeart } from "react-icons/bi";
 
-// import Asyncoload from "asyncoload";
+import Asyncoload from "asyncoload";
 import _axios from "../helpers/_axios";
 import verification from "../auth/verify.token";
 import PostRenderer from "../helpers/PostRenderer";
@@ -147,7 +147,7 @@ const Posts = () => {
                           {post?.postData?.attachments.map((attachment) => {
                             return (
                               <Container>
-                                {/* <Asyncoload src={attachment.url} /> */}
+                                <Asyncoload src={attachment.url} />
                               </Container>
                             );
                           })}
