@@ -9,6 +9,7 @@ import {
   FormControl,
   Input,
   useToast,
+  useColorMode,
 } from "@chakra-ui/react";
 import { IoMdImages } from "react-icons/io";
 import { useState, useRef, useContext, useEffect } from "react";
@@ -19,6 +20,7 @@ import _DataContext from "../utils/data.context";
 const CreatePost = () => {
   const Toast = useToast();
   const AttachmentInputRef = useRef();
+  const { colorMode } = useColorMode();
   const [userData, setUserData] = useState({});
   const DataContext = useContext(_DataContext);
   const [createDisabled, setCreateDisabled] = useState(true);
@@ -64,7 +66,13 @@ const CreatePost = () => {
       }}
     >
       <Center m={2}>
-        <Container boxShadow="xl" borderRadius="lg" p={3}>
+        <Container
+          boxShadow="md"
+          borderRadius="lg"
+          p={3}
+          border="1px"
+          borderColor={colorMode === "light" ? "gray.300" : "gray.700"}
+        >
           <Box m={2}>
             <Flex>
               <Center me={5}>
@@ -107,7 +115,7 @@ const CreatePost = () => {
                 _focus={false}
                 _focusWithin={false}
                 _focusVisible={false}
-                variant="ghost"
+                variant="outline"
                 w="full"
                 me={1}
                 onClick={() => {

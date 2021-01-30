@@ -1,5 +1,4 @@
 // The CSS for carousel
-import "@brainhubeu/react-carousel/lib/style.css";
 import {
   Box,
   Container,
@@ -23,6 +22,8 @@ import {
   Button,
   Spinner,
   Divider,
+  useToast,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
@@ -31,21 +32,40 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BiBookmark, BiChat, BiHeart } from "react-icons/bi";
 
-// Carousel
-import Carousel from "@brainhubeu/react-carousel";
-
 import Asyncoload from "asyncoload";
 import _axios from "../utils/_axios";
 import verification from "../auth/verify.token";
 import PostRenderer from "../helpers/PostRenderer";
 
 const Posts = () => {
+  const Toast = useToast();
   const { accountId } = useParams();
+  const { colorMode } = useColorMode();
   const [posts, setPosts] = useState([]);
+  const onClose = () => setIsOpen(false);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const onClose = () => setIsOpen(false);
+  const deletePost = async (data) => {
+    const postData = data.postData;
+    const { data: responseData } = await _axios.delete(
+      `/api/posts/delete/?postId=${postData._id}`
+    );
+
+    if (!responseData.error) {
+      Toast({
+        title: "Post deleted",
+        duration: 1000,
+        isClosable: true,
+      });
+    } else {
+      Toast({
+        title: responseData.error.toString(),
+        duration: 1000,
+        isClosable: true,
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -64,17 +84,11 @@ const Posts = () => {
       <Container>
         {loading ? (
           <Center>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
+            <Spinner color="blue.500" />
           </Center>
         ) : (
           <Box>
-            {posts.length === 0 ? (
+            {posts?.length === 0 ? (
               <Center>
                 <Text color="gray.600" fontSize="xl" fontWeight="bold">
                   No posts yet
@@ -90,7 +104,9 @@ const Posts = () => {
                     border="1px"
                     boxShadow="md"
                     borderRadius="md"
-                    borderColor="gray.200"
+                    borderColor={
+                      colorMode === "light" ? "gray.300" : "gray.700"
+                    }
                   >
                     <Box>
                       <Flex>
@@ -147,22 +163,15 @@ const Posts = () => {
                     <Box mt={2} textAlign="left" alignContent="center">
                       <Box>
                         <PostRenderer input={post?.postData?.text} />
-                        {post?.postData?.attachments.length !== 0 && (
-                          <Box mt={5} mb={5}>
-                            <Carousel
-                              plugins={["arrows", "centered", "infinite"]}
-                            >
-                              {post?.postData?.attachments.map((attachment) => {
-                                return (
-                                  <Asyncoload
-                                    key={attachment?.filename}
-                                    src={attachment.url}
-                                  />
-                                );
-                              })}
-                            </Carousel>
-                          </Box>
-                        )}
+                        {post?.postData?.attachments?.length !== 0 &&
+                          post?.postData?.attachments?.map((attachment) => {
+                            return (
+                              <Asyncoload
+                                key={attachment?.filename}
+                                src={attachment.url}
+                              />
+                            );
+                          })}
                       </Box>
 
                       {/* Like, comment, etc... */}
@@ -217,7 +226,10 @@ const Posts = () => {
                             <Button
                               _focus={false}
                               colorScheme="red"
-                              onClick={onClose}
+                              onClick={() => {
+                                // onClose();
+                                deletePost(post);
+                              }}
                               ml={3}
                             >
                               Delete

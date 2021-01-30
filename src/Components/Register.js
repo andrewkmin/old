@@ -69,6 +69,8 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
       });
       setIsSubmitting(false);
     }
+
+    return data;
   };
 
   return (
@@ -77,9 +79,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
       <ModalContent m={2}>
         <ModalHeader>
           <Flex>
-            <Text color="gray.900" fontWeight="bold">
-              Sign Up
-            </Text>
+            <Text fontWeight="bold">Sign Up</Text>
           </Flex>
         </ModalHeader>
         <ModalCloseButton
@@ -89,6 +89,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
         />
         <ModalBody>
           <form
+            autoComplete="off"
             encType="multipart/form-data"
             onSubmit={(event) => {
               event.preventDefault();

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-
 import Routes from "../routes/routes";
 import AuthContext from "../auth/auth.context";
 import DataContext from "../utils/data.context";

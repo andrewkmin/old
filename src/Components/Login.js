@@ -95,6 +95,7 @@ const Login = ({ registrationOnOpen }) => {
         <Container>
           <Center>
             <form
+              autoComplete="off"
               onSubmit={(event) => {
                 event.preventDefault();
                 handleLogin(event);

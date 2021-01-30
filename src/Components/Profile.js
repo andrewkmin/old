@@ -62,7 +62,9 @@ const UserProfile = () => {
   return (
     <>
       <Helmet>
-        <title>{`${userData?.fullName} — Usocial`}</title>
+        <title>{`${
+          userData?.fullName === undefined ? "" : userData?.fullName + " —"
+        } Usocial`}</title>
       </Helmet>
       <Box>
         <Container>

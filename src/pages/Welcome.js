@@ -6,9 +6,9 @@ import {
   Slide,
   Link,
 } from "@chakra-ui/react";
-import Login from "../Login";
-import Register from "../Register";
+import Login from "../components/Login";
 import { Helmet } from "react-helmet-async";
+import Register from "../components/Register";
 
 const Welcome = () => {
   const { isOpen: welcomeInfoIsOpen } = useDisclosure({ isOpen: true });

@@ -13,8 +13,9 @@ import {
   Center,
   Image,
   useToast,
+  useColorMode,
 } from "@chakra-ui/react";
-import { Link, Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 
 // Icons
@@ -31,6 +32,7 @@ import _DataContext from "../utils/data.context";
 
 const Navbar = () => {
   const toast = useToast();
+  const { colorMode } = useColorMode();
   const [userData, setUserData] = useState({});
   const DataContext = useContext(_DataContext);
   const AuthContext = useContext(_AuthContext);
@@ -58,10 +60,20 @@ const Navbar = () => {
   }, [DataContext.userData]);
 
   return (
-    <Flex boxShadow="md" zIndex="sticky" pos="sticky" top="0" mb={10} p={2}>
+    <Flex
+      borderBottom="1px"
+      borderColor={colorMode === "light" ? "gray.300" : "gray.700"}
+      bg={colorMode === "light" ? "gray.50" : "gray.700"}
+      zIndex="sticky"
+      boxShadow="md"
+      pos="sticky"
+      mb={10}
+      top="0"
+      p={2}
+    >
       <Box me={1}>
         <Center>
-          <Link to="/">
+          <NavLink to="/">
             <Image
               src="/favicon.ico"
               style={{
@@ -69,7 +81,7 @@ const Navbar = () => {
               }}
               alt="Website Logo"
             />
-          </Link>
+          </NavLink>
         </Center>
       </Box>
 
@@ -91,13 +103,13 @@ const Navbar = () => {
             </MenuButton>
             <MenuList mt={1}>
               <MenuGroup title="General">
-                <MenuItem as={Link} to={`/users/${userData._id}`}>
+                <MenuItem as={NavLink} to={`/users/${userData._id}`}>
                   <Box mr="5px">
                     <BiUser />
                   </Box>
                   My account
                 </MenuItem>
-                <MenuItem as={Link} to="/notifications">
+                <MenuItem as={NavLink} to="/notifications">
                   <Box mr="5px">
                     <MdNotifications
                       color={
@@ -127,11 +139,11 @@ const Navbar = () => {
                   Report a bug
                 </MenuItem>
 
-                <MenuItem as={Link} to="/settings">
+                <MenuItem as={NavLink} to="/settings">
                   <Box mr="5px">
                     <RiListSettingsFill />
                   </Box>
-                  User Settings
+                  Settings
                 </MenuItem>
 
                 <Center p={2}>
