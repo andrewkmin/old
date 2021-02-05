@@ -8,20 +8,21 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
-
-import _axios from "../utils/_axios";
-import { useState, useEffect } from "react";
+import _axios from "../api/_axios";
+import { useState, useEffect, useRef } from "react";
 
 const Notifications = () => {
+  const fetchNotifications = useRef(() => {});
   const [notifications, setNotifications] = useState([]);
 
+  fetchNotifications.current = async () => {
+    const { data } = await _axios.get("/api/notifications/fetch");
+    setNotifications(data);
+    return data;
+  };
+
   useEffect(() => {
-    const fetchNotifications = async () => {
-      const { data } = await _axios.get("/api/notifications/fetch");
-      setNotifications(data);
-      return data;
-    };
-    fetchNotifications();
+    fetchNotifications.current();
   }, []);
 
   return (

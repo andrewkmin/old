@@ -15,7 +15,6 @@
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-helmet-async": "^1.0.7",
     "react-icons": "^4.1.0",
     "react-linkify": "^1.0.0-alpha",
     "react-router-dom": "^5.2.0",

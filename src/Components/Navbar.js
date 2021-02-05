@@ -12,47 +12,19 @@ import {
   Text,
   Center,
   Image,
-  useToast,
-  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { NavLink, Redirect } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
-
-// Icons
 import { BiUser } from "react-icons/bi";
 import { RiBugLine } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
+import _DataContext from "../data/data.context";
 import { MdNotifications } from "react-icons/md";
 import { RiListSettingsFill } from "react-icons/ri";
-
-import _axios from "../utils/_axios";
-import WebSocket from "../utils/websocket";
-
-import _AuthContext from "../auth/auth.context";
-import _DataContext from "../utils/data.context";
+import { useEffect, useState, useContext } from "react";
 
 const Navbar = () => {
-  const toast = useToast();
-  const { colorMode } = useColorMode();
   const [userData, setUserData] = useState({});
   const DataContext = useContext(_DataContext);
-  const AuthContext = useContext(_AuthContext);
-
-  const handleLogout = async () => {
-    const { data } = await _axios.post("/auth/logout");
-
-    if (data) {
-      WebSocket.close();
-      AuthContext.setAuthenticated(false);
-      toast({
-        position: "bottom-left",
-        title: "You are now logged out",
-        status: "info",
-        duration: 5000,
-        isClosable: true,
-      });
-      return <Redirect to="/logout" />;
-    }
-  };
 
   useEffect(() => {
     setUserData(DataContext.userData);
@@ -62,8 +34,8 @@ const Navbar = () => {
   return (
     <Flex
       borderBottom="1px"
-      borderColor={colorMode === "light" ? "gray.300" : "gray.700"}
-      bg={colorMode === "light" ? "gray.50" : "gray.700"}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
+      bg={useColorModeValue("gray.50", "gray.700")}
       zIndex="sticky"
       boxShadow="md"
       pos="sticky"
@@ -111,19 +83,9 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem as={NavLink} to="/notifications">
                   <Box mr="5px">
-                    <MdNotifications
-                      color={
-                        userData?.friends?.pending?.length === 0 ? "" : "red"
-                      }
-                    />
+                    <MdNotifications />
                   </Box>
-                  <span
-                    color={
-                      userData?.friends?.pending?.length === 0 ? "" : "red"
-                    }
-                  >
-                    Notifications
-                  </span>
+                  Notifications
                 </MenuItem>
               </MenuGroup>
 
@@ -147,7 +109,11 @@ const Navbar = () => {
                 </MenuItem>
 
                 <Center p={2}>
-                  <Button colorScheme="red" w="full" onClick={handleLogout}>
+                  <Button
+                    colorScheme="red"
+                    w="full"
+                    onClick={/*handleLogout*/ () => {}}
+                  >
                     Logout
                   </Button>
                 </Center>

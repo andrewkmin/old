@@ -1,33 +1,33 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 import Routes from "../routes/routes";
 import AuthContext from "../auth/auth.context";
-import DataContext from "../utils/data.context";
-import verification from "../auth/verify.token";
+import DataContext from "../data/data.context";
+import verification from "../auth/verification.js";
+import { Skeleton } from "@chakra-ui/react";
 
 const App = () => {
+  const checkUserIsValid = useRef(() => {});
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const isValid = await verification.verify();
-      setAuthenticated(isValid);
-      setLoading(false);
-      return isValid;
-    })();
-  }, []);
+  checkUserIsValid.current = async () => {
+    const isValid = await verification.verify();
+    setUserData(verification.data);
+    setAuthenticated(isValid);
+    setLoading(false);
+    return isValid;
+  };
+
+  useEffect(() => checkUserIsValid.current(), []);
 
   return (
     <AuthContext.Provider
       value={{ authenticated, loading, setAuthenticated, setLoading }}
     >
       <DataContext.Provider value={{ userData, setUserData }}>
-        <Router>
-          <Routes />
-        </Router>
+        {loading ? <Skeleton h={"100vh"} w={"100vw"} /> : <Routes />}
       </DataContext.Provider>
     </AuthContext.Provider>
   );

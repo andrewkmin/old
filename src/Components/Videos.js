@@ -13,7 +13,7 @@ import { BiVideo } from "react-icons/bi";
 const Videos = () => {
   const Toast = useToast();
   const fetchVideos = useRef(() => {});
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState();
   const [fetching, setFetching] = useState(true);
   const [errorIsThrown, setErrorIsThrown] = useState(false);
 
@@ -21,16 +21,15 @@ const Videos = () => {
     setFetching(true);
     try {
       const { data } = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&max_results=10`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&max_results=3`
       );
-      setVideos(data.items);
+      setVideos(data.list);
       setFetching(false);
     } catch (error) {
       console.error(error);
       setFetching(false);
       Toast({
-        title:
-          "Your video quota has been exceeded, please try again after some time",
+        title: "Your video quota has been exceeded",
         duration: 5000,
         isClosable: true,
         status: "error",
@@ -41,6 +40,15 @@ const Videos = () => {
 
   useEffect(() => {
     fetchVideos.current();
+    window.onscroll = function (ev) {
+      if (
+        window.innerHeight + Math.ceil(window.pageYOffset) >=
+        document.body.offsetHeight
+      ) {
+        // alert("you're at the bottom of the page");
+        fetchVideos.current();
+      }
+    };
   }, []);
 
   return (
@@ -63,25 +71,26 @@ const Videos = () => {
           <Box>
             {videos?.map((video) => {
               return (
-                <Box key={video.etag}>
-                  <Container>
-                    <Container borderRadius="lg" boxShadow="md">
-                      <iframe
-                        title={video.snippet.title}
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${video.id.videoId}`}
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                      ></iframe>
-                    </Container>
-                    <a
-                      href={`https://youtube.com/channel/${video.snippet.channelId}`}
-                    >
-                      {video.snippet.channelTitle}
-                    </a>
-                  </Container>
+                <Box
+                  key={video?.etag}
+                  mb={3}
+                  p={3}
+                  borderRadius="lg"
+                  border="1px"
+                  borderColor="gray.300"
+                >
+                  <Center>
+                    <iframe
+                      style={{
+                        width: "100%",
+                        height: "40vh",
+                      }}
+                      title={video?.snippet?.title}
+                      src={`https://www.youtube.com/embed/${video?.id?.videoId}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </Center>
                 </Box>
               );
             })}

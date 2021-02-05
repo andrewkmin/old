@@ -1,7 +1,7 @@
 /**
  * This is a class for checking if user's token is valid
  */
-import _axios from "../utils/_axios";
+import _axios from "../api/_axios";
 
 class Verify {
   constructor() {

@@ -7,7 +7,6 @@ import {
   Link,
 } from "@chakra-ui/react";
 import Login from "../components/Login";
-import { Helmet } from "react-helmet-async";
 import Register from "../components/Register";
 
 const Welcome = () => {
@@ -20,10 +19,6 @@ const Welcome = () => {
 
   return (
     <>
-      <Helmet>
-        <meta name="description" content="Welcome to Usocial" />
-        <title>Welcome to Usocial</title>
-      </Helmet>
       <Box>
         <Center>
           <Login registrationOnOpen={registrationOnOpen} />

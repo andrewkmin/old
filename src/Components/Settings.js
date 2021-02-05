@@ -22,22 +22,22 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { Helmet } from "react-helmet-async";
 import { Redirect } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdEmail, MdLock } from "react-icons/md";
 
-import _axios from "../utils/_axios";
-import _DataContext from "../utils/data.context";
+import _axios from "../api/_axios";
+import _DataContext from "../data/data.context";
 import _AuthContext from "../auth/auth.context";
 
 const Settings = () => {
   const Toast = useToast();
+  const { toggleColorMode } = useColorMode();
   const DataContext = useContext(_DataContext);
   const AuthContext = useContext(_AuthContext);
-  const { colorMode, toggleColorMode } = useColorMode();
   const {
     isOpen: deleteAccountAlertIsOpen,
     onOpen: deleteAccountAlertOnOpen,
@@ -47,10 +47,6 @@ const Settings = () => {
   const deleteAccount = async () => {
     const { data } = await _axios.delete("/api/accounts/delete");
     if (!data.error) {
-      <Redirect to="/logout" />;
-      DataContext.setUserData({});
-      AuthContext.setAuthenticated(false);
-
       Toast({
         title: "Deleted",
         description: "All of your account data has been deleted",
@@ -58,7 +54,10 @@ const Settings = () => {
         isClosable: true,
         status: "success",
       });
-    } else if (data.error) {
+      AuthContext.setAuthenticated(false);
+      DataContext.setUserData({});
+      <Redirect to="/logout" />;
+    } else {
       Toast({
         title: data.error,
         duration: 5000,
@@ -68,15 +67,16 @@ const Settings = () => {
     }
   };
 
+  const handleInput = (event) => {
+    // TODO: Handle user input and check for changes
+  };
+
   const checkForChanges = () => {
     // TODO: Show a toast if settings have been changed
   };
 
   return (
     <>
-      <Helmet>
-        <title>Settings — Usocial</title>
-      </Helmet>
       <Box m={2}>
         <Container p={5}>
           <Text fontSize="3xl" fontWeight="bold">
@@ -182,10 +182,10 @@ const Settings = () => {
                   <Text>
                     <Switch
                       me={2}
-                      isChecked={colorMode === "light" ? false : true}
+                      isChecked={useColorModeValue(false, true)}
                       onChange={toggleColorMode}
                     />
-                    {colorMode === "light" ? "🌞" : "🌚"}
+                    {useColorModeValue("🌞", "🌚")}
                   </Text>
                 </Box>
               </Box>

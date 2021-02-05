@@ -9,20 +9,20 @@ import {
   FormControl,
   Input,
   useToast,
-  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { IoMdImages } from "react-icons/io";
 import { useState, useRef, useContext, useEffect } from "react";
 
-import _axios from "../utils/_axios";
-import _DataContext from "../utils/data.context";
+import _axios from "../api/_axios";
+import _DataContext from "../data/data.context";
 
 const CreatePost = () => {
   const Toast = useToast();
   const AttachmentInputRef = useRef();
-  const { colorMode } = useColorMode();
   const [userData, setUserData] = useState({});
   const DataContext = useContext(_DataContext);
+  const [submitting, setSubmitting] = useState(false);
   const [createDisabled, setCreateDisabled] = useState(true);
   const [attachmentText, setAttachmentText] = useState("Photo/Video");
 
@@ -36,19 +36,23 @@ const CreatePost = () => {
 
   const handleCreatePost = async (event) => {
     event.preventDefault();
-
+    setSubmitting(true);
+    setCreateDisabled(true);
     const { data } = await _axios.put(
       "/api/posts/create",
       new FormData(event.target)
     );
 
     if (!data.error) {
+      // TODO: Maybe remove the toast
       Toast({
         title: "Posted! 🤩",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
+      setSubmitting(false);
+      setCreateDisabled(false);
     }
   };
 
@@ -67,11 +71,12 @@ const CreatePost = () => {
     >
       <Center m={2}>
         <Container
+          bg={useColorModeValue("white.500", "gray.700")}
           boxShadow="md"
           borderRadius="lg"
           p={3}
           border="1px"
-          borderColor={colorMode === "light" ? "gray.300" : "gray.700"}
+          borderColor={useColorModeValue("gray.300", "gray.800")}
         >
           <Box m={2}>
             <Flex>
@@ -97,7 +102,7 @@ const CreatePost = () => {
                   colorScheme="blue"
                   disabled={createDisabled}
                   _focus={false}
-                  isLoading={false}
+                  isLoading={submitting}
                   type="submit"
                 >
                   POST

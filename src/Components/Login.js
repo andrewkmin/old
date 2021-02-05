@@ -18,10 +18,10 @@ import { useHistory } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
 import { RiUser3Line } from "react-icons/ri";
 
-import _axios from "../utils/_axios";
+import _axios from "../api/_axios";
 
 import _AuthContext from "../auth/auth.context";
-import _DataContext from "../utils/data.context";
+import _DataContext from "../data/data.context";
 
 const Login = ({ registrationOnOpen }) => {
   const toast = useToast();
