@@ -13,13 +13,15 @@ import {
   useColorModeValue,
   IconButton,
   Avatar,
-  Divider,
+  MenuDivider,
 } from "@chakra-ui/react";
-import { BiBell } from "react-icons/bi";
 import _DataContext from "../data/data.context";
 import { Link, NavLink } from "react-router-dom";
-import { RiListSettingsFill } from "react-icons/ri";
-import { BsFillCaretDownFill } from "react-icons/bs";
+import {
+  BsBellFill,
+  BsFillCaretDownFill,
+  BsFillGearFill,
+} from "react-icons/bs";
 import React, { useEffect, useState, useContext } from "react";
 
 const Navbar = () => {
@@ -65,10 +67,10 @@ const Navbar = () => {
           to={`/users/${userData._id}`}
           _focus={false}
           isRound
-          pt={3}
-          pb={3}
           ps={1}
-          pe={2}
+          pe={3}
+          pt={2}
+          pb={2}
         >
           <Flex>
             <Box>
@@ -87,7 +89,7 @@ const Navbar = () => {
           _focus={false}
           isRound
           ms={2}
-          icon={<BiBell />}
+          icon={<BsBellFill />}
         />
 
         <Menu>
@@ -106,12 +108,12 @@ const Navbar = () => {
           <MenuList mt={1}>
             <MenuItem as={NavLink} to="/settings">
               <Box mr="5px">
-                <RiListSettingsFill />
+                <BsFillGearFill />
               </Box>
               Settings
             </MenuItem>
 
-            <Divider />
+            <MenuDivider />
 
             <Center p={2}>
               <Button as={Link} to="/logout" colorScheme="red" w="full">

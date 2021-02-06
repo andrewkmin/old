@@ -11,17 +11,18 @@ import {
 } from "@chakra-ui/react";
 import PostList from "./PostList";
 import _axios from "../api/_axios";
-import { useParams } from "react-router-dom";
-import { AiTwotoneEdit } from "react-icons/ai";
+import CreatePost from "./CreatePost";
 import { RiMessage2Fill } from "react-icons/ri";
 import verification from "../auth/verification.js";
-import React, { useEffect, useRef, useState } from "react";
-import { BsPersonPlusFill, BsFillGearFill } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { AiOutlineMinusCircle, AiTwotoneEdit } from "react-icons/ai";
+import { BsPersonPlusFill, BsFillGearFill, BsMoon } from "react-icons/bs";
 
 const UserProfile = () => {
   const { accountId } = useParams();
   const [userData, setUserData] = useState({});
-  const [userIsActive, setUserIsActive] = useState(false);
+  const [userStatus, setUserStatus] = useState("offline");
 
   useEffect(() => {
     // fetchAccount.current();
@@ -37,7 +38,7 @@ const UserProfile = () => {
       await verification.verify();
 
       setUserData(_userData);
-      setUserIsActive(_userIsActive.message);
+      setUserStatus(_userIsActive.message);
       return _userData;
     };
 
@@ -55,8 +56,21 @@ const UserProfile = () => {
           >
             <AvatarBadge
               boxSize="1em"
-              bg={userIsActive ? "green.500" : "gray.500"}
-            />
+              bg={
+                userStatus === "active"
+                  ? "green.500"
+                  : userStatus === "dnd"
+                  ? "red.500"
+                  : userStatus === "idle"
+                  ? "yellow.500"
+                  : "gray.500"
+              }
+            >
+              <Center>
+                {userStatus === "dnd" && <AiOutlineMinusCircle size="1rem" />}
+                {userStatus === "idle" && <BsMoon size="1rem" />}
+              </Center>
+            </AvatarBadge>
           </Avatar>
 
           <Center>
@@ -74,7 +88,7 @@ const UserProfile = () => {
         {verification?.id === userData?._id ? (
           <Center mt={5}>
             <Flex>
-              <Box me={1}>
+              <Box>
                 <Button
                   leftIcon={<AiTwotoneEdit />}
                   colorScheme="gray"
@@ -84,8 +98,10 @@ const UserProfile = () => {
                 </Button>
               </Box>
 
-              <Box ms={1}>
+              <Box ms={2}>
                 <Button
+                  as={NavLink}
+                  to="/settings"
                   leftIcon={<BsFillGearFill />}
                   colorScheme="gray"
                   _focus={false}
@@ -123,6 +139,7 @@ const UserProfile = () => {
       </Container>
 
       <Container mt={10}>
+        {verification.id === userData._id && <CreatePost />}
         <PostList />
       </Container>
     </Box>

@@ -18,6 +18,7 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import _axios from "../api/_axios";
+import _WebSocket from "../utils/websocket";
 import { useHistory } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import _AuthContext from "../auth/auth.context";
@@ -48,6 +49,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
       });
       AuthContext.setAuthenticated(true);
       setIsSubmitting(false);
+      _WebSocket.ping();
       History.push("/");
     } else if (data.error === "Forbidden") {
       toast({

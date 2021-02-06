@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import _axios from "../api/_axios";
 import { BiLogIn } from "react-icons/bi";
+import _WebSocket from "../utils/websocket";
 import { RiUser3Line } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import _AuthContext from "../auth/auth.context";
@@ -56,6 +57,7 @@ const Login = ({ registrationOnOpen }) => {
       AuthContext.setAuthenticated(true);
       DataContext.setUserData(UserData);
       setIsSubmitting(false);
+      _WebSocket.ping();
       History.push("/");
     } else if (data.error) {
       if (data.error === "No Accounts") {
