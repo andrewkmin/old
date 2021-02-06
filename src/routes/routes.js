@@ -1,10 +1,5 @@
-import {
-  BrowserRouter as Router,
-  // Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
 import { useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Welcome from "../pages/Welcome";
 import Navbar from "../components/Navbar";
@@ -57,18 +52,6 @@ const Routes = () => {
       <Route path="/welcome">
         <Private swap redirect="/" component={Welcome} />
       </Route>
-
-      {/* Logout */}
-      <Route
-        path="/logout"
-        render={() => {
-          verification.logout() ? (
-            <Redirect to="/welcome" />
-          ) : (
-            <Redirect to="/" />
-          );
-        }}
-      />
     </Router>
   );
 };

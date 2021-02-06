@@ -66,6 +66,7 @@ const Navbar = () => {
           as={NavLink}
           to={`/users/${userData._id}`}
           _focus={false}
+          variant="ghost"
           isRound
           ps={1}
           pe={3}
