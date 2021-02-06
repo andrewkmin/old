@@ -7,6 +7,7 @@ import {
   AvatarBadge,
   Center,
   Button,
+  Badge,
 } from "@chakra-ui/react";
 import PostList from "./PostList";
 import _axios from "../api/_axios";
@@ -19,29 +20,29 @@ import { BsPersonPlusFill, BsFillGearFill } from "react-icons/bs";
 
 const UserProfile = () => {
   const { accountId } = useParams();
-  const fetchAccount = useRef(() => {});
   const [userData, setUserData] = useState({});
   const [userIsActive, setUserIsActive] = useState(false);
 
-  fetchAccount.current = async () => {
-    // For getting user data
-    const { data: _userData } = await _axios.get(
-      `/api/accounts/fetch/?accountId=${accountId}`
-    );
-    // For checking if the user is online
-    const { data: _userIsActive } = await _axios.get(
-      `/api/network/active/?accountId=${accountId}`
-    );
-    await verification.verify();
-
-    setUserData(_userData);
-    setUserIsActive(_userIsActive.message);
-    return { _userData, _userIsActive };
-  };
-
   useEffect(() => {
-    fetchAccount.current();
-  }, []);
+    // fetchAccount.current();
+    const fetchAccount = async () => {
+      // For getting user data
+      const { data: _userData } = await _axios.get(
+        `/api/accounts/fetch/?accountId=${accountId}`
+      );
+      // For checking if the user is online
+      const { data: _userIsActive } = await _axios.get(
+        `/api/network/status/?accountId=${accountId}`
+      );
+      await verification.verify();
+
+      setUserData(_userData);
+      setUserIsActive(_userIsActive.message);
+      return _userData;
+    };
+
+    fetchAccount();
+  }, [accountId]);
 
   return (
     <Box>
@@ -61,6 +62,11 @@ const UserProfile = () => {
           <Center>
             <Text ms={5} fontWeight="semibold" fontSize="2xl">
               {userData?.fullName}
+              {verification.id === userData?._id && (
+                <Badge ms={2} variant="outline" colorScheme="blue">
+                  Your Account
+                </Badge>
+              )}
             </Text>
           </Center>
         </Flex>

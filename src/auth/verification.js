@@ -16,7 +16,7 @@ class Verify {
       return false;
     } else {
       this.data = data;
-      this.id = data.id;
+      this.id = data._id;
       return true;
     }
   }

@@ -52,8 +52,7 @@ const Login = ({ registrationOnOpen }) => {
         isClosable: true,
       });
 
-      const UserData = fetchUserData();
-      console.log(UserData);
+      const UserData = await fetchUserData();
       AuthContext.setAuthenticated(true);
       DataContext.setUserData(UserData);
       setIsSubmitting(false);

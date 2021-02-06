@@ -91,14 +91,17 @@ const Navbar = () => {
         />
 
         <Menu>
-          <MenuButton>
-            <IconButton
-              ms={2}
-              _focus={false}
-              isRound
-              icon={<BsFillCaretDownFill />}
-            />
-          </MenuButton>
+          <IconButton
+            as={MenuButton}
+            ms={2}
+            _focus={false}
+            isRound
+            icon={
+              <Center>
+                <BsFillCaretDownFill />
+              </Center>
+            }
+          />
 
           <MenuList mt={1}>
             <MenuItem as={NavLink} to="/settings">
