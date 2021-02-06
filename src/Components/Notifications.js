@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import _axios from "../api/_axios";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Notifications = () => {
   const fetchNotifications = useRef(() => {});

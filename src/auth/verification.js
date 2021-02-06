@@ -11,12 +11,11 @@ class Verify {
 
   async verify() {
     const { data } = await _axios.get("/auth/verify");
-    const { data: userData } = await _axios.get("/api/accounts/fetch");
-    this.data = userData;
     if (data.error) {
       this.id = "";
       return false;
     } else {
+      this.data = data;
       this.id = data.id;
       return true;
     }
@@ -24,6 +23,12 @@ class Verify {
 
   getUserData() {
     return this.data;
+  }
+
+  async logout() {
+    const { data } = await _axios.post("/auth/logout");
+    if (!data.error) return true;
+    return false;
   }
 }
 

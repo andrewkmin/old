@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Center,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BiVideo } from "react-icons/bi";
+import React, { useState, useEffect, useRef } from "react";
 
 const Videos = () => {
   const Toast = useToast();

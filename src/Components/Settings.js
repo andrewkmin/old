@@ -24,14 +24,13 @@ import {
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import _axios from "../api/_axios";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
-import { MdEmail, MdLock } from "react-icons/md";
-
-import _axios from "../api/_axios";
 import _DataContext from "../data/data.context";
 import _AuthContext from "../auth/auth.context";
+import { MdEmail, MdLock } from "react-icons/md";
 
 const Settings = () => {
   const Toast = useToast();

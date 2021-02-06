@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { Skeleton } from "@chakra-ui/react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Routes from "../routes/routes";
 import AuthContext from "../auth/auth.context";
 import DataContext from "../data/data.context";
 import verification from "../auth/verification.js";
-import { Skeleton } from "@chakra-ui/react";
 
 const App = () => {
   const checkUserIsValid = useRef(() => {});

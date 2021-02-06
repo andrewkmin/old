@@ -4,8 +4,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuGroup,
-  MenuDivider,
   Flex,
   Spacer,
   Box,
@@ -13,14 +11,16 @@ import {
   Center,
   Image,
   useColorModeValue,
+  IconButton,
+  Avatar,
+  Divider,
 } from "@chakra-ui/react";
-import { BiUser } from "react-icons/bi";
-import { RiBugLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { BiBell } from "react-icons/bi";
 import _DataContext from "../data/data.context";
-import { MdNotifications } from "react-icons/md";
+import { Link, NavLink } from "react-router-dom";
 import { RiListSettingsFill } from "react-icons/ri";
-import { useEffect, useState, useContext } from "react";
+import { BsFillCaretDownFill } from "react-icons/bs";
+import React, { useEffect, useState, useContext } from "react";
 
 const Navbar = () => {
   const [userData, setUserData] = useState({});
@@ -60,67 +60,63 @@ const Navbar = () => {
       <Spacer />
 
       <Box ms={1}>
-        <Center>
-          <Menu>
-            <MenuButton
-              _focusVisible={false}
+        <IconButton
+          as={NavLink}
+          to={`/users/${userData._id}`}
+          _focus={false}
+          isRound
+          pt={3}
+          pb={3}
+          ps={1}
+          pe={2}
+        >
+          <Flex>
+            <Box>
+              <Avatar size="sm" src={userData?.pictureUrl} />
+            </Box>
+
+            <Center ms={1} as={Box}>
+              <Text fontWeight="bold">{userData?.firstName}</Text>
+            </Center>
+          </Flex>
+        </IconButton>
+
+        <IconButton
+          as={NavLink}
+          to="/notifications"
+          _focus={false}
+          isRound
+          ms={2}
+          icon={<BiBell />}
+        />
+
+        <Menu>
+          <MenuButton>
+            <IconButton
+              ms={2}
               _focus={false}
-              colorScheme="teal"
-              size="md"
-              as={Button}
-            >
-              <Text fontSize="sm" isTruncated>
-                {userData?.fullName}
-              </Text>
-            </MenuButton>
-            <MenuList mt={1}>
-              <MenuGroup title="General">
-                <MenuItem as={NavLink} to={`/users/${userData._id}`}>
-                  <Box mr="5px">
-                    <BiUser />
-                  </Box>
-                  My account
-                </MenuItem>
-                <MenuItem as={NavLink} to="/notifications">
-                  <Box mr="5px">
-                    <MdNotifications />
-                  </Box>
-                  Notifications
-                </MenuItem>
-              </MenuGroup>
+              isRound
+              icon={<BsFillCaretDownFill />}
+            />
+          </MenuButton>
 
-              <MenuDivider />
+          <MenuList mt={1}>
+            <MenuItem as={NavLink} to="/settings">
+              <Box mr="5px">
+                <RiListSettingsFill />
+              </Box>
+              Settings
+            </MenuItem>
 
-              <MenuGroup title="Other">
-                <MenuItem
-                // TODO: Add a redirect to https://linear.app/usocial/team/USO
-                >
-                  <Box mr="5px">
-                    <RiBugLine />
-                  </Box>
-                  Report a bug
-                </MenuItem>
+            <Divider />
 
-                <MenuItem as={NavLink} to="/settings">
-                  <Box mr="5px">
-                    <RiListSettingsFill />
-                  </Box>
-                  Settings
-                </MenuItem>
-
-                <Center p={2}>
-                  <Button
-                    colorScheme="red"
-                    w="full"
-                    onClick={/*handleLogout*/ () => {}}
-                  >
-                    Logout
-                  </Button>
-                </Center>
-              </MenuGroup>
-            </MenuList>
-          </Menu>
-        </Center>
+            <Center p={2}>
+              <Button as={Link} to="/logout" colorScheme="red" w="full">
+                Logout
+              </Button>
+            </Center>
+          </MenuList>
+        </Menu>
       </Box>
     </Flex>
   );

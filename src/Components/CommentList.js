@@ -1,3 +1,4 @@
+import React from "react";
 import Comment from "./Comment";
 import _axios from "../api/_axios";
 import { Text, Box, Center, Flex, Input, Button } from "@chakra-ui/react";

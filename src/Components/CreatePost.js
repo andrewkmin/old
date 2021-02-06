@@ -12,7 +12,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { IoMdImages } from "react-icons/io";
-import { useState, useRef, useContext, useEffect } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 
 import _axios from "../api/_axios";
 import _DataContext from "../data/data.context";

@@ -17,13 +17,12 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { useState, useContext } from "react";
+import _axios from "../api/_axios";
 import { useHistory } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { MdEmail, MdLock } from "react-icons/md";
-
-import _axios from "../api/_axios";
 import _AuthContext from "../auth/auth.context";
+import { MdEmail, MdLock } from "react-icons/md";
+import React, { useState, useContext } from "react";
 
 const Register = ({ registrationIsOpen, registrationOnClose }) => {
   const toast = useToast();

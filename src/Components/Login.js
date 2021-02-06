@@ -12,16 +12,14 @@ import {
   useToast,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { BiLogIn } from "react-icons/bi";
-import { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { MdEmail, MdLock } from "react-icons/md";
-import { RiUser3Line } from "react-icons/ri";
-
 import _axios from "../api/_axios";
-
+import { BiLogIn } from "react-icons/bi";
+import { RiUser3Line } from "react-icons/ri";
+import { useHistory } from "react-router-dom";
 import _AuthContext from "../auth/auth.context";
 import _DataContext from "../data/data.context";
+import { MdEmail, MdLock } from "react-icons/md";
+import React, { useState, useContext } from "react";
 
 const Login = ({ registrationOnOpen }) => {
   const toast = useToast();
@@ -54,7 +52,8 @@ const Login = ({ registrationOnOpen }) => {
         isClosable: true,
       });
 
-      const UserData = await fetchUserData();
+      const UserData = fetchUserData();
+      console.log(UserData);
       AuthContext.setAuthenticated(true);
       DataContext.setUserData(UserData);
       setIsSubmitting(false);

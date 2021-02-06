@@ -36,14 +36,13 @@ import CommentList from "./CommentList";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
+import _DataContext from "../data/data.context";
 import { BiChat, BiShare } from "react-icons/bi";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { useEffect, useState, useContext } from "react";
+import verification from "../auth/verification.js";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-
-import verification from "../auth/verification.js";
-import _DataContext from "../data/data.context";
+import React, { useEffect, useState, useContext } from "react";
 
 const Post = ({ data: post }) => {
   const Toast = useToast();

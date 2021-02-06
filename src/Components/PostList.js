@@ -1,7 +1,7 @@
 import Post from "./Post";
 import _axios from "../api/_axios";
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Box, Container, Center, Text, Spinner } from "@chakra-ui/react";
 
 const PostList = () => {
