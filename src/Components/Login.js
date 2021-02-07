@@ -29,47 +29,42 @@ const Login = ({ registrationOnOpen }) => {
   const AuthContext = useContext(_AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchUserData = async () => {
-    const { data } = await _axios.get("/api/accounts/fetch");
-    return data;
-  };
-
   const handleLogin = async (event) => {
+    setIsSubmitting(true);
     const PAYLOAD = {
       email: event.currentTarget.elements.email.value,
       password: event.currentTarget.elements.password.value,
     };
 
-    setIsSubmitting(true);
+    // Authentication
+    const { data: auth } = await _axios.post("/auth/login", PAYLOAD);
+    // User data
+    const { data: userData } = await _axios.get("/api/accounts/fetch");
 
-    const { data } = await _axios.post("/auth/login", PAYLOAD);
-
-    if (!data.error) {
-      toast({
+    if (!auth.error) {
+      AuthContext.setAuthenticated(true);
+      DataContext.setUserData(userData);
+      setIsSubmitting(false);
+      _WebSocket.ping();
+      History.push("/");
+      return toast({
         title: "Successfully logged in",
         description: "Welcome to Usocial",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-
-      const UserData = await fetchUserData();
-      AuthContext.setAuthenticated(true);
-      DataContext.setUserData(UserData);
-      setIsSubmitting(false);
-      _WebSocket.ping();
-      History.push("/");
-    } else if (data.error) {
-      if (data.error === "No Accounts") {
-        toast({
+    } else if (auth.error) {
+      if (auth.error === "No Accounts") {
+        return toast({
           title: "No such account",
           description: "There are no accounts associated with that email",
           status: "error",
           duration: 5000,
           isClosable: true,
         });
-      } else if (data.error === "Forbidden") {
-        toast({
+      } else if (auth.error === "Forbidden") {
+        return toast({
           title: "Check your credentials",
           description: "The password you have entered is incorrect",
           status: "error",
