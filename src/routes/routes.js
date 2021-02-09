@@ -1,5 +1,6 @@
 import Welcome from "../pages/Welcome";
 import NotFound from "../pages/NotFound";
+import Logout from "../components/Logout";
 import Navbar from "../components/Navbar";
 import Profile from "../components/Profile";
 import PostList from "../components/PostList";
@@ -46,18 +47,8 @@ const Routes = () => {
           <Welcome />
         </Private>
 
-        <Route
-          path="/logout"
-          exact
-          render={() => {
-            verification.logout();
-            <Redirect to="/welcome" />;
-          }}
-        />
-
-        <Route exact path="*">
-          <NotFound />
-        </Route>
+        <Route exact path="/logout" component={Logout} />
+        <Route exact path="*" component={NotFound} />
       </Switch>
     </Router>
   );

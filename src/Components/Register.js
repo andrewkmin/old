@@ -40,6 +40,9 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
     );
 
     if (!data.error) {
+      setIsSubmitting(false);
+      AuthContext.setAuthenticated(true);
+      _WebSocket.ping();
       toast({
         title: "Account created successfully",
         description: "You have successfully registered",
@@ -47,28 +50,27 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
         duration: 5000,
         isClosable: true,
       });
-      AuthContext.setAuthenticated(true);
+      return History.push("/");
+    } else {
       setIsSubmitting(false);
-      _WebSocket.ping();
-      History.push("/");
-    } else if (data.error === "Forbidden") {
-      toast({
-        title: "Forbidden",
-        description: "There's already an account with that email",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      setIsSubmitting(false);
-    } else if (data.error === "Invalid email") {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      setIsSubmitting(false);
+      if (data.error === "Forbidden") {
+        return toast({
+          title: "Forbidden",
+          description: "There's already an account with that email",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (data.error === "Invalid email") {
+        return toast({
+          title: "Invalid Email",
+          description: "Please enter a valid email",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+      }
     }
 
     return data;

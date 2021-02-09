@@ -54,7 +54,9 @@ const Login = ({ registrationOnOpen }) => {
         duration: 5000,
         isClosable: true,
       });
-    } else if (auth.error) {
+    } else {
+      AuthContext.setAuthenticated(false);
+      setIsSubmitting(false);
       if (auth.error === "No Accounts") {
         return toast({
           title: "No such account",
@@ -71,10 +73,15 @@ const Login = ({ registrationOnOpen }) => {
           duration: 5000,
           isClosable: true,
         });
+      } else {
+        return toast({
+          title: "There was an error",
+          description: auth.error,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
-
-      AuthContext.setAuthenticated(false);
-      setIsSubmitting(false);
     }
   };
 

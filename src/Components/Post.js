@@ -221,7 +221,11 @@ const Post = ({ data: post }) => {
         {post?.postData?.attachments?.length !== 0 &&
           post?.postData?.attachments?.map((attachment) => {
             return (
-              <Asyncoload key={attachment?.filename} src={attachment.url} />
+              <Asyncoload
+                loading="lazy"
+                key={attachment?.filename}
+                src={attachment.url}
+              />
             );
           })}
       </Box>
