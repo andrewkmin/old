@@ -23,7 +23,8 @@ import { MdEmail, MdLock } from "react-icons/md";
 import React, { useState, useContext } from "react";
 
 const Login = ({ registrationOnOpen }) => {
-  const toast = useToast();
+  const Toast = useToast();
+
   const History = useHistory();
   const DataContext = useContext(_DataContext);
   const AuthContext = useContext(_AuthContext);
@@ -47,7 +48,7 @@ const Login = ({ registrationOnOpen }) => {
       setIsSubmitting(false);
       _WebSocket.ping();
       History.push("/");
-      return toast({
+      return Toast({
         title: "Successfully logged in",
         description: "Welcome to Usocial",
         status: "success",
@@ -55,10 +56,10 @@ const Login = ({ registrationOnOpen }) => {
         isClosable: true,
       });
     } else {
-      AuthContext.setAuthenticated(false);
       setIsSubmitting(false);
+      AuthContext.setAuthenticated(false);
       if (auth.error === "No Accounts") {
-        return toast({
+        return Toast({
           title: "No such account",
           description: "There are no accounts associated with that email",
           status: "error",
@@ -66,7 +67,7 @@ const Login = ({ registrationOnOpen }) => {
           isClosable: true,
         });
       } else if (auth.error === "Forbidden") {
-        return toast({
+        return Toast({
           title: "Check your credentials",
           description: "The password you have entered is incorrect",
           status: "error",
@@ -74,7 +75,7 @@ const Login = ({ registrationOnOpen }) => {
           isClosable: true,
         });
       } else {
-        return toast({
+        return Toast({
           title: "There was an error",
           description: auth.error,
           status: "error",

@@ -1,6 +1,6 @@
 import { useContext } from "react";
+import { useLogout } from "../api/hooks";
 import { Redirect } from "react-router-dom";
-import { useLogout } from "../auth/verification";
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 
 import _DataContext from "../data/data.context";

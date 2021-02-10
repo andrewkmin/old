@@ -10,8 +10,8 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import PostList from "./PostList";
-import _axios from "../api/_axios";
 import CreatePost from "./CreatePost";
+import { useFetchUserData } from "../api/hooks";
 import { RiMessage2Fill } from "react-icons/ri";
 import verification from "../auth/verification.js";
 import React, { useEffect, useState } from "react";
@@ -22,28 +22,15 @@ import { BsPersonPlusFill, BsFillGearFill, BsMoon } from "react-icons/bs";
 const UserProfile = () => {
   const { accountId } = useParams();
   const [userData, setUserData] = useState({});
+  const { data, isFetched } = useFetchUserData(accountId);
   const [userStatus, setUserStatus] = useState("offline");
 
   useEffect(() => {
-    // fetchAccount.current();
-    const fetchAccount = async () => {
-      // For getting user data
-      const { data: _userData } = await _axios.get(
-        `/api/accounts/fetch/?accountId=${accountId}`
-      );
-      // For checking if the user is online
-      const { data: _userIsActive } = await _axios.get(
-        `/api/network/status/?accountId=${accountId}`
-      );
-      await verification.verify();
-
-      setUserData(_userData);
-      setUserStatus(_userIsActive.message);
-      return _userData;
-    };
-
-    fetchAccount();
-  }, [accountId]);
+    if (isFetched) {
+      setUserData(data.userData);
+      setUserStatus(data.status.message);
+    }
+  }, [data?.status, data?.userData, isFetched]);
 
   return (
     <Box>

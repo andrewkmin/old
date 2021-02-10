@@ -1,4 +1,5 @@
 import {
+  Input,
   Box,
   Flex,
   Center,
@@ -28,6 +29,7 @@ import {
   useToast,
   useColorModeValue,
   useDisclosure,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import Asyncoload from "asyncoload";
@@ -134,6 +136,28 @@ const Post = ({ data: post }) => {
     async sharePost() {
       // TODO: Implement post sharing
     },
+  };
+
+  const createComment = async (event) => {
+    event.preventDefault();
+    const PAYLOAD = {
+      comment: event.currentTarget.elements.comment.value,
+    };
+    const { data } = await _axios.post(
+      `/api/posts/comments/create/?postId=${post?.postData?._id}`,
+      PAYLOAD
+    );
+
+    if (!data.error) {
+      return Toast({
+        title: "There was an error while posting your comment",
+        duration: 3000,
+        status: "error",
+        isClosable: false,
+      });
+    }
+
+    return data;
   };
 
   // Setting the states
@@ -332,17 +356,46 @@ const Post = ({ data: post }) => {
         onClose={commentModalOnClose}
         isOpen={commentModalIsOpen}
         scrollBehavior="inside"
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Comments</ModalHeader>
           <ModalCloseButton _focus={false} />
           <ModalBody>
-            <CommentList
-              comments={post?.postData?.comments}
-              postdata={post?.postData}
-            />
+            <CommentList comments={post?.postData?.comments} />
           </ModalBody>
+
+          <ModalFooter justifyContent="center">
+            <Center>
+              <form
+                autoComplete="off"
+                onSubmit={(event) => createComment(event)}
+              >
+                <Flex>
+                  <Box me={1}>
+                    <Input
+                      placeholder="Comment something..."
+                      name="comment"
+                      type="text"
+                      w="full"
+                    />
+                  </Box>
+
+                  <Box ms={1}>
+                    <Button
+                      w="full"
+                      colorScheme="blue"
+                      _focus={false}
+                      type="submit"
+                    >
+                      Comment
+                    </Button>
+                  </Box>
+                </Flex>
+              </form>
+            </Center>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

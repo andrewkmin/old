@@ -1,49 +1,19 @@
 import Welcome from "../pages/Welcome";
 import NotFound from "../pages/NotFound";
 import Logout from "../components/Logout";
-import Navbar from "../components/Navbar";
-import Profile from "../components/Profile";
-import PostList from "../components/PostList";
+import Platform from "../pages/Platform";
 import Private from "../helpers/PrivateRoute";
-import Settings from "../components/Settings";
-import CreatePost from "../components/CreatePost";
-import Notifications from "../components/Notifications";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
-import verification from "../auth/verification";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const Routes = () => {
   return (
     <Router>
-      {/* Index Routes */}
-
       <Switch>
-        <Private path="/" exact>
-          <Navbar />
-
-          <Route path="/" exact>
-            <CreatePost />
-            <PostList />
-          </Route>
-
-          <Route path="/settings" exact>
-            <Settings />
-          </Route>
-
-          <Route path="/notifications" exact>
-            <Notifications />
-          </Route>
-
-          <Route path="/users/:accountId" exact>
-            <Profile />
-          </Route>
+        <Private path="/">
+          <Platform />
         </Private>
 
-        <Private swap exact path="/welcome">
+        <Private exact swap path="/welcome">
           <Welcome />
         </Private>
 
