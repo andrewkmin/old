@@ -1,6 +1,6 @@
 import React from "react";
 import Comment from "./Comment";
-import { Text, Box, Center, List, Divider, ListItem } from "@chakra-ui/react";
+import { Text, Box, Center, Stack } from "@chakra-ui/react";
 
 const CommentList = ({ comments }) => {
   return (
@@ -10,16 +10,11 @@ const CommentList = ({ comments }) => {
           <Text fontWeight="semibold">Be the first one to comment 🦓</Text>
         </Center>
       ) : (
-        <List spacing={5}>
+        <Stack direction="column" spacing={5}>
           {comments.map((comment) => {
-            return (
-              <ListItem key={comment.commentData._id}>
-                <Comment data={comment} />
-                <Divider />
-              </ListItem>
-            );
+            return <Comment key={comment.commentData._id} data={comment} />;
           })}
-        </List>
+        </Stack>
       )}
     </Box>
   );

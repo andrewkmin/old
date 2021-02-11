@@ -28,6 +28,8 @@ const LogoutComponent = () => {
           <Text fontWeight="bold" fontSize="xl">
             Logging you out
           </Text>
+        </Center>
+        <Center>
           <Spinner />
         </Center>
       </Box>
