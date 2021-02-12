@@ -10,7 +10,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import PostList from "./PostList";
-import CreatePost from "./CreatePost";
+import CreatePost from "./main/Create/index";
 import { useFetchUserData } from "../api/hooks";
 import { RiMessage2Fill } from "react-icons/ri";
 import verification from "../auth/verification.js";

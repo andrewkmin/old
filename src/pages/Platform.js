@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Route } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/main/Navbar/index";
 import Profile from "../components/Profile";
 import PostList from "../components/PostList";
 import Settings from "../components/Settings";
-import CreatePost from "../components/CreatePost";
+import CreatePost from "../components/main/Create/index";
 import Notifications from "../components/Notifications";
 
 import _WebSocket from "../utils/websocket";
@@ -19,20 +19,20 @@ const Platform = () => {
     <>
       <Navbar />
 
-      <Route path="/" exact>
+      <Route path="/">
         <CreatePost />
         <PostList />
       </Route>
 
-      <Route path="/settings" exact>
+      <Route path="/settings">
         <Settings />
       </Route>
 
-      <Route path="/notifications" exact>
+      <Route path="/notifications">
         <Notifications />
       </Route>
 
-      <Route path="/users/:accountId" exact>
+      <Route path="/users/:accountId">
         <Profile />
       </Route>
     </>

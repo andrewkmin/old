@@ -1,6 +1,7 @@
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import React, { useState, useContext } from "react";
-import { Stack, Divider, useToast } from "@chakra-ui/react";
+import { isMobile } from "react-device-detect";
+import { Stack, Divider, useToast, Center } from "@chakra-ui/react";
 
 import _axios from "../../../../api/_axios";
 import _AuthContext from "../../../../auth/auth.context";
@@ -81,12 +82,14 @@ const LoginForm = ({ registrationOnOpen }) => {
         handleLogin(event);
       }}
     >
-      <Stack p={7} spacing={3} boxSize={"sm"}>
+      <Stack p={5} spacing={3} boxSize={"sm"}>
         <EmailInput />
         <PasswordInput />
         <LoginButton isSubmitting={isSubmitting} />
 
-        <Divider />
+        <Center ps={isMobile ? 5 : null} pe={isMobile ? 5 : null}>
+          <Divider />
+        </Center>
         <CreateNewAccountModalTriggerButton
           registrationOnOpen={registrationOnOpen}
         />
