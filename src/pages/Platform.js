@@ -19,20 +19,20 @@ const Platform = () => {
     <>
       <Navbar />
 
-      <Route path="/">
+      <Route path="/" exact>
         <CreatePost />
         <PostList />
       </Route>
 
-      <Route path="/settings">
+      <Route path="/settings" exact>
         <Settings />
       </Route>
 
-      <Route path="/notifications">
+      <Route path="/notifications" exact>
         <Notifications />
       </Route>
 
-      <Route path="/users/:accountId">
+      <Route path="/users/:accountId" exact>
         <Profile />
       </Route>
     </>
