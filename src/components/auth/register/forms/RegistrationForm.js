@@ -62,28 +62,30 @@ const RegistrationForm = () => {
   };
 
   return (
-    <form
-      autoComplete={"off"}
-      encType={"multipart/form-data"}
-      onSubmit={(event) => {
-        event.preventDefault();
-        handleRegistration(event);
-      }}
-    >
-      <Stack mt={4} spacing={4}>
-        <Box>
-          <Flex>
-            <FirstNameInput />
-            <LastNameInput />
-          </Flex>
-        </Box>
+    <Box>
+      <form
+        autoComplete={"off"}
+        encType={"multipart/form-data"}
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleRegistration(event);
+        }}
+      >
+        <Stack mt={4} spacing={4}>
+          <Box>
+            <Flex>
+              <FirstNameInput />
+              <LastNameInput />
+            </Flex>
+          </Box>
 
-        <EmailInput />
-        <PasswordInput />
-        <AvatarInput />
-        <CreateAccountButton isSubmitting={isSubmitting} />
-      </Stack>
-    </form>
+          <EmailInput />
+          <PasswordInput />
+          <AvatarInput />
+          <CreateAccountButton isSubmitting={isSubmitting} />
+        </Stack>
+      </form>
+    </Box>
   );
 };
 

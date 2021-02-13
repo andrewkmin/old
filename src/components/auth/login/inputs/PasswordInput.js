@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdLock } from "react-icons/md";
-import { isMobile } from "react-device-detect";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const PasswordInput = () => {
@@ -18,7 +17,7 @@ const PasswordInput = () => {
   };
 
   return (
-    <FormControl ps={isMobile ? 5 : null} pe={isMobile ? 5 : null}>
+    <FormControl>
       <InputGroup>
         <InputLeftElement>
           <MdLock color="gray" />
@@ -34,7 +33,6 @@ const PasswordInput = () => {
         <InputRightElement>
           <IconButton
             variant={"ghost"}
-            _focus={false}
             aria-label={passVisible ? "Mask password" : "Reveal password"}
             icon={passVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
             onClick={() => toggleVisibility()}

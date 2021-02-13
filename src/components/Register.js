@@ -87,7 +87,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
         </ModalHeader>
         <ModalCloseButton
           _focusVisible={false}
-          _focus={false}
+          
           _focusWithin={false}
         />
         <ModalBody>
@@ -173,7 +173,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
 
               <Button
                 _focusVisible={false}
-                _focus={false}
+                
                 _focusWithin={false}
                 colorScheme="teal"
                 type="submit"

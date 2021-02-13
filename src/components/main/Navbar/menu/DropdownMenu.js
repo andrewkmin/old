@@ -19,7 +19,7 @@ const DropdownMenu = () => {
       <IconButton
         as={MenuButton}
         ms={2}
-        _focus={false}
+        
         isRound
         icon={
           <Center>

@@ -10,7 +10,7 @@ const AttachmentInput = () => {
     <Flex>
       <Button
         leftIcon={<IoMdImages color="green" />}
-        _focus={false}
+        
         variant={"outline"}
         w={"full"}
         onClick={() => {

@@ -65,7 +65,7 @@ const Navbar = () => {
         <IconButton
           as={NavLink}
           to={`/users/${userData._id}`}
-          _focus={false}
+          
           variant="ghost"
           isRound
           ps={1}
@@ -87,7 +87,7 @@ const Navbar = () => {
         <IconButton
           as={NavLink}
           to="/notifications"
-          _focus={false}
+          
           isRound
           ms={2}
           icon={<BsBellFill />}
@@ -97,7 +97,7 @@ const Navbar = () => {
           <IconButton
             as={MenuButton}
             ms={2}
-            _focus={false}
+            
             isRound
             icon={
               <Center>

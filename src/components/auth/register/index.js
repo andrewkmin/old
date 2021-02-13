@@ -1,31 +1,15 @@
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
-  ModalHeader,
-  Text,
-  ModalBody,
-  Flex,
-} from "@chakra-ui/react";
-import RegistrationForm from "./forms/RegistrationForm";
+import { Box, useDisclosure } from "@chakra-ui/react";
+import ModalTriggerButton from "./buttons/ModalTrigger";
+import RegistrationModal from "./modals/RegistrationModal";
 
-const Register = ({ registrationIsOpen, registrationOnClose }) => {
+const Register = () => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
   return (
-    <Modal onClose={registrationOnClose} isOpen={registrationIsOpen} isCentered>
-      <ModalOverlay />
-      <ModalContent m={2}>
-        <ModalHeader>
-          <Flex>
-            <Text fontWeight={"bold"}>Sign Up</Text>
-          </Flex>
-        </ModalHeader>
-        <ModalCloseButton _focus={false} />
-        <ModalBody>
-          <RegistrationForm />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    <Box w={"sm"}>
+      <ModalTriggerButton registrationOnOpen={onOpen} />
+      <RegistrationModal onClose={onClose} isOpen={isOpen} />
+    </Box>
   );
 };
 

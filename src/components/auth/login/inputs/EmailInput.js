@@ -5,11 +5,10 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import { MdEmail } from "react-icons/md";
-import { isMobile } from "react-device-detect";
 
 const EmailInput = () => {
   return (
-    <FormControl ps={isMobile ? 5 : null} pe={isMobile ? 5 : null}>
+    <FormControl>
       <InputGroup>
         <InputLeftElement>
           <MdEmail color={"gray"} />

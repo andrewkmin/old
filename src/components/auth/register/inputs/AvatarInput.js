@@ -19,7 +19,7 @@ const AvatarInput = () => {
       <FormLabel>Avatar (optional)</FormLabel>
       <InputGroup>
         <Button
-          _focus={false}
+          
           variant={"outline"}
           w={"full"}
           rightIcon={

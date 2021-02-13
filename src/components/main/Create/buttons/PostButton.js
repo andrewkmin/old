@@ -8,7 +8,7 @@ const PostButton = ({ createPostDisabled, submitting }) => {
         size={isMobile ? "sm" : "lg"}
         colorScheme={"blue"}
         disabled={createPostDisabled}
-        _focus={false}
+        
         isLoading={submitting}
         type={"submit"}
       >

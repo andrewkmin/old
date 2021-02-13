@@ -79,7 +79,7 @@ const UserProfile = () => {
                 <Button
                   leftIcon={<AiTwotoneEdit />}
                   colorScheme="gray"
-                  _focus={false}
+                  
                 >
                   Edit Profile
                 </Button>
@@ -91,7 +91,7 @@ const UserProfile = () => {
                   to="/settings"
                   leftIcon={<BsFillGearFill />}
                   colorScheme="gray"
-                  _focus={false}
+                  
                 >
                   Settings
                 </Button>
@@ -105,7 +105,7 @@ const UserProfile = () => {
                 <Button
                   leftIcon={<BsPersonPlusFill />}
                   colorScheme="green"
-                  _focus={false}
+                  
                 >
                   Add friend
                 </Button>
@@ -115,7 +115,7 @@ const UserProfile = () => {
                 <Button
                   leftIcon={<RiMessage2Fill />}
                   colorScheme="blue"
-                  _focus={false}
+                  
                 >
                   Message
                 </Button>

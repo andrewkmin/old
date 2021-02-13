@@ -182,7 +182,7 @@ const Settings = () => {
                 <Box mt={1}>
                   <Button
                     onClick={deleteAccountAlertOnOpen}
-                    _focus={false}
+                    
                     w="full"
                     colorScheme="red"
                     size="sm"
@@ -206,7 +206,7 @@ const Settings = () => {
 
         <AlertDialogContent>
           <AlertDialogHeader>Delete account?</AlertDialogHeader>
-          <AlertDialogCloseButton _focus={false} />
+          <AlertDialogCloseButton  />
           <AlertDialogBody>
             <Text fontWeight="semibold">
               Are you sure you want to delete your account and all of the
@@ -217,12 +217,12 @@ const Settings = () => {
             </Text>
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button _focus={false} onClick={deleteAccountAlertOnClose}>
+            <Button  onClick={deleteAccountAlertOnClose}>
               No
             </Button>
             <Button
               onClick={() => FormActions.deleteAccount()}
-              _focus={false}
+              
               colorScheme="red"
               ml={3}
             >

@@ -59,8 +59,8 @@ const Comment = ({ data: comment }) => {
         </Text>
 
         <Stack direction="row" spacing={2} mt={2} mb={3}>
-          <IconButton size="sm" icon={<BiHeart />} isRound _focus={false} />
-          <IconButton size="sm" icon={<BiReply />} isRound _focus={false} />
+          <IconButton size="sm" icon={<BiHeart />} isRound />
+          <IconButton size="sm" icon={<BiReply />} isRound />
 
           {comment.authorData._id === userData._id && (
             <IconButton
@@ -68,7 +68,6 @@ const Comment = ({ data: comment }) => {
               size="sm"
               icon={<BiTrash />}
               isRound
-              _focus={false}
             />
           )}
         </Stack>

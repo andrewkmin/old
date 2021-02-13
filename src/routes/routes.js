@@ -8,12 +8,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 const Routes = () => {
   return (
     <Router>
-      <Switch>
-        <Route component={Platform} path="/" />
-        <Route exact component={Welcome} path="/welcome" />
-        <Route exact component={Logout} path="/logout" />
-        <Route exact component={NotFound} path="*" />
-      </Switch>
+      <Route exact component={Platform} path="/" />
+      <Route exact component={Welcome} path="/welcome" />
+      <Route exact component={Logout} path="/logout" />
+      <Router exact component={NotFound} path="*" />
     </Router>
   );
 };

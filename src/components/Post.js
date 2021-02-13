@@ -206,7 +206,7 @@ const Post = ({ data: post }) => {
 
           <Center>
             <Menu>
-              <IconButton as={MenuButton} isRound _focus={false}>
+              <IconButton as={MenuButton} isRound >
                 <Center>
                   <FiMoreHorizontal />
                 </Center>
@@ -284,7 +284,7 @@ const Post = ({ data: post }) => {
                     PostActions.heartPost();
                   }
             }
-            _focus={false}
+            
           >
             {/* TODO: Implement hearted/unhearted states for both the text and the icon */}
             {hearted ? "Unheart" : "Heart"}
@@ -293,7 +293,7 @@ const Post = ({ data: post }) => {
             size="sm"
             leftIcon={<BiChat />}
             w="full"
-            _focus={false}
+            
             ms={1}
             onClick={commentModalOnOpen}
           >
@@ -303,7 +303,7 @@ const Post = ({ data: post }) => {
             size="sm"
             leftIcon={<BiShare />}
             w="full"
-            _focus={false}
+            
             ms={1}
             onClick={() => PostActions.sharePost()}
           >
@@ -336,11 +336,11 @@ const Post = ({ data: post }) => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button _focus={false} onClick={deletePostAlertOnClose}>
+              <Button  onClick={deletePostAlertOnClose}>
                 Cancel
               </Button>
               <Button
-                _focus={false}
+                
                 colorScheme="red"
                 onClick={() => PostActions.deletePost()}
                 ml={3}
@@ -361,7 +361,7 @@ const Post = ({ data: post }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Comments</ModalHeader>
-          <ModalCloseButton _focus={false} />
+          <ModalCloseButton  />
           <ModalBody>
             <CommentList comments={post?.postData?.comments} />
           </ModalBody>
@@ -386,7 +386,7 @@ const Post = ({ data: post }) => {
                     <Button
                       w="full"
                       colorScheme="blue"
-                      _focus={false}
+                      
                       type="submit"
                     >
                       Comment

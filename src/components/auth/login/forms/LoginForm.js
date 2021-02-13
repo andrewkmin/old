@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { isMobile } from "react-device-detect";
-import { Stack, Divider, useToast, Center } from "@chakra-ui/react";
+import { Stack, useToast, Box } from "@chakra-ui/react";
 
 import _axios from "../../../../api/_axios";
 import _AuthContext from "../../../../auth/auth.context";
@@ -10,9 +9,8 @@ import _DataContext from "../../../../data/data.context";
 import EmailInput from "../inputs/EmailInput";
 import LoginButton from "../buttons/LoginButton";
 import PasswordInput from "../inputs/PasswordInput";
-import CreateNewAccountModalTriggerButton from "../buttons/CreateNewAccountModalTriggerButton";
 
-const LoginForm = ({ registrationOnOpen }) => {
+const LoginForm = () => {
   const Toast = useToast();
   const History = useHistory();
   const DataContext = useContext(_DataContext);
@@ -75,26 +73,21 @@ const LoginForm = ({ registrationOnOpen }) => {
   };
 
   return (
-    <form
-      autoComplete={"off"}
-      onSubmit={(event) => {
-        event.preventDefault();
-        handleLogin(event);
-      }}
-    >
-      <Stack p={5} spacing={3} boxSize={"sm"}>
-        <EmailInput />
-        <PasswordInput />
-        <LoginButton isSubmitting={isSubmitting} />
-
-        <Center ps={isMobile ? 5 : null} pe={isMobile ? 5 : null}>
-          <Divider />
-        </Center>
-        <CreateNewAccountModalTriggerButton
-          registrationOnOpen={registrationOnOpen}
-        />
-      </Stack>
-    </form>
+    <Box w={"sm"}>
+      <form
+        autoComplete={"off"}
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleLogin(event);
+        }}
+      >
+        <Stack spacing={3}>
+          <EmailInput />
+          <PasswordInput />
+          <LoginButton isSubmitting={isSubmitting} />
+        </Stack>
+      </form>
+    </Box>
   );
 };
 
