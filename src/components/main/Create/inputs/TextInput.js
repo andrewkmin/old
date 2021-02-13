@@ -5,8 +5,9 @@ const TextInput = ({ handleInput }) => {
   return (
     <FormControl>
       <Input
+        borderRadius={"full"}
         size={isMobile ? "sm" : "lg"}
-        variant={"flushed"}
+        variant={"outline"}
         onChange={(event) => handleInput(event)}
         placeholder={"Write something..."}
         name={"text"}

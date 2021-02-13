@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { Route } from "react-router-dom";
-import Navbar from "../components/main/Navbar/index";
+
 import Profile from "../components/Profile";
 import PostList from "../components/PostList";
 import Settings from "../components/Settings";
-import CreatePost from "../components/main/Create/index";
+
+import Navbar from "../components/main/Navbar/index";
 import Notifications from "../components/Notifications";
+import CreatePost from "../components/main/Create/index";
 
 import _WebSocket from "../utils/websocket";
 

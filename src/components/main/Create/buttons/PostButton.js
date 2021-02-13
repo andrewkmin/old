@@ -5,10 +5,10 @@ const PostButton = ({ createPostDisabled, submitting }) => {
   return (
     <Center>
       <Button
+        borderRadius={"full"}
         size={isMobile ? "sm" : "lg"}
         colorScheme={"blue"}
         disabled={createPostDisabled}
-        
         isLoading={submitting}
         type={"submit"}
       >

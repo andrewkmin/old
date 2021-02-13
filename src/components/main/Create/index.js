@@ -73,7 +73,7 @@ const CreateForm = () => {
                 <UserAvatar />
               </Box>
               <Spacer />
-              <Box w={"full"} ms={5} me={5}>
+              <Box w={"full"} mx={1}>
                 <TextInput handleInput={handleInput} />
               </Box>
               <Spacer />

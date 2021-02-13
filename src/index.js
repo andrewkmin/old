@@ -11,6 +11,7 @@ import { ChakraProvider, ColorModeScript, Skeleton } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const Entry = () => {
+  const _QueryClient_ = new QueryClient();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [authenticated, setAuthenticated] = useState(false);
@@ -27,7 +28,7 @@ const Entry = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={_QueryClient_}>
       <AuthContext.Provider
         value={{ authenticated, loading, setAuthenticated, setLoading }}
       >
@@ -41,7 +42,7 @@ const Entry = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={Theme}>
       {/* This provides support for dark mode */}
       <ColorModeScript initialColorMode={Theme.config.initialColorMode} />
       <Entry />
