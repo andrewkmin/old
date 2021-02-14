@@ -17,7 +17,15 @@ const Renderer = ({
   ...props // Rest of the props
 }) => {
   // For detecting links
-  const linkRegex = new RegExp(/(https?:\/\/[^\s]+)/g);
+  const linkRegex = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  );
   // For detecting hashtags
   const hashtagRegex = new RegExp(/\B(#[a-zA-Z]+\b)(?!;)/);
   // For detecting user mentions
