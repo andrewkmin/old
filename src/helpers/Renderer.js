@@ -40,7 +40,12 @@ const Renderer = ({
         // If a link was detected and the detected array is not equal to null
         case text.match(linkRegex) !== null && text.match(linkRegex)[0]: {
           text = (
-            <ChakraLink href={text} target={"_blank"} key={nanoid()}>
+            <ChakraLink
+              href={text}
+              color={"blue"}
+              target={"_blank"}
+              key={nanoid()}
+            >
               {text}
             </ChakraLink>
           );
@@ -51,7 +56,9 @@ const Renderer = ({
           text.match(userMentionRegex)[0]: {
           text = (
             <Tag size={fontSize} colorScheme={"blue"} key={nanoid()}>
-              <Link color={"gray.800"}>{text}</Link>
+              <Link to={`/users/${text.replace("@", "")}`} color={"gray.800"}>
+                {text}
+              </Link>
             </Tag>
           );
           return text;
