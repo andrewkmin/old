@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Stack, useToast, Box } from "@chakra-ui/react";
 
-import _axios from "../../../../api/_axios";
-import _AuthContext from "../../../../auth/auth.context";
-import _DataContext from "../../../../data/data.context";
+import _axios from "../../../api/_axios";
+import _AuthContext from "../../../auth/auth.context";
+import _DataContext from "../../../data/data.context";
 
 import EmailInput from "../inputs/EmailInput";
 import LoginButton from "../buttons/LoginButton";
@@ -42,8 +42,11 @@ const LoginForm = () => {
       });
       return History.push("/");
     } else {
+      // Updating the states
       setIsSubmitting(false);
+      DataContext.setUserData({});
       AuthContext.setAuthenticated(false);
+
       if (auth.error === "No Accounts") {
         return Toast({
           title: "No such account",

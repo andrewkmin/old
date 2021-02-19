@@ -8,18 +8,21 @@ import {
   Center,
   Button,
   Badge,
+  Link,
 } from "@chakra-ui/react";
-import PostList from "./PostList";
-import CreatePost from "./main/Create/index";
-import { useFetchUserData } from "../api/hooks";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import { RiMessage2Fill } from "react-icons/ri";
-import verification from "../auth/verification.js";
-import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { AiOutlineMinusCircle, AiTwotoneEdit } from "react-icons/ai";
 import { BsPersonPlusFill, BsFillGearFill, BsMoon } from "react-icons/bs";
 
-const UserProfile = () => {
+import CreatePost from "./Create";
+import PostList from "./PostList";
+import { useFetchUserData } from "../api/hooks";
+import verification from "../auth/verification.js";
+
+const Profile = () => {
   const { accountId } = useParams();
   const [userData, setUserData] = useState({});
   const { data, isFetched } = useFetchUserData(accountId);
@@ -36,39 +39,52 @@ const UserProfile = () => {
     <Box>
       <Container>
         <Flex>
-          <Avatar
-            size="xl"
-            name={userData?.fullName}
-            src={userData?.pictureUrl}
-          >
-            <AvatarBadge
-              boxSize="1em"
-              bg={
-                userStatus === "active"
-                  ? "green.500"
-                  : userStatus === "dnd"
-                  ? "red.500"
-                  : userStatus === "idle"
-                  ? "yellow.500"
-                  : "gray.500"
-              }
+          <Link target={"_blank"} href={userData?.pictureUrl}>
+            <Avatar
+              size="xl"
+              name={userData?.fullName}
+              src={userData?.pictureUrl}
             >
-              <Center>
-                {userStatus === "dnd" && <AiOutlineMinusCircle size="1rem" />}
-                {userStatus === "idle" && <BsMoon size="1rem" />}
-              </Center>
-            </AvatarBadge>
-          </Avatar>
+              <AvatarBadge
+                boxSize="1em"
+                bg={
+                  userStatus === "active"
+                    ? "green.500"
+                    : userStatus === "dnd"
+                    ? "red.500"
+                    : userStatus === "idle"
+                    ? "yellow.500"
+                    : "gray.500"
+                }
+              >
+                <Center>
+                  {userStatus === "dnd" && <AiOutlineMinusCircle size="1rem" />}
+                  {userStatus === "idle" && <BsMoon size="1rem" />}
+                </Center>
+              </AvatarBadge>
+            </Avatar>
+          </Link>
 
           <Center>
-            <Text ms={5} fontWeight="semibold" fontSize="2xl">
-              {userData?.fullName}
-              {verification.id === userData?._id && (
-                <Badge ms={2} variant="outline" colorScheme="blue">
-                  Your Account
-                </Badge>
-              )}
-            </Text>
+            <Flex direction={"column"}>
+              <Text ms={5} fontWeight="semibold" fontSize="2xl">
+                {userData?.fullName}
+                {verification.id === userData?._id && (
+                  <Badge ms={2} variant="outline" colorScheme="blue">
+                    Your Account
+                  </Badge>
+                )}
+              </Text>
+              <Text
+                color={"gray.500"}
+                ms={5}
+                fontSize={"sm"}
+                fontWeight={"semibold"}
+              >
+                Account created at{" "}
+                {userData.datefield && format(userData.datefield, "LLLL dd y")}
+              </Text>
+            </Flex>
           </Center>
         </Flex>
 
@@ -76,11 +92,7 @@ const UserProfile = () => {
           <Center mt={5}>
             <Flex>
               <Box>
-                <Button
-                  leftIcon={<AiTwotoneEdit />}
-                  colorScheme="gray"
-                  
-                >
+                <Button leftIcon={<AiTwotoneEdit />} colorScheme="gray">
                   Edit Profile
                 </Button>
               </Box>
@@ -91,7 +103,6 @@ const UserProfile = () => {
                   to="/settings"
                   leftIcon={<BsFillGearFill />}
                   colorScheme="gray"
-                  
                 >
                   Settings
                 </Button>
@@ -102,21 +113,13 @@ const UserProfile = () => {
           <Center mt={5}>
             <Flex>
               <Box me={1}>
-                <Button
-                  leftIcon={<BsPersonPlusFill />}
-                  colorScheme="green"
-                  
-                >
+                <Button leftIcon={<BsPersonPlusFill />} colorScheme="green">
                   Add friend
                 </Button>
               </Box>
 
               <Box ms={1}>
-                <Button
-                  leftIcon={<RiMessage2Fill />}
-                  colorScheme="blue"
-                  
-                >
+                <Button leftIcon={<RiMessage2Fill />} colorScheme="blue">
                   Message
                 </Button>
               </Box>
@@ -133,4 +136,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default Profile;

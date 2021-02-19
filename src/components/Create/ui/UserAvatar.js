@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { isMobile } from "react-device-detect";
 import { Center, Avatar } from "@chakra-ui/react";
 
-import DataContext from "../../../../data/data.context";
+import DataContext from "../../../data/data.context";
 
 const UserAvatar = () => {
   const { userData } = useContext(DataContext);

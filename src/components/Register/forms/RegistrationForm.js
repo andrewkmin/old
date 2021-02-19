@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Stack, Flex, Box, useToast } from "@chakra-ui/react";
 
-import _axios from "../../../../api/_axios";
-import _AuthContext from "../../../../auth/auth.context";
+import _axios from "../../../api/_axios";
+import _AuthContext from "../../../auth/auth.context";
 
 import EmailInput from "../inputs/EmailInput";
 import AvatarInput from "../inputs/AvatarInput";

@@ -17,18 +17,19 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import _axios from "../api/_axios";
-import _WebSocket from "../utils/websocket";
 import { useHistory } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import _AuthContext from "../auth/auth.context";
 import { MdEmail, MdLock } from "react-icons/md";
 import React, { useState, useContext } from "react";
+
+import _axios from "../api/_axios";
+import _WebSocket from "../utils/websocket";
+import _AuthContext from "../auth/auth.context";
 
 const Register = ({ registrationIsOpen, registrationOnClose }) => {
   const toast = useToast();
   const History = useHistory();
-  const AuthContext = useContext(_AuthContext);
+  const { setAuthenticated } = useContext(_AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegistration = async (event) => {
@@ -41,7 +42,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
 
     if (!data.error) {
       setIsSubmitting(false);
-      AuthContext.setAuthenticated(true);
+      setAuthenticated(true);
       _WebSocket.ping();
       toast({
         title: "Account created successfully",
@@ -85,11 +86,7 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
             <Text fontWeight="bold">Sign Up</Text>
           </Flex>
         </ModalHeader>
-        <ModalCloseButton
-          _focusVisible={false}
-          
-          _focusWithin={false}
-        />
+        <ModalCloseButton _focusVisible={false} _focusWithin={false} />
         <ModalBody>
           <form
             autoComplete="off"
@@ -173,7 +170,6 @@ const Register = ({ registrationIsOpen, registrationOnClose }) => {
 
               <Button
                 _focusVisible={false}
-                
                 _focusWithin={false}
                 colorScheme="teal"
                 type="submit"

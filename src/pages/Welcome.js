@@ -1,5 +1,6 @@
 import { Center } from "@chakra-ui/react";
-import Auth from "../components/auth/index";
+
+import Auth from "../components/Auth";
 
 const Welcome = () => {
   return (

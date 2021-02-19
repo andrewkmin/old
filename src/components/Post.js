@@ -33,141 +33,62 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import Asyncoload from "asyncoload";
-import _axios from "../api/_axios";
-import CommentList from "./CommentList";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
-import _DataContext from "../data/data.context";
 import { BiChat, BiShare } from "react-icons/bi";
 import { FiMoreHorizontal } from "react-icons/fi";
-import verification from "../auth/verification.js";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import React, { useEffect, useState, useContext } from "react";
 
+import CommentList from "./CommentList";
+import DataContext from "../data/data.context";
+import verification from "../auth/verification.js";
+
 const Post = ({ data: post }) => {
   const Toast = useToast();
   const setData = useRef(() => {});
-  const DataContext = useContext(_DataContext);
-
+  const { userData } = useContext(DataContext);
   const {
     isOpen: commentModalIsOpen,
     onOpen: commentModalOnOpen,
     onClose: commentModalOnClose,
   } = useDisclosure();
-
   const {
     isOpen: deletePostAlertIsOpen,
     onOpen: deletePostAlertOnOpen,
     onClose: deletePostAlertOnClose,
   } = useDisclosure();
 
-  // Post parameter states
-  const [saved, setSaved] = useState(false);
-  const [hearted, setHearted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // Post states
+  const [states, updateState] = useState({
+    saved: false,
+    hearted: false,
+    hearting: false,
+  });
 
-  // An interface for interacting with post
-  const PostActions = {
-    async heartPost() {
-      setLoading(true);
-      const { data } = await _axios.put(
-        `/api/posts/heart/?postId=${post?.postData?._id}`
-      );
-
-      if (!data.error) {
-        setLoading(false);
-        setHearted(true);
-      } else {
-        setLoading(false);
-        Toast({
-          title: "Whoops, something bad happened!",
-          description: "There was an error while hearting the post",
-          isClosable: true,
-          duration: 3000,
-          status: "error",
-        });
-      }
-    },
-
-    async unheartPost() {
-      setLoading(true);
-      const { data } = await _axios.put(
-        `/api/posts/unheart/?postId=${post?.postData?._id}`
-      );
-
-      if (!data.error) {
-        setLoading(false);
-        setHearted(false);
-      } else {
-        setLoading(false);
-        Toast({
-          title: "Whoops, something bad happened!",
-          description: "There was an error while unhearting the post",
-          isClosable: true,
-          duration: 3000,
-          status: "error",
-        });
-      }
-    },
-
-    async deletePost() {
-      const postData = post?.postData;
-      const { data: responseData } = await _axios.delete(
-        `/api/posts/delete/?postId=${postData._id}`
-      );
-
-      if (!responseData.error) {
-        Toast({
-          title: "Post deleted",
-          duration: 1000,
-          isClosable: true,
-        });
-      } else {
-        Toast({
-          title: responseData.error.toString(),
-          duration: 1000,
-          isClosable: true,
-        });
-      }
-    },
-
-    async sharePost() {
-      // TODO: Implement post sharing
-    },
-  };
-
-  const createComment = async (event) => {
+  const CreateComment = async (event) => {
     event.preventDefault();
-    const PAYLOAD = {
-      comment: event.currentTarget.elements.comment.value,
+    const payload = {
+      comment: event.target.elements.comment,
     };
-    const { data } = await _axios.post(
-      `/api/posts/comments/create/?postId=${post?.postData?._id}`,
-      PAYLOAD
-    );
-
-    if (!data.error) {
-      return Toast({
-        title: "There was an error while posting your comment",
-        duration: 3000,
-        status: "error",
-        isClosable: false,
-      });
-    }
-
-    return data;
   };
+
+  const UnheartPost = () => {};
+  const DeletePost = () => {};
+  const UnsavePost = () => {};
+  const HeartPost = () => {};
+  const SavePost = () => {};
 
   // Setting the states
   setData.current = () => {
-    if (post?.postData?.hearts?.includes(DataContext.userData._id)) {
-      setHearted(true);
+    if (post?.postData?.hearts?.includes(userData?._id)) {
+      updateState({ hearted: true });
     }
 
-    if (post?.authorData?.saved?.includes(DataContext.userData._id)) {
-      setSaved(true);
+    if (post?.authorData?.saved?.includes(userData?._id)) {
+      updateState({ saved: true });
     }
   };
 
@@ -224,11 +145,16 @@ const Post = ({ data: post }) => {
                       Delete Post
                     </MenuItem>
                   )}
-                  <MenuItem fontWeight="semibold">
+                  <MenuItem
+                    onClick={() => {
+                      states.saved ? UnsavePost() : SavePost();
+                    }}
+                    fontWeight={"semibold"}
+                  >
                     <Box mr={1}>
-                      {saved ? <BsBookmarkFill /> : <BsBookmark />}
+                      {states.saved ? <BsBookmarkFill /> : <BsBookmark />}
                     </Box>
-                    {saved ? "Unsave post" : "Save post"}
+                    {states.saved ? "Unsave post" : "Save post"}
                   </MenuItem>
                 </MenuGroup>
               </MenuList>
@@ -269,24 +195,16 @@ const Post = ({ data: post }) => {
       <Box mb={1}>
         <Flex>
           <Button
-            isLoading={loading}
-            size="sm"
-            leftIcon={hearted ? <AiFillHeart /> : <AiOutlineHeart />}
-            colorScheme={hearted ? "red" : null}
-            w="full"
             me={1}
-            onClick={
-              hearted
-                ? () => {
-                    PostActions.unheartPost();
-                  }
-                : () => {
-                    PostActions.heartPost();
-                  }
-            }
+            w={"full"}
+            size={"sm"}
+            isLoading={states.hearting}
+            loadingText={states.hearted ? "Unhearting" : "Hearting"}
+            leftIcon={states.hearted ? <AiFillHeart /> : <AiOutlineHeart />}
+            colorScheme={states.hearted ? "red" : null}
+            onClick={states.hearted ? () => UnheartPost() : () => HeartPost()}
           >
-            {/* TODO: Implement hearted/unhearted states for both the text and the icon */}
-            {hearted ? "Unheart" : "Heart"}
+            {states.hearted ? "Unheart" : "Heart"}
           </Button>
           <Button
             size="sm"
@@ -302,7 +220,7 @@ const Post = ({ data: post }) => {
             leftIcon={<BiShare />}
             w="full"
             ms={1}
-            onClick={() => PostActions.sharePost()}
+            // onClick={() => { ... }}
           >
             Share
           </Button>
@@ -334,11 +252,7 @@ const Post = ({ data: post }) => {
 
             <AlertDialogFooter>
               <Button onClick={deletePostAlertOnClose}>Cancel</Button>
-              <Button
-                colorScheme="red"
-                onClick={() => PostActions.deletePost()}
-                ml={3}
-              >
+              <Button colorScheme="red" onClick={() => DeletePost()} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
@@ -364,7 +278,7 @@ const Post = ({ data: post }) => {
             <Center>
               <form
                 autoComplete="off"
-                onSubmit={(event) => createComment(event)}
+                onSubmit={(event) => CreateComment(event)}
               >
                 <Flex>
                   <Box me={1}>

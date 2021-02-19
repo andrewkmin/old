@@ -10,11 +10,11 @@ import {
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
-import _axios from "../../../api/_axios";
+import _axios from "../../api/_axios";
+import UserAvatar from "./ui/UserAvatar";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import AttachmentInput from "./inputs/AttachmentInput";
-import UserAvatar from "./ui/UserAvatar";
 
 const CreateForm = () => {
   const Toast = useToast();

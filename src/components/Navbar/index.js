@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import { BsBellFill } from "react-icons/bs";
 
 import DropdownMenu from "./menu/DropdownMenu";
-import _DataContext from "../../../data/data.context";
+import _DataContext from "../../data/data.context";
 
 const Navbar = () => {
   const { userData } = useContext(_DataContext);

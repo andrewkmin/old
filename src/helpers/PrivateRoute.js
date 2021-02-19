@@ -1,40 +1,22 @@
 import { useContext } from "react";
-import _AuthContext from "../auth/auth.context";
+import AuthContext from "../auth/auth.context";
 import { Redirect, Route } from "react-router-dom";
 
 const PrivateRoute = ({ children, swap, ...rest }) => {
-  const { authenticated } = useContext(_AuthContext);
+  const { authenticated } = useContext(AuthContext);
+
+  console.log(authenticated);
 
   return (
     <Route
       {...rest}
-      render={({ location }) => {
+      render={() => {
         if (authenticated) {
-          if (swap)
-            return (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: {
-                    from: location,
-                  },
-                }}
-              />
-            );
+          if (swap) return <Redirect to={"/"} />;
           else return children;
         } else {
           if (swap) return children;
-          else
-            return (
-              <Redirect
-                to={{
-                  pathname: "/welcome",
-                  state: {
-                    from: location,
-                  },
-                }}
-              />
-            );
+          else return <Redirect to={"/welcome"} />;
         }
       }}
     />

@@ -9,6 +9,11 @@ const theme = extendTheme({
         _focus: false,
       },
     },
+    Link: {
+      baseStyle: {
+        _focus: false,
+      },
+    },
   },
 });
 

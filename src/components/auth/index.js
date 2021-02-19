@@ -1,5 +1,5 @@
-import LoginForm from "./login/index";
-import RegistrationForm from "./register/index";
+import LoginForm from "../Login/index";
+import RegistrationForm from "../Register/index";
 import { Text, Center, Stack, Divider, Box } from "@chakra-ui/react";
 
 const Auth = () => {
