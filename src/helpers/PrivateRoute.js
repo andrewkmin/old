@@ -5,8 +5,6 @@ import { Redirect, Route } from "react-router-dom";
 const PrivateRoute = ({ children, swap, ...rest }) => {
   const { authenticated } = useContext(AuthContext);
 
-  console.log(authenticated);
-
   return (
     <Route
       {...rest}

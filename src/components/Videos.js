@@ -1,51 +1,45 @@
 import axios from "axios";
-import {
-  Box,
-  Center,
-  Container,
-  Spinner,
-  useToast,
-  Text,
-} from "@chakra-ui/react";
-import { BiVideo } from "react-icons/bi";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Box, Center, Container, Spinner, Text } from "@chakra-ui/react";
 
 const Videos = () => {
-  const Toast = useToast();
   const fetchVideos = useRef(() => {});
-  const [videos, setVideos] = useState();
-  const [fetching, setFetching] = useState(true);
-  const [errorIsThrown, setErrorIsThrown] = useState(false);
+  const [states, setState] = useState({
+    videos: [],
+    fetching: true,
+    error: {
+      isError: false,
+      reason: null,
+    },
+  });
 
   fetchVideos.current = async () => {
-    setFetching(true);
     try {
       const { data } = await axios.get(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&max_results=3`
       );
-      setVideos(data.list);
-      setFetching(false);
+      setState({ videos: [...states.videos, ...data.items], fetching: false });
+      return data;
     } catch (error) {
       console.error(error);
-      setFetching(false);
-      Toast({
-        title: "Your video quota has been exceeded",
-        duration: 5000,
-        isClosable: true,
-        status: "error",
+      setState({
+        fetching: false,
+        error: {
+          isError: true,
+          reason: error,
+        },
       });
-      setErrorIsThrown(true);
+      return error;
     }
   };
 
   useEffect(() => {
     fetchVideos.current();
-    window.onscroll = function (ev) {
+    window.onscroll = () => {
       if (
         window.innerHeight + Math.ceil(window.pageYOffset) >=
         document.body.offsetHeight
       ) {
-        // alert("you're at the bottom of the page");
         fetchVideos.current();
       }
     };
@@ -54,22 +48,21 @@ const Videos = () => {
   return (
     <Box>
       <Container>
-        <Center>
-          <BiVideo size="3rem" />
-        </Center>
-        {fetching ? (
+        {states.fetching ? (
           <Center>
             <Spinner color="blue.500" />
           </Center>
-        ) : errorIsThrown ? (
-          <Center>
-            <Text fontWeight="extrabold">
-              You have exceeded your video quota 😢
-            </Text>
-          </Center>
+        ) : states.error.isError ? (
+          <Box>
+            <Center>
+              <Text color={"gray"} fontWeight={"semibold"} fontSize={"lg"}>
+                Looks like you've exceeded your video quota 💔
+              </Text>
+            </Center>
+          </Box>
         ) : (
           <Box>
-            {videos?.map((video) => {
+            {states.videos?.map((video) => {
               return (
                 <Box
                   key={video?.etag}

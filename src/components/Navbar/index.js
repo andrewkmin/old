@@ -45,7 +45,6 @@ const Navbar = () => {
         <IconButton
           as={NavLink}
           to={`/users/${userData._id}`}
-          
           variant={"ghost"}
           isRound
           ps={1}
@@ -67,7 +66,6 @@ const Navbar = () => {
         <IconButton
           as={NavLink}
           to={"/notifications"}
-          
           isRound
           ms={2}
           icon={<BsBellFill />}
