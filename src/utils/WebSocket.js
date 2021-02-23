@@ -1,34 +1,20 @@
+const { REACT_APP_API_ENDPOINT } = process.env;
+
 class _WebSocket {
-  constructor() {
-    this.wss = new WebSocket(
-      `ws://${process.env.REACT_APP_API_ENDPOINT}/api/network`
-    );
-  }
-
-  open() {
-    const wss = this.wss;
-    wss.onopen = () => {
-      wss.send(JSON.stringify({ message: "ping" }));
-    };
-  }
-
-  message(message) {
-    const wss = this.wss;
-    if (this.active === true) {
-      wss.send(message);
-    }
-  }
+  #wss = new WebSocket(`ws://${REACT_APP_API_ENDPOINT}/api/network`);
 
   ping() {
-    const wss = this.wss;
-    wss.onopen = () => {
-      wss.send(JSON.stringify({ message: "ping" }));
+    this.#wss.onopen = () => {
+      return this.#wss.send(JSON.stringify({ message: "ping" }));
     };
+  }
+
+  message(m) {
+    return this.#wss.send(JSON.stringify(m));
   }
 
   close() {
-    const wss = this.wss;
-    wss.close();
+    return this.#wss.close();
   }
 }
 

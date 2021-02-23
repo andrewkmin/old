@@ -10,9 +10,18 @@ export const useLogout = () => {
   return useQuery("logout", Logout);
 };
 
-// TODO
 export const useAuth = () => {
-  const Authenticate = async () => {};
+  const Authenticate = async () => {
+    try {
+      const data = await _axios.get("/auth/verify");
+      if (data.hasOwnProperty("error")) return false;
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+  return useQuery("authenticate", Authenticate);
 };
 
 // For fetching user data

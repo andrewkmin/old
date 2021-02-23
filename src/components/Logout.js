@@ -1,24 +1,20 @@
-import { useContext, useEffect, useRef } from "react";
-import { useLogout } from "../api/hooks";
 import { Redirect } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 
+import { useLogout } from "../api/hooks";
 import DataContext from "../data/data.context";
-import AuthContext from "../auth/auth.context";
 
 const LogoutComponent = () => {
-  const logout = useRef(() => {});
-  const { setUserData } = useContext(DataContext);
+  const { setState } = useContext(DataContext);
   const { data, isFetched, isFetching } = useLogout();
-  const { setAuthenticated } = useContext(AuthContext);
-  logout.current = () => {
-    setUserData({});
-    setAuthenticated(false);
-  };
 
   useEffect(() => {
-    logout.current();
-  }, []);
+    setState({
+      userData: {},
+      authenticated: false,
+    });
+  }, [setState]);
 
   if (!isFetching) {
     if (isFetched) {

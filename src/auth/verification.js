@@ -5,19 +5,25 @@ import _axios from "../api/_axios";
 
 class Verify {
   constructor() {
-    this.id = "";
-    this.data = {};
+    this.id = null;
+    this.data = null;
   }
 
   async verify() {
-    const { data } = await _axios.get("/auth/verify");
-    if (data.error) {
-      this.id = "";
-      return false;
-    } else {
-      this.data = data;
-      this.id = data._id;
-      return true;
+    try {
+      const { data } = await _axios.get("/auth/verify");
+
+      if (!data.hasOwnProperty("error")) {
+        this.data = data;
+        this.id = data._id;
+        return true;
+      } else {
+        this.id = "";
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
     }
   }
 

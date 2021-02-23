@@ -1,8 +1,9 @@
+import React from "react";
 import {
-  BrowserRouter as Router,
-  Redirect,
   Route,
   Switch,
+  Redirect,
+  BrowserRouter as Router,
 } from "react-router-dom";
 
 import Home from "../pages/Home";
@@ -15,43 +16,47 @@ import Private from "../helpers/PrivateRoute";
 import Notifications from "../components/Notifications";
 import PlatformLayout from "../layouts/Platform.layout";
 
-const Routes = () => {
-  return (
-    <Router>
-      <Route
-        render={() => {
-          return (
-            <Private>
-              <PlatformLayout>
-                <Switch>
-                  <Route exact component={Home} path={"/"} />
-                  <Route exact component={Settings} path={"/settings"} />
-                  <Route exact component={Profile} path={"/users/:accountId"} />
-                  <Route
-                    exact
-                    component={Notifications}
-                    path={"/notifications"}
-                  />
-                  <Route exact component={Videos} path={"/videos"} />
-                  <Route exact path={"*"}>
-                    <Redirect to={"/"} from={"*"} />
-                  </Route>
-                </Switch>
-              </PlatformLayout>
-            </Private>
-          );
-        }}
-      />
-      <Route path={"/welcome"}>
-        <Private swap>
-          <Welcome />
-        </Private>
-      </Route>
-      <Route path={"/logout"}>
-        <Logout />
-      </Route>
-    </Router>
-  );
-};
-
-export default Routes;
+export default class Routes extends React.Component {
+  render() {
+    return (
+      <Router>
+        <Route
+          render={() => {
+            return (
+              <Private>
+                <PlatformLayout>
+                  <Switch>
+                    <Route exact component={Home} path={"/"} />
+                    <Route exact component={Settings} path={"/settings"} />
+                    <Route
+                      exact
+                      component={Profile}
+                      path={"/users/:accountId"}
+                    />
+                    <Route
+                      exact
+                      component={Notifications}
+                      path={"/notifications"}
+                    />
+                    <Route exact component={Videos} path={"/videos"} />
+                    <Route exact path={"*"}>
+                      <Redirect to={"/"} from={"*"} />
+                    </Route>
+                  </Switch>
+                </PlatformLayout>
+              </Private>
+            );
+          }}
+        />
+        <Route path={"/welcome"}>
+          <Private swap>
+            <Welcome />
+          </Private>
+        </Route>
+        <Route path={"/logout"}>
+          <Logout />
+        </Route>
+      </Router>
+    );
+  }
+}

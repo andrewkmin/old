@@ -1,3 +1,4 @@
+import "react-alice-carousel/lib/scss/alice-carousel.scss";
 import {
   Input,
   Box,
@@ -26,7 +27,6 @@ import {
   ModalCloseButton,
   Button,
   Divider,
-  useToast,
   useColorModeValue,
   useDisclosure,
   ModalFooter,
@@ -38,6 +38,7 @@ import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { BiChat, BiShare } from "react-icons/bi";
 import { FiMoreHorizontal } from "react-icons/fi";
+import AliceCarousel from "react-alice-carousel";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import React, { useEffect, useState, useContext } from "react";
@@ -47,7 +48,6 @@ import DataContext from "../data/data.context";
 import verification from "../auth/verification.js";
 
 const Post = ({ data: post }) => {
-  const Toast = useToast();
   const setData = useRef(() => {});
   const { userData } = useContext(DataContext);
   const {
@@ -70,9 +70,9 @@ const Post = ({ data: post }) => {
 
   const CreateComment = async (event) => {
     event.preventDefault();
-    const payload = {
-      comment: event.target.elements.comment,
-    };
+    // const payload = {
+    // comment: event.target.elements.comment.value,
+    // };
   };
 
   const UnheartPost = () => {};
@@ -168,16 +168,19 @@ const Post = ({ data: post }) => {
           {post?.postData?.text}
         </Text>
 
-        {post?.postData?.attachments?.length !== 0 &&
-          post?.postData?.attachments?.map((attachment) => {
-            return (
-              <Asyncoload
-                loading="lazy"
-                key={attachment?.filename}
-                src={attachment.url}
-              />
-            );
-          })}
+        {post?.postData?.attachments?.length !== 0 && (
+          <AliceCarousel name={post?.postData?._id}>
+            {post?.postData?.attachments?.map((attachment) => {
+              return (
+                <Asyncoload
+                  loading={"lazy"}
+                  key={attachment?.filename}
+                  src={attachment.url}
+                />
+              );
+            })}
+          </AliceCarousel>
+        )}
       </Box>
 
       <Box mb={1} mt={2}>
