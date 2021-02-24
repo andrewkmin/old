@@ -26,12 +26,13 @@ import {
   Avatar,
   Center,
 } from "@chakra-ui/react";
-import _axios from "../api/_axios";
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import _DataContext from "../data/data.context";
-import _AuthContext from "../auth/auth.context";
 import { MdEmail, MdLock } from "react-icons/md";
+
+import _axios from "../../api/_axios";
+import _DataContext from "../../data/data.context";
+import _AuthContext from "../../auth/auth.context";
 
 const Settings = () => {
   const Toast = useToast();
@@ -182,7 +183,6 @@ const Settings = () => {
                 <Box mt={1}>
                   <Button
                     onClick={deleteAccountAlertOnOpen}
-                    
                     w="full"
                     colorScheme="red"
                     size="sm"
@@ -206,7 +206,7 @@ const Settings = () => {
 
         <AlertDialogContent>
           <AlertDialogHeader>Delete account?</AlertDialogHeader>
-          <AlertDialogCloseButton  />
+          <AlertDialogCloseButton />
           <AlertDialogBody>
             <Text fontWeight="semibold">
               Are you sure you want to delete your account and all of the
@@ -217,12 +217,9 @@ const Settings = () => {
             </Text>
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button  onClick={deleteAccountAlertOnClose}>
-              No
-            </Button>
+            <Button onClick={deleteAccountAlertOnClose}>No</Button>
             <Button
               onClick={() => FormActions.deleteAccount()}
-              
               colorScheme="red"
               ml={3}
             >

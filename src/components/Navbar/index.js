@@ -13,7 +13,8 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { BsBellFill } from "react-icons/bs";
 
-import DropdownMenu from "./menu/DropdownMenu";
+import Tabs from "./Tabs/index";
+import DropdownMenu from "./Menu/DropdownMenu";
 import _DataContext from "../../data/data.context";
 
 const Navbar = () => {
@@ -38,6 +39,10 @@ const Navbar = () => {
           </NavLink>
         </Center>
       </Box>
+
+      <Spacer />
+
+      <Tabs />
 
       <Spacer />
 

@@ -57,6 +57,7 @@ class PlatformLayout extends React.Component {
           />
         </Helmet>
         <Navbar />
+
         {this.#children}
       </>
     );

@@ -11,7 +11,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { BsFillCaretDownFill, BsFillGearFill } from "react-icons/bs";
 
-import LogoutButton from "../buttons/LogoutButton";
+import LogoutButton from "../Buttons/LogoutButton";
 
 const DropdownMenu = () => {
   return (

@@ -7,13 +7,14 @@ import {
 } from "react-router-dom";
 
 import Home from "../pages/Home";
+import Logout from "../pages/Logout";
+import Videos from "../pages/Videos";
 import Welcome from "../pages/Welcome";
-import Videos from "../components/Videos";
-import Logout from "../components/Logout";
-import Profile from "../components/Profile";
-import Settings from "../components/Settings";
+import Profile from "../pages/Profile";
+import Settings from "../pages/Settings";
+import Notifications from "../pages/Notifications";
+
 import Private from "../helpers/PrivateRoute";
-import Notifications from "../components/Notifications";
 import PlatformLayout from "../layouts/Platform.layout";
 
 export default class Routes extends React.Component {

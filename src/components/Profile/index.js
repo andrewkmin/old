@@ -18,10 +18,10 @@ import { NavLink, useParams } from "react-router-dom";
 import { AiOutlineMinusCircle, AiTwotoneEdit } from "react-icons/ai";
 import { BsPersonPlusFill, BsFillGearFill, BsMoon } from "react-icons/bs";
 
-import CreatePost from "./Create";
-import PostList from "./PostList";
-import { useFetchUserData } from "../api/hooks";
-import verification from "../auth/verification.js";
+import PostList from "../PostList";
+import CreatePost from "../Create/index";
+import { useFetchUserData } from "../../api/hooks";
+import verification from "../../auth/verification.js";
 
 const Profile = () => {
   const { accountId } = useParams();
