@@ -40,7 +40,6 @@ export default class Entry extends React.Component {
           authenticated: isValid,
           userData: verification.getUserData(),
         });
-        console.log(this.state);
         return isValid;
       } catch (error) {
         this.setState({

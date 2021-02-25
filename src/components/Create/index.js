@@ -6,9 +6,10 @@ import {
   useToast,
   useColorModeValue,
   Spacer,
+  Stack,
+  Center,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 
 import _axios from "../../api/_axios";
 import UserAvatar from "./ui/UserAvatar";
@@ -61,35 +62,33 @@ const CreateForm = () => {
     >
       <Box m={2}>
         <Container
+          p={[2, 3]}
           boxShadow={"md"}
-          p={isMobile ? 2 : 5}
+          borderRadius={["md", "lg"]}
           bg={useColorModeValue("white.500", "gray.700")}
-          borderRadius={isMobile ? "md" : "lg"}
           borderColor={useColorModeValue("gray.300", "gray.800")}
         >
-          <Box>
-            <Flex>
-              <Box>
+          <Stack>
+            <Stack direction={"row"} spacing={2}>
+              <Center>
                 <UserAvatar />
-              </Box>
-              <Spacer />
-              <Box w={"full"} mx={1}>
+              </Center>
+
+              <Center w={"full"}>
                 <TextInput handleInput={handleInput} />
-              </Box>
-              <Spacer />
-              <Box>
+              </Center>
+
+              <Center>
                 <PostButton
                   submitting={submitting}
                   createPostDisabled={createPostDisabled}
                 />
-              </Box>
-            </Flex>
-          </Box>
+              </Center>
+            </Stack>
 
-          <Box>
-            <Divider mt={3} mb={3} />
+            <Divider />
             <AttachmentInput />
-          </Box>
+          </Stack>
         </Container>
       </Box>
     </form>

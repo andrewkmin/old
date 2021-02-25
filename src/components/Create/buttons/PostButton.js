@@ -1,12 +1,11 @@
-import { isMobile } from "react-device-detect";
 import { Button, Center } from "@chakra-ui/react";
 
 const PostButton = ({ createPostDisabled, submitting }) => {
   return (
     <Center>
       <Button
-        borderRadius={"full"}
-        size={isMobile ? "sm" : "lg"}
+        borderRadius={"xl"}
+        size={"md"}
         colorScheme={"blue"}
         disabled={createPostDisabled}
         isLoading={submitting}

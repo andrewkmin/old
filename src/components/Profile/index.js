@@ -7,8 +7,10 @@ import {
   AvatarBadge,
   Center,
   Button,
-  Badge,
   Link,
+  Stack,
+  Spinner,
+  Progress,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -48,7 +50,7 @@ const Profile = () => {
           <Flex>
             <Link target={"_blank"} href={userData?.pictureUrl}>
               <Avatar
-                size="xl"
+                size={"xl"}
                 name={userData?.fullName}
                 src={userData?.pictureUrl}
               >
@@ -76,18 +78,17 @@ const Profile = () => {
 
             <Center>
               <Flex direction={"column"}>
-                <Text ms={5} fontWeight="semibold" fontSize="2xl">
-                  {userData?.fullName}
-                  {verification.id === userData?._id && (
-                    <Badge ms={2} variant="outline" colorScheme="blue">
-                      Your Account
-                    </Badge>
-                  )}
-                </Text>
+                {!isFetched ? (
+                  <Progress size={"xs"} isIndeterminate />
+                ) : (
+                  <Text ms={5} fontWeight="semibold" fontSize={["lg", "2xl"]}>
+                    {userData?.fullName}
+                  </Text>
+                )}
                 <Text
                   color={"gray.500"}
                   ms={5}
-                  fontSize={"sm"}
+                  fontSize={["xs", "sm"]}
                   fontWeight={"semibold"}
                 >
                   Account created at{" "}
@@ -98,44 +99,50 @@ const Profile = () => {
             </Center>
           </Flex>
 
-          {verification?.id === userData?._id ? (
-            <Center mt={5}>
-              <Flex>
-                <Box>
-                  <Button leftIcon={<AiTwotoneEdit />} colorScheme="gray">
+          <Box mt={7}>
+            <Stack direction={["column", "row"]}>
+              {!isFetched ? (
+                <Progress size={"xs"} isIndeterminate />
+              ) : verification.id === userData._id ? (
+                <>
+                  <Button
+                    w={"full"}
+                    leftIcon={<AiTwotoneEdit />}
+                    colorScheme={"gray"}
+                  >
                     Edit Profile
                   </Button>
-                </Box>
 
-                <Box ms={2}>
                   <Button
+                    w={"full"}
                     as={NavLink}
-                    to="/settings"
+                    to={"/settings"}
                     leftIcon={<BsFillGearFill />}
-                    colorScheme="gray"
+                    colorScheme={"gray"}
                   >
                     Settings
                   </Button>
-                </Box>
-              </Flex>
-            </Center>
-          ) : (
-            <Center mt={5}>
-              <Flex>
-                <Box me={1}>
-                  <Button leftIcon={<BsPersonPlusFill />} colorScheme="green">
+                </>
+              ) : (
+                <>
+                  <Button
+                    w={"full"}
+                    leftIcon={<BsPersonPlusFill />}
+                    colorScheme={"green"}
+                  >
                     Add friend
                   </Button>
-                </Box>
-
-                <Box ms={1}>
-                  <Button leftIcon={<RiMessage2Fill />} colorScheme="blue">
+                  <Button
+                    w={"full"}
+                    leftIcon={<RiMessage2Fill />}
+                    colorScheme={"blue"}
+                  >
                     Message
                   </Button>
-                </Box>
-              </Flex>
-            </Center>
-          )}
+                </>
+              )}
+            </Stack>
+          </Box>
         </Container>
 
         <Container mt={10}>

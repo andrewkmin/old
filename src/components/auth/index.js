@@ -5,35 +5,17 @@ import RegistrationForm from "./Register/index";
 
 const Auth = () => {
   return (
-    <Box top={150} pos={"absolute"}>
+    <Box w={["sm"]} top={150} pos={"absolute"}>
       <Stack m={5}>
-        <Box>
-          <Center>
-            <Text fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>
-              Usocial
-            </Text>
-          </Center>
-        </Box>
+        <Center>
+          <Text fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>
+            Usocial
+          </Text>
+        </Center>
 
-        <Box>
-          <Center>
-            <LoginForm />
-          </Center>
-        </Box>
-
-        <Box>
-          <Center>
-            <Box w={"sm"}>
-              <Divider />
-            </Box>
-          </Center>
-        </Box>
-
-        <Box>
-          <Center>
-            <RegistrationForm />
-          </Center>
-        </Box>
+        <LoginForm />
+        <Divider />
+        <RegistrationForm />
       </Stack>
     </Box>
   );

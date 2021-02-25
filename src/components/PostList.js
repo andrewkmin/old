@@ -1,8 +1,9 @@
-import Post from "./Post";
-import _axios from "../api/_axios";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Container, Center, Text, Spinner } from "@chakra-ui/react";
+
+import Post from "./Post/index";
+import _axios from "../api/_axios";
 
 const PostList = () => {
   const { accountId } = useParams();
@@ -17,6 +18,10 @@ const PostList = () => {
     setPosts(data);
     setLoading(false);
     return data;
+  };
+
+  const handleRemovePost = (id) => {
+    setPosts((prev) => prev.filter((post) => post.postData._id !== id));
   };
 
   useEffect(() => {
@@ -40,7 +45,13 @@ const PostList = () => {
               </Center>
             ) : (
               posts.map((post) => {
-                return <Post key={post?.postData?._id} data={post} />;
+                return (
+                  <Post
+                    removeHandler={(postId) => handleRemovePost(postId)}
+                    key={post?.postData?._id}
+                    data={post}
+                  />
+                );
               })
             )}
           </Box>

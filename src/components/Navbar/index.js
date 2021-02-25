@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { BsBellFill } from "react-icons/bs";
 
-import Tabs from "./Tabs/index";
+// import Tabs from "./Tabs/index";
 import DropdownMenu from "./Menu/DropdownMenu";
 import _DataContext from "../../data/data.context";
 
@@ -39,10 +39,10 @@ const Navbar = () => {
           </NavLink>
         </Center>
       </Box>
-
+      {/* 
       <Spacer />
 
-      <Tabs />
+      <Tabs /> */}
 
       <Spacer />
 

@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { isMobile } from "react-device-detect";
 import { Center, Avatar } from "@chakra-ui/react";
 
 import DataContext from "../../../data/data.context";
@@ -9,7 +8,7 @@ const UserAvatar = () => {
   return (
     <Center>
       <Avatar
-        size={isMobile ? "sm" : "md"}
+        size={"md"}
         name={userData?.fullName}
         src={userData?.pictureUrl}
       />

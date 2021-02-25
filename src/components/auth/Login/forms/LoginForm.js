@@ -87,7 +87,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Box w={"sm"}>
+    <Box>
       <form
         autoComplete={"off"}
         onSubmit={(event) => {
@@ -95,7 +95,7 @@ const LoginForm = () => {
           handleLogin(event);
         }}
       >
-        <Stack spacing={3}>
+        <Stack px={[10, 0, 0]} spacing={3}>
           <EmailInput />
           <PasswordInput />
           <LoginButton isSubmitting={isSubmitting} />

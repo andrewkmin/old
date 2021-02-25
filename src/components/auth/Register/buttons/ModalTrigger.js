@@ -5,7 +5,6 @@ const CreateNewAccountModalTriggerButton = ({ registrationOnOpen }) => {
     <FormControl>
       <InputGroup>
         <Button
-          type={"button"}
           size={"md"}
           w={"full"}
           onClick={registrationOnOpen}

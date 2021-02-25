@@ -6,26 +6,18 @@ export default extendTheme({
   components: {
     Button: {
       baseStyle: {
-        _focus: {
-          outline: "none",
-        },
+        _focus: null,
       },
     },
     Link: {
       baseStyle: {
-        _focus: {
-          outline: "none",
-        },
+        _focus: null,
       },
     },
     Tabs: {
       baseStyle: {
         tab: {
-          _focus: {
-            boxShadow: {
-              outline: "none",
-            },
-          },
+          _focus: null,
         },
       },
     },

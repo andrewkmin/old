@@ -1,17 +1,19 @@
-import { isMobile } from "react-device-detect";
-import { FormControl, Input } from "@chakra-ui/react";
+import { Center, FormControl, Input } from "@chakra-ui/react";
 
 const TextInput = ({ handleInput }) => {
   return (
     <FormControl>
-      <Input
-        borderRadius={"full"}
-        size={isMobile ? "sm" : "lg"}
-        variant={"outline"}
-        onChange={(event) => handleInput(event)}
-        placeholder={"Write something..."}
-        name={"text"}
-      />
+      <Center>
+        <Input
+          borderRadius={"xl"}
+          variant={"outline"}
+          onChange={(event) => handleInput(event)}
+          placeholder={"Write something..."}
+          name={"text"}
+          size={"md"}
+          // w={"full"}
+        />
+      </Center>
     </FormControl>
   );
 };
