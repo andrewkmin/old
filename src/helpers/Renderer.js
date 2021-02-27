@@ -2,58 +2,33 @@ import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
 import { Tag, Text, Link as ChakraLink } from "@chakra-ui/react";
 
-/**
- * Usage:
- * ```js
- * <PostRenderer input="Hey guys I love color #red. Thanks @someUser for sharing" />
- * ```
- * @arugments {String} input, fontSize
- * @author Michael Grigoryan
- */
+// import Crawler from "./Crawler";
+import { Hashtag, Mention, URL } from "../utils/patterns";
 
-const Renderer = ({
-  text, // The input that will get parsed
-  fontSize = "md", // This props will also be set on all the tags to maintain consistency
-  ...props // Rest of the props
-}) => {
-  // For detecting links
-  const linkRegex = new RegExp(
-    "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
-  );
-  // For detecting hashtags
-  const hashtagRegex = new RegExp(/\B(#[a-zA-Z]+\b)(?!;)/);
-  // For detecting user mentions
-  const userMentionRegex = new RegExp(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i);
-
-  const RenderedPost = text
+const Renderer = ({ text = "", fontSize = "md", ...props }) => {
+  const Rendered = text
     // Splitting the text
     .split(" ")
     // Mapping each splitted string
     .map((text) => {
       switch (text) {
-        // If a link was detected and the detected array is not equal to null
-        case text.match(linkRegex) !== null && text.match(linkRegex)[0]: {
+        // HTTP URL
+        case text.match(URL) !== null && text.match(URL)[0]: {
           text = (
             <ChakraLink
               href={text}
-              color={"blue"}
-              target={"_blank"}
               key={nanoid()}
+              color={"blue.500"}
+              target={"_blank"}
+              rel={"noopener noreferrer"}
             >
               {text}
             </ChakraLink>
           );
           return text;
         }
-        // If a user mention was detected and the detected array is not equal to null
-        case text.match(userMentionRegex) !== null &&
-          text.match(userMentionRegex)[0]: {
+        // User mention
+        case text.match(Mention) !== null && text.match(Mention)[0]: {
           text = (
             <Tag size={fontSize} colorScheme={"blue"} key={nanoid()}>
               <Link to={`/users/${text.replace("@", "")}`} color={"gray.800"}>
@@ -63,8 +38,8 @@ const Renderer = ({
           );
           return text;
         }
-        // If a hashtag was detected and the detected array is not equal to null
-        case text.match(hashtagRegex) !== null && text.match(hashtagRegex)[0]: {
+        // Hashtag
+        case text.match(Hashtag) !== null && text.match(Hashtag)[0]: {
           text = (
             <Tag size={fontSize} colorScheme={"blue"} key={nanoid()}>
               <Link to={`/tags/${text.replace("#", "")}`} color={"gray.800"}>
@@ -74,8 +49,8 @@ const Renderer = ({
           );
           return text;
         }
+        // Just text
         default: {
-          // If it is a basic text
           return <span key={nanoid()}>{text}</span>;
         }
       }
@@ -86,7 +61,7 @@ const Renderer = ({
     // Wrapping inside of a text to provide flexible styling
     <Text fontSize={fontSize} {...props}>
       {/* Wrapping the RenderedPost inside of a text tag to maintain consistency */}
-      {RenderedPost}
+      {Rendered}
     </Text>
   );
 };

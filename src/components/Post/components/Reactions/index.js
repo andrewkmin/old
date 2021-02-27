@@ -2,27 +2,25 @@ import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
 const Reactions = ({ post }) => {
+  const numOfHearts = useRef(() => {});
   const [state, setState] = useState({
     hearts: {
-      fetched: post?.postData?.hearts?.length,
-      rendered: "",
+      number: post?.postData?.hearts?.length,
+      prefix: "",
     },
   });
 
-  const numOfHearts = useRef(() => {});
-
   numOfHearts.current = () => {
-    switch (state.hearts.fetched) {
-      case state.hearts.fetched > 1000: {
+    switch (state.hearts.number) {
+      case state.hearts.number > 1000 && state.hearts.number < 999999999: {
         return setState({
           hearts: {
-            rendered:
-              state.hearts.fetched.toString().substring(0, 1).toString() + "K",
+            prefix: "K",
           },
         });
       }
       default: {
-        return setState({ hearts: { rendered: state.hearts.fetched } });
+        return setState({ hearts: { number: state.hearts.number } });
       }
     }
   };
@@ -34,7 +32,11 @@ const Reactions = ({ post }) => {
   return (
     <Box my={2}>
       <Text fontSize={"sm"} fontWeight={"semibold"}>
-        {state.hearts.rendered} people reacted
+        {state.hearts.number !== 0 && (
+          <span>
+            {state.hearts.number} {state.hearts.prefix} people reacted
+          </span>
+        )}
       </Text>
     </Box>
   );

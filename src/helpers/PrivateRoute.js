@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import AuthContext from "../auth/auth.context";
+import DataContext from "../data/data.context";
 
 const PrivateRoute = ({ children, swap, ...rest }) => {
-  const { authenticated } = useContext(AuthContext);
+  const { authenticated } = useContext(DataContext);
 
   return (
     <Route

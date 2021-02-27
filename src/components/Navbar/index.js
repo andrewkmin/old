@@ -39,15 +39,12 @@ const Navbar = () => {
           </NavLink>
         </Center>
       </Box>
-      {/* 
-      <Spacer />
-
-      <Tabs /> */}
 
       <Spacer />
 
       <Box ms={1}>
         <IconButton
+          display={["none", "inline-flex"]}
           as={NavLink}
           to={`/users/${userData._id}`}
           variant={"ghost"}
@@ -69,6 +66,7 @@ const Navbar = () => {
         </IconButton>
 
         <IconButton
+          display={["none", "inline-list-item"]}
           as={NavLink}
           to={"/notifications"}
           isRound

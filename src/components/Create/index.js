@@ -2,10 +2,8 @@ import {
   Box,
   Container,
   Divider,
-  Flex,
   useToast,
   useColorModeValue,
-  Spacer,
   Stack,
   Center,
 } from "@chakra-ui/react";

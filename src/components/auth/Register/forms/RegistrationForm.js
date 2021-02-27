@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Stack, Flex, Box, useToast } from "@chakra-ui/react";
 
 import _axios from "../../../../api/_axios";
-import _AuthContext from "../../../../auth/auth.context";
+import DataContext from "../../../../data/data.context";
 
 import EmailInput from "../inputs/EmailInput";
 import AvatarInput from "../inputs/AvatarInput";
@@ -15,7 +15,7 @@ import CreateAccountButton from "../buttons/CreateAccountButton";
 const RegistrationForm = () => {
   const Toast = useToast();
   const History = useHistory();
-  const AuthContext = useContext(_AuthContext);
+  const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegistration = async (event) => {
@@ -28,7 +28,7 @@ const RegistrationForm = () => {
 
     if (!data.error) {
       setIsSubmitting(false);
-      AuthContext.setAuthenticated(true);
+      setState({ authenticated: true });
       Toast({
         title: "Account created successfully",
         description: "You have successfully registered",
@@ -39,6 +39,7 @@ const RegistrationForm = () => {
       return History.push("/");
     } else {
       setIsSubmitting(false);
+      setState({ authenticated: false });
       if (data.error === "Forbidden") {
         return Toast({
           title: "Forbidden",

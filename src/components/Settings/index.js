@@ -31,14 +31,12 @@ import { Redirect } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
 
 import _axios from "../../api/_axios";
-import _DataContext from "../../data/data.context";
-import _AuthContext from "../../auth/auth.context";
+import DataContext from "../../data/data.context";
 
 const Settings = () => {
   const Toast = useToast();
   const { toggleColorMode } = useColorMode();
-  const DataContext = useContext(_DataContext);
-  const AuthContext = useContext(_AuthContext);
+  const { setState, userData } = useContext(DataContext);
 
   const {
     isOpen: deleteAccountAlertIsOpen,
@@ -57,9 +55,8 @@ const Settings = () => {
           isClosable: true,
           status: "success",
         });
-        AuthContext.setAuthenticated(false);
-        DataContext.setUserData({});
-        <Redirect to="/logout" />;
+        setState({ authenticated: false, userData: {} });
+        return <Redirect to="/logout" />;
       } else {
         Toast({
           title: data.error,
@@ -93,12 +90,12 @@ const Settings = () => {
                 <Box mt={1}>
                   <Flex>
                     <Avatar
-                      src={DataContext.userData.pictureUrl}
-                      name={DataContext.userData.fullName}
+                      src={userData.pictureUrl}
+                      name={userData.fullName}
                     />
                     <Center>
                       <Text ms={2} fontWeight="bold">
-                        {DataContext.userData.fullName}
+                        {userData.fullName}
                       </Text>
                     </Center>
                   </Flex>
@@ -119,7 +116,7 @@ const Settings = () => {
                         required
                         name="email"
                         type="email"
-                        placeholder={DataContext.userData.email}
+                        placeholder={userData.email}
                       />
                     </InputGroup>
 
@@ -146,9 +143,7 @@ const Settings = () => {
 
                 <RadioGroup
                   name="privacy"
-                  defaultValue={
-                    DataContext.userData.isPrivate ? "private" : "public"
-                  }
+                  defaultValue={userData.isPrivate ? "private" : "public"}
                   mt={2}
                 >
                   <Stack direction="row">

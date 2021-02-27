@@ -10,8 +10,7 @@ const Middle = ({ post }) => {
     // Middle section
     <Box my={2}>
       {/* Rendering post text */}
-      <Renderer fontSize={"md"} text={post?.postData?.text} />
-
+      <Renderer fontSize={["lg", "md"]} text={post?.postData?.text} />
       {/* If attachment length is not equal to zero, then return a carousel with all of the attachments */}
       {post?.postData?.attachments?.length !== 0 && (
         // Carousel
