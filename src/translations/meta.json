@@ -1,0 +1,59 @@
+{
+  "title": {
+    "en": {
+      "translation": {
+        "Welcome to Usocial": "Welcome to Usocial"
+      }
+    },
+    "fr": {
+      "translation": {
+        "Welcome to Usocial": "Bienvenue sur Usocial"
+      }
+    },
+
+    "ru": {
+      "translation": {
+        "Welcome to Usocial": "Добро пожаловать в Usocial"
+      }
+    },
+    "am": {
+      "translation": {
+        "Welcome to Usocial": "Բարի գալուստ Usocial"
+      }
+    },
+
+    "de": {
+      "translation": {
+        "Welcome to Usocial": "Willkommen bei Usocial"
+      }
+    }
+  },
+
+  "description": {
+    "en": {
+      "translation": {
+        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial is a next-gen privacy oriented social media networking platform"
+      }
+    },
+    "fr": {
+      "translation": {
+        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial est une plate-forme de réseautage de médias sociaux de nouvelle génération axée sur la confidentialité"
+      }
+    },
+    "ru": {
+      "translation": {
+        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial - это социальная сетевая платформа нового поколения, ориентированная на конфиденциальность"
+      }
+    },
+    "am": {
+      "translation": {
+        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial- ը հաջորդ սերնդի գաղտնիությանն ուղղված սոցցանցային հարթակ է"
+      }
+    },
+    "de": {
+      "translation": {
+        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial ist eine datenschutzorientierte Social-Media-Netzwerkplattform der nächsten Generation"
+      }
+    }
+  }
+}
