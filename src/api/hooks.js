@@ -1,5 +1,6 @@
-import _axios from "./_axios";
 import { useQuery } from "react-query";
+
+import _axios from "./_axios";
 
 // For logging out
 export const useLogout = () => {
@@ -27,14 +28,66 @@ export const useAuth = () => {
 // For fetching user data
 export const useFetchUserData = (accountId) => {
   const FetchData = async () => {
-    const { data: _status } = await _axios.get(
-      `/api/network/status/?accountId=${accountId}`
+    const { data } = await _axios.get(
+      `/api/accounts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
     );
-    const { data: _data } = await _axios.get(
-      `/api/accounts/fetch/${accountId && `?accountId=${accountId}`}`
-    );
-    return { userData: _data, status: _status };
+    return data;
   };
 
   return useQuery("userData", FetchData);
+};
+
+// For fetching notifications
+export const useFetchNotifications = () => {
+  const FetchNotifications = async () => {
+    const { data } = await _axios.get("/api/notifications/fetch");
+    return data;
+  };
+  return useQuery("notifications", FetchNotifications, {
+    refetchInterval: 60 * 1 * 1000, // 1 minute
+  });
+};
+
+// For fetching posts
+export const useFetchPosts = (accountId) => {
+  const FetchPosts = async () => {
+    const { data } = await _axios.get(
+      `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
+    );
+    return data;
+  };
+  return useQuery("posts", FetchPosts);
+};
+
+// For fetching friendship status with an account
+export const useCheckFriendShip = (accountId) => {
+  const CheckFriendship = async () => {
+    const { data } = await _axios.get(
+      `/api/friends/check/?accountId=${accountId}`
+    );
+    return data;
+  };
+  return useQuery("friendshipStatus", CheckFriendship);
+};
+
+// For fetching user status
+export const useFetchUserStatus = (accountId) => {
+  const FetchUserStatus = async () => {
+    const { data } = await _axios.get(
+      `/api/network/status/?accountId=${accountId}`
+    );
+    return data;
+  };
+  return useQuery("userStatus", FetchUserStatus);
+};
+
+// For sending a heartbeat to the network api to indicate that current user is connected to the servers
+export const useSendHeartbeat = () => {
+  const SendHeartbeat = async () => {
+    const { data } = await _axios.get("/api/network/heartbeat");
+    return data;
+  };
+  return useQuery("heartbeat", SendHeartbeat, {
+    refetchInterval: 60 * 1 * 1000,
+  });
 };

@@ -1,54 +1,70 @@
 import {
-  Box,
-  Container,
-  List,
-  ListItem,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  Spinner,
   Text,
-  Divider,
-  ButtonGroup,
-  Button,
+  Center,
+  DrawerCloseButton,
+  Stack,
 } from "@chakra-ui/react";
-import _axios from "../../api/_axios";
-import React, { useState, useEffect, useRef } from "react";
 
-const Notifications = () => {
-  const fetchNotifications = useRef(() => {});
-  const [notifications, setNotifications] = useState([]);
+import Notification from "./Notification/index";
+import { useFetchNotifications } from "../../api/hooks";
 
-  fetchNotifications.current = async () => {
-    const { data } = await _axios.get("/api/notifications/fetch");
-    setNotifications(data);
-    return data;
-  };
-
-  useEffect(() => {
-    fetchNotifications.current();
-  }, []);
+const Notifications = ({ onClose, isOpen }) => {
+  const { data, isFetched, isError } = useFetchNotifications();
 
   return (
-    <Box>
-      <Container>
-        <Text fontSize="3xl">Notifications</Text>
-        <Divider />
-        <List mt={5}>
-          {notifications.length !== 0 ? (
-            notifications.map((notification) => {
-              return (
-                <ListItem key={notification._id}>
-                  <Text fontSize="md">{notification.fullName}</Text>
-                  <ButtonGroup variant="fill" spacing={2}>
-                    <Button colorScheme="green">Accept friend request</Button>
-                    <Button colorScheme="red">Decline friend request</Button>
-                  </ButtonGroup>
-                </ListItem>
-              );
-            })
-          ) : (
-            <Text fontSize="md">You don't have any notifications</Text>
-          )}
-        </List>
-      </Container>
-    </Box>
+    <Drawer
+      // size={["full", "xs"]}
+      placement={"right"}
+      onClose={onClose}
+      isOpen={isOpen}
+    >
+      <DrawerOverlay>
+        <DrawerContent>
+          <DrawerCloseButton
+            _focus={{
+              outline: "none",
+            }}
+          />
+          <DrawerHeader borderBottomWidth={"1px"}>Notifications</DrawerHeader>
+          <DrawerBody>
+            {!isFetched ? (
+              <Center>
+                <Spinner />
+              </Center>
+            ) : isError || data.error ? (
+              <Center>
+                <Text fontWeight={"semibold"} color={"red.500"}>
+                  There was an error
+                </Text>
+              </Center>
+            ) : data.length === 0 ? (
+              <Center>
+                <Text fontWeight={"bold"} fontSize={"md"}>
+                  You don't have any notifications yet
+                </Text>
+              </Center>
+            ) : (
+              <Stack spacing={4}>
+                {data.map((notification) => {
+                  return (
+                    <Notification
+                      key={notification?.notificationData?._id}
+                      data={notification}
+                    />
+                  );
+                })}
+              </Stack>
+            )}
+          </DrawerBody>
+        </DrawerContent>
+      </DrawerOverlay>
+    </Drawer>
   );
 };
 

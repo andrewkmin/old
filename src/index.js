@@ -11,7 +11,18 @@ import Theme from "./theme/index";
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider
+      client={
+        new QueryClient({
+          defaultOptions: {
+            queries: {
+              refetchOnWindowFocus: false,
+              refetchIntervalInBackground: true,
+            },
+          },
+        })
+      }
+    >
       <HelmetProvider>
         <ChakraProvider theme={Theme}>
           {/* This provides support for dark mode */}

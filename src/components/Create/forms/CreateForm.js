@@ -72,7 +72,10 @@ const CreateForm = () => {
           <Box m={2}>
             <Flex>
               <Center me={5}>
-                <Avatar name={userData?.fullName} src={userData?.pictureUrl} />
+                <Avatar
+                  name={`${userData?.firstName} ${userData?.lastName}`}
+                  src={userData?.avatar}
+                />
               </Center>
 
               <Center w={"full"}>

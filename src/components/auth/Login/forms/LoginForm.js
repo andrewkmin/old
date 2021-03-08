@@ -24,9 +24,9 @@ const LoginForm = () => {
     const { data: auth } = await _axios.post("/auth/login", PAYLOAD);
 
     // If authentication response suceeds
-    if (!auth.hasOwnProperty("error")) {
+    if (!auth?.error) {
       const { data: userData } = await _axios.get("/api/accounts/fetch");
-      if (!userData.hasOwnProperty("error")) {
+      if (!userData?.error) {
         setIsSubmitting(false);
         setState({
           userData: userData,
@@ -34,9 +34,8 @@ const LoginForm = () => {
         });
         Toast({
           title: "Successfully logged in",
-          description: "Welcome to Usocial",
           status: "success",
-          duration: 1000,
+          duration: 2000,
           isClosable: false,
         });
         return History.push("/");
@@ -46,8 +45,8 @@ const LoginForm = () => {
           title: "There was an error",
           description: auth.error,
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
         });
       }
     } else {
@@ -58,29 +57,34 @@ const LoginForm = () => {
         authenticated: false,
       });
 
-      if (auth.error === "No Accounts") {
+      if (auth?.code === "no_account".toUpperCase()) {
         return Toast({
           title: "No such account",
-          description: "There are no accounts associated with that email",
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
         });
-      } else if (auth.error === "Forbidden") {
+      } else if (auth?.code === "wrong_password".toUpperCase()) {
         return Toast({
-          title: "Check your credentials",
           description: "The password you have entered is incorrect",
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
+        });
+      } else if (auth?.code === "missing_fields".toUpperCase()) {
+        return Toast({
+          description: "There are missing fields",
+          status: "error",
+          duration: 2000,
+          isClosable: false,
         });
       } else {
         return Toast({
           title: "There was an error",
-          description: auth.error,
+          description: auth?.error,
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
         });
       }
     }
@@ -95,7 +99,7 @@ const LoginForm = () => {
           handleLogin(event);
         }}
       >
-        <Stack px={[10, 0, 0]} spacing={3}>
+        <Stack spacing={3}>
           <EmailInput />
           <PasswordInput />
           <LoginButton isSubmitting={isSubmitting} />

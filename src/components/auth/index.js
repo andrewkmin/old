@@ -5,19 +5,19 @@ import RegistrationForm from "./Register/index";
 
 const Auth = () => {
   return (
-    <Box w={["sm"]} top={150} pos={"absolute"}>
-      <Stack m={5}>
+    <Stack mx={[2, 5]} w={"sm"}>
+      <Box>
         <Center>
           <Text fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>
             Usocial
           </Text>
         </Center>
+      </Box>
 
-        <LoginForm />
-        <Divider />
-        <RegistrationForm />
-      </Stack>
-    </Box>
+      <LoginForm />
+      <Divider />
+      <RegistrationForm />
+    </Stack>
   );
 };
 

@@ -5,12 +5,14 @@ import DataContext from "../../../data/data.context";
 
 const UserAvatar = () => {
   const { userData } = useContext(DataContext);
+
   return (
     <Center>
       <Avatar
         size={"md"}
-        name={userData?.fullName}
-        src={userData?.pictureUrl}
+        boxShadow={"md"}
+        name={`${userData?.firstName} ${userData?.lastName}`}
+        src={userData?.avatar}
       />
     </Center>
   );

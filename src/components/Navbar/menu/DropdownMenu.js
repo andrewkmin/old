@@ -3,13 +3,13 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Box,
   Center,
   IconButton,
   MenuDivider,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { BsFillCaretDownFill, BsFillGearFill } from "react-icons/bs";
+import { RiSettingsLine } from "react-icons/ri";
+import { BsFillCaretDownFill } from "react-icons/bs";
 
 import LogoutButton from "../Buttons/LogoutButton";
 
@@ -27,21 +27,17 @@ const DropdownMenu = () => {
         }
       />
 
-      <MenuList mt={1}>
-        <MenuItem as={NavLink} to={"/settings"}>
-          <Box mr={"5px"}>
-            <BsFillGearFill />
-          </Box>
+      <MenuList mt={2} me={2}>
+        <MenuItem
+          icon={<RiSettingsLine fontSize={"20px"} />}
+          as={NavLink}
+          to={"/settings"}
+        >
           Settings
         </MenuItem>
 
         <MenuDivider />
 
-        {/* <Center p={2}>
-            <Button as={Link} to={"/logout"} colorScheme={"red"} w={"full"}>
-              Logout
-            </Button>
-          </Center> */}
         <LogoutButton />
       </MenuList>
     </Menu>

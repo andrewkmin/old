@@ -3,7 +3,7 @@ import { BiChat, BiShare } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Box, Button, Stack, useToast } from "@chakra-ui/react";
 
-import _axios from "../../../../api/_axios";
+import _axios from "../../../api/_axios";
 // import DataContext from "../../../../data/data.context";
 
 const Bottom = ({ post, states, setState }) => {

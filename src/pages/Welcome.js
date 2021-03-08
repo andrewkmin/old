@@ -1,11 +1,32 @@
-import { Center } from "@chakra-ui/react";
+import { sample } from "lodash";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Box, Center, Flex, Spacer, Text } from "@chakra-ui/react";
 
 import Auth from "../components/Auth/index";
 
 const Welcome = () => {
+  const [welcomeText, setWelcomeText] = useState("");
+
+  useEffect(() => {
+    const quotes = [
+      "Usocial is a next-gen social network that aims to create a more protected web 🔒",
+      "Usocial stands for -> You socialize 🤝",
+      "Usocial has privacy baked-in 🧁",
+    ];
+
+    setImmediate(() => {
+      setWelcomeText(sample(quotes));
+    });
+
+    setInterval(() => {
+      setWelcomeText(sample(quotes));
+    }, 5000);
+  }, []);
+
   return (
-    <Center>
+    <>
       <Helmet>
         {/* Main Meta Tags */}
         <title>Welcome to Usocial</title>
@@ -44,8 +65,46 @@ const Welcome = () => {
           content="Usocial is a next-gen privacy oriented social media networking platform."
         />
       </Helmet>
-      <Auth />
-    </Center>
+      <Box>
+        <Flex display={["none", "none", "flex"]}>
+          <Box w={[null, "full"]} h={"100vh"} bg={"teal.400"}>
+            <Center>
+              <Text
+                mt={[null, null, "80", "96"]}
+                px={10}
+                color={"white"}
+                fontWeight={"bold"}
+                fontSize={"xl"}
+              >
+                <motion.span
+                  animate={{
+                    opacity: [0, 1],
+                  }}
+                >
+                  {welcomeText}
+                </motion.span>
+              </Text>
+            </Center>
+          </Box>
+
+          <Spacer />
+
+          <Box h={"100vh"} w={[null, "full"]}>
+            <Center>
+              <Box mt={[null, null, "44", "56"]}>
+                <Auth />
+              </Box>
+            </Center>
+          </Box>
+        </Flex>
+
+        <Box pt={"40"} display={["block", "block", "none"]}>
+          <Center>
+            <Auth />
+          </Center>
+        </Box>
+      </Box>
+    </>
   );
 };
 

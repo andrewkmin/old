@@ -17,6 +17,7 @@ const PasswordInput = () => {
         </InputLeftElement>
         <Input
           required
+          minLength={8}
           type={"password"}
           name={"password"}
           placeholder={"Password"}

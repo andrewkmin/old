@@ -22,18 +22,19 @@ const PasswordInput = () => {
         <InputLeftElement>
           <MdLock color="gray" />
         </InputLeftElement>
+
         <Input
           placeholder={"Password"}
           size={"md"}
-          min={8}
+          minLength={8}
           name={"password"}
           type={passVisible ? "text" : "password"}
           required
         />
+
         <InputRightElement>
           <IconButton
             variant={"ghost"}
-            aria-label={passVisible ? "Mask password" : "Reveal password"}
             icon={passVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
             onClick={() => toggleVisibility()}
           />

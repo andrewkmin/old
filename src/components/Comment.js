@@ -23,8 +23,8 @@ const Comment = ({ data: comment }) => {
       <Flex>
         <Avatar
           loading="lazy"
-          name={comment.authorData.fullName}
-          src={comment.authorData.pictureUrl}
+          name={`${comment.authorData.firstName} ${comment.authorData.lastName}`}
+          src={comment.authorData.avatar}
         />
 
         <Center>
@@ -36,7 +36,7 @@ const Comment = ({ data: comment }) => {
                     fontWeight="semibold"
                     color={useColorModeValue("blue.500", "blue.200")}
                   >
-                    {comment.authorData.fullName}
+                    {`${comment.authorData.firstName} ${comment.authorData.lastName}`}
                   </Text>
                 </Link>
                 <Text fontSize="xs" color="gray.500">

@@ -6,7 +6,7 @@ const Register = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
-    <Box px={[10, 0, 0]}>
+    <Box>
       <ModalTriggerButton registrationOnOpen={onOpen} />
       <RegistrationModal onClose={onClose} isOpen={isOpen} />
     </Box>

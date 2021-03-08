@@ -13,13 +13,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
-import _axios from "../../../../api/_axios";
-import verification from "../../../../auth/verification";
+import _axios from "../../../api/_axios";
+import verification from "../../../auth/verification";
 
 const Top = ({ states, setState, post, removeHandler }) => {
   const Toast = useToast();
@@ -87,7 +85,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
             <Flex>
               {/* Author Image */}
               <Link to={`/users/${post?.authorData?._id}`}>
-                <Avatar src={post?.authorData?.pictureUrl} />
+                <Avatar src={post?.authorData?.avatar} />
               </Link>
 
               {/* Author name */}
@@ -96,7 +94,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
                   {/* Link to user's profile */}
                   <Link to={`/users/${post?.authorData?._id}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
-                      {post?.authorData?.fullName}
+                      {`${post?.authorData?.firstName} ${post?.authorData?.lastName}`}
                     </Text>
                   </Link>
 
@@ -131,10 +129,11 @@ const Top = ({ states, setState, post, removeHandler }) => {
               {/* If post author's id is the same as the current user's id show delete post button */}
               {post?.postData?.authorId === verification.id && (
                 // For deleting the post
-                <MenuItem fontWeight="semibold" onClick={() => deletePost()}>
-                  <Box mr={1}>
-                    <FaTrash color="red" />
-                  </Box>
+                <MenuItem
+                  // icon={<FaTimes color={"red"} />}
+                  fontWeight="semibold"
+                  onClick={() => deletePost()}
+                >
                   Delete Post
                 </MenuItem>
               )}
@@ -144,9 +143,9 @@ const Top = ({ states, setState, post, removeHandler }) => {
                 onClick={states.saved ? () => unsavePost() : () => savePost()}
                 fontWeight={"semibold"}
               >
-                <Box mr={1}>
+                {/* <Box mr={1}>
                   {states.saved ? <BsBookmarkFill /> : <BsBookmark />}
-                </Box>
+                </Box> */}
                 {states.saved ? "Unsave post" : "Save post"}
               </MenuItem>
             </MenuList>

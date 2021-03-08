@@ -1,7 +1,8 @@
 import axios from "axios";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const instance = axios.create({
-  baseURL: "http://" + process.env.REACT_APP_API_ENDPOINT,
+  baseURL: "https://" + REACT_APP_API_ENDPOINT,
   withCredentials: true,
 });
 

@@ -30,23 +30,27 @@ export default class Entry extends React.Component {
     }
   }
 
+  async checkValidity() {
+    const isValid = await this.checkUserIsValid();
+    return this.setState({
+      loading: false,
+      authenticated: isValid,
+      userData: verification.getUserData(),
+    });
+  }
+
   async componentDidMount() {
     try {
-      const isValid = await this.checkUserIsValid();
-      this.setState({
-        loading: false,
-        authenticated: isValid,
-        userData: verification.getUserData(),
-      });
-      return isValid;
+      await this.checkValidity();
+      setInterval(async () => {
+        await this.checkValidity();
+      }, 60 * 5 * 1000);
     } catch (error) {
-      this.setState({
+      return this.setState({
         userData: {},
         loading: false,
         authenticated: false,
       });
-      console.error(error);
-      return error;
     }
   }
 

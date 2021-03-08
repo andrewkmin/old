@@ -7,6 +7,7 @@ const AttachmentInput = () => {
   const [attachmentText, setAttachmentText] = useState("Photo/Video");
   return (
     <Button
+      boxShadow={"sm"}
       leftIcon={<IoMdImages color="green" />}
       variant={"outline"}
       w={"full"}

@@ -27,14 +27,15 @@ const RegistrationForm = () => {
     );
 
     if (!data.error) {
+      const { data: userData } = await _axios.get("/api/accounts/fetch");
       setIsSubmitting(false);
-      setState({ authenticated: true });
+      setState({ authenticated: true, userData });
       Toast({
         title: "Account created successfully",
         description: "You have successfully registered",
         status: "success",
-        duration: 5000,
-        isClosable: true,
+        duration: 2000,
+        isClosable: false,
       });
       return History.push("/");
     } else {
@@ -42,19 +43,17 @@ const RegistrationForm = () => {
       setState({ authenticated: false });
       if (data.error === "Forbidden") {
         return Toast({
-          title: "Forbidden",
-          description: "There's already an account with that email",
+          title: "There's already an account with that email 😲",
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
         });
       } else if (data.error === "Invalid email") {
         return Toast({
-          title: "Invalid Email",
           description: "Please enter a valid email",
           status: "error",
-          duration: 5000,
-          isClosable: true,
+          duration: 2000,
+          isClosable: false,
         });
       } else {
         return data;

@@ -5,6 +5,7 @@ const TextInput = ({ handleInput }) => {
     <FormControl>
       <Center>
         <Input
+          boxShadow={"sm"}
           borderRadius={"xl"}
           variant={"outline"}
           onChange={(event) => handleInput(event)}

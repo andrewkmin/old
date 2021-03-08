@@ -8,17 +8,31 @@ import {
   useColorModeValue,
   IconButton,
   Avatar,
+  useDisclosure,
+  Portal,
+  Stack,
 } from "@chakra-ui/react";
+import { filter } from "lodash";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { BsBellFill } from "react-icons/bs";
+import { SiGooglemessages } from "react-icons/si";
+import { RiNotification3Fill } from "react-icons/ri";
 
-// import Tabs from "./Tabs/index";
+import Notifications from "../Notifications";
 import DropdownMenu from "./Menu/DropdownMenu";
 import _DataContext from "../../data/data.context";
 
 const Navbar = () => {
   const { userData } = useContext(_DataContext);
+  const unreadNotifications = filter(userData.notifications, (notification) => {
+    return !notification.seen;
+  });
+
+  const {
+    onOpen: notifDrawerOnOpen,
+    onClose: notifDrawerOnClose,
+    isOpen: notifDrawerIsOpen,
+  } = useDisclosure();
 
   return (
     <Flex
@@ -32,6 +46,7 @@ const Navbar = () => {
       top={0}
       p={2}
     >
+      {/* Logo */}
       <Box me={1}>
         <Center>
           <NavLink to="/">
@@ -43,38 +58,57 @@ const Navbar = () => {
       <Spacer />
 
       <Box ms={1}>
-        <IconButton
-          display={["none", "inline-flex"]}
-          as={NavLink}
-          to={`/users/${userData._id}`}
-          variant={"ghost"}
-          isRound
-          ps={1}
-          pe={3}
-          pt={2}
-          pb={2}
-        >
-          <Flex>
-            <Box>
-              <Avatar size={"sm"} src={userData?.pictureUrl} />
-            </Box>
+        <Stack direction={"row"}>
+          {/* Current Account */}
+          <IconButton
+            display={["none", "inline-flex"]}
+            as={NavLink}
+            to={`/users/${userData?._id}`}
+            variant={"ghost"}
+            isRound
+            ps={1}
+            pe={3}
+            pt={2}
+            pb={2}
+          >
+            <Flex>
+              <Box>
+                {/* User avatar */}
+                <Avatar size={"sm"} src={userData?.avatar} />
+              </Box>
 
-            <Center ms={1} as={Box}>
-              <Text fontWeight={"bold"}>{userData?.firstName}</Text>
-            </Center>
-          </Flex>
-        </IconButton>
+              {/* First name */}
+              <Center ms={1} as={Box}>
+                <Text fontWeight={"bold"}>{userData?.firstName}</Text>
+              </Center>
+            </Flex>
+          </IconButton>
 
-        <IconButton
-          display={["none", "inline-list-item"]}
-          as={NavLink}
-          to={"/notifications"}
-          isRound
-          ms={2}
-          icon={<BsBellFill />}
-        />
+          {/* Notification drawer trigger */}
+          <IconButton
+            display={["none", "inline-list-item"]}
+            isRound
+            onClick={notifDrawerOnOpen}
+            icon={
+              <RiNotification3Fill
+                color={unreadNotifications.length === 0 ? null : "red.400"}
+              />
+            }
+          />
 
-        <DropdownMenu />
+          <IconButton isRound icon={<SiGooglemessages />} />
+
+          {/* Notification drawer from the right */}
+          <Portal>
+            <Notifications
+              onClose={notifDrawerOnClose}
+              isOpen={notifDrawerIsOpen}
+            />
+          </Portal>
+
+          {/* Dropdown menu for other things */}
+          <DropdownMenu />
+        </Stack>
       </Box>
     </Flex>
   );
