@@ -70,8 +70,8 @@ const PlatformLayout = ({ children }) => {
           content="Usocial is a next-gen privacy oriented social media networking platform."
         />
       </Helmet>
-      <Navbar />
 
+      <Navbar />
       {children}
     </>
   );

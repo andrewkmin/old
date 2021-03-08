@@ -6,16 +6,18 @@ import CreatePost from "../components/Create/index";
 
 const Home = () => {
   return (
-    <Box>
+    <>
       <Helmet>
         <title>Usocial</title>
       </Helmet>
 
       <Box>
-        <CreatePost />
-        <PostList />
+        <Box>
+          <CreatePost />
+          <PostList />
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

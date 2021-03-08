@@ -1,29 +1,26 @@
 import { sample } from "lodash";
+import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Box, Center, Flex, Spacer, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Box, Center, Flex, Link, Spacer, Stack, Text } from "@chakra-ui/react";
 
 import Auth from "../components/Auth/index";
 
+const quotes = [
+  "Usocial has privacy baked-in 🧁",
+  "Usocial has your data covered 🔒",
+  "Usocial is an extraordinary social network 🌠",
+];
+
 const Welcome = () => {
-  const [welcomeText, setWelcomeText] = useState("");
+  const [welcomeText, setWelcomeText] = useState(sample(quotes));
 
-  useEffect(() => {
-    const quotes = [
-      "Usocial is a next-gen social network that aims to create a more protected web 🔒",
-      "Usocial stands for -> You socialize 🤝",
-      "Usocial has privacy baked-in 🧁",
-    ];
-
-    setImmediate(() => {
-      setWelcomeText(sample(quotes));
-    });
-
+  useEffect(() =>
     setInterval(() => {
       setWelcomeText(sample(quotes));
-    }, 5000);
-  }, []);
+    }, 10000)
+  );
 
   return (
     <>
@@ -65,6 +62,7 @@ const Welcome = () => {
           content="Usocial is a next-gen privacy oriented social media networking platform."
         />
       </Helmet>
+
       <Box>
         <Flex display={["none", "none", "flex"]}>
           <Box w={[null, "full"]} h={"100vh"} bg={"teal.400"}>
@@ -74,7 +72,7 @@ const Welcome = () => {
                 px={10}
                 color={"white"}
                 fontWeight={"bold"}
-                fontSize={"xl"}
+                fontSize={[null, null, "xl"]}
               >
                 <motion.span
                   animate={{
@@ -89,11 +87,25 @@ const Welcome = () => {
 
           <Spacer />
 
-          <Box h={"100vh"} w={[null, "full"]}>
+          <Box h={"100vh"} w={[null, null, "full"]}>
             <Center>
               <Box mt={[null, null, "44", "56"]}>
                 <Auth />
               </Box>
+            </Center>
+
+            <Center ms={2} pe={3} pb={3} pos={"absolute"} right={0} bottom={0}>
+              <Stack color={"gray.400"} direction={"row"}>
+                <Link fontSize={"sm"}>Privacy Policy</Link>
+                <Text fontSize={"sm"}>•</Text>
+                <Link fontSize={"sm"}>Terms of Service</Link>
+                <Text fontSize={"sm"}>•</Text>
+                <Link fontSize={"sm"}>More</Link>
+                <Text fontSize={"sm"}>•</Text>
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  &copy; Usocial {format(Date.now(), "yyyy")}
+                </Text>
+              </Stack>
             </Center>
           </Box>
         </Flex>

@@ -46,6 +46,7 @@ const Profile = () => {
       <Helmet>
         <title>{`${data?.firstName} ${data?.lastName} on Usocial`}</title>
       </Helmet>
+
       <Container>
         <User connected={userStatus} isFetching={isFetching} data={data} />
         <Buttons data={data} isFetching={isFetching} />

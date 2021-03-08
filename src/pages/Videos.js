@@ -7,6 +7,7 @@ export default function VideosPage() {
       <Helmet>
         <title>Videos - Usocial</title>
       </Helmet>
+
       <Videos />
     </>
   );
