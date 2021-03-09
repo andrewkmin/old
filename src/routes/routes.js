@@ -17,47 +17,43 @@ import Notifications from "../pages/Notifications";
 import Private from "../helpers/PrivateRoute";
 import PlatformLayout from "../layouts/Platform.layout";
 
-export default class Routes extends React.Component {
-  render() {
-    return (
-      <Router>
-        <Route
-          render={() => {
-            return (
-              <Private>
-                <PlatformLayout>
-                  <Switch>
-                    <Route exact component={Home} path={"/"} />
-                    <Route exact component={Settings} path={"/settings"} />
-                    <Route
-                      exact
-                      component={Profile}
-                      path={"/users/:accountId"}
-                    />
-                    <Route
-                      exact
-                      component={Notifications}
-                      path={"/notifications"}
-                    />
-                    <Route exact component={Videos} path={"/videos"} />
-                    <Route exact path={"*"}>
-                      <Redirect to={"/"} from={"*"} />
-                    </Route>
-                  </Switch>
-                </PlatformLayout>
-              </Private>
-            );
-          }}
-        />
-        <Route path={"/welcome"}>
-          <Private swap>
-            <Welcome />
-          </Private>
-        </Route>
-        <Route path={"/logout"}>
-          <Logout />
-        </Route>
-      </Router>
-    );
-  }
-}
+const Routes = () => {
+  return (
+    <Router>
+      <Route
+        render={() => {
+          return (
+            <Private>
+              <PlatformLayout>
+                <Switch>
+                  <Route exact component={Home} path={"/"} />
+                  <Route exact component={Settings} path={"/settings"} />
+                  <Route exact component={Profile} path={"/users/:accountId"} />
+                  <Route
+                    exact
+                    component={Notifications}
+                    path={"/notifications"}
+                  />
+                  <Route exact component={Videos} path={"/videos"} />
+                  <Route exact path={"*"}>
+                    <Redirect to={"/"} from={"*"} />
+                  </Route>
+                </Switch>
+              </PlatformLayout>
+            </Private>
+          );
+        }}
+      />
+      <Route path={"/welcome"}>
+        <Private swap>
+          <Welcome />
+        </Private>
+      </Route>
+      <Route path={"/logout"}>
+        <Logout />
+      </Route>
+    </Router>
+  );
+};
+
+export default Routes;
