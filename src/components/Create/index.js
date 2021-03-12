@@ -58,7 +58,7 @@ const CreateForm = () => {
         handleCreatePost(event);
       }}
     >
-      <Box>
+      <Box m={[2, 4, 6]}>
         <Container
           p={[2, 3]}
           boxShadow={"md"}

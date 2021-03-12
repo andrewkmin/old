@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, Center, Text, Spinner } from "@chakra-ui/react";
 
 import Post from "./Post/index";
+// import _axios from "../api/_axios";
 import { useFetchPosts } from "../api/hooks";
 
 const PostList = () => {
@@ -10,8 +11,13 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const { data, isError, isFetching, isFetched } = useFetchPosts(accountId);
 
+  // ! TODO: Because of using hooks, when deleting the last post the "No posts yet" text doesn't show up
   const handleRemovePost = (id) => {
-    setPosts((prev) => prev.filter((post) => post.postData._id !== id));
+    return setPosts(
+      posts.filter((post) => {
+        return post.postData._id !== id;
+      })
+    );
   };
 
   useEffect(() => {

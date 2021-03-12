@@ -15,7 +15,6 @@ import {
 import { filter } from "lodash";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { SiGooglemessages } from "react-icons/si";
 import { RiNotification3Fill } from "react-icons/ri";
 
 import Notifications from "../Notifications";
@@ -61,7 +60,6 @@ const Navbar = () => {
         <Stack direction={"row"}>
           {/* Current Account */}
           <IconButton
-            display={["none", "inline-flex"]}
             as={NavLink}
             to={`/users/${userData?._id}`}
             variant={"ghost"}
@@ -86,7 +84,6 @@ const Navbar = () => {
 
           {/* Notification drawer trigger */}
           <IconButton
-            display={["none", "inline-list-item"]}
             isRound
             onClick={notifDrawerOnOpen}
             icon={
@@ -95,8 +92,6 @@ const Navbar = () => {
               />
             }
           />
-
-          <IconButton isRound icon={<SiGooglemessages />} />
 
           {/* Notification drawer from the right */}
           <Portal>
