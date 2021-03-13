@@ -42,6 +42,8 @@ const PostList = ({ _posts, _isFetching }) => {
       setPosts(_posts);
       setIsFetching(_isFetching);
     }
+
+    return () => {};
   }, [accountId, _posts, _isFetching]);
 
   return (

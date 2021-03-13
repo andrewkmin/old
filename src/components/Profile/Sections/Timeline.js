@@ -32,8 +32,10 @@ const Timeline = ({ data }) => {
         return setPosts([]);
       }
     };
+
     verify();
     fetchPosts();
+    return () => {};
   }, [data?._id]);
 
   return (

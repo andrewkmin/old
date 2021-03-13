@@ -73,6 +73,7 @@ const Profile = () => {
     };
 
     fetchUserData();
+    return () => {};
   }, [History, Toast, accountId]);
 
   return (

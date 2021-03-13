@@ -29,6 +29,8 @@ const PlatformLayout = ({ children }) => {
         isClosable: false,
       });
     }
+
+    return () => {};
   }, [Toast, data?.error, isError, isFetched]);
 
   return (

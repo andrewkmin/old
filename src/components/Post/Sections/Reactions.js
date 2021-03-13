@@ -27,6 +27,7 @@ const Reactions = ({ post }) => {
 
   useEffect(() => {
     numOfHearts.current();
+    return () => {};
   }, []);
 
   return (

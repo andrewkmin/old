@@ -11,6 +11,7 @@ export default function _Tabs() {
     if (Location.pathname === "/") setIndex(0);
     else if (Location.pathname === "/videos") setIndex(1);
     else setIndex(null);
+    return () => {};
   }, [Location.pathname]);
 
   return (
