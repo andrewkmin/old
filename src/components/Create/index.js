@@ -15,7 +15,7 @@ import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import AttachmentInput from "./inputs/AttachmentInput";
 
-const CreateForm = () => {
+const CreateForm = ({ _posts, _setPosts }) => {
   const Toast = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
@@ -37,9 +37,21 @@ const CreateForm = () => {
       new FormData(event.target)
     );
 
-    if (!data.error) {
+    if (!data?.error) {
       setSubmitting(false);
       setCreatePostDisabled(false);
+
+      if (_setPosts && _posts) {
+        // ! TODO: Fix the bug in here when creating a post
+        _setPosts((_posts) => [..._posts, data]);
+      } else {
+        Toast({
+          title: "Post created!",
+          status: "success",
+          isClosable: false,
+          duration: 2000,
+        });
+      }
     } else {
       Toast({
         title: "There was an error",

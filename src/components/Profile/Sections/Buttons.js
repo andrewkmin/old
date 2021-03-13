@@ -17,34 +17,34 @@ const Buttons = ({ isFetching, data }) => {
   const FriendshipStatusButtons = () => {
     if (verification.id !== data?._id) {
       if (frIsFetching) {
-        return <Button isLoading={true}></Button>;
+        return <Button w={"full"} isLoading={true}></Button>;
       } else {
         if (frData?.approved) {
           return (
-            <Button leftIcon={<FiUserCheck />} colorScheme={"green"}>
+            <Button w={"full"} leftIcon={<FiUserCheck />} colorScheme={"green"}>
               Friends
             </Button>
           );
         } else if (frData?.pending) {
           return (
-            <Button leftIcon={<BiTime />} colorScheme={"orange"}>
+            <Button w={"full"} leftIcon={<BiTime />} colorScheme={"orange"}>
               Requested
             </Button>
           );
         } else if (frData?.requested) {
           return (
             <>
-              <Button leftIcon={<BiCheck />} colorScheme={"orange"}>
+              <Button w={"full"} leftIcon={<BiCheck />} colorScheme={"orange"}>
                 Approve friend request
               </Button>
-              <Button leftIcon={<FaTimes />} colorScheme={"orange"}>
+              <Button w={"full"} leftIcon={<FaTimes />} colorScheme={"orange"}>
                 Decline friend request
               </Button>
             </>
           );
         } else {
           return (
-            <Button leftIcon={<TiUserAdd />} colorScheme={"green"}>
+            <Button w={"full"} leftIcon={<TiUserAdd />} colorScheme={"green"}>
               Add friend
             </Button>
           );

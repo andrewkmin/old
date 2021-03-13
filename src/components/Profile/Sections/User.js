@@ -11,7 +11,7 @@ import {
 
 import verification from "../../../auth/verification";
 
-const User = ({ data, isFetching, connected }) => {
+const User = ({ data, isFetching, status }) => {
   return (
     <Box p={5} border={"2px"} borderColor={"gray.200"} borderRadius={"lg"}>
       <Stack spacing={1.5}>
@@ -23,10 +23,9 @@ const User = ({ data, isFetching, connected }) => {
                 name={`${data?.firstName || ""} ${data?.lastName || ""}`}
                 src={data?.avatar}
               >
-                <AvatarBadge
-                  boxSize={"1em"}
-                  bg={connected ? "green.500" : "gray.500"}
-                />
+                {status.connected && (
+                  <AvatarBadge boxSize={"1em"} bg={"green.500"} />
+                )}
               </Avatar>
             </Link>
           </Center>

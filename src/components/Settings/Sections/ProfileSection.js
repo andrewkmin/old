@@ -32,10 +32,8 @@ const ProfileSection = () => {
         setSaving(false);
 
         if (!updatedData?.error) {
-          // Setting the value of every input to empty
-          event.target.elements.forEach((element) => {
-            element.value = "";
-          });
+          event.target.elements.email.value = "";
+          event.target.elements.password.value = "";
 
           setChanged({
             email: false,

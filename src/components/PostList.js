@@ -3,17 +3,15 @@ import { useParams } from "react-router-dom";
 import { Box, Center, Text, Spinner } from "@chakra-ui/react";
 
 import Post from "./Post/index";
-// import _axios from "../api/_axios";
-import { useFetchPosts } from "../api/hooks";
+import _axios from "../api/_axios";
 
-const PostList = () => {
+const PostList = ({ _posts, _isFetching }) => {
   const { accountId } = useParams();
   const [posts, setPosts] = useState([]);
-  const { data, isError, isFetching, isFetched } = useFetchPosts(accountId);
+  const [isFetching, setIsFetching] = useState(true);
 
-  // ! TODO: Because of using hooks, when deleting the last post the "No posts yet" text doesn't show up
   const handleRemovePost = (id) => {
-    return setPosts(
+    setPosts(
       posts.filter((post) => {
         return post.postData._id !== id;
       })
@@ -21,33 +19,40 @@ const PostList = () => {
   };
 
   useEffect(() => {
-    if (isFetched) {
-      if (data?.error) {
-        setPosts([]);
-      } else {
-        setPosts(data);
+    const fetchPosts = async () => {
+      try {
+        const { data } = await _axios.get(
+          `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
+        );
+
+        if (!data?.error) {
+          setIsFetching(false);
+          setPosts(data);
+        } else {
+          setPosts([]);
+        }
+      } catch (error) {
+        console.error(error);
+        return setPosts([]);
       }
+    };
+
+    if (!_posts) fetchPosts();
+    else {
+      setPosts(_posts);
+      setIsFetching(_isFetching);
     }
-    if (isError) setPosts([]);
-  }, [data, isError, isFetched]);
+  }, [accountId, _posts, _isFetching]);
 
   return (
     <Box overflow={"none"} w={"full"} mt={5}>
       {isFetching ? (
         <Center>
           <Spinner color={"blue.500"} />
-        </Center> ? (
-          isError
-        ) : (
-          <Center>
-            <Text color={"red.500"} fontSize={"xl"} fontWeight={"bold"}>
-              There was an error
-            </Text>
-          </Center>
-        )
+        </Center>
       ) : (
         <Box>
-          {data?.length === 0 ? (
+          {posts?.length === 0 ? (
             <Center>
               <Text color={"gray.600"} fontSize={"xl"} fontWeight={"bold"}>
                 No posts yet
@@ -58,7 +63,7 @@ const PostList = () => {
               return (
                 <Post
                   removeHandler={(postId) => handleRemovePost(postId)}
-                  key={post.postData._id}
+                  key={post?.postData?._id}
                   data={post}
                 />
               );

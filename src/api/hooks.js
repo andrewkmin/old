@@ -25,18 +25,6 @@ export const useAuth = () => {
   return useQuery("authenticate", Authenticate);
 };
 
-// For fetching user data
-export const useFetchUserData = (accountId) => {
-  const FetchData = async () => {
-    const { data } = await _axios.get(
-      `/api/accounts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
-    );
-    return data;
-  };
-
-  return useQuery("userData", FetchData);
-};
-
 // For fetching notifications
 export const useFetchNotifications = () => {
   const FetchNotifications = async () => {
@@ -70,17 +58,6 @@ export const useCheckFriendShip = (accountId) => {
   return useQuery("friendshipStatus", CheckFriendship);
 };
 
-// For fetching user status
-export const useFetchUserStatus = (accountId) => {
-  const FetchUserStatus = async () => {
-    const { data } = await _axios.get(
-      `/api/network/status/?accountId=${accountId}`
-    );
-    return data;
-  };
-  return useQuery("userStatus", FetchUserStatus);
-};
-
 // For sending a heartbeat to the network api to indicate that current user is connected to the servers
 export const useSendHeartbeat = () => {
   const SendHeartbeat = async () => {
@@ -88,6 +65,6 @@ export const useSendHeartbeat = () => {
     return data;
   };
   return useQuery("heartbeat", SendHeartbeat, {
-    refetchInterval: 60 * 1 * 1000,
+    refetchInterval: 5000, // 5 seconds
   });
 };

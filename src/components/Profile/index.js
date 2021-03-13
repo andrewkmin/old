@@ -1,56 +1,94 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Container, useToast } from "@chakra-ui/react";
 import { useHistory, useParams } from "react-router-dom";
 
 import User from "./Sections/User";
+import _axios from "../../api/_axios";
 import Buttons from "./Sections/Buttons";
 import Timeline from "./Sections/Timeline";
-import { useFetchUserData, useFetchUserStatus } from "../../api/hooks";
 
 const Profile = () => {
   const Toast = useToast();
   const History = useHistory();
   const { accountId } = useParams();
-  const { data: userStatus } = useFetchUserStatus(accountId);
-  const { data, isFetched, isFetching, isError } = useFetchUserData(accountId);
+  const [isFetching, setIsFetching] = useState(true);
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentUserStatus, setCurrentUserStatus] = useState({});
 
   useEffect(() => {
-    if (isFetched) {
-      if (data?.error) {
-        Toast.closeAll();
-        if (data?.code === "invalid_id".toUpperCase()) {
-          Toast({
-            title: "The id that you entered was invalid",
-            duration: 1000,
-            isClosable: false,
-            status: "info",
-          });
-        } else if (data?.code === "no_account".toUpperCase()) {
-          Toast({
-            title: "There's no account with that id",
-            duration: 3000,
-            isClosable: false,
-            status: "info",
-          });
-        }
+    const fetchUserData = async () => {
+      try {
+        const { data } = await _axios.get(
+          `/api/accounts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
+        );
 
+        setIsFetching(false);
+
+        if (data) {
+          if (data?.error) {
+            Toast.closeAll();
+            if (data?.code === "invalid_id".toUpperCase()) {
+              return Toast({
+                title: "The id that you entered was invalid",
+                duration: 1000,
+                isClosable: false,
+                status: "info",
+              });
+            } else if (data?.code === "no_account".toUpperCase()) {
+              return Toast({
+                title: "There's no account with that id",
+                duration: 3000,
+                isClosable: false,
+                status: "info",
+              });
+            } else {
+              return History.push("/");
+            }
+          } else {
+            try {
+              const { data: status } = await _axios.get(
+                `/api/network/status/?accountId=${accountId}`
+              );
+
+              // Setting the data of current profile
+              setCurrentUser(data);
+              // Setting the status of current profile
+              return setCurrentUserStatus(status);
+            } catch (error) {
+              console.error(error);
+              return Toast({
+                title: "There was an error while fetching user's status",
+                isClosable: false,
+                duration: 2000,
+                status: "warning",
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error);
         return History.push("/");
       }
-    }
-    if (isError) return History.push("/");
-  }, [History, data?.error, isError, isFetched, data?.code, Toast]);
+    };
+
+    fetchUserData();
+  }, [History, Toast, accountId]);
 
   return (
     <>
       <Helmet>
-        <title>{`${data?.firstName} ${data?.lastName} on Usocial`}</title>
+        <title>{`${currentUser?.firstName} ${currentUser?.lastName} on Usocial`}</title>
       </Helmet>
 
       <Container>
-        <User connected={userStatus} isFetching={isFetching} data={data} />
-        <Buttons data={data} isFetching={isFetching} />
-        <Timeline data={data} />
+        <User
+          status={currentUserStatus}
+          isFetching={isFetching}
+          data={currentUser}
+        />
+        <Buttons data={currentUser} isFetching={isFetching} />
+        <Timeline data={currentUser} />
       </Container>
     </>
   );

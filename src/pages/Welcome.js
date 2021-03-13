@@ -2,7 +2,6 @@ import { sample } from "lodash";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
 import { Box, Center, Flex, Link, Spacer, Stack, Text } from "@chakra-ui/react";
 
 import Auth from "../components/Auth/index";
@@ -14,14 +13,6 @@ const quotes = [
 ];
 
 const Welcome = () => {
-  const [welcomeText, setWelcomeText] = useState(sample(quotes));
-
-  useEffect(() =>
-    setInterval(() => {
-      setWelcomeText(sample(quotes));
-    }, 10000)
-  );
-
   return (
     <>
       <Helmet>
@@ -79,7 +70,7 @@ const Welcome = () => {
                     opacity: [0, 1],
                   }}
                 >
-                  {welcomeText}
+                  {sample(quotes)}
                 </motion.span>
               </Text>
             </Center>

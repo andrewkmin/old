@@ -1,3 +1,4 @@
+import uniq from "uniq";
 import React from "react";
 import axios from "axios";
 import { Box, Center, Container, Spinner, Text } from "@chakra-ui/react";
@@ -15,12 +16,12 @@ export default class Videos extends React.Component {
   async fetchVideos() {
     try {
       const { data } = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&max_results=3&pageToken=${this.state.nextPageToken}&type=video`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&max_results=3&pageToken=${this.state.nextPageToken}&type=video&q=funny`
       );
       this.setState({
         fetching: false,
         nextPageToken: data.nextPageToken,
-        videos: [...this.state.videos, ...data.items],
+        videos: uniq([...this.state.videos, ...data.items]),
       });
       return data;
     } catch (error) {
@@ -66,20 +67,22 @@ export default class Videos extends React.Component {
             </Box>
           ) : (
             <Box>
-              {this.state.videos.map((video) => {
+              {Array.from(this.state.videos).map((video) => {
                 return (
-                  <Center key={video?.etag}>
-                    <iframe
-                      style={{
-                        width: "100%",
-                        height: "40vh",
-                      }}
-                      title={video?.snippet?.title}
-                      src={`https://www.youtube.com/embed/${video?.id?.videoId}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </Center>
+                  <Box p={5} boxShadow={"xl"} key={video?.id?.videoId}>
+                    <Center>
+                      <iframe
+                        style={{
+                          width: "100%",
+                          height: "40vh",
+                        }}
+                        title={video?.snippet?.title}
+                        src={`https://www.youtube.com/embed/${video?.id?.videoId}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </Center>
+                  </Box>
                 );
               })}
             </Box>
