@@ -17,6 +17,8 @@ const Content = ({ post }) => {
             //   Dynamic media loading
             <Asyncoload
               controls
+              loading={"lazy"}
+              preload={"auto"}
               src={attachment.url}
               key={attachment.filename}
             />

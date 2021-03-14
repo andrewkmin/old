@@ -22,7 +22,7 @@ const Comment = ({ data: comment }) => {
     <Box>
       <Flex>
         <Avatar
-          loading="lazy"
+          loading={"lazy"}
           name={`${comment.authorData.firstName} ${comment.authorData.lastName}`}
           src={comment.authorData.avatar}
         />

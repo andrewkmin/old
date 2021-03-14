@@ -13,8 +13,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { format, formatDistanceToNow, fromUnixTime } from "date-fns";
 
 import _axios from "../../../api/_axios";
 import verification from "../../../auth/verification";
@@ -103,7 +103,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
                     {post?.postData?.datefield &&
                       formatDistanceToNow(new Date(post?.postData?.datefield), {
                         addSuffix: true,
-                        includeSeconds: false,
+                        includeSeconds: true,
                       })}
                   </Text>
                 </Flex>

@@ -8,7 +8,6 @@ import {
 
 import Home from "../pages/Home";
 import Logout from "../pages/Logout";
-import Videos from "../pages/Videos";
 import Welcome from "../pages/Welcome";
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
@@ -34,9 +33,9 @@ const Routes = () => {
                     component={Notifications}
                     path={"/notifications"}
                   />
-                  <Route exact component={Videos} path={"/videos"} />
+
                   <Route exact path={"*"}>
-                    <Redirect to={"/"} from={"*"} />
+                    <Redirect to={"/"} />
                   </Route>
                 </Switch>
               </PlatformLayout>
@@ -44,6 +43,7 @@ const Routes = () => {
           );
         }}
       />
+
       <Route path={"/welcome"}>
         <Private swap>
           <Welcome />
