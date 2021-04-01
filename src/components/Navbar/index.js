@@ -64,19 +64,15 @@ const Navbar = () => {
             to={`/users/${userData?._id}`}
             variant={"ghost"}
             isRound
-            ps={1}
-            pe={3}
-            pt={2}
-            pb={2}
           >
-            <Flex>
+            <Flex px={1}>
               <Box>
                 {/* User avatar */}
                 <Avatar size={"sm"} src={userData?.avatar} />
               </Box>
 
               {/* First name */}
-              <Center ms={1} as={Box}>
+              <Center as={Box}>
                 <Text fontWeight={"bold"}>{userData?.firstName}</Text>
               </Center>
             </Flex>

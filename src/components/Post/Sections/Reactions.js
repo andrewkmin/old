@@ -31,7 +31,7 @@ const Reactions = ({ post }) => {
   }, []);
 
   return (
-    <Box my={2}>
+    <Box>
       <Text fontSize={"sm"} fontWeight={"semibold"}>
         {state.hearts.number !== 0 && (
           <span>

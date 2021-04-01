@@ -1,6 +1,5 @@
 import {
   Box,
-  Container,
   Divider,
   useToast,
   useColorModeValue,
@@ -39,11 +38,11 @@ const CreateForm = ({ _posts, _setPosts }) => {
 
     if (!data?.error) {
       setSubmitting(false);
+      const newPost = data;
       setCreatePostDisabled(false);
 
       if (_setPosts && _posts) {
-        // ! TODO: Fix the bug in here when creating a post
-        _setPosts((_posts) => [..._posts, data]);
+        _setPosts((_posts) => _posts.concat([{ ...newPost }]));
       } else {
         Toast({
           title: "Post created!",
@@ -70,8 +69,8 @@ const CreateForm = ({ _posts, _setPosts }) => {
         handleCreatePost(event);
       }}
     >
-      <Box m={[2, 4, 6]}>
-        <Container
+      <Box>
+        <Box
           p={[2, 3]}
           boxShadow={"md"}
           borderRadius={["md", "lg"]}
@@ -99,7 +98,7 @@ const CreateForm = ({ _posts, _setPosts }) => {
             <Divider />
             <AttachmentInput />
           </Stack>
-        </Container>
+        </Box>
       </Box>
     </form>
   );

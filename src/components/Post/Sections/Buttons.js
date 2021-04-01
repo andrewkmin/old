@@ -1,21 +1,22 @@
-// import { useContext } from "react";
+import { useState } from "react";
 import { BiChat, BiShare } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Box, Button, Stack, useToast } from "@chakra-ui/react";
 
 import _axios from "../../../api/_axios";
-// import DataContext from "../../../../data/data.context";
 
 const Bottom = ({ post, states, setState }) => {
   const Toast = useToast();
-  // const { userData } = useContext(DataContext);
+  const [heartButtonLoading, setHeartButtonLoading] = useState(false);
 
   const heartPost = async () => {
+    setHeartButtonLoading(true);
     const { data } = await _axios.put(
       `/api/posts/heart/?postId=${post?.postData?._id}`
     );
+    setHeartButtonLoading(false);
 
-    if (!data.hasOwnProperty("error")) {
+    if (!data?.error) {
       setState({
         hearted: true,
       });
@@ -31,11 +32,13 @@ const Bottom = ({ post, states, setState }) => {
   };
 
   const unheartPost = async () => {
+    setHeartButtonLoading(true);
     const { data } = await _axios.put(
       `/api/posts/unheart/?postId=${post?.postData?._id}`
     );
+    setHeartButtonLoading(false);
 
-    if (!data.hasOwnProperty("error")) {
+    if (!data?.error) {
       setState({ hearted: false });
     } else {
       return Toast({
@@ -55,22 +58,24 @@ const Bottom = ({ post, states, setState }) => {
         {/* Heart button */}
         <Button
           w={"full"}
+          size={"sm"}
           isLoading={states.hearting}
+          loading={heartButtonLoading}
+          colorScheme={states.hearted ? "red" : null}
           loadingText={states.hearted ? "Unhearting" : "Hearting"}
           leftIcon={states.hearted ? <AiFillHeart /> : <AiOutlineHeart />}
-          colorScheme={states.hearted ? "red" : null}
           onClick={states.hearted ? () => unheartPost() : () => heartPost()}
         >
           {states.hearted ? "Unheart" : "Heart"}
         </Button>
 
         {/* Comment button */}
-        <Button leftIcon={<BiChat />} w={"full"}>
+        <Button size={"sm"} leftIcon={<BiChat />} w={"full"}>
           Comment
         </Button>
 
         {/* Share button */}
-        <Button leftIcon={<BiShare />} w={"full"}>
+        <Button size={"sm"} leftIcon={<BiShare />} w={"full"}>
           Share
         </Button>
       </Stack>

@@ -14,22 +14,27 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { format, formatDistanceToNow, fromUnixTime } from "date-fns";
+import {
+  // format,
+  formatDistanceToNow,
+  // fromUnixTime
+} from "date-fns";
 
 import _axios from "../../../api/_axios";
 import verification from "../../../auth/verification";
 
 const Top = ({ states, setState, post, removeHandler }) => {
   const Toast = useToast();
+
   const savePost = async () => {
     const { data } = await _axios.put(
       `/api/posts/save/?postId=${post?.postData?._id}`
     );
 
-    if (!data.hasOwnProperty("error")) {
+    if (!data?.error) {
       setState({ saved: true });
     } else {
-      Toast({
+      return Toast({
         title: "There was an error",
         description: data.error,
         duration: 2000,
@@ -44,10 +49,10 @@ const Top = ({ states, setState, post, removeHandler }) => {
       `/api/posts/unsave/?postId=${post?.postData?._id}`
     );
 
-    if (!data.hasOwnProperty("error")) {
+    if (!data?.error) {
       setState({ saved: false });
     } else {
-      Toast({
+      return Toast({
         title: "There was an error",
         description: data.error,
         duration: 2000,
@@ -58,14 +63,15 @@ const Top = ({ states, setState, post, removeHandler }) => {
   };
 
   const deletePost = async () => {
+    setState({ deleting: true });
     const { data } = await _axios.delete(
       `/api/posts/delete/?postId=${post?.postData?._id}`
     );
 
-    if (!data.hasOwnProperty("error")) {
+    if (!data?.error) {
       removeHandler(post?.postData?._id);
     } else {
-      Toast({
+      return Toast({
         title: "There was an error",
         description: data.error,
         duration: 2000,

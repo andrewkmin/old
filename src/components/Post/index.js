@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Progress, Stack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 
 import Info from "./Sections/Info";
@@ -12,30 +12,36 @@ const Post = ({ data: post, removeHandler }) => {
   const [states, setState] = useState({
     hearted: post?.postData?.hearts?.includes(userData?._id),
     saved: false,
+    deleting: false,
   });
 
   return (
     // Base Container
     <Box
-      p={[3, 4, 5]}
       my={5}
+      p={[2, 3]}
       border={"1px"}
       boxShadow={"md"}
       borderRadius={"md"}
       borderColor={"gray.300"}
     >
-      <Info
-        removeHandler={removeHandler}
-        post={post}
-        setState={setState}
-        states={states}
-      />
+      {states.deleting && (
+        <Progress size={"xs"} isIndeterminate colorScheme="red" />
+      )}
+      <Stack spacing={2}>
+        <Info
+          removeHandler={removeHandler}
+          post={post}
+          setState={setState}
+          states={states}
+        />
 
-      <Content post={post} />
+        <Content post={post} />
 
-      <Reactions post={post} />
+        <Reactions post={post} />
 
-      <Buttons post={post} states={states} setState={setState} />
+        <Buttons post={post} states={states} setState={setState} />
+      </Stack>
     </Box>
   );
 };

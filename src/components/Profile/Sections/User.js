@@ -7,14 +7,15 @@ import {
   CircularProgress,
   AvatarBadge,
   Stack,
+  // Tooltip,
 } from "@chakra-ui/react";
-
-import verification from "../../../auth/verification";
+// import { GoVerified } from "react-icons/go";
+// import { RiTeamFill } from "react-icons/ri";
 
 const User = ({ data, isFetching, status }) => {
   return (
     <Box p={5} border={"2px"} borderColor={"gray.200"} borderRadius={"lg"}>
-      <Stack spacing={1.5}>
+      <Stack spacing={1}>
         <Box>
           <Center>
             <Link target={"_blank"} href={data?.avatar}>
@@ -32,31 +33,31 @@ const User = ({ data, isFetching, status }) => {
         </Box>
 
         <Box>
-          <Center>
-            {isFetching ? (
-              <CircularProgress isIndeterminate mt={2} />
-            ) : (
-              <Text
-                fontSize={["lg", "xl"]}
-                fontWeight={"bold"}
-              >{`${data?.firstName} ${data?.lastName}`}</Text>
-            )}
-          </Center>
+          <Stack>
+            <Center>
+              {isFetching ? (
+                <CircularProgress isIndeterminate mt={2} />
+              ) : (
+                <Center>
+                  <Text
+                    fontSize={["lg", "xl"]}
+                    fontWeight={"bold"}
+                  >{`${data?.firstName} ${data?.lastName}`}</Text>
+                </Center>
+              )}
+            </Center>
+          </Stack>
         </Box>
 
-        <Box>
-          <Center>
-            {isFetching ? null : (
+        {isFetching ? null : data?.bio?.length === 0 ? null : (
+          <Box>
+            <Center>
               <Text fontSize={["xs", "md"]} fontWeight={"semibold"}>
-                {data?.bio?.length === 0 && verification.id === data._id
-                  ? "Your bio is empty so here's a placeholder"
-                  : data?.bio?.length === 0 && verification.id !== data._id
-                  ? "This user's bio is empty so here's a placeholder 🤔"
-                  : data?.bio}
+                {data?.bio}
               </Text>
-            )}
-          </Center>
-        </Box>
+            </Center>
+          </Box>
+        )}
       </Stack>
     </Box>
   );

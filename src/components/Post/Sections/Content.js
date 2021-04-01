@@ -7,7 +7,7 @@ import Renderer from "../../../helpers/Renderer";
 const Content = ({ post }) => {
   return (
     // Middle section
-    <Box my={2}>
+    <Box>
       {/* Rendering post text */}
       <Renderer fontSize={["lg", "md"]} text={post?.postData?.text} />
       {/* If attachment length is not equal to zero, then return a carousel with all of the attachments */}
@@ -19,6 +19,9 @@ const Content = ({ post }) => {
               controls
               loading={"lazy"}
               preload={"auto"}
+              style={{
+                borderRadius: ".1vw",
+              }}
               src={attachment.url}
               key={attachment.filename}
             />
