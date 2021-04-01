@@ -8,7 +8,6 @@
     "asyncoload": "^2.0.1",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
-    "fast-safe-stringify": "^2.0.7",
     "framer-motion": "^4.0.3",
     "lodash": "^4.17.21",
     "nanoid": "^3.1.20",

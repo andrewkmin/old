@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { Skeleton } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 
-import Routes from "../routes/routes";
-import DataContext from "../data/data.context";
-import verification from "../auth/verification";
+import Routes from "../app/routes/routes";
+import DataContext from "../app/data/data.context";
+import verification from "../app/auth/verification";
 
 const Entry = () => {
   const [state, setState] = useState({
