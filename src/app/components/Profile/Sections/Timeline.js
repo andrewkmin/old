@@ -6,7 +6,7 @@ import _axios from "../../../api/_axios";
 import CreatePost from "../../Create/index";
 import verification from "../../../auth/verification";
 
-const Timeline = ({ data }) => {
+const Timeline = ({ data: userData }) => {
   const [posts, setPosts] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -17,13 +17,22 @@ const Timeline = ({ data }) => {
 
     const fetchPosts = async () => {
       try {
-        const { data: posts } = await _axios.get(
-          `/api/posts/fetch/${data?._id ? `?accountId=${data._id}` : ``}`
+        const { data } = await _axios.get(
+          `/api/posts/fetch/${
+            userData?._id ? `?accountId=${userData._id}` : ``
+          }`
         );
 
-        if (!posts?.error) {
+        if (!data?.error) {
           setIsFetching(false);
-          setPosts(posts);
+          setPosts(
+            data.sort((a, b) => {
+              return (
+                new Date(b?.postData?.datefield).getTime() -
+                new Date(a?.postData?.datefield).getTime()
+              );
+            })
+          );
         } else {
           setPosts([]);
         }
@@ -36,11 +45,11 @@ const Timeline = ({ data }) => {
     verify();
     fetchPosts();
     return () => {};
-  }, [data?._id]);
+  }, [userData?._id]);
 
   return (
     <Box mt={10}>
-      {verification.id === data?._id && (
+      {verification.id === userData?._id && (
         <CreatePost _setPosts={setPosts} _posts={posts} />
       )}
       <PostList _isFetching={isFetching} _posts={posts} />

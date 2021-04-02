@@ -59,8 +59,7 @@ const Bottom = ({ post, states, setState }) => {
         <Button
           w={"full"}
           size={"sm"}
-          isLoading={states.hearting}
-          loading={heartButtonLoading}
+          isLoading={heartButtonLoading}
           colorScheme={states.hearted ? "red" : null}
           loadingText={states.hearted ? "Unhearting" : "Hearting"}
           leftIcon={states.hearted ? <AiFillHeart /> : <AiOutlineHeart />}

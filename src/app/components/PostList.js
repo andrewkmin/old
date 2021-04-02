@@ -12,9 +12,13 @@ const PostList = ({ _posts, _isFetching }) => {
 
   const handleRemovePost = (id) => {
     setPosts(
-      posts.filter((post) => {
-        return post.postData._id !== id;
-      })
+      posts
+        .filter((post) => {
+          return post.postData._id !== id;
+        })
+        .sort((a, b) => {
+          return b?.postData?.datefield - a?.postData?.datefield;
+        })
     );
   };
 
@@ -27,7 +31,14 @@ const PostList = ({ _posts, _isFetching }) => {
 
         if (!data?.error) {
           setIsFetching(false);
-          setPosts(data);
+          setPosts(
+            data.sort((a, b) => {
+              return (
+                new Date(b?.postData?.datefield).getTime() -
+                new Date(a?.postData?.datefield).getTime()
+              );
+            })
+          );
         } else {
           setPosts([]);
         }
@@ -37,8 +48,9 @@ const PostList = ({ _posts, _isFetching }) => {
       }
     };
 
-    if (!_posts) fetchPosts();
-    else {
+    if (!_posts) {
+      fetchPosts();
+    } else {
       setPosts(_posts);
       setIsFetching(_isFetching);
     }
@@ -65,7 +77,7 @@ const PostList = ({ _posts, _isFetching }) => {
               return (
                 <Post
                   removeHandler={(postId) => handleRemovePost(postId)}
-                  key={post?.postData?._id}
+                  key={post.postData._id}
                   data={post}
                 />
               );

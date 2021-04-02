@@ -1,4 +1,5 @@
 import { sample } from "lodash";
+import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -6,13 +7,19 @@ import { Box, Center, Flex, Link, Spacer, Stack, Text } from "@chakra-ui/react";
 
 import Auth from "../components/Auth/index";
 
-const quotes = [
-  "Usocial has privacy baked-in 🧁",
-  "Usocial has your data covered 🔒",
-  "Usocial is an extraordinary social network 🌠",
-];
-
 const Welcome = () => {
+  const [quote, setQuote] = useState(null);
+
+  useMemo(() => {
+    const quotes = [
+      "Usocial has privacy baked-in 🧁",
+      "Usocial has your data covered 🔒",
+      "Usocial is an extraordinary social network 🌠",
+    ];
+
+    setQuote(sample(quotes));
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -70,7 +77,7 @@ const Welcome = () => {
                     opacity: [0, 1],
                   }}
                 >
-                  {sample(quotes)}
+                  {quote}
                 </motion.span>
               </Text>
             </Center>

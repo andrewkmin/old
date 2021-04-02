@@ -72,7 +72,7 @@ const Navbar = () => {
               </Box>
 
               {/* First name */}
-              <Center as={Box}>
+              <Center as={Box} px={1}>
                 <Text fontWeight={"bold"}>{userData?.firstName}</Text>
               </Center>
             </Flex>

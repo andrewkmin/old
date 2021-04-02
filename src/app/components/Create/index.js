@@ -38,11 +38,11 @@ const CreateForm = ({ _posts, _setPosts }) => {
 
     if (!data?.error) {
       setSubmitting(false);
-      const newPost = data;
       setCreatePostDisabled(false);
 
       if (_setPosts && _posts) {
-        _setPosts((_posts) => _posts.concat([{ ...newPost }]));
+        console.log({ data });
+        _setPosts((_posts) => _posts.concat([data]));
       } else {
         Toast({
           title: "Post created!",
