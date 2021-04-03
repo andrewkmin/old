@@ -4,12 +4,8 @@
 import _axios from "../api/_axios";
 
 class Verification {
-  constructor() {
-    this.id = null;
-    this.data = null;
-
-    this.verify();
-  }
+  id = null;
+  data = null;
 
   async verify() {
     try {

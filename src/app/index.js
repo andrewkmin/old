@@ -1,5 +1,5 @@
 import { Skeleton } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import Routes from "../app/routes/routes";
@@ -12,21 +12,13 @@ const Entry = () => {
     userData: {},
     authenticated: false,
   });
+  const checkUserIsValid = useRef();
 
-  useEffect(() => {
-    const checkUserIsValid = async () => {
-      try {
-        const isValid = await verification.verify();
-        return isValid;
-      } catch (error) {
-        console.error(error);
-        return error;
-      }
-    };
+  checkUserIsValid.current = async () => {
+    try {
+      const isValid = await verification.verify();
 
-    const checkValidity = async () => {
       try {
-        const isValid = await checkUserIsValid();
         return setState({
           loading: false,
           authenticated: isValid,
@@ -40,9 +32,14 @@ const Entry = () => {
           userData: {},
         });
       }
-    };
-    checkValidity();
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
 
+  useEffect(() => {
+    checkUserIsValid.current();
     return () => {};
   }, []);
 
