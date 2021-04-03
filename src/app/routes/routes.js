@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Route,
   Switch,
@@ -49,6 +48,7 @@ const Routes = () => {
           <Welcome />
         </Private>
       </Route>
+
       <Route path={"/logout"}>
         <Logout />
       </Route>
