@@ -62,7 +62,7 @@ const Comment = ({ data: comment }) => {
           <IconButton size="sm" icon={<BiHeart />} isRound />
           <IconButton size="sm" icon={<BiReply />} isRound />
 
-          {comment.authorData._id === userData._id && (
+          {comment.authorData._id === userData?._id && (
             <IconButton
               colorScheme="red"
               size="sm"

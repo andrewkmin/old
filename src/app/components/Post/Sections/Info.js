@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   Avatar,
   Box,
@@ -14,20 +15,19 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
-import {
-  // format,
-  formatDistanceToNow,
-  // fromUnixTime
-} from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 
-import _axios from "../../../api/_axios";
-import verification from "../../../auth/verification";
+import axios from "../../../api/axios";
+import DataContext from "../../../data/data.context";
 
 const Top = ({ states, setState, post, removeHandler }) => {
   const Toast = useToast();
+  const { userData } = useContext(DataContext);
+
+  console.log(userData);
 
   const savePost = async () => {
-    const { data } = await _axios.put(
+    const { data } = await axios.put(
       `/api/posts/save/?postId=${post?.postData?._id}`
     );
 
@@ -45,7 +45,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
   };
 
   const unsavePost = async () => {
-    const { data } = await _axios.put(
+    const { data } = await axios.put(
       `/api/posts/unsave/?postId=${post?.postData?._id}`
     );
 
@@ -64,7 +64,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
 
   const deletePost = async () => {
     setState({ deleting: true });
-    const { data } = await _axios.delete(
+    const { data } = await axios.delete(
       `/api/posts/delete/?postId=${post?.postData?._id}`
     );
 
@@ -133,7 +133,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
 
             <MenuList>
               {/* If post author's id is the same as the current user's id show delete post button */}
-              {post?.postData?.authorId === verification.id && (
+              {post?.postData?.authorId === userData?._id && (
                 // For deleting the post
                 <MenuItem
                   // icon={<FaTimes color={"red"} />}

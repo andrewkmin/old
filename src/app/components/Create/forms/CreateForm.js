@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useContext } from "react";
 
-import _axios from "../api/_axios";
+import _axios from "../api/axios";
 import PostButton from "../buttons/PostButton";
 import _DataContext from "../data/data.context";
 import AttachmentInput from "../inputs/AttachmentInput";

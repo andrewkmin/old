@@ -1,20 +1,21 @@
+import axios from "./axios";
 import { useQuery } from "react-query";
 
-import _axios from "./_axios";
-
-// For logging out
+// Logout hook
 export const useLogout = () => {
   const Logout = async () => {
-    const { data } = await _axios.post("/auth/logout");
+    const { data } = await axios.post("/auth/logout");
     return data;
   };
+
   return useQuery("logout", Logout);
 };
 
+// Token validation hook
 export const useAuth = () => {
   const Authenticate = async () => {
     try {
-      const data = await _axios.get("/auth/verify");
+      const data = await axios.get("/auth/verify");
       if (data.hasOwnProperty("error")) return false;
       return true;
     } catch (error) {
@@ -22,48 +23,53 @@ export const useAuth = () => {
       return false;
     }
   };
-  return useQuery("authenticate", Authenticate);
+
+  return useQuery("authentication", Authenticate);
 };
 
-// For fetching notifications
+// Notification fetching hook
 export const useFetchNotifications = () => {
   const FetchNotifications = async () => {
-    const { data } = await _axios.get("/api/notifications/fetch");
+    const { data } = await axios.get("/api/notifications/fetch");
     return data;
   };
+
   return useQuery("notifications", FetchNotifications, {
     refetchInterval: 60 * 1 * 1000, // 1 minute
   });
 };
 
-// For fetching posts
+// Fetching posts hook
 export const useFetchPosts = (accountId) => {
   const FetchPosts = async () => {
-    const { data } = await _axios.get(
+    const { data } = await axios.get(
       `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
     );
     return data;
   };
+
   return useQuery("posts", FetchPosts);
 };
 
-// For fetching friendship status with an account
+// Check friendship hook
 export const useCheckFriendShip = (accountId) => {
   const CheckFriendship = async () => {
-    const { data } = await _axios.get(
+    const { data } = await axios.get(
       `/api/friends/check/?accountId=${accountId}`
     );
     return data;
   };
-  return useQuery("friendshipStatus", CheckFriendship);
+
+  return useQuery("friendship status", CheckFriendship);
 };
 
-// For sending a heartbeat to the network api to indicate that current user is connected to the servers
+// Heartbeat hook
 export const useSendHeartbeat = () => {
   const SendHeartbeat = async () => {
-    const { data } = await _axios.get("/api/network/heartbeat");
+    const { data } = await axios.get("/api/network/heartbeat");
     return data;
   };
+
   return useQuery("heartbeat", SendHeartbeat, {
     refetchInterval: 5000, // 5 seconds
   });

@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { TiUserAdd } from "react-icons/ti";
@@ -6,16 +7,17 @@ import { RiSettingsFill } from "react-icons/ri";
 import { Progress, Button, Box, Stack } from "@chakra-ui/react";
 import { BiCheck, BiMessageDetail, BiTime } from "react-icons/bi";
 
-import verification from "../../../auth/verification";
+import DataContext from "../../../data/data.context";
 import { useCheckFriendShip } from "../../../api/hooks";
 
 const Buttons = ({ isFetching, data }) => {
+  const { state } = useContext(DataContext);
   const { data: frData, isFetching: frIsFetching } = useCheckFriendShip(
     data?._id
   );
 
   const FriendshipStatusButtons = () => {
-    if (verification.id !== data?._id) {
+    if (state?.userData?._id !== data?._id) {
       if (frIsFetching) {
         return <Button w={"full"} isLoading={true}></Button>;
       } else {
@@ -56,8 +58,8 @@ const Buttons = ({ isFetching, data }) => {
   };
 
   const MessageButton = () => {
-    if (verification.id !== data?._id) {
-      if (data?.friends?.approved?.includes(verification.id)) {
+    if (state?.userData?._id !== data?._id) {
+      if (data?.friends?.approved?.includes(state?.userData?._id)) {
         return (
           <Button leftIcon={<BiMessageDetail />} colorScheme={"blue"}>
             Message
@@ -80,7 +82,7 @@ const Buttons = ({ isFetching, data }) => {
           <FriendshipStatusButtons />
           <MessageButton />
 
-          {verification.id === data?._id && (
+          {state?.userData?._id === data?._id && (
             <Button
               w={"full"}
               as={NavLink}

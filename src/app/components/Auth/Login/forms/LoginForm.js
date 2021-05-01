@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Stack, useToast, Box } from "@chakra-ui/react";
 
-import _axios from "../../../../api/_axios";
+import axios from "../../../../api/axios";
 import DataContext from "../../../../data/data.context";
 
 import EmailInput from "../inputs/EmailInput";
@@ -14,6 +14,7 @@ const LoginForm = () => {
   const History = useHistory();
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleLogin = async (event) => {
     setIsSubmitting(true);
     const PAYLOAD = {
@@ -21,22 +22,16 @@ const LoginForm = () => {
       password: event.currentTarget.elements.password.value,
     };
 
-    const { data: auth } = await _axios.post("/auth/login", PAYLOAD);
+    const { data: auth } = await axios.post("/auth/login", PAYLOAD);
 
     // If authentication response suceeds
     if (!auth?.error) {
-      const { data: userData } = await _axios.get("/api/accounts/fetch");
+      const { data: userData } = await axios.get("/api/accounts/fetch");
       if (!userData?.error) {
         setIsSubmitting(false);
         setState({
           userData: userData,
           authenticated: true,
-        });
-        Toast({
-          title: "Successfully logged in",
-          status: "success",
-          duration: 2000,
-          isClosable: false,
         });
         return History.push("/");
       } else {

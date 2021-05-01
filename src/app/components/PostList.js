@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, Center, Text, Spinner } from "@chakra-ui/react";
 
 import Post from "./Post/index";
-import _axios from "../api/_axios";
+import axios from "../api/axios";
 
 const PostList = ({ _posts, _isFetching }) => {
   const { accountId } = useParams();
@@ -25,7 +25,7 @@ const PostList = ({ _posts, _isFetching }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await _axios.get(
+        const { data } = await axios.get(
           `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
         );
 

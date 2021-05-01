@@ -1,5 +1,5 @@
-import { Box, Container } from "@chakra-ui/react";
 import { Helmet } from "react-helmet-async";
+import { Box, Container } from "@chakra-ui/react";
 
 import PostList from "../components/PostList";
 import CreatePost from "../components/Create/index";

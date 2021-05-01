@@ -16,7 +16,6 @@ const Post = ({ data: post, removeHandler }) => {
   });
 
   return (
-    // Base Container
     <Box
       my={5}
       p={[2, 3]}
@@ -25,10 +24,8 @@ const Post = ({ data: post, removeHandler }) => {
       borderRadius={"md"}
       borderColor={"gray.300"}
     >
-      {states.deleting && (
-        <Progress size={"xs"} isIndeterminate colorScheme="red" />
-      )}
       <Stack spacing={2}>
+        {/* Post info */}
         <Info
           removeHandler={removeHandler}
           post={post}
@@ -36,11 +33,19 @@ const Post = ({ data: post, removeHandler }) => {
           states={states}
         />
 
+        {/* Post content */}
         <Content post={post} />
 
+        {/* Post reactions */}
         <Reactions post={post} />
 
+        {/* Post buttons */}
         <Buttons post={post} states={states} setState={setState} />
+
+        {/* Delete indicator */}
+        {states.deleting && (
+          <Progress size={"xs"} isIndeterminate colorScheme="red" />
+        )}
       </Stack>
     </Box>
   );

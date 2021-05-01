@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import _axios from "../../api/_axios";
+import _axios from "../../api/axios";
 import UserAvatar from "./ui/UserAvatar";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";

@@ -4,7 +4,7 @@ import { Container, useToast } from "@chakra-ui/react";
 import { useHistory, useParams } from "react-router-dom";
 
 import User from "./Sections/User";
-import _axios from "../../api/_axios";
+import _axios from "../../api/axios";
 import Buttons from "./Sections/Buttons";
 import Timeline from "./Sections/Timeline";
 

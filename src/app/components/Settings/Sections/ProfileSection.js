@@ -2,7 +2,7 @@ import { RiCheckFill } from "react-icons/ri";
 import { useContext, useState } from "react";
 import { Box, Stack, Text, Input, Button, useToast } from "@chakra-ui/react";
 
-import _axios from "../../../api/_axios";
+import _axios from "../../../api/axios";
 import DataContext from "../../../data/data.context";
 
 const ProfileSection = () => {

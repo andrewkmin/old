@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { useContext, useEffect } from "react";
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 
-import _axios from "../../api/_axios";
+import _axios from "../../api/axios";
 import DataContext from "../../data/data.context";
 
 const LogoutComponent = () => {

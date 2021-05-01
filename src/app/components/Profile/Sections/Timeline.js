@@ -1,23 +1,21 @@
 import { Box } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import PostList from "../../PostList";
-import _axios from "../../../api/_axios";
+import axios from "../../../api/axios";
 import CreatePost from "../../Create/index";
-import verification from "../../../auth/verification";
+import { verify } from "../../../auth/verification";
+import DataContext from "../../../data/data.context";
 
-const Timeline = ({ data: userData }) => {
+const Timeline = ({ data: otherUserData }) => {
   const [posts, setPosts] = useState([]);
+  const { userData } = useContext(DataContext);
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-    const verify = async () => {
-      await verification.verify();
-    };
-
     const fetchPosts = async () => {
       try {
-        const { data } = await _axios.get(
+        const { data } = await axios.get(
           `/api/posts/fetch/${
             userData?._id ? `?accountId=${userData._id}` : ``
           }`
@@ -49,7 +47,7 @@ const Timeline = ({ data: userData }) => {
 
   return (
     <Box mt={10}>
-      {verification.id === userData?._id && (
+      {userData?._id === otherUserData?._id && (
         <CreatePost _setPosts={setPosts} _posts={posts} />
       )}
       <PostList _isFetching={isFetching} _posts={posts} />
