@@ -1,6 +1,6 @@
 import Asyncoload from "asyncoload";
 import { Box, Image } from "@chakra-ui/react";
-import "react-alice-carousel/lib/scss/alice-carousel.scss";
+// import "react-alice-carousel/lib/";
 
 import Renderer from "../../../helpers/Renderer";
 

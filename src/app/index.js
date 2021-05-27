@@ -4,7 +4,6 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import axios from "./api/axios";
 import Routes from "../app/routes/routes";
-import { verify } from "../app/auth/verification";
 import DataContext from "../app/data/data.context";
 
 const Entry = () => {
@@ -17,23 +16,21 @@ const Entry = () => {
 
   // Fetching current user data and checking if it's valid
   authenticate.current = async () => {
-    const isValid = await verify();
+    const response = await axios.get("/api/accounts/fetch");
 
-    if (!isValid) {
-      return setState({
+    if (response.status === 200)
+      setState({
+        userData: response.data,
+        loading: false,
+        authenticated: true,
+      });
+    else {
+      setState({
         userData: {},
         loading: false,
         authenticated: false,
       });
     }
-
-    const { data: userData } = await axios.get("/api/accounts/fetch");
-
-    return setState({
-      userData,
-      loading: false,
-      authenticated: isValid,
-    });
   };
 
   useEffect(() => {

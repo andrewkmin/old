@@ -16,34 +16,41 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLogin = async (event) => {
-    setIsSubmitting(true);
     const PAYLOAD = {
       email: event.currentTarget.elements.email.value,
       password: event.currentTarget.elements.password.value,
     };
 
-    const { data: auth } = await axios.post("/auth/login", PAYLOAD);
+    setIsSubmitting(true);
+    const authResponse = await axios.post("/auth/login", PAYLOAD);
+    setIsSubmitting(false);
 
     // If authentication response suceeds
-    if (!auth?.error) {
-      const { data: userData } = await axios.get("/api/accounts/fetch");
-      if (!userData?.error) {
-        setIsSubmitting(false);
+    if (authResponse.status === 200) {
+      const userResponse = await axios.get("/api/accounts/fetch");
+
+      if (userResponse.status === 200) {
         setState({
-          userData: userData,
           authenticated: true,
+          userData: userResponse.data,
         });
-        return History.push("/");
+        History.push("/");
       } else {
-        setIsSubmitting(false);
-        return Toast({
+        Toast({
           title: "There was an error",
-          description: auth.error,
           status: "error",
           duration: 2000,
           isClosable: false,
         });
+        console.warn({ userResponse });
       }
+    } else if (authResponse.status === 404) {
+      Toast({
+        title: "That account does not exist",
+        status: "error",
+        duration: 2000,
+        isClosable: false,
+      });
     } else {
       // Updating the states
       setIsSubmitting(false);
@@ -51,37 +58,12 @@ const LoginForm = () => {
         userData: {},
         authenticated: false,
       });
-
-      if (auth?.code === "no_account".toUpperCase()) {
-        return Toast({
-          title: "No such account",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      } else if (auth?.code === "wrong_password".toUpperCase()) {
-        return Toast({
-          description: "The password you have entered is incorrect",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      } else if (auth?.code === "missing_fields".toUpperCase()) {
-        return Toast({
-          description: "There are missing fields",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      } else {
-        return Toast({
-          title: "There was an error",
-          description: auth?.error,
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      }
+      Toast({
+        title: "Check your credentials",
+        status: "error",
+        isClosable: false,
+        duration: 2000,
+      });
     }
   };
 

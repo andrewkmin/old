@@ -20,15 +20,14 @@ const RegistrationForm = () => {
 
   const handleRegistration = async (event) => {
     setIsSubmitting(true);
-
-    const { data } = await _axios.post(
+    const response = await _axios.post(
       "/auth/register",
       new FormData(event.currentTarget)
     );
+    setIsSubmitting(false);
 
-    if (!data.error) {
+    if (response.status === 200) {
       const { data: userData } = await _axios.get("/api/accounts/fetch");
-      setIsSubmitting(false);
       setState({ authenticated: true, userData });
       Toast({
         title: "Account created successfully",
@@ -38,26 +37,31 @@ const RegistrationForm = () => {
         isClosable: false,
       });
       return History.push("/");
+    }
+    // If there's another account with the same email
+    else if (response.status === 403) {
+      Toast({
+        title: "That account is taken by someone else",
+        status: "error",
+        duration: 2000,
+        isClosable: false,
+      });
+    }
+    // If there are invalid fields
+    else if (response.status === 401) {
+      Toast({
+        title: "There must be some invalid fields",
+        status: "error",
+        duration: 2000,
+        isClosable: false,
+      });
     } else {
-      setIsSubmitting(false);
-      setState({ authenticated: false });
-      if (data.error === "Forbidden") {
-        return Toast({
-          title: "There's already an account with that email 😲",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      } else if (data.error === "Invalid email") {
-        return Toast({
-          description: "Please enter a valid email",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-      } else {
-        return data;
-      }
+      Toast({
+        title: "There was an error",
+        status: "error",
+        duration: 2000,
+        isClosable: false,
+      });
     }
   };
 

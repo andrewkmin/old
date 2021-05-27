@@ -101,7 +101,7 @@ const Welcome = () => {
                 <Link fontSize={"sm"}>More</Link>
                 <Text fontSize={"sm"}>•</Text>
                 <Text fontWeight={"semibold"} fontSize={"sm"}>
-                  &copy; Usocial {format(Date.now(), "yyyy")}
+                  &copy; Usocial Network Incorporated {format(Date.now(), "yyyy")}
                 </Text>
               </Stack>
             </Center>

@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import PostList from "../../PostList";
 import axios from "../../../api/axios";
 import CreatePost from "../../Create/index";
-import { verify } from "../../../auth/verification";
 import DataContext from "../../../data/data.context";
 
 const Timeline = ({ data: otherUserData }) => {
@@ -14,33 +13,25 @@ const Timeline = ({ data: otherUserData }) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      try {
-        const { data } = await axios.get(
-          `/api/posts/fetch/${
-            userData?._id ? `?accountId=${userData._id}` : ``
-          }`
-        );
+      const response = await axios.get(
+        `/api/posts/fetch/${userData?._id ? `?accountId=${userData._id}` : ``}`
+      );
 
-        if (!data?.error) {
-          setIsFetching(false);
-          setPosts(
-            data.sort((a, b) => {
-              return (
-                new Date(b?.postData?.datefield).getTime() -
-                new Date(a?.postData?.datefield).getTime()
-              );
-            })
-          );
-        } else {
-          setPosts([]);
-        }
-      } catch (error) {
-        console.error(error);
-        return setPosts([]);
-      }
+      if (response.status === 200) {
+        const { data } = response;
+
+        setIsFetching(false);
+        setPosts(
+          data.sort((a, b) => {
+            return (
+              new Date(b?.postData?.datefield).getTime() -
+              new Date(a?.postData?.datefield).getTime()
+            );
+          })
+        );
+      } else setPosts([]);
     };
 
-    verify();
     fetchPosts();
     return () => {};
   }, [userData?._id]);
