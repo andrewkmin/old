@@ -3177,7 +3177,7 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-asyncoload@3.0.3:
+asyncoload@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/asyncoload/-/asyncoload-3.0.3.tgz#5cd24f22c4b5b66d22925834283ba0c6134626bd"
   integrity sha512-4t2e1WKj+uuSdUxfCEkqmDE/nuAKwlTCWg4YHXCpWSRFsx7UjQHJAFHXEKROHVe4d5nve2QLijDtn0mFJAtxAg==
