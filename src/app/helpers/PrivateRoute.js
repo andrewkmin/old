@@ -4,6 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 import DataContext from "../data/data.context";
 
 const PrivateRoute = ({ children, swap, ...rest }) => {
+  // Getting the authenticated parameter from the context
   const { authenticated } = useContext(DataContext);
 
   return (

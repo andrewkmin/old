@@ -1,8 +1,10 @@
+// Components
+import Login from "./Login";
+import Registration from "./Register";
+
 import { Text, Center, Stack, Divider, Box } from "@chakra-ui/react";
 
-import LoginForm from "./Login/index";
-import RegistrationForm from "./Register/index";
-
+// Component that holds both registration and login forms
 const Auth = () => {
   return (
     <Stack mx={[2, 5]} w={"sm"}>
@@ -14,9 +16,11 @@ const Auth = () => {
         </Center>
       </Box>
 
-      <LoginForm />
+      {/* Login Form */}
+      <Login />
       <Divider />
-      <RegistrationForm />
+      {/* Registration Form */}
+      <Registration />
     </Stack>
   );
 };

@@ -11,22 +11,6 @@ export const useLogout = () => {
   return useQuery("logout", Logout);
 };
 
-// Token validation hook
-export const useAuth = () => {
-  const Authenticate = async () => {
-    try {
-      const data = await axios.get("/auth/verify");
-      if (data.hasOwnProperty("error")) return false;
-      return true;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
-
-  return useQuery("authentication", Authenticate);
-};
-
 // Notification fetching hook
 export const useFetchNotifications = () => {
   const FetchNotifications = async () => {

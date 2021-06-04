@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
+// Button component used for submitting form and sending the request
 const CreateAccountButton = ({ isSubmitting }) => {
   return (
     <Button

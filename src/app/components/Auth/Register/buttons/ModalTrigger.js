@@ -1,6 +1,7 @@
 import { Button, FormControl, InputGroup } from "@chakra-ui/react";
 
-const CreateNewAccountModalTriggerButton = ({ registrationOnOpen }) => {
+// Modal trigger triggers the registration modal
+const ModalTrigger = ({ registrationOnOpen }) => {
   return (
     <FormControl>
       <InputGroup>
@@ -17,4 +18,4 @@ const CreateNewAccountModalTriggerButton = ({ registrationOnOpen }) => {
   );
 };
 
-export default CreateNewAccountModalTriggerButton;
+export default ModalTrigger;

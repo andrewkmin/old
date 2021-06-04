@@ -14,50 +14,58 @@ import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import AttachmentInput from "./inputs/AttachmentInput";
 
-const CreateForm = ({ _posts, _setPosts }) => {
-  const Toast = useToast();
+const CreateForm = () => {
+  const toast = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
 
+  // For handling input and enabling/disabling the post button based on it
   const handleInput = (event) => {
-    if (event.target.value.length === 0) {
-      setCreatePostDisabled(true);
-    } else {
-      setCreatePostDisabled(false);
-    }
+    // Disabling the button if the length is 0
+    if (event.target.value.length === 0) setCreatePostDisabled(true);
+    else setCreatePostDisabled(false);
   };
 
   const handleCreatePost = async (event) => {
+    // Preventing default behaviour
     event.preventDefault();
+
+    // Loading
     setSubmitting(true);
+    // Disabling create post button
     setCreatePostDisabled(true);
-    const { data } = await _axios.put(
+
+    // Sending a request
+    const response = await _axios.put(
       "/api/posts/create",
       new FormData(event.target)
     );
 
-    if (!data?.error) {
-      setSubmitting(false);
-      setCreatePostDisabled(false);
+    // Not loading
+    setSubmitting(false);
+    // Enabling create post button
+    setCreatePostDisabled(false);
 
-      if (_setPosts && _posts) {
-        console.log({ data });
-        _setPosts((_posts) => _posts.concat([data]));
-      } else {
-        Toast({
+    // Checking the response
+    switch (response.status) {
+      // If post was created
+      case 201: {
+        return toast({
           title: "Post created!",
           status: "success",
           isClosable: false,
           duration: 2000,
         });
       }
-    } else {
-      Toast({
-        title: "There was an error",
-        status: "error",
-        isClosable: false,
-        duration: 2000,
-      });
+      // If there was an error and the status wasn't 201
+      default: {
+        return toast({
+          title: "There was an error",
+          status: "error",
+          isClosable: false,
+          duration: 2000,
+        });
+      }
     }
   };
 

@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
 import { Tag, Text, Link as ChakraLink } from "@chakra-ui/react";
 
-// import Crawler from "./Crawler";
 import { Hashtag, Mention, URL } from "../utils/patterns";
 
 const Renderer = ({ text = "", fontSize = "md", ...props }) => {

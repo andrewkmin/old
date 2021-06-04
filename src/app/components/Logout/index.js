@@ -1,31 +1,39 @@
 import { useHistory } from "react-router";
 import { useContext, useEffect } from "react";
-import { Box, Center, Spinner, Text } from "@chakra-ui/react";
+import { Box, Center, Spinner, Text, useToast } from "@chakra-ui/react";
 
-import _axios from "../../api/axios";
+import axios from "../../api/axios";
 import DataContext from "../../data/data.context";
 
 const LogoutComponent = () => {
+  const toast = useToast();
   const history = useHistory();
   const { setState } = useContext(DataContext);
 
   useEffect(() => {
     const logout = async () => {
-      try {
-        const { data } = await _axios.post("/auth/logout");
+      const response = await axios.post("/auth/logout");
 
-        if (!data?.error) {
-          history.push("/welcome");
-          return setState({ userData: {}, authenticated: false });
-        } else return null;
-      } catch (error) {
-        return null;
+      switch (response.status) {
+        case 200: {
+          setState({ userData: {}, authenticated: false, loading: false });
+          return history.push("/welcome");
+        }
+        default: {
+          toast({
+            title: "There was an error",
+            status: "error",
+            duration: 2000,
+            isClosable: false,
+          });
+          return history.push("/");
+        }
       }
     };
     logout();
 
     return () => {};
-  }, [history, setState]);
+  }, [history, setState, toast]);
 
   return (
     <Box>
