@@ -24,6 +24,8 @@ const RegistrationForm = () => {
       "/auth/register",
       new FormData(event.currentTarget)
     );
+
+    console.log({ response });
     setIsSubmitting(false);
 
     if (response.status === 200) {

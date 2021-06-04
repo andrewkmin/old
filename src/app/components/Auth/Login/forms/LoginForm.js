@@ -25,9 +25,13 @@ const LoginForm = () => {
     const authResponse = await axios.post("/auth/login", PAYLOAD);
     setIsSubmitting(false);
 
+    console.log({ authResponse });
+
     // If authentication response suceeds
     if (authResponse.status === 200) {
       const userResponse = await axios.get("/api/accounts/fetch");
+
+      console.log({ userResponse });
 
       if (userResponse.status === 200) {
         setState({
