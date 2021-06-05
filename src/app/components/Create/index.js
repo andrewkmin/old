@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import _axios from "../../api/axios";
+import axios from "../../api/axios";
 import UserAvatar from "./ui/UserAvatar";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
@@ -36,7 +36,7 @@ const CreateForm = () => {
     setCreatePostDisabled(true);
 
     // Sending a request
-    const response = await _axios.put(
+    const response = await axios.post(
       "/api/posts/create",
       new FormData(event.target)
     );

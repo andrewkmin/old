@@ -38,9 +38,7 @@ export const useFetchPosts = (accountId) => {
 // Check friendship hook
 export const useCheckFriendShip = (accountId) => {
   const CheckFriendship = async () => {
-    const { data } = await axios.get(
-      `/api/friends/check/?accountId=${accountId}`
-    );
+    const { data } = await axios.get(`/api/friends/${accountId}/check/`);
     return data;
   };
 
