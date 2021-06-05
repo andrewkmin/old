@@ -1,9 +1,7 @@
-import Asyncoload from "asyncoload";
-import { Box, Image } from "@chakra-ui/react";
-// import "react-alice-carousel/lib/";
-
+import { Box } from "@chakra-ui/react";
 import Renderer from "../../../helpers/Renderer";
 
+// Post content
 const Content = ({ post }) => {
   return (
     // Middle section
@@ -15,18 +13,7 @@ const Content = ({ post }) => {
       {post?.postData?.attachments?.length !== 0 &&
         post?.postData?.attachments?.map((attachment) => {
           return (
-            //   Dynamic media loading
-            <Asyncoload src={attachment.url} key={attachment.filename}>
-              {({ type, src }) => {
-                if (type.startsWith("image")) {
-                  <Image src={src} />;
-                } else if (type.startsWith("video")) {
-                  <video>
-                    <source src={src}></source>
-                  </video>;
-                }
-              }}
-            </Asyncoload>
+            <object aria-label={attachment.url} data={attachment.url}></object>
           );
         })}
     </Box>
