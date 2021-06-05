@@ -26,6 +26,7 @@ const CreateForm = () => {
     else setCreatePostDisabled(false);
   };
 
+  // For creating a post
   const handleCreatePost = async (event) => {
     // Preventing default behaviour
     event.preventDefault();
@@ -87,20 +88,16 @@ const CreateForm = () => {
         >
           <Stack>
             <Stack direction={"row"} spacing={2}>
-              <Center>
-                <UserAvatar />
-              </Center>
+              <UserAvatar />
 
               <Center w={"full"}>
                 <TextInput handleInput={handleInput} />
               </Center>
 
-              <Center>
-                <PostButton
-                  submitting={submitting}
-                  createPostDisabled={createPostDisabled}
-                />
-              </Center>
+              <PostButton
+                submitting={submitting}
+                createPostDisabled={createPostDisabled}
+              />
             </Stack>
 
             <Divider />

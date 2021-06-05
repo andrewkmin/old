@@ -39,7 +39,7 @@ const Navbar = () => {
       borderColor={useColorModeValue("gray.300", "gray.700")}
       bg={useColorModeValue("gray.50", "gray.700")}
       zIndex={"sticky"}
-      boxShadow={"md"}
+      // boxShadow={"md"}
       pos={"sticky"}
       mb={10}
       top={0}

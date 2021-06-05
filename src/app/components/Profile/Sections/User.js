@@ -7,10 +7,7 @@ import {
   CircularProgress,
   AvatarBadge,
   Stack,
-  // Tooltip,
 } from "@chakra-ui/react";
-// import { GoVerified } from "react-icons/go";
-// import { RiTeamFill } from "react-icons/ri";
 
 const User = ({ data, isFetching, status }) => {
   return (

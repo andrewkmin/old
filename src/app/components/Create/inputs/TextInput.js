@@ -5,14 +5,13 @@ const TextInput = ({ handleInput }) => {
     <FormControl>
       <Center>
         <Input
+          size={"md"}
+          name={"text"}
           boxShadow={"sm"}
           borderRadius={"xl"}
           variant={"outline"}
-          onChange={(event) => handleInput(event)}
           placeholder={"Write something..."}
-          name={"text"}
-          size={"md"}
-          // w={"full"}
+          onChange={(event) => handleInput(event)}
         />
       </Center>
     </FormControl>

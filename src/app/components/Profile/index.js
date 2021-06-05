@@ -4,9 +4,7 @@ import { Container, useToast } from "@chakra-ui/react";
 import { useHistory, useParams } from "react-router-dom";
 
 import User from "./Sections/User";
-import _axios from "../../api/axios";
-import Buttons from "./Sections/Buttons";
-import Timeline from "./Sections/Timeline";
+import axios from "../../api/axios";
 
 const Profile = () => {
   const Toast = useToast();
@@ -14,72 +12,84 @@ const Profile = () => {
   const { accountId } = useParams();
   const [isFetching, setIsFetching] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
-  const [currentUserStatus, setCurrentUserStatus] = useState({});
+  const [currentUserStatus, setCurrentUserStatus] = useState({
+    connected: false,
+  });
 
   useEffect(() => {
+    // Used for fetching user data
     const fetchUserData = async () => {
-      try {
-        const { data } = await _axios.get(
-          `/api/accounts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
-        );
+      // Send the request
+      const response = await axios.get(
+        `/api/accounts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
+      );
 
-        setIsFetching(false);
-
-        if (data) {
-          if (data?.error) {
-            Toast.closeAll();
-            if (data?.code === "invalid_id".toUpperCase()) {
-              return Toast({
-                title: "The id that you entered was invalid",
-                duration: 1000,
-                isClosable: false,
-                status: "info",
-              });
-            } else if (data?.code === "no_account".toUpperCase()) {
-              return Toast({
-                title: "There's no account with that id",
-                duration: 3000,
-                isClosable: false,
-                status: "info",
-              });
-            } else {
-              return History.push("/");
-            }
-          } else {
-            try {
-              const { data: status } = await _axios.get(
-                `/api/network/status/?accountId=${accountId}`
-              );
-
-              // Setting the data of current profile
-              setCurrentUser(data);
-              // Setting the status of current profile
-              return setCurrentUserStatus(status);
-            } catch (error) {
-              console.error(error);
-              return Toast({
-                title: "There was an error while fetching user's status",
-                isClosable: false,
-                duration: 2000,
-                status: "warning",
-              });
-            }
-          }
+      // Checking response status
+      switch (response.status) {
+        // If everything is fine
+        case 200: {
+          return setCurrentUser(response.data);
         }
-      } catch (error) {
-        console.error(error);
-        return History.push("/");
+        // If the ID was invalid
+        case 400: {
+          Toast({
+            title: "Invalid user ID",
+            duration: 1000,
+            isClosable: false,
+            status: "info",
+          });
+          return History.push("/");
+        }
+        // If user doesn't exist
+        case 404: {
+          Toast({
+            title: "That user doesn't exist",
+            duration: 1000,
+            isClosable: false,
+            status: "info",
+          });
+          return History.push("/");
+        }
+        // Something else
+        default: {
+          return History.push("/");
+        }
       }
     };
 
-    fetchUserData();
+    // For fetching user status
+    const fetchUserStatus = async () => {
+      // Sending the request
+      const request = await axios.get(`/api/network/status/?id=${accountId}`);
+
+      // Checking the response
+      switch (request.status) {
+        // If everything is fine
+        case 200: {
+          const { connected } = request.data;
+          return setCurrentUserStatus({ connected });
+        }
+        // If not
+        default:
+          return setCurrentUserStatus({ connected: false });
+      }
+    };
+
+    // For fetching everything in one function
+    const fetchEverything = async () => {
+      await Promise.all([fetchUserData(), fetchUserStatus()]);
+      return setIsFetching(false);
+    };
+
+    // Fetching everything
+    fetchEverything();
     return () => {};
   }, [History, Toast, accountId]);
 
   return (
     <>
       <Helmet>
-        <title>{`${currentUser?.firstName} ${currentUser?.lastName} on Usocial`}</title>
+        <title>{`${currentUser?.firstName} ${currentUser?.lastName} - Usocial`}</title>
       </Helmet>
 
       <Container>
@@ -88,8 +98,6 @@ const Profile = () => {
           isFetching={isFetching}
           data={currentUser}
         />
-        <Buttons data={currentUser} isFetching={isFetching} />
-        <Timeline data={currentUser} />
       </Container>
     </>
   );
