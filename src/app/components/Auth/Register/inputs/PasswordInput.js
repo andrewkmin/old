@@ -4,59 +4,59 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  Box,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  Center,
-  Text,
+  // Box,
+  // Slider,
+  // SliderTrack,
+  // SliderFilledTrack,
+  // Center,
+  // Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+// import { useState } from "react";
 import { MdLock } from "react-icons/md";
-import { passwordStrength } from "check-password-strength";
+// import { passwordStrength } from "check-password-strength";
 
 const PasswordInput = () => {
-  const [sliderState, setSliderState] = useState({
-    color: "",
-    value: 0,
-    text: "",
-  });
-  const evalStrengthColor = (strength) => {
-    switch (strength) {
-      case 0: {
-        return "";
-      }
-      case 1: {
-        return "orange";
-      }
-      case 2: {
-        return "blue";
-      }
-      default: {
-        return "teal";
-      }
-    }
-  };
+  // const [sliderState, setSliderState] = useState({
+  //   color: "",
+  //   value: 0,
+  //   text: "",
+  // });
+  // const evalStrengthColor = (strength) => {
+  //   switch (strength) {
+  //     case 0: {
+  //       return "";
+  //     }
+  //     case 1: {
+  //       return "orange";
+  //     }
+  //     case 2: {
+  //       return "blue";
+  //     }
+  //     default: {
+  //       return "teal";
+  //     }
+  //   }
+  // };
 
-  const handlePasswordChange = (event) => {
-    const { value } = event.target;
+  // const handlePasswordChange = (event) => {
+  //   const { value } = event.target;
 
-    if (value.length === 0) {
-      setSliderState({
-        value: 0,
-        text: "",
-        color: "",
-      });
-    } else {
-      const strength = passwordStrength(value);
+  //   if (value.length === 0) {
+  //     setSliderState({
+  //       value: 0,
+  //       text: "",
+  //       color: "",
+  //     });
+  //   } else {
+  //     const strength = passwordStrength(value);
 
-      setSliderState({
-        value: strength.id,
-        text: strength.value,
-        color: evalStrengthColor(strength.id),
-      });
-    }
-  };
+  //     setSliderState({
+  //       value: strength.id,
+  //       text: strength.value,
+  //       color: evalStrengthColor(strength.id),
+  //     });
+  //   }
+  // };
 
   return (
     <FormControl isRequired>
@@ -66,7 +66,7 @@ const PasswordInput = () => {
           <MdLock color="gray" />
         </InputLeftElement>
         <Input
-          onChange={(event) => handlePasswordChange(event)}
+          // onChange={(event) => handlePasswordChange(event)}
           required
           minLength={8}
           type={"password"}
@@ -77,7 +77,7 @@ const PasswordInput = () => {
       </InputGroup>
 
       {/* Password strength bar */}
-      <Slider
+      {/* <Slider
         defaultValue={0}
         value={sliderState.value}
         min={0}
@@ -91,7 +91,7 @@ const PasswordInput = () => {
       </Slider>
       <Center>
         <Text fontWeight={"semibold"}>{sliderState.text}</Text>
-      </Center>
+      </Center> */}
     </FormControl>
   );
 };

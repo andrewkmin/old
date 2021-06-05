@@ -24,62 +24,12 @@ const Top = ({ states, setState, post, removeHandler }) => {
   const Toast = useToast();
   const { userData } = useContext(DataContext);
 
-  console.log(userData);
-
-  const savePost = async () => {
-    const { data } = await axios.put(
-      `/api/posts/save/?postId=${post?.postData?._id}`
-    );
-
-    if (!data?.error) {
-      setState({ saved: true });
-    } else {
-      return Toast({
-        title: "There was an error",
-        description: data.error,
-        duration: 2000,
-        isClosable: false,
-        status: "error",
-      });
-    }
-  };
-
-  const unsavePost = async () => {
-    const { data } = await axios.put(
-      `/api/posts/unsave/?postId=${post?.postData?._id}`
-    );
-
-    if (!data?.error) {
-      setState({ saved: false });
-    } else {
-      return Toast({
-        title: "There was an error",
-        description: data.error,
-        duration: 2000,
-        isClosable: false,
-        status: "error",
-      });
-    }
-  };
-
-  const deletePost = async () => {
-    setState({ deleting: true });
-    const { data } = await axios.delete(
-      `/api/posts/delete/?postId=${post?.postData?._id}`
-    );
-
-    if (!data?.error) {
-      removeHandler(post?.postData?._id);
-    } else {
-      return Toast({
-        title: "There was an error",
-        description: data.error,
-        duration: 2000,
-        isClosable: false,
-        status: "error",
-      });
-    }
-  };
+  // TODO: Implement
+  const savePost = async () => {};
+  // TODO: Implement
+  const unsavePost = async () => {};
+  // TODO։ Implement
+  const deletePost = async () => {};
 
   return (
     // Top section
@@ -90,27 +40,26 @@ const Top = ({ states, setState, post, removeHandler }) => {
           <Center>
             <Flex>
               {/* Author Image */}
-              <Link to={`/users/${post?.authorData?._id}`}>
-                <Avatar src={post?.authorData?.avatar} />
+              <Link to={`/users/${post?.author?._id}`}>
+                <Avatar src={post?.author?.avatar} />
               </Link>
 
               {/* Author name */}
               <Center>
                 <Flex ms={1} direction={"column"}>
                   {/* Link to user's profile */}
-                  <Link to={`/users/${post?.authorData?._id}`}>
+                  <Link to={`/users/${post?.author?._id}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
-                      {`${post?.authorData?.firstName} ${post?.authorData?.lastName}`}
+                      {`${post?.author?.firstName} ${post?.author?.lastName}`}
                     </Text>
                   </Link>
 
                   {/* How much time has passed since the post was published */}
                   <Text fontSize={"xs"}>
-                    {post?.postData?.datefield &&
-                      formatDistanceToNow(new Date(post?.postData?.datefield), {
-                        addSuffix: true,
-                        includeSeconds: true,
-                      })}
+                    {formatDistanceToNow(new Date(post?.createdAt), {
+                      addSuffix: true,
+                      includeSeconds: true,
+                    })}
                   </Text>
                 </Flex>
               </Center>
@@ -133,7 +82,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
 
             <MenuList>
               {/* If post author's id is the same as the current user's id show delete post button */}
-              {post?.postData?.authorId === userData?._id && (
+              {post?.author?._id === userData?._id && (
                 // For deleting the post
                 <MenuItem
                   // icon={<FaTimes color={"red"} />}

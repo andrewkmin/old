@@ -23,10 +23,7 @@ const Timeline = ({ data: otherUserData }) => {
         setIsFetching(false);
         setPosts(
           data.sort((a, b) => {
-            return (
-              new Date(b?.postData?.datefield).getTime() -
-              new Date(a?.postData?.datefield).getTime()
-            );
+            return new Date(b?.updatedAt) - new Date(a?.updatedAt);
           })
         );
       } else setPosts([]);

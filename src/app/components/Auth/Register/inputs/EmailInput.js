@@ -17,10 +17,10 @@ const EmailInput = () => {
         </InputLeftElement>
         <Input
           required
-          type="email"
-          name="email"
-          placeholder="Email"
-          size="md"
+          type={"email"}
+          name={"email"}
+          placeholder={"Email"}
+          size={"md"}
         />
       </InputGroup>
     </FormControl>

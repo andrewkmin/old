@@ -5,7 +5,7 @@ const Reactions = ({ post }) => {
   const numOfHearts = useRef(() => {});
   const [state, setState] = useState({
     hearts: {
-      number: post?.postData?.hearts?.length,
+      number: post?.hearts?.length,
       prefix: "",
     },
   });

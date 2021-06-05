@@ -12,7 +12,7 @@ const LoginButton = ({ isSubmitting }) => {
           colorScheme={"blue"}
           isLoading={isSubmitting}
         >
-          Log In
+          Login
         </Button>
       </InputGroup>
     </FormControl>

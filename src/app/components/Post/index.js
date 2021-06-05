@@ -10,7 +10,7 @@ import DataContext from "../../data/data.context";
 const Post = ({ data: post, removeHandler }) => {
   const { userData } = useContext(DataContext);
   const [states, setState] = useState({
-    hearted: post?.postData?.hearts?.includes(userData?._id),
+    hearted: post?.hearts?.includes(userData?._id),
     saved: false,
     deleting: false,
   });
@@ -29,8 +29,8 @@ const Post = ({ data: post, removeHandler }) => {
         <Info
           removeHandler={removeHandler}
           post={post}
-          setState={setState}
-          states={states}
+          // setState={setState}
+          // states={states}
         />
 
         {/* Post content */}
@@ -40,12 +40,16 @@ const Post = ({ data: post, removeHandler }) => {
         <Reactions post={post} />
 
         {/* Post buttons */}
-        <Buttons post={post} states={states} setState={setState} />
+        <Buttons
+          post={post}
+          // states={states}
+          // setState={setState}
+        />
 
         {/* Delete indicator */}
-        {states.deleting && (
+        {/* {states.deleting && (
           <Progress size={"xs"} isIndeterminate colorScheme="red" />
-        )}
+        )} */}
       </Stack>
     </Box>
   );

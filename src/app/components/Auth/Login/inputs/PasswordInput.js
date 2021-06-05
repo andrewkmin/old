@@ -12,9 +12,11 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const PasswordInput = () => {
   const [passVisible, setPassVisibility] = useState(false);
-  const toggleVisibility = () => {
+  const [toggleVisible, setToggleVisible] = useState(false);
+
+  // For toggling password visibility
+  const toggleVisibility = () =>
     passVisible ? setPassVisibility(false) : setPassVisibility(true);
-  };
 
   return (
     <FormControl>
@@ -24,6 +26,8 @@ const PasswordInput = () => {
         </InputLeftElement>
 
         <Input
+          onBlur={() => setToggleVisible(false)}
+          onFocus={() => setToggleVisible(true)}
           placeholder={"Password"}
           size={"md"}
           minLength={8}
@@ -32,7 +36,7 @@ const PasswordInput = () => {
           required
         />
 
-        <InputRightElement>
+        <InputRightElement display={!toggleVisible && "none"}>
           <IconButton
             variant={"ghost"}
             icon={passVisible ? <AiFillEyeInvisible /> : <AiFillEye />}

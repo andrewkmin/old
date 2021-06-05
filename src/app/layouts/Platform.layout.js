@@ -49,7 +49,7 @@ const PlatformLayout = ({ children }) => {
         />
         <meta
           name="keywords"
-          content="social media website, social, media, videos, images, text, comment"
+          content="social, media, social media, content, audio, video, images, other"
         />
 
         {/* Open Graph Meta Tags */}

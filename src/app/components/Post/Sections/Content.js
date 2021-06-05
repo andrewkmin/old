@@ -7,15 +7,18 @@ const Content = ({ post }) => {
     // Middle section
     <Box>
       {/* Rendering post text */}
-      <Renderer fontSize={["lg", "md"]} text={post?.postData?.text} />
+      <Renderer fontSize={["lg", "md"]} text={post?.text} />
 
       {/* Rendering post attachments if there are any */}
-      {post?.postData?.attachments?.length !== 0 &&
-        post?.postData?.attachments?.map((attachment) => {
-          return (
-            <object aria-label={attachment.url} data={attachment.url}></object>
-          );
-        })}
+      {post?.attachments?.urls?.map((attachment, index) => {
+        return (
+          <object
+            aria-label={attachment.url}
+            data={attachment.url}
+            key={index}
+          ></object>
+        );
+      })}
     </Box>
   );
 };
