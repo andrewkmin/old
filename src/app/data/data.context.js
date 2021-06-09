@@ -1,6 +1,11 @@
-import { createContext } from "react";
-export default createContext({
-  userData: {},
+import React, { createContext } from "react";
+const DataContext = createContext({
+  data: {},
+  setData: () => {},
   loading: true,
+  setLoading: () => {},
   authenticated: false,
+  setAuthenticated: (state) => {},
 });
+
+export default DataContext;

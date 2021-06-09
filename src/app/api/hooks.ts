@@ -56,3 +56,15 @@ export const useSendHeartbeat = () => {
     refetchInterval: 5000, // 5 seconds
   });
 };
+
+// Fetch account hook
+export const useFetchAccount = (accountId: String) => {
+  const FetchAccount = async () => {
+    const response = await axios.get(
+      `/api/acconts/fetch${accountId ? `/?accountId=${accountId}` : null}`
+    );
+    return response;
+  };
+
+  return useQuery("user data", FetchAccount);
+};
