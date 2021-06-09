@@ -24,7 +24,7 @@ export const useFetchNotifications = () => {
 };
 
 // Fetching posts hook
-export const useFetchPosts = (accountId) => {
+export const useFetchPosts = (accountId: String) => {
   const FetchPosts = async () => {
     const { data } = await axios.get(
       `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
@@ -36,7 +36,7 @@ export const useFetchPosts = (accountId) => {
 };
 
 // Check friendship hook
-export const useCheckFriendShip = (accountId) => {
+export const useCheckFriendShip = (accountId: String) => {
   const CheckFriendship = async () => {
     const { data } = await axios.get(`/api/friends/${accountId}/check/`);
     return data;

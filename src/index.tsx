@@ -9,20 +9,18 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import App from "./app/index";
 import Theme from "./theme/index";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+    },
+  },
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider
-      client={
-        new QueryClient({
-          defaultOptions: {
-            queries: {
-              refetchOnWindowFocus: false,
-              refetchIntervalInBackground: true,
-            },
-          },
-        })
-      }
-    >
+    <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <ChakraProvider theme={Theme}>
           {/* This provides support for dark mode */}

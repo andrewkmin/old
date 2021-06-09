@@ -1,10 +1,10 @@
 import { Skeleton } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import axios from "./api/axios";
-import Routes from "../app/routes/routes";
-import DataContext from "../app/data/data.context";
+import Routes from "./routes/routes";
+import DataContext from "./data/data.context";
 
 const Entry = () => {
   const authenticate = useRef();

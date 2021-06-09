@@ -5,5 +5,5 @@ const { REACT_APP_API_ENDPOINT } = process.env;
 export default axios.create({
   baseURL: "https://" + REACT_APP_API_ENDPOINT,
   withCredentials: true,
-  validateStatus: false,
+  validateStatus: null,
 });
