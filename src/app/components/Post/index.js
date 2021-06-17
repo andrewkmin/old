@@ -1,5 +1,5 @@
-import { Box, Progress, Stack } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { Box, Stack } from "@chakra-ui/react";
 
 import Info from "./Sections/Info";
 import Buttons from "./Sections/Buttons";
@@ -7,13 +7,8 @@ import Content from "./Sections/Content";
 import Reactions from "./Sections/Reactions";
 import DataContext from "../../data/data.context";
 
-const Post = ({ data: post, removeHandler }) => {
+const Post = ({ data }) => {
   const { userData } = useContext(DataContext);
-  const [states, setState] = useState({
-    hearted: post?.hearts?.includes(userData?._id),
-    saved: false,
-    deleting: false,
-  });
 
   return (
     <Box
@@ -26,30 +21,13 @@ const Post = ({ data: post, removeHandler }) => {
     >
       <Stack spacing={2}>
         {/* Post info */}
-        <Info
-          removeHandler={removeHandler}
-          post={post}
-          // setState={setState}
-          // states={states}
-        />
-
+        <Info post={data} />
         {/* Post content */}
-        <Content post={post} />
-
+        <Content post={data} />
         {/* Post reactions */}
-        <Reactions post={post} />
-
+        <Reactions post={data} />
         {/* Post buttons */}
-        <Buttons
-          post={post}
-          // states={states}
-          // setState={setState}
-        />
-
-        {/* Delete indicator */}
-        {/* {states.deleting && (
-          <Progress size={"xs"} isIndeterminate colorScheme="red" />
-        )} */}
+        <Buttons post={data} />
       </Stack>
     </Box>
   );

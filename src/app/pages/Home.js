@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Helmet } from "react-helmet-async";
 import CreatePost from "../components/Create/index";
+import Posts from "../components/Posts";
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
 
       <Box>
         <CreatePost />
-        {/* <Posts /> */}
+        <Posts />
       </Box>
     </>
   );

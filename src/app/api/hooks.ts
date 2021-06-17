@@ -24,10 +24,10 @@ export const useFetchNotifications = () => {
 };
 
 // Fetching posts hook
-export const useFetchPosts = (accountId: String) => {
+export const useFetchPosts = (accountId?: String) => {
   const FetchPosts = async () => {
     const { data } = await axios.get(
-      `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ``}`
+      `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
     );
     return data;
   };
@@ -53,7 +53,7 @@ export const useSendHeartbeat = () => {
   };
 
   return useQuery("heartbeat", SendHeartbeat, {
-    refetchInterval: 5000, // 5 seconds
+    refetchInterval: 1000 * 5 * 60, // 5 seconds
   });
 };
 

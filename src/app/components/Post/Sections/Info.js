@@ -11,17 +11,18 @@ import {
   MenuList,
   Spacer,
   Text,
-  useToast,
+  Stack,
+  // useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal } from "react-icons/fi";
 import { formatDistanceToNow } from "date-fns";
+import { FiMoreHorizontal } from "react-icons/fi";
 
-import axios from "../../../api/axios";
+// import axios from "../../../api/axios";
 import DataContext from "../../../data/data.context";
 
 const Top = ({ states, setState, post, removeHandler }) => {
-  const Toast = useToast();
+  // const Toast = useToast();
   const { userData } = useContext(DataContext);
 
   // TODO: Implement
@@ -38,7 +39,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
         {/* Author data container */}
         <Box>
           <Center>
-            <Flex>
+            <Stack spacing={1.5} direction={"row"}>
               {/* Author Image */}
               <Link to={`/users/${post?.author?._id}`}>
                 <Avatar src={post?.author?.avatar} />
@@ -63,7 +64,7 @@ const Top = ({ states, setState, post, removeHandler }) => {
                   </Text>
                 </Flex>
               </Center>
-            </Flex>
+            </Stack>
           </Center>
         </Box>
 
@@ -94,15 +95,15 @@ const Top = ({ states, setState, post, removeHandler }) => {
               )}
 
               {/* Saving and unsaving the post */}
-              <MenuItem
+              {/* <MenuItem
                 onClick={states.saved ? () => unsavePost() : () => savePost()}
                 fontWeight={"semibold"}
-              >
-                {/* <Box mr={1}>
+              > */}
+              {/* <Box mr={1}>
                   {states.saved ? <BsBookmarkFill /> : <BsBookmark />}
                 </Box> */}
-                {states.saved ? "Unsave post" : "Save post"}
-              </MenuItem>
+              {/* {states.saved ? "Unsave post" : "Save post"}
+              </MenuItem> */}
             </MenuList>
           </Menu>
         </Box>
