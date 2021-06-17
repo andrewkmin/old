@@ -71,8 +71,8 @@ const CreateForm = () => {
       {successful && (
         <Confetti
           recycle={false}
-          numberOfPieces={10}
-          tweenDuration={2000}
+          tweenDuration={100}
+          numberOfPieces={1000}
           width={window.innerWidth}
           height={window.innerHeight}
         />

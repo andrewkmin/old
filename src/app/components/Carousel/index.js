@@ -17,7 +17,7 @@ const Carousel = ({ element = "glide", options, children }) => {
 
     // cleanup when unmounting component
     return () => slider.destroy();
-  });
+  }, [slider]);
 
   return (
     <Box w={"full"}>

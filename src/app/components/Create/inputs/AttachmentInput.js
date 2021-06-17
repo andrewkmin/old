@@ -18,7 +18,7 @@ const AttachmentInput = () => {
     // If there are some files attached
     else {
       // Dynamic suffix or something
-      const suffix = event.target.files.length > 1 ? "s" : null;
+      const suffix = event.target.files.length > 1 ? "s" : "";
       // Update the text
       setAttachmentText(`Attached ${event.target.files.length} file${suffix}`);
     }

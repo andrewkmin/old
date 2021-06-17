@@ -13,7 +13,7 @@ const Renderer = ({ text = "", fontSize = "md", ...props }) => {
       switch (text) {
         // HTTP URL
         case text.match(URL) !== null && text.match(URL)[0]: {
-          text = (
+          return (
             <ChakraLink
               href={text}
               key={nanoid()}
@@ -24,29 +24,26 @@ const Renderer = ({ text = "", fontSize = "md", ...props }) => {
               {text}
             </ChakraLink>
           );
-          return text;
         }
         // User mention
         case text.match(Mention) !== null && text.match(Mention)[0]: {
-          text = (
+          return (
             <Tag size={fontSize} colorScheme={"blue"} key={nanoid()}>
               <Link to={`/users/${text.replace("@", "")}`} color={"gray.800"}>
                 {text}
               </Link>
             </Tag>
           );
-          return text;
         }
         // Hashtag
         case text.match(Hashtag) !== null && text.match(Hashtag)[0]: {
-          text = (
+          return (
             <Tag size={fontSize} colorScheme={"blue"} key={nanoid()}>
               <Link to={`/tags/${text.replace("#", "")}`} color={"gray.800"}>
                 {text}
               </Link>
             </Tag>
           );
-          return text;
         }
         // Just text
         default: {
