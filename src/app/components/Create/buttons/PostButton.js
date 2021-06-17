@@ -10,12 +10,12 @@ const PostButton = ({
   return (
     <Center>
       <Button
-        borderRadius={"xl"}
         size={"md"}
-        colorScheme={"blue"}
-        disabled={createPostDisabled}
-        isLoading={submitting}
         type={"submit"}
+        borderRadius={"xl"}
+        colorScheme={"blue"}
+        isLoading={submitting}
+        disabled={createPostDisabled}
       >
         POST
       </Button>

@@ -1,6 +1,5 @@
+import { Box } from "@chakra-ui/react";
 import { Helmet } from "react-helmet-async";
-import { Box, Container } from "@chakra-ui/react";
-
 import CreatePost from "../components/Create/index";
 
 const Home = () => {
@@ -11,12 +10,8 @@ const Home = () => {
       </Helmet>
 
       <Box>
-        <Box>
-          <Container>
-            <CreatePost />
-            {/* <PostList /> */}
-          </Container>
-        </Box>
+        <CreatePost />
+        {/* <Posts /> */}
       </Box>
     </>
   );

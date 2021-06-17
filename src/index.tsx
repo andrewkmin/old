@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
+// Query Client for react query
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

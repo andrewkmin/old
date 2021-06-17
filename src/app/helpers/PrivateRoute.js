@@ -1,8 +1,16 @@
-import React from "react";
-import { useContext } from "react";
+import {
+  // ReactChildren,
+  useContext,
+} from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import DataContext from "../data/data.context";
+
+// Props for private route
+// type PrivateRouteProps = {
+//   children: ReactChildren;
+//   swap: Boolean;
+// };
 
 const PrivateRoute = ({ children, swap, ...rest }) => {
   // Getting the authenticated parameter from the context

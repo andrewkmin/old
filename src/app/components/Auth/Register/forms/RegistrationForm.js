@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Stack, Box, useToast } from "@chakra-ui/react";
 
-import _axios from "../../../../api/axios";
+import axios from "../../../../api/axios";
 import DataContext from "../../../../data/data.context";
 
 import EmailInput from "../inputs/EmailInput";
@@ -18,6 +18,7 @@ const RegistrationForm = () => {
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // For registering
   const handleRegistration = async (event) => {
     // Prevent default behavior
     event.preventDefault();
@@ -25,9 +26,9 @@ const RegistrationForm = () => {
     setIsSubmitting(true);
 
     // Sending the response
-    const response = await _axios.post(
+    const response = await axios.post(
       "/auth/register",
-      new FormData(event.currentTarget)
+      new FormData(event.target)
     );
 
     // Not loading anymore
@@ -38,7 +39,7 @@ const RegistrationForm = () => {
       // Created successfully
       case 201: {
         // Fetching user data
-        const { data: userData } = await _axios.get("/api/accounts/fetch");
+        const { data: userData } = await axios.get("/api/accounts/fetch");
 
         // Updating the state
         setState({ authenticated: true, userData });
@@ -89,10 +90,10 @@ const RegistrationForm = () => {
     <Box>
       <form
         autoComplete={"off"}
-        encType={"multipart/form-data"}
         onSubmit={handleRegistration}
+        encType={"multipart/form-data"}
       >
-        <Stack spacing={4}>
+        <Stack spacing={3}>
           <Box>
             <Stack direction={"row"}>
               <FirstNameInput />

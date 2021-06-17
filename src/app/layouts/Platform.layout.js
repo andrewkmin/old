@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useToast } from "@chakra-ui/toast";
 
 import { useSendHeartbeat } from "../api/hooks";
-import Navbar from "../components/Navbar/index";
+// import Navbar from "../components/Navbar/index";
 
 const PlatformLayout = ({ children }) => {
   const Toast = useToast();
@@ -73,7 +73,7 @@ const PlatformLayout = ({ children }) => {
         />
       </Helmet>
 
-      <Navbar />
+      {/* <Navbar /> */}
       {children}
     </>
   );

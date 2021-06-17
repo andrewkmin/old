@@ -19,11 +19,11 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         <ModalContent m={2}>
           <ModalHeader>
             <Flex>
-              <Text fontWeight={"bold"}>Sign Up</Text>
+              <Text fontWeight={"semibold"}>Sign Up</Text>
             </Flex>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody p={3.5}>
             <RegistrationForm />
           </ModalBody>
         </ModalContent>

@@ -1,18 +1,10 @@
-import {
-  Box,
-  Divider,
-  useToast,
-  useColorModeValue,
-  Stack,
-  Center,
-} from "@chakra-ui/react";
-import { useState } from "react";
-
 import axios from "../../api/axios";
 import UserAvatar from "./ui/UserAvatar";
 import TextInput from "./inputs/TextInput";
+import { ChangeEvent, useState } from "react";
 import PostButton from "./buttons/PostButton";
 import AttachmentInput from "./inputs/AttachmentInput";
+import { Box, Divider, useToast, Stack, Center } from "@chakra-ui/react";
 
 const CreateForm = () => {
   const toast = useToast();
@@ -20,14 +12,14 @@ const CreateForm = () => {
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
 
   // For handling input and enabling/disabling the post button based on it
-  const handleInput = (event) => {
+  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     // Disabling the button if the length is 0
     if (event.target.value.length === 0) setCreatePostDisabled(true);
     else setCreatePostDisabled(false);
   };
 
   // For creating a post
-  const handleCreatePost = async (event) => {
+  const handleCreatePost = async (event: ChangeEvent<HTMLFormElement>) => {
     // Preventing default behaviour
     event.preventDefault();
 
@@ -73,21 +65,19 @@ const CreateForm = () => {
   return (
     <form
       autoComplete={"off"}
+      onSubmit={handleCreatePost}
       encType={"multipart/form-data"}
-      onSubmit={(event) => {
-        handleCreatePost(event);
-      }}
     >
       <Box>
         <Box
           p={[2, 3]}
-          boxShadow={"md"}
+          border={"2px"}
+          bg={"white.500"}
+          borderColor={"gray.100"}
           borderRadius={["md", "lg"]}
-          bg={useColorModeValue("white.500", "gray.700")}
-          borderColor={useColorModeValue("gray.300", "gray.800")}
         >
-          <Stack>
-            <Stack direction={"row"} spacing={2}>
+          <Stack spacing={2}>
+            <Stack direction={"row"}>
               <UserAvatar />
 
               <Center w={"full"}>

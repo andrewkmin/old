@@ -16,11 +16,11 @@ import axios from "../../../api/axios";
 import DataContext from "../../../data/data.context";
 
 // Components
-import { MdEmail } from "react-icons/md";
-import PasswordInput from "./inputs/PasswordInput";
+import { MdEmail, MdLock } from "react-icons/md";
 
+// Login form component
 const Login = () => {
-  const Toast = useToast();
+  const toast = useToast();
   const History = useHistory();
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,9 +56,9 @@ const Login = () => {
         return History.push("/");
       }
       // If there is no such account
-      case 404: {
+      case 204: {
         // Notify
-        return Toast({
+        return toast({
           title: "That account does not exist",
           status: "error",
           duration: 2000,
@@ -68,7 +68,7 @@ const Login = () => {
       // If there's another status
       default: {
         // Notify
-        return Toast({
+        return toast({
           title: "Check your credentials",
           status: "error",
           isClosable: false,
@@ -98,7 +98,22 @@ const Login = () => {
             </InputGroup>
           </FormControl>
           {/* Password Input */}
-          <PasswordInput />
+          <FormControl>
+            <InputGroup>
+              <InputLeftElement>
+                <MdLock color={"gray"} />
+              </InputLeftElement>
+
+              <Input
+                placeholder={"Password"}
+                size={"md"}
+                minLength={8}
+                name={"password"}
+                type={"password"}
+                required
+              />
+            </InputGroup>
+          </FormControl>
           {/* Submit */}
           <FormControl>
             <InputGroup>
