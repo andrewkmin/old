@@ -1,14 +1,22 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Stack, useToast, Box } from "@chakra-ui/react";
+import {
+  Stack,
+  useToast,
+  Box,
+  FormControl,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 
 // API
 import axios from "../../../api/axios";
 import DataContext from "../../../data/data.context";
 
 // Components
-import EmailInput from "./inputs/EmailInput";
-import LoginButton from "./buttons/LoginButton";
+import { MdEmail } from "react-icons/md";
 import PasswordInput from "./inputs/PasswordInput";
 
 const Login = () => {
@@ -19,6 +27,8 @@ const Login = () => {
 
   // For handling the login
   const handleLogin = async (event) => {
+    // Preventing default behavior
+    event.preventDefault();
     // Creating a payload
     const PAYLOAD = {
       email: event.currentTarget.elements.email.value,
@@ -70,17 +80,40 @@ const Login = () => {
 
   return (
     <Box>
-      <form
-        autoComplete={"off"}
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleLogin(event);
-        }}
-      >
+      <form autoComplete={"off"} onSubmit={handleLogin}>
         <Stack spacing={3}>
-          <EmailInput />
+          {/* Email input */}
+          <FormControl>
+            <InputGroup>
+              <InputLeftElement>
+                <MdEmail color={"gray"} />
+              </InputLeftElement>
+              <Input
+                required
+                placeholder={"Email"}
+                size={"md"}
+                name={"email"}
+                type={"email"}
+              />
+            </InputGroup>
+          </FormControl>
+          {/* Password Input */}
           <PasswordInput />
-          <LoginButton isSubmitting={isSubmitting} />
+          {/* Submit */}
+          <FormControl>
+            <InputGroup>
+              <Button
+                type={"submit"}
+                loadingText={"Logging you In"}
+                w={"full"}
+                size={"md"}
+                colorScheme={"blue"}
+                isLoading={isSubmitting}
+              >
+                Login
+              </Button>
+            </InputGroup>
+          </FormControl>
         </Stack>
       </form>
     </Box>

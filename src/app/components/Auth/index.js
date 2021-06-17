@@ -1,7 +1,6 @@
 // Components
 import Login from "./Login";
 import Registration from "./Register";
-
 import { Text, Center, Stack, Divider, Box } from "@chakra-ui/react";
 
 // Component that holds both registration and login forms

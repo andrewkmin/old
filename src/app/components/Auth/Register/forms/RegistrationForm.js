@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Stack, Flex, Box, useToast } from "@chakra-ui/react";
+import { Stack, Box, useToast } from "@chakra-ui/react";
 
 import _axios from "../../../../api/axios";
 import DataContext from "../../../../data/data.context";
@@ -19,6 +19,8 @@ const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegistration = async (event) => {
+    // Prevent default behavior
+    event.preventDefault();
     // Loading
     setIsSubmitting(true);
 
@@ -88,17 +90,14 @@ const RegistrationForm = () => {
       <form
         autoComplete={"off"}
         encType={"multipart/form-data"}
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleRegistration(event);
-        }}
+        onSubmit={handleRegistration}
       >
-        <Stack mt={4} spacing={4}>
+        <Stack spacing={4}>
           <Box>
-            <Flex>
+            <Stack direction={"row"}>
               <FirstNameInput />
               <LastNameInput />
-            </Flex>
+            </Stack>
           </Box>
 
           <EmailInput />

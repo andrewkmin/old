@@ -1,13 +1,11 @@
-import "./css/globals.css";
-
+import App from "./app";
 import React from "react";
+import "./css/globals.css";
+import Theme from "./app/theme";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
-
-import App from "./app/index";
-import Theme from "./theme/index";
 
 const queryClient = new QueryClient({
   defaultOptions: {

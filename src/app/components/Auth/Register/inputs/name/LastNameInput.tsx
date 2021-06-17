@@ -3,10 +3,9 @@ import { Box, FormControl, FormLabel, Input } from "@chakra-ui/react";
 // Input component for last name
 const LastNameInput = () => {
   return (
-    <Box ms={1}>
+    <Box>
       <FormControl isRequired>
         <FormLabel>Last Name</FormLabel>
-
         <Input
           required
           type="text"
