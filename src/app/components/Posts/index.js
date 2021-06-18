@@ -3,7 +3,10 @@ import { Box } from "@chakra-ui/layout";
 import { useFetchPosts } from "../../api/hooks";
 
 const Posts = ({ accountId = null }) => {
-  const { data, isFetching } = useFetchPosts(accountId);
+  const {
+    data,
+    // isFetching
+  } = useFetchPosts(accountId);
 
   return (
     <Box>

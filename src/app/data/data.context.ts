@@ -1,9 +1,29 @@
 import { createContext } from "react";
 
-const DataContext = createContext({
-  data: {},
-  // TODO: Might remove later when I find a solution to activate suspense while react-query/axios are making requests
+type User = {
+  _id: string;
+  __v: number;
+  bio: string;
+  email: string;
+  avatar: string;
+  lastName: string;
+  private: boolean;
+  firstName: string;
+
+  posts: [];
+  friends: [];
+  notifications: [];
+};
+
+interface ContextProps {
+  loading: boolean;
+  authenticated: boolean;
+  userData?: User | null;
+}
+
+const DataContext = createContext<ContextProps>({
   loading: true,
+  userData: null,
   authenticated: false,
 });
 

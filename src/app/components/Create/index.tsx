@@ -1,14 +1,23 @@
 import axios from "../../api/axios";
 import Confetti from "react-confetti";
-import UserAvatar from "./ui/UserAvatar";
 import TextInput from "./inputs/TextInput";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import PostButton from "./buttons/PostButton";
+import DataContext from "../../data/data.context";
 import AttachmentInput from "./inputs/AttachmentInput";
-import { Box, Divider, useToast, Stack, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  useToast,
+  Stack,
+  Center,
+  Button,
+  Avatar,
+} from "@chakra-ui/react";
 
 const CreateForm = () => {
   const toast = useToast();
+  const { userData } = useContext(DataContext);
   const [successful, setSuccessful] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
@@ -51,7 +60,6 @@ const CreateForm = () => {
           status: "success",
           isClosable: false,
           duration: 2000,
-          onCloseComplete: () => setSuccessful(false),
         });
       }
       // If there was an error and the status wasn't 201
@@ -75,8 +83,10 @@ const CreateForm = () => {
           numberOfPieces={1000}
           width={window.innerWidth}
           height={window.innerHeight}
+          onConfettiComplete={() => setSuccessful(false)}
         />
       )}
+
       <form
         autoComplete={"off"}
         onSubmit={handleCreatePost}
@@ -88,11 +98,17 @@ const CreateForm = () => {
             border={"2px"}
             bg={"white.500"}
             borderColor={"gray.100"}
-            borderRadius={["md", "lg"]}
           >
             <Stack spacing={2}>
               <Stack direction={"row"}>
-                <UserAvatar />
+                <Center>
+                  <Avatar
+                    size={"md"}
+                    boxShadow={"md"}
+                    src={userData?.avatar!!}
+                    name={`${userData?.firstName} ${userData?.lastName}`}
+                  />
+                </Center>
 
                 <Center w={"full"}>
                   <TextInput handleInput={handleInput} />
@@ -105,7 +121,16 @@ const CreateForm = () => {
               </Stack>
 
               <Divider />
-              <AttachmentInput />
+
+              <Stack direction={"row"}>
+                <AttachmentInput />
+                <Button variant={"outline"} boxShadow={"xs"} w={"full"}>
+                  Something Else
+                </Button>
+                <Button variant={"outline"} w={"full"}>
+                  Something Else
+                </Button>
+              </Stack>
             </Stack>
           </Box>
         </Box>

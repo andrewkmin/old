@@ -3,8 +3,6 @@ import {
   Spacer,
   Box,
   Text,
-  Center,
-  Image,
   useColorModeValue,
   IconButton,
   Avatar,
@@ -19,10 +17,10 @@ import { RiNotification3Fill } from "react-icons/ri";
 
 import Notifications from "../Notifications";
 import DropdownMenu from "./Menu/DropdownMenu";
-import _DataContext from "../../data/data.context";
+import DataContext from "../../data/data.context";
 
 const Navbar = () => {
-  const { userData } = useContext(_DataContext);
+  const { userData } = useContext(DataContext);
   const unreadNotifications = filter(userData.notifications, (notification) => {
     return !notification.seen;
   });
@@ -35,47 +33,42 @@ const Navbar = () => {
 
   return (
     <Flex
-      borderBottom={"1px"}
-      borderColor={useColorModeValue("gray.300", "gray.700")}
-      bg={useColorModeValue("gray.50", "gray.700")}
-      zIndex={"sticky"}
-      // boxShadow={"md"}
-      pos={"sticky"}
+      p={2}
       mb={10}
       top={0}
-      p={2}
+      pos={"sticky"}
+      zIndex={"sticky"}
+      borderBottom={"1px"}
+      bg={useColorModeValue("gray.50", "gray.700")}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
     >
       {/* Logo */}
-      <Box me={1}>
-        <Center>
-          <NavLink to="/">
-            <Image boxSize={"40px"} src={"/favicon.ico"} alt={"Logo"} />
+      <Flex alignItems={"center"}>
+        <Box>
+          <NavLink to={"/"}>
+            <Text fontSize={"2xl"} fontWeight={"semibold"}>
+              Usocial
+            </Text>
           </NavLink>
-        </Center>
-      </Box>
+        </Box>
+      </Flex>
 
       <Spacer />
 
-      <Box ms={1}>
+      <Box>
         <Stack direction={"row"}>
-          {/* Current Account */}
           <IconButton
-            as={NavLink}
-            to={`/users/${userData?._id}`}
-            variant={"ghost"}
             isRound
+            as={NavLink}
+            border={"2px"}
+            variant={"ghost"}
+            borderColor={"gray.400"}
+            to={`/users/${userData?._id}`}
           >
-            <Flex px={1}>
-              <Box>
-                {/* User avatar */}
-                <Avatar size={"sm"} src={userData?.avatar} />
-              </Box>
-
-              {/* First name */}
-              <Center as={Box} px={1}>
-                <Text fontWeight={"bold"}>{userData?.firstName}</Text>
-              </Center>
-            </Flex>
+            <Stack alignItems={"center"} direction={"row"} px={2}>
+              <Avatar size={"sm"} src={userData?.avatar} />
+              <Text fontWeight={"bold"}>{userData?.firstName}</Text>
+            </Stack>
           </IconButton>
 
           {/* Notification drawer trigger */}

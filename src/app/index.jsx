@@ -9,8 +9,8 @@ import DataContext from "./data/data.context";
 const Entry = () => {
   const authenticate = useRef();
   const [state, setState] = useState({
-    loading: true,
     userData: {},
+    loading: true,
     authenticated: false,
   });
 

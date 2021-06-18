@@ -9,9 +9,7 @@ const Content = ({ post }) => {
     // Middle section
     <Box>
       {/* Rendering post text */}
-      {/* <Renderer fontSize={["lg", "md"]} text={post?.body} /> */}
-
-      {post.body}
+      <Renderer fontSize={["lg", "md"]} text={post.body} />
 
       <Carousel>
         {/* Rendering post attachments if there are any */}

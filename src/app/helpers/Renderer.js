@@ -5,6 +5,8 @@ import { Tag, Text, Link as ChakraLink } from "@chakra-ui/react";
 import { Hashtag, Mention, URL } from "../utils/patterns";
 
 const Renderer = ({ text = "", fontSize = "md", ...props }) => {
+  if (!text || text.length === 0) return;
+
   const Rendered = text
     // Splitting the text
     .split(" ")

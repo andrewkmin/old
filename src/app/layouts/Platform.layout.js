@@ -1,9 +1,9 @@
 import { useEffect } from "react";
+import { Box } from "@chakra-ui/react";
+import Navbar from "../components/Navbar";
 import { Helmet } from "react-helmet-async";
 import { useToast } from "@chakra-ui/toast";
-
 import { useSendHeartbeat } from "../api/hooks";
-// import Navbar from "../components/Navbar/index";
 
 const PlatformLayout = ({ children }) => {
   const Toast = useToast();
@@ -73,8 +73,8 @@ const PlatformLayout = ({ children }) => {
         />
       </Helmet>
 
-      {/* <Navbar /> */}
-      {children}
+      <Navbar />
+      <Box mx={["5", 10, null, "60", "96"]}>{children}</Box>
     </>
   );
 };

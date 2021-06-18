@@ -10,7 +10,7 @@ import Logout from "../pages/Logout";
 import { Box } from "@chakra-ui/react";
 import Welcome from "../pages/Welcome";
 import Profile from "../pages/Profile";
-// import Settings from "../pages/Settings";
+import Settings from "../pages/Settings";
 import Private from "../helpers/PrivateRoute";
 import PlatformLayout from "../layouts/Platform.layout";
 
@@ -25,7 +25,7 @@ const Routes = () => {
                 <PlatformLayout>
                   <Switch>
                     <Route exact component={Home} path={"/"} />
-                    {/* <Route exact component={() => {}} path={"/settings"} /> */}
+                    <Route exact component={Settings} path={"/settings"} />
                     <Route
                       exact
                       component={Profile}

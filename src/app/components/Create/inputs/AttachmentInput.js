@@ -10,7 +10,7 @@ const AttachmentInput = () => {
   // The ref for interacting with the hidden input element
   const AttachmentInputRef = useRef();
   // The text that will be shown if no media was uploaded
-  const [attachmentText, setAttachmentText] = useState("Photo/Video");
+  const [attachmentText, setAttachmentText] = useState("Media");
   // Handle file change
   const handleFileChange = (event) => {
     // If there are no files attached

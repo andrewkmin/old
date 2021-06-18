@@ -26,9 +26,9 @@ const Top = ({ states, setState, post, removeHandler }) => {
   const { userData } = useContext(DataContext);
 
   // TODO: Implement
-  const savePost = async () => {};
+  // const savePost = async () => {};
   // TODO: Implement
-  const unsavePost = async () => {};
+  // const unsavePost = async () => {};
   // TODO։ Implement
   const deletePost = async () => {};
 

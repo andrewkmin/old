@@ -1,14 +1,14 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Box, Stack } from "@chakra-ui/react";
 
 import Info from "./Sections/Info";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
 import Reactions from "./Sections/Reactions";
-import DataContext from "../../data/data.context";
+// import DataContext from "../../data/data.context";
 
 const Post = ({ data }) => {
-  const { userData } = useContext(DataContext);
+  // const { userData } = useContext(DataContext);
 
   return (
     <Box

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
+import Posts from "../components/Posts";
 import { Helmet } from "react-helmet-async";
 import CreatePost from "../components/Create/index";
-import Posts from "../components/Posts";
 
 const Home = () => {
   return (

@@ -12,7 +12,6 @@ const PostButton = ({
       <Button
         size={"md"}
         type={"submit"}
-        borderRadius={"xl"}
         colorScheme={"blue"}
         isLoading={submitting}
         disabled={createPostDisabled}

@@ -1,7 +1,7 @@
 import App from "./app";
 import React from "react";
 import "./css/globals.css";
-import Theme from "./app/theme";
+import theme from "./app/theme";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -21,9 +21,9 @@ ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <ChakraProvider theme={Theme}>
+        <ChakraProvider theme={theme}>
           {/* This provides support for dark mode */}
-          <ColorModeScript initialColorMode={Theme.config.initialColorMode} />
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <App />
         </ChakraProvider>
       </HelmetProvider>
