@@ -74,7 +74,7 @@ const PlatformLayout = ({ children }) => {
       </Helmet>
 
       <Navbar />
-      <Box mx={["5", 10, null, "60", "96"]}>{children}</Box>
+      <Box>{children}</Box>
     </>
   );
 };

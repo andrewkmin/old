@@ -75,7 +75,7 @@ const CreateForm = () => {
   };
 
   return (
-    <>
+    <Box w={["md", "lg", "xl"]}>
       {successful && (
         <Confetti
           recycle={false}
@@ -97,6 +97,7 @@ const CreateForm = () => {
             p={[2, 3]}
             border={"2px"}
             bg={"white.500"}
+            // borderRadius={"lg"}
             borderColor={"gray.100"}
           >
             <Stack spacing={2}>
@@ -135,7 +136,7 @@ const CreateForm = () => {
           </Box>
         </Box>
       </form>
-    </>
+    </Box>
   );
 };
 
