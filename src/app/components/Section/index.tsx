@@ -1,5 +1,11 @@
 import { ReactChildren } from "react";
-import { Box, ChakraProps, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  ChakraProps,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 type SectionProps = {
   title: string;
@@ -18,7 +24,7 @@ const Section = ({ title, subtitle, children }: SectionInterface) => {
           <Text fontSize={["xl", "2xl", "3xl"]} fontWeight={"semibold"}>
             {title}
           </Text>
-          <Text color={"gray.500"} fontSize={["sm", "md"]}>
+          <Text color={useColorModeValue("gray.600", "gray.300")} fontSize={["sm", "md"]}>
             {subtitle}
           </Text>
         </Box>

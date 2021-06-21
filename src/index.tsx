@@ -1,6 +1,6 @@
 import App from "./app";
 import React from "react";
-import "./css/globals.css";
+import "./app/css/globals.css";
 import theme from "./app/theme";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";

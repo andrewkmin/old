@@ -6,30 +6,20 @@ import {
   useColorModeValue,
   IconButton,
   Avatar,
-  useDisclosure,
-  Portal,
+  // useDisclosure,
+  // Portal,
   Stack,
 } from "@chakra-ui/react";
-import { filter } from "lodash";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { RiNotification3Fill } from "react-icons/ri";
+// import { RiNotification3Fill } from "react-icons/ri";
 
-import Notifications from "../Notifications";
 import DropdownMenu from "./Menu/DropdownMenu";
+// import Notifications from "../Notifications";
 import DataContext from "../../data/data.context";
 
 const Navbar = () => {
-  const {
-    onOpen: notifDrawerOnOpen,
-    onClose: notifDrawerOnClose,
-    isOpen: notifDrawerIsOpen,
-  } = useDisclosure();
-
   const { userData } = useContext(DataContext);
-  const unreadNotifications = filter(userData.notifications, (notification) => {
-    return !notification.seen;
-  });
 
   return (
     <Flex
@@ -44,56 +34,33 @@ const Navbar = () => {
     >
       {/* Logo */}
       <Flex alignItems={"center"}>
-        <Box>
-          <NavLink to={"/"}>
-            <Text fontSize={"2xl"} fontWeight={"semibold"}>
-              Usocial
-            </Text>
-          </NavLink>
-        </Box>
+        <NavLink to={"/"}>
+          <Text color={"teal.400"} fontSize={"2xl"} fontWeight={"semibold"}>
+            Usocial
+          </Text>
+        </NavLink>
       </Flex>
 
       <Spacer />
 
-      <Box>
-        <Stack direction={"row"}>
-          <IconButton
-            isRound
-            as={NavLink}
-            border={"2px"}
-            variant={"ghost"}
-            borderColor={"gray.400"}
-            to={`/users/${userData?._id}`}
-          >
-            <Stack alignItems={"center"} direction={"row"} px={2}>
-              <Avatar size={"sm"} src={userData?.avatar} />
-              <Text fontWeight={"bold"}>{userData?.firstName}</Text>
-            </Stack>
-          </IconButton>
+      {/* Actions */}
+      <Stack direction={"row"}>
+        {/* Current account link */}
+        <IconButton
+          as={NavLink}
+          isRound={true}
+          variant={"ghost"}
+          borderColor={"gray.400"}
+          to={`/users/${userData?.id}`}
+        >
+          <Stack alignItems={"center"} direction={"row"}>
+            {/* <Avatar size={"sm"} src={userData?.avatar} /> */}
+            <Text fontWeight={"bold"}>{userData?.firstName}</Text>
+          </Stack>
+        </IconButton>
 
-          {/* Notification drawer trigger */}
-          <IconButton
-            isRound
-            onClick={notifDrawerOnOpen}
-            icon={
-              <RiNotification3Fill
-                color={unreadNotifications.length === 0 ? null : "red.400"}
-              />
-            }
-          />
-
-          {/* Notification drawer from the right */}
-          <Portal>
-            <Notifications
-              onClose={notifDrawerOnClose}
-              isOpen={notifDrawerIsOpen}
-            />
-          </Portal>
-
-          {/* Dropdown menu for other things */}
-          <DropdownMenu />
-        </Stack>
-      </Box>
+        <DropdownMenu />
+      </Stack>
     </Flex>
   );
 };

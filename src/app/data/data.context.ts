@@ -1,19 +1,5 @@
+import { User } from "../types";
 import { createContext } from "react";
-
-type User = {
-  _id: string;
-  __v: number;
-  bio: string;
-  email: string;
-  avatar: string;
-  lastName: string;
-  private: boolean;
-  firstName: string;
-
-  posts: [];
-  friends: [];
-  notifications: [];
-};
 
 interface ContextProps {
   loading: boolean;

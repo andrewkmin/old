@@ -1,4 +1,5 @@
 import axios from "./axios";
+import { User } from "../types";
 import { useQuery } from "react-query";
 
 // Logout hook
@@ -24,11 +25,13 @@ export const useFetchNotifications = () => {
 };
 
 // Fetching posts hook
-export const useFetchPosts = (accountId?: String) => {
+export const useFetchPosts = (accountId: String = "") => {
   const FetchPosts = async () => {
-    const { data } = await axios.get(
-      `/api/posts/fetch/${accountId ? `?accountId=${accountId}` : ""}`
-    );
+    const { data } = await axios.get("/api/posts/fetch", {
+      params: {
+        accountId,
+      },
+    });
     return data;
   };
 
@@ -36,7 +39,7 @@ export const useFetchPosts = (accountId?: String) => {
 };
 
 // Check friendship hook
-export const useCheckFriendShip = (accountId: String) => {
+export const useCheckFriendship = (accountId: String) => {
   const CheckFriendship = async () => {
     const { data } = await axios.get(`/api/friends/${accountId}/check/`);
     return data;
@@ -58,13 +61,28 @@ export const useSendHeartbeat = () => {
 };
 
 // Fetch account hook
-export const useFetchAccount = (accountId: String) => {
+export const useFetchAccount = (accountId: String = "") => {
   const FetchAccount = async () => {
-    const response = await axios.get(
-      `/api/acconts/fetch${accountId ? `/?accountId=${accountId}` : null}`
-    );
+    const response = await axios.get<User>("/api/accounts/fetch", {
+      params: {
+        accountId,
+      },
+    });
     return response;
   };
 
   return useQuery("user data", FetchAccount);
+};
+
+export const useFetchAccountStatus = (accountId: String = "") => {
+  const FetchAccountStatus = async () => {
+    const { data } = await axios.get("/api/network/status", {
+      params: {
+        accountId,
+      },
+    });
+    return data;
+  };
+
+  return useQuery("user status", FetchAccountStatus);
 };

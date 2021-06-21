@@ -97,8 +97,8 @@ const CreateForm = () => {
             p={[2, 3]}
             border={"2px"}
             bg={"white.500"}
-            // borderRadius={"lg"}
-            borderColor={"gray.100"}
+            borderRadius={"lg"}
+            borderColor={"teal.500"}
           >
             <Stack spacing={2}>
               <Stack direction={"row"}>
@@ -106,8 +106,8 @@ const CreateForm = () => {
                   <Avatar
                     size={"md"}
                     boxShadow={"md"}
-                    src={userData?.avatar!!}
-                    name={`${userData?.firstName} ${userData?.lastName}`}
+                    src={userData?.avatar}
+                    name={userData?.firstName}
                   />
                 </Center>
 
