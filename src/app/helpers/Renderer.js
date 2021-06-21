@@ -1,13 +1,12 @@
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
-import { Tag, Text, Link as ChakraLink } from "@chakra-ui/react";
-
 import { Hashtag, Mention, URL } from "../utils/patterns";
+import { Tag, Text, Link as ChakraLink } from "@chakra-ui/react";
 
 const Renderer = ({ text = "", fontSize = "md", ...props }) => {
   if (!text || text.length === 0) return;
 
-  const Rendered = text
+  const rendered = text
     // Splitting the text
     .split(" ")
     // Mapping each splitted string
@@ -53,13 +52,15 @@ const Renderer = ({ text = "", fontSize = "md", ...props }) => {
         }
       }
     })
-    .reduce((prev, current) => [prev, " ", current]);
+    .reduce((prev, current) => {
+      return [prev, " ", current];
+    });
 
   return (
     // Wrapping inside of a text to provide flexible styling
     <Text fontSize={fontSize} {...props}>
-      {/* Wrapping the RenderedPost inside of a text tag to maintain consistency */}
-      {Rendered}
+      {/* Wrapping rendered inside of a text tag to maintain font consistency */}
+      {rendered}
     </Text>
   );
 };

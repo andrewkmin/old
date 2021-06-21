@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import { IoMdImages } from "react-icons/io";
 import { Button, Input } from "@chakra-ui/react";
 
@@ -8,11 +8,13 @@ import { Button, Input } from "@chakra-ui/react";
  */
 const AttachmentInput = () => {
   // The ref for interacting with the hidden input element
-  const AttachmentInputRef = useRef();
+  const AttachmentInputRef = useRef<HTMLInputElement>(null);
   // The text that will be shown if no media was uploaded
   const [attachmentText, setAttachmentText] = useState("Media");
   // Handle file change
-  const handleFileChange = (event) => {
+  const handleFileChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLFormElement>
+  ) => {
     // If there are no files attached
     if (event.target.files.length === 0) setAttachmentText("Photo/Video");
     // If there are some files attached
@@ -32,7 +34,7 @@ const AttachmentInput = () => {
       variant={"outline"}
       leftIcon={<IoMdImages color="green" />}
       // Virtually click the attachment input and select files from there
-      onClick={() => AttachmentInputRef.current.click()}
+      onClick={() => AttachmentInputRef.current?.click()}
     >
       {/* Dynamic text */}
       {attachmentText}

@@ -20,16 +20,16 @@ import DropdownMenu from "./Menu/DropdownMenu";
 import DataContext from "../../data/data.context";
 
 const Navbar = () => {
-  const { userData } = useContext(DataContext);
-  const unreadNotifications = filter(userData.notifications, (notification) => {
-    return !notification.seen;
-  });
-
   const {
     onOpen: notifDrawerOnOpen,
     onClose: notifDrawerOnClose,
     isOpen: notifDrawerIsOpen,
   } = useDisclosure();
+
+  const { userData } = useContext(DataContext);
+  const unreadNotifications = filter(userData.notifications, (notification) => {
+    return !notification.seen;
+  });
 
   return (
     <Flex
