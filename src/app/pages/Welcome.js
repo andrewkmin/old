@@ -3,13 +3,17 @@ import Auth from "../components/Auth/index";
 import { Helmet } from "react-helmet-async";
 import FirstTimeGreeting from "../components/FirstTimeGreeting";
 import { Box, Center, Flex, Link, Stack, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 // The welcome/authentication page
 const Welcome = () => {
   // Checking if this is the first time the user accesses the site
   const isFirstTime = JSON.parse(localStorage.isFirstTime || null);
-  // After this component renders setting the value to false
-  localStorage.isFirstTime = false;
+
+  useEffect(() => {
+    // On component mount, setting the value to false
+    localStorage.isFirstTime = false;
+  }, []);
 
   return (
     <>
@@ -53,7 +57,25 @@ const Welcome = () => {
       </Helmet>
 
       <Box minH={"100vh"}>
-        {isFirstTime && <FirstTimeGreeting />}
+        {isFirstTime === true ||
+          (isFirstTime === null && <FirstTimeGreeting />)}
+
+        {/* <Box
+          p={1}
+          zIndex={-11111}
+          position={"absolute"}
+          opacity={0.1}
+          w={"full"}
+          h={"full"}
+          bgColor={"teal.100"}
+        ></Box>
+
+        <Text ms={5} mt={5} fontWeight={"semibold"} fontSize={"5xl"}>
+          Welcome, to{" "}
+          <chakra.span fontWeight={"bold"} color={"#F2AF29"}>
+            Usocial
+          </chakra.span>
+        </Text> */}
 
         <Flex minH={"90vh"} alignItems={"center"} justifyContent={"center"}>
           <Auth />
