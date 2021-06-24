@@ -80,7 +80,7 @@ const Welcome = () => {
             border={"2px"}
             rounded={"xl"}
             boxShadow={"md"}
-            bgColor={useColorModeValue("gray.50", "gray.700")}
+            bgColor={useColorModeValue("white", "gray.700")}
             borderColor={useColorModeValue("gray.50", "gray.700")}
           >
             <Auth />
