@@ -25,7 +25,7 @@ const OrDivider = () => (
 // Component that holds both registration and login forms
 const Auth = () => {
   return (
-    <Stack mx={[2, 5]} spacing={6} w={"sm"}>
+    <Stack mx={[2, null,  5]} spacing={6} w={["xs", null, null, "sm"]}>
       <Box>
         <Center>
           <Text fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>

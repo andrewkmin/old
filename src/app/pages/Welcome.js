@@ -72,14 +72,15 @@ const Welcome = () => {
           maxH={"100%"}
           minH={"100vh"}
           alignItems={"center"}
+          w={"full"}
           justifyContent={"center"}
         >
           <Box
             px={1}
-            py={"14"}
             border={"2px"}
             rounded={"xl"}
             boxShadow={"md"}
+            py={["10", null, null, "14"]}
             bgColor={useColorModeValue("white", "gray.700")}
             borderColor={useColorModeValue("gray.50", "gray.700")}
           >
