@@ -3,7 +3,15 @@ import { format } from "date-fns";
 import Auth from "../components/Auth/index";
 import { Helmet } from "react-helmet-async";
 import FirstTimeGreeting from "../components/FirstTimeGreeting";
-import { Box, Center, Flex, Link, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Link,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 // The welcome/authentication page
 const Welcome = () => {
@@ -60,8 +68,23 @@ const Welcome = () => {
         {isFirstTime === true ||
           (isFirstTime === null && <FirstTimeGreeting />)}
 
-        <Flex minH={"100vh"} alignItems={"center"} justifyContent={"center"}>
-          <Auth />
+        <Flex
+          maxH={"100%"}
+          minH={"100vh"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Box
+            px={1}
+            py={"14"}
+            border={"2px"}
+            rounded={"xl"}
+            boxShadow={"md"}
+            bgColor={useColorModeValue("gray.50", "gray.700")}
+            borderColor={useColorModeValue("gray.50", "gray.700")}
+          >
+            <Auth />
+          </Box>
         </Flex>
 
         <Center

@@ -12,14 +12,14 @@ const EmailInput = () => (
     <FormLabel>Email</FormLabel>
     <InputGroup>
       <InputLeftElement>
-        <MdEmail color="gray" />
+        <MdEmail color={"gray"} />
       </InputLeftElement>
       <Input
         required
+        size={"md"}
         type={"email"}
         name={"email"}
         placeholder={"Email"}
-        size={"md"}
       />
     </InputGroup>
   </FormControl>

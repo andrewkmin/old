@@ -103,7 +103,6 @@ const Login = () => {
                 <InputLeftElement>
                   <MdLock color={"gray"} />
                 </InputLeftElement>
-
                 <Input
                   required
                   size={"md"}

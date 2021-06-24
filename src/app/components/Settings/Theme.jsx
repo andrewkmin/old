@@ -1,15 +1,7 @@
+import { useState } from "react";
 import Section from "../Section";
 import axios from "../../api/axios";
-import {
-  Box,
-  Center,
-  chakra,
-  Spinner,
-  Stack,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { chakra, Stack, useColorMode, useToast } from "@chakra-ui/react";
 
 // The section that will change the theme
 const Theme = () => {

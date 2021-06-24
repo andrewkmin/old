@@ -1,7 +1,7 @@
-import { useHistory, useParams } from "react-router-dom";
-import { Avatar, Box, Center, Spinner, Stack, Text } from "@chakra-ui/react";
-import { useFetchAccount, useFetchAccountStatus } from "../api/hooks";
 import { useEffect } from "react";
+import { useFetchAccount } from "../api/hooks";
+import { useHistory, useParams } from "react-router-dom";
+import { Avatar, Box, Spinner, Stack, Text } from "@chakra-ui/react";
 
 // The profile page
 const Profile = () => {

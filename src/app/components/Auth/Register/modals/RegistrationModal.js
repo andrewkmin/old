@@ -8,7 +8,6 @@ import {
   ModalBody,
   Flex,
 } from "@chakra-ui/react";
-
 import RegistrationForm from "../forms/RegistrationForm";
 
 const RegistrationModal = ({ isOpen, onClose }) => {
@@ -16,7 +15,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
     <>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent m={2}>
+        <ModalContent rounded={"2xl"} m={2}>
           <ModalHeader>
             <Flex>
               <Text fontWeight={"semibold"}>Sign Up</Text>

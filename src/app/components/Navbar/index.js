@@ -1,21 +1,14 @@
 import {
   Flex,
   Spacer,
-  Box,
   Text,
   useColorModeValue,
   IconButton,
-  Avatar,
-  // useDisclosure,
-  // Portal,
   Stack,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-// import { RiNotification3Fill } from "react-icons/ri";
-
 import DropdownMenu from "./Menu/DropdownMenu";
-// import Notifications from "../Notifications";
 import DataContext from "../../data/data.context";
 
 const Navbar = () => {
