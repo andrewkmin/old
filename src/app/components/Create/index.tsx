@@ -1,10 +1,10 @@
 import axios from "../../api/axios";
 import Confetti from "react-confetti";
 import TextInput from "./inputs/TextInput";
-import { ChangeEvent, useContext, useState } from "react";
 import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
 import AttachmentInput from "./inputs/AttachmentInput";
+import { ChangeEvent, useContext, useState } from "react";
 import {
   Box,
   Divider,
@@ -13,9 +13,10 @@ import {
   Center,
   Button,
   Avatar,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
-const CreateForm = () => {
+const Create = () => {
   const toast = useToast();
   const { userData } = useContext(DataContext);
   const [successful, setSuccessful] = useState(false);
@@ -98,7 +99,7 @@ const CreateForm = () => {
             border={"2px"}
             bg={"white.500"}
             borderRadius={"lg"}
-            borderColor={"teal.500"}
+            borderColor={useColorModeValue("gray.200", "gray.600")}
           >
             <Stack spacing={2}>
               <Stack direction={"row"}>
@@ -140,4 +141,4 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default Create;

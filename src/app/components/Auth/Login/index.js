@@ -1,5 +1,8 @@
+import axios from "../../../api/axios";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { MdEmail, MdLock } from "react-icons/md";
+import DataContext from "../../../data/data.context";
 import {
   Stack,
   useToast,
@@ -9,14 +12,8 @@ import {
   InputLeftElement,
   Input,
   Button,
+  FormLabel,
 } from "@chakra-ui/react";
-
-// API
-import axios from "../../../api/axios";
-import DataContext from "../../../data/data.context";
-
-// Components
-import { MdEmail, MdLock } from "react-icons/md";
 
 // Login form component
 const Login = () => {
@@ -81,49 +78,54 @@ const Login = () => {
   return (
     <Box>
       <form autoComplete={"off"} onSubmit={handleLogin}>
-        <Stack spacing={3}>
-          {/* Email input */}
-          <FormControl>
-            <InputGroup>
-              <InputLeftElement>
-                <MdEmail color={"gray"} />
-              </InputLeftElement>
-              <Input
-                required
-                placeholder={"Email"}
-                size={"md"}
-                name={"email"}
-                type={"email"}
-              />
-            </InputGroup>
-          </FormControl>
-          {/* Password Input */}
-          <FormControl>
-            <InputGroup>
-              <InputLeftElement>
-                <MdLock color={"gray"} />
-              </InputLeftElement>
+        <Stack spacing={5}>
+          <Stack>
+            {/* Email input */}
+            <FormControl>
+              <FormLabel fontWeight={"semibold"}>Email</FormLabel>
+              <InputGroup>
+                <InputLeftElement>
+                  <MdEmail color={"gray"} />
+                </InputLeftElement>
+                <Input
+                  required
+                  size={"md"}
+                  name={"email"}
+                  type={"email"}
+                  placeholder={"Email"}
+                />
+              </InputGroup>
+            </FormControl>
+            {/* Password Input */}
+            <FormControl>
+              <FormLabel fontWeight={"semibold"}>Password</FormLabel>
+              <InputGroup>
+                <InputLeftElement>
+                  <MdLock color={"gray"} />
+                </InputLeftElement>
 
-              <Input
-                placeholder={"Password"}
-                size={"md"}
-                minLength={8}
-                name={"password"}
-                type={"password"}
-                required
-              />
-            </InputGroup>
-          </FormControl>
+                <Input
+                  required
+                  size={"md"}
+                  minLength={8}
+                  name={"password"}
+                  type={"password"}
+                  placeholder={"Password"}
+                />
+              </InputGroup>
+            </FormControl>
+          </Stack>
           {/* Submit */}
           <FormControl>
             <InputGroup>
               <Button
-                type={"submit"}
-                loadingText={"Logging you In"}
                 w={"full"}
                 size={"md"}
+                type={"submit"}
+                rounded={"full"}
                 colorScheme={"blue"}
                 isLoading={isSubmitting}
+                loadingText={"Logging you In"}
               >
                 Login
               </Button>

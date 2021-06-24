@@ -6,10 +6,11 @@ const ModalTrigger = ({ registrationOnOpen }) => {
     <FormControl>
       <InputGroup>
         <Button
-          size={"md"}
           w={"full"}
-          onClick={registrationOnOpen}
+          size={"md"}
           colorScheme={"teal"}
+          borderRadius={"full"}
+          onClick={registrationOnOpen}
         >
           Create New Account
         </Button>

@@ -28,6 +28,7 @@ const AvatarInput = () => {
       <InputGroup>
         <Button
           w={"full"}
+          rounded={"full"}
           // Virtually clicking the hidden image attachment button to select a file
           onClick={() => AttachmentInputRef.current?.click()}
         >
@@ -51,11 +52,12 @@ const AvatarInput = () => {
         {/* The button for removing the avatar */}
         <Tooltip isDisabled={!avatarUploaded} label={"Remove avatar"}>
           <IconButton
-            aria-label={"Remove avatar"}
             ms={2}
-            icon={<DeleteIcon color={"red.400"} />}
+            isRound
+            aria-label={"Remove avatar"}
             isDisabled={!avatarUploaded}
             onClick={() => emptyAvatar()}
+            icon={<DeleteIcon color={"red.400"} />}
           />
         </Tooltip>
       </InputGroup>

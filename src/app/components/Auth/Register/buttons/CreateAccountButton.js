@@ -9,6 +9,7 @@ const CreateAccountButton = ({ isSubmitting }) => {
       mt={2}
       mb={2}
       w={"full"}
+      rounded={"full"}
       isLoading={isSubmitting}
       loadingText={"Creating an account"}
     >

@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import { format } from "date-fns";
 import Auth from "../components/Auth/index";
 import { Helmet } from "react-helmet-async";
 import FirstTimeGreeting from "../components/FirstTimeGreeting";
 import { Box, Center, Flex, Link, Stack, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 // The welcome/authentication page
 const Welcome = () => {
@@ -60,24 +60,7 @@ const Welcome = () => {
         {isFirstTime === true ||
           (isFirstTime === null && <FirstTimeGreeting />)}
 
-        {/* <Box
-          p={1}
-          zIndex={-11111}
-          position={"absolute"}
-          opacity={0.1}
-          w={"full"}
-          h={"full"}
-          bgColor={"teal.100"}
-        ></Box>
-
-        <Text ms={5} mt={5} fontWeight={"semibold"} fontSize={"5xl"}>
-          Welcome, to{" "}
-          <chakra.span fontWeight={"bold"} color={"#F2AF29"}>
-            Usocial
-          </chakra.span>
-        </Text> */}
-
-        <Flex minH={"90vh"} alignItems={"center"} justifyContent={"center"}>
+        <Flex minH={"100vh"} alignItems={"center"} justifyContent={"center"}>
           <Auth />
         </Flex>
 
