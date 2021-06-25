@@ -1,8 +1,8 @@
 import App from "./app";
 import React from "react";
-import "./app/css/globals.css";
 import theme from "./app/theme";
 import ReactDOM from "react-dom";
+import "./app/assets/scss/globals.scss";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";

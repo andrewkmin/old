@@ -9,6 +9,7 @@ import {
   Box,
   chakra,
   Tooltip,
+  Heading,
 } from "@chakra-ui/react";
 
 // Nice "OR" divider
@@ -25,12 +26,12 @@ const OrDivider = () => (
 // Component that holds both registration and login forms
 const Auth = () => {
   return (
-    <Stack mx={[2, null,  5]} spacing={6} w={["xs", null, null, "sm"]}>
+    <Stack mx={[2, null, 5]} spacing={6} w={["xs", "sm", null, "sm"]}>
       <Box>
         <Center>
-          <Text fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>
+          <Heading fontSize={"6xl"} fontWeight={"bold"} color={"teal.500"}>
             Usocial
-          </Text>
+          </Heading>
         </Center>
       </Box>
 
