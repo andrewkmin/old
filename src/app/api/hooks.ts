@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { User } from "../types";
+import { Post, User } from "../types";
 import { useQuery } from "react-query";
 
 // Logout hook
@@ -27,7 +27,7 @@ export const useFetchNotifications = () => {
 // Fetching posts hook
 export const useFetchPosts = (accountId: String = "") => {
   const FetchPosts = async () => {
-    const { data } = await axios.get("/api/posts/fetch", {
+    const { data } = await axios.get<Post[]>("/api/posts/fetch", {
       params: {
         accountId,
       },
@@ -56,7 +56,7 @@ export const useSendHeartbeat = () => {
   };
 
   return useQuery("heartbeat", SendHeartbeat, {
-    refetchInterval: 1000 * 5 * 60, // 5 seconds
+    refetchInterval: 1000 * 5 * 60, // 5 minutes
   });
 };
 

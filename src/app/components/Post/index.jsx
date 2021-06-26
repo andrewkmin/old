@@ -1,23 +1,18 @@
-// import { useContext } from "react";
-import { Box, Stack } from "@chakra-ui/react";
-
 import Info from "./Sections/Info";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
 import Reactions from "./Sections/Reactions";
-// import DataContext from "../../data/data.context";
+import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 
 const Post = ({ data }) => {
-  // const { userData } = useContext(DataContext);
-
   return (
     <Box
       my={5}
       p={[2, 3]}
-      border={"1px"}
+      border={"2px"}
       boxShadow={"md"}
       borderRadius={"md"}
-      borderColor={"gray.300"}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
     >
       <Stack spacing={2}>
         {/* Post info */}

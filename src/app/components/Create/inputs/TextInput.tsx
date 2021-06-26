@@ -1,5 +1,9 @@
-import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Center, FormControl, Input } from "@chakra-ui/react";
+import {
+  Center,
+  FormControl,
+  Input,
+  // Textarea
+} from "@chakra-ui/react";
 
 type TextInputProps = {
   handleInput: Function;
@@ -12,11 +16,13 @@ const TextInput = ({ handleInput }: TextInputProps) => (
       <Input
         size={"md"}
         name={"text"}
+        rounded={"full"}
+        // resize={"none"}
         boxShadow={"sm"}
         variant={"outline"}
         placeholder={"Write something..."}
         onChange={(event) => handleInput(event)}
-        focusBorderColor={useColorModeValue("teal.500", "teal.300")}
+        // focusBorderColor={useColorModeValue("teal.500", "teal.300")}
       />
     </Center>
   </FormControl>

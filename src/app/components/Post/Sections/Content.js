@@ -1,5 +1,5 @@
 import Carousel from "../../Carousel";
-import { Box } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import Renderer from "../../../helpers/Renderer";
 import Media from "../../Media";
 
@@ -15,21 +15,15 @@ const Content = ({ post }) => {
         {/* Rendering post attachments if there are any */}
         {post?.attachments?.urls?.map((attachment, index) => {
           return (
+            // <Center>
             <Media
+              m={5}
+              rounded={"xl"}
+              key={attachment.url}
               url={attachment.url}
               mimetype={attachment.mimetype}
-              key={attachment.url}
             />
-            // <object
-            //   aria-controls={"enabled"}
-            //   style={{
-            //     width: "100%",
-            //     height: "50%",
-            //   }}
-            //   aria-label={attachment.url}
-            //   data={`http://${attachment.url}`}
-            //   key={index}
-            // ></object>
+            // </Center>
           );
         })}
       </Carousel>

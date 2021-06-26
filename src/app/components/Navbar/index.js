@@ -28,7 +28,7 @@ const Navbar = () => {
       {/* Logo */}
       <Flex alignItems={"center"}>
         <NavLink to={"/"}>
-          <Text color={"teal.400"} fontSize={"2xl"} fontWeight={"semibold"}>
+          <Text color={"teal.400"} fontSize={"2xl"} fontFamily={"Ubuntu Bold"} fontWeight={"bold"}>
             Usocial
           </Text>
         </NavLink>

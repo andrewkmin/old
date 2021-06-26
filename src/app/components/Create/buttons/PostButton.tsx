@@ -1,8 +1,8 @@
 import { Button, Center } from "@chakra-ui/react";
 
 type PostButtonProps = {
-  createPostDisabled: boolean;
   submitting: boolean;
+  createPostDisabled: boolean;
 };
 
 // The button that will submit the form that will send a POST request to the back-end
@@ -17,11 +17,13 @@ const PostButton = ({
       <Button
         size={"md"}
         type={"submit"}
+        rounded={"full"}
         colorScheme={"blue"}
         isLoading={submitting}
+        fontWeight={"semibold"}
         disabled={createPostDisabled}
       >
-        POST
+        Post
       </Button>
     </Center>
   );

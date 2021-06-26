@@ -6,7 +6,6 @@ import FirstTimeGreeting from "../components/FirstTimeGreeting";
 import {
   Box,
   Center,
-  chakra,
   Flex,
   Link,
   Stack,

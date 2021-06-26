@@ -14,6 +14,7 @@ import {
   Button,
   Avatar,
   useColorModeValue,
+  AvatarBadge,
 } from "@chakra-ui/react";
 
 const Create = () => {
@@ -76,7 +77,7 @@ const Create = () => {
   };
 
   return (
-    <Box w={["md", "lg", "xl"]}>
+    <>
       {successful && (
         <Confetti
           recycle={false}
@@ -97,9 +98,10 @@ const Create = () => {
           <Box
             p={[2, 3]}
             border={"2px"}
-            bg={"white.500"}
+            boxShadow={"lg"}
             borderRadius={"lg"}
-            borderColor={useColorModeValue("gray.200", "gray.600")}
+            bgColor={useColorModeValue("#FFFFFC", "gray.700")}
+            borderColor={useColorModeValue("gray.300", "gray.700")}
           >
             <Stack spacing={2}>
               <Stack direction={"row"}>
@@ -109,7 +111,9 @@ const Create = () => {
                     boxShadow={"md"}
                     src={userData?.avatar}
                     name={userData?.firstName}
-                  />
+                  >
+                    <AvatarBadge boxSize="1.15em" bg="green.500" />
+                  </Avatar>
                 </Center>
 
                 <Center w={"full"}>
@@ -126,10 +130,25 @@ const Create = () => {
 
               <Stack direction={"row"}>
                 <AttachmentInput />
-                <Button variant={"outline"} boxShadow={"xs"} w={"full"}>
+                <Button
+                  w={"full"}
+                  border={"2px"}
+                  boxShadow={"xs"}
+                  fontWeight={"sm"}
+                  fontFamily={"ubuntu bold"}
+                  variant={useColorModeValue("outline", "solid")}
+                  borderColor={useColorModeValue("gray.300", "gray.800")}
+                >
                   Something Else
                 </Button>
-                <Button variant={"outline"} w={"full"}>
+                <Button
+                  w={"full"}
+                  border={"2px"}
+                  fontWeight={"sm"}
+                  fontFamily={"ubuntu bold"}
+                  variant={useColorModeValue("outline", "solid")}
+                  borderColor={useColorModeValue("gray.300", "gray.800")}
+                >
                   Something Else
                 </Button>
               </Stack>
@@ -137,7 +156,7 @@ const Create = () => {
           </Box>
         </Box>
       </form>
-    </Box>
+    </>
   );
 };
 

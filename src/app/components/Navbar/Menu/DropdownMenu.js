@@ -8,10 +8,9 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { RiSettingsLine } from "react-icons/ri";
-import { BsFillCaretDownFill } from "react-icons/bs";
-
+import { IoMdSettings } from "react-icons/io";
 import LogoutButton from "../Buttons/LogoutButton";
+import { BsFillCaretDownFill } from "react-icons/bs";
 
 const DropdownMenu = () => {
   return (
@@ -29,7 +28,7 @@ const DropdownMenu = () => {
 
       <MenuList mt={2} me={2}>
         <MenuItem
-          icon={<RiSettingsLine fontSize={"20px"} />}
+          icon={<IoMdSettings fontSize={"20px"} />}
           as={NavLink}
           to={"/settings"}
         >
