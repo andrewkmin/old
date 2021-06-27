@@ -140,7 +140,7 @@ const Create = () => {
                   variant={useColorModeValue("outline", "solid")}
                   borderColor={useColorModeValue("gray.300", "gray.800")}
                 >
-                  <Text fontSize={["sm", "md", "lg"]}>Something</Text>
+                  <Text fontSize={["sm", "md"]}>Something</Text>
                 </Button>
                 <Button
                   w={"full"}
@@ -150,7 +150,7 @@ const Create = () => {
                   variant={useColorModeValue("outline", "solid")}
                   borderColor={useColorModeValue("gray.300", "gray.800")}
                 >
-                  <Text fontSize={["sm", "md", "lg"]}>Something</Text>
+                  <Text fontSize={["sm", "md"]}>Something</Text>
                 </Button>
               </Stack>
             </Stack>

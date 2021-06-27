@@ -41,7 +41,7 @@ const AttachmentInput = () => {
       onClick={() => AttachmentInputRef.current?.click()}
     >
       {/* Dynamic text */}
-      <Text fontSize={["sm", "md", "lg"]}>{attachmentText}</Text>
+      <Text fontSize={["sm", "md"]}>{attachmentText}</Text>
       {/* Invisible attachment input */}
       <Input
         multiple
