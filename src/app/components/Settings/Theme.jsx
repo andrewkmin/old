@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Section from "../Section";
 import axios from "../../api/axios";
-import { chakra, Stack, useColorMode, useToast } from "@chakra-ui/react";
+import { ImSun } from "react-icons/im";
+import { chakra, Flex, Stack, useColorMode, useToast } from "@chakra-ui/react";
+import { BsMoon } from "react-icons/bs";
 
 // The section that will change the theme
 const Theme = () => {
@@ -46,12 +48,11 @@ const Theme = () => {
   };
 
   return (
-    <Section title={"Theme"} subtitle={"Choose the best theme that you like"}>
+    <Section title={"Theme"}>
       <form onSubmit={handleThemeChange}>
-        <Stack direction={"row"}>
+        <Stack alignItems={"center"} justifyContent={"end"} direction={"row"}>
           <chakra.button
             p={2}
-            w={"full"}
             name={"light"}
             type={"submit"}
             value={"light"}
@@ -65,15 +66,20 @@ const Theme = () => {
               bgColor: "#E5EBEA",
               cursor: "not-allowed",
             }}
-            onClick={(event) => setColorMode("light")}
+            transition={"0.2s ease-in-out"}
+            onClick={() => setColorMode("light")}
             disabled={colorMode === "light" || updating}
           >
-            Light Theme
+            <Flex>
+              Light Theme{" "}
+              <Flex ps={2} alignItems={"center"} justifyContent={"center"}>
+                <ImSun />
+              </Flex>
+            </Flex>
           </chakra.button>
 
           <chakra.button
             p={2}
-            w={"full"}
             name={"dark"}
             color={"white"}
             type={"submit"}
@@ -86,10 +92,16 @@ const Theme = () => {
               cursor: "not-allowed",
               bgColor: "#353535",
             }}
-            onClick={(event) => setColorMode("dark")}
+            transition={"0.2s ease-in-out"}
+            onClick={() => setColorMode("dark")}
             disabled={colorMode === "dark" || updating}
           >
-            Dark theme
+            <Flex>
+              Dark Theme{" "}
+              <Flex ps={2} alignItems={"center"} justifyContent={"center"}>
+                <BsMoon />
+              </Flex>
+            </Flex>
           </chakra.button>
         </Stack>
       </form>

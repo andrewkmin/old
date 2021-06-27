@@ -5,6 +5,8 @@ import {
   useColorModeValue,
   IconButton,
   Stack,
+  Avatar,
+  Box,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
@@ -16,23 +18,23 @@ const Navbar = () => {
 
   return (
     <Flex
-      p={2}
+      mb={8}
       top={0}
-      mb={10}
+      p={[2, 3]}
       pos={"sticky"}
       zIndex={"sticky"}
       borderBottom={"1px"}
       bg={useColorModeValue("gray.50", "gray.700")}
-      borderColor={useColorModeValue("gray.300", "gray.700")}
+      borderColor={useColorModeValue("#FFFFFC", "gray.700")}
     >
       {/* Logo */}
       <Flex alignItems={"center"}>
         <NavLink to={"/"}>
           <Text
+            fontSize={["2xl", "3xl"]}
             color={"teal.400"}
-            fontSize={"2xl"}
-            fontFamily={"Ubuntu Bold"}
             fontWeight={"bold"}
+            fontFamily={"Ubuntu Bold"}
           >
             Usocial
           </Text>
@@ -42,21 +44,30 @@ const Navbar = () => {
       <Spacer />
 
       {/* Actions */}
-      <Stack direction={"row"}>
-        {/* Current account link */}
-        <IconButton
-          as={NavLink}
-          isRound={true}
-          variant={"ghost"}
-          borderColor={"gray.400"}
-          aria-label={"Your account"}
-          to={`/users/${userData?.id}`}
-        >
-          <Stack alignItems={"center"} direction={"row"}>
-            {/* <Avatar size={"sm"} src={userData?.avatar} /> */}
-            <Text fontWeight={"bold"}>{userData?.firstName}</Text>
-          </Stack>
-        </IconButton>
+      <Stack spacing={4} alignItems={"center"} direction={"row"}>
+        <Box>
+          {/* Current account link */}
+          <IconButton
+            as={NavLink}
+            isRound={true}
+            variant={"ghost"}
+            borderColor={"gray.400"}
+            aria-label={"Your account"}
+            to={`/users/${userData?.id}`}
+          >
+            <Stack px={1} alignItems={"center"} direction={"row"}>
+              {/* Account avatar */}
+              <Avatar
+                size={"sm"}
+                src={userData?.avatar}
+                name={userData?.firstName}
+              />
+              <Text fontSize={["lg", "xl"]} fontWeight={"bold"}>
+                {userData?.firstName}
+              </Text>
+            </Stack>
+          </IconButton>
+        </Box>
 
         <DropdownMenu />
       </Stack>

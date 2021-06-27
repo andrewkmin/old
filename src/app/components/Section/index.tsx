@@ -1,22 +1,13 @@
-import { ReactChildren } from "react";
-import {
-  Box,
-  ChakraProps,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import React from "react";
+import { Box, Divider, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 
 type SectionProps = {
   title: string;
-  subtitle: string;
-  children: ReactChildren;
+  subtitle?: string;
 };
 
-interface SectionInterface extends ChakraProps, SectionProps {}
-
 // A responsive settings section
-const Section = ({ title, subtitle, children }: SectionInterface) => {
+const Section: React.FC<SectionProps> = ({ title, subtitle, children }) => {
   return (
     <Box px={["5", 10, null, "60", "96"]}>
       <Stack spacing={5}>
@@ -24,12 +15,15 @@ const Section = ({ title, subtitle, children }: SectionInterface) => {
           <Text fontSize={["xl", "2xl", "3xl"]} fontWeight={"semibold"}>
             {title}
           </Text>
-          <Text color={useColorModeValue("gray.600", "gray.300")} fontSize={["sm", "md"]}>
+          <Text
+            color={useColorModeValue("gray.600", "gray.300")}
+            fontSize={["sm", "md"]}
+          >
             {subtitle}
           </Text>
         </Box>
-
         <Box>{children}</Box>
+        <Divider />
       </Stack>
     </Box>
   );

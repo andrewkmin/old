@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import {
   Avatar,
   Box,
@@ -12,17 +11,14 @@ import {
   Spacer,
   Text,
   Stack,
-  // useToast,
 } from "@chakra-ui/react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
-
-// import axios from "../../../api/axios";
 import DataContext from "../../../data/data.context";
 
-const Top = ({ states, setState, post, removeHandler }) => {
-  // const Toast = useToast();
+const Top = ({ post }) => {
   const { userData } = useContext(DataContext);
 
   // TODO: Implement
@@ -98,11 +94,11 @@ const Top = ({ states, setState, post, removeHandler }) => {
               {/* <MenuItem
                 onClick={states.saved ? () => unsavePost() : () => savePost()}
                 fontWeight={"semibold"}
-              > */}
-              {/* <Box mr={1}>
+              >
+                <Box mr={1}>
                   {states.saved ? <BsBookmarkFill /> : <BsBookmark />}
-                </Box> */}
-              {/* {states.saved ? "Unsave post" : "Save post"}
+                </Box>
+                {states.saved ? "Unsave post" : "Save post"}
               </MenuItem> */}
             </MenuList>
           </Menu>

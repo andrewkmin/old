@@ -15,15 +15,14 @@ const Content = ({ post }) => {
         {/* Rendering post attachments if there are any */}
         {post?.attachments?.urls?.map((attachment, index) => {
           return (
-            // <Center>
-            <Media
-              m={5}
-              rounded={"xl"}
-              key={attachment.url}
-              url={attachment.url}
-              mimetype={attachment.mimetype}
-            />
-            // </Center>
+            <Box p={2}>
+              <Media
+                rounded={"xl"}
+                key={attachment.url}
+                url={attachment.url}
+                mimetype={attachment.mimetype}
+              />
+            </Box>
           );
         })}
       </Carousel>

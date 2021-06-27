@@ -17,19 +17,13 @@ const Settings = () => {
 
       <Box>
         <Stack spacing={10}>
-          <Box>
-            <Center>
-              <Box pb={2} borderColor={"green"} borderBottom={"2px"}>
-                <Text fontSize={["xl", "2xl", "3xl"]}>
-                  Welcome to your settings,{" "}
-                  <chakra.span userSelect={"none"} fontWeight={"semibold"}>
-                    {userData?.firstName}
-                  </chakra.span>
-                  .
-                </Text>
-              </Box>
-            </Center>
-          </Box>
+          <Center>
+            <Box pb={2} borderBottom={"2px"} w={["xl", "2xl", "3xl"]}>
+              <Text fontFamily={"ubuntu bold"} fontSize={["xl", "2xl", "3xl"]}>
+                Account Settings
+              </Text>
+            </Box>
+          </Center>
 
           <Stack spacing={5}>
             <Theme />

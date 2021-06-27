@@ -12,6 +12,8 @@ const Post = ({ data }) => {
       rounded={"xl"}
       border={"2px"}
       boxShadow={"md"}
+      mx={[4, 3, null, null]}
+      maxW={["sm", "lg", "xl"]}
       borderColor={useColorModeValue("gray.300", "gray.700")}
     >
       <Stack spacing={2}>

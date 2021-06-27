@@ -11,7 +11,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import axios from "../../api/axios";
-import Confetti from "react-confetti";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
@@ -21,7 +20,6 @@ import { ChangeEvent, useContext, useState } from "react";
 const Create = () => {
   const toast = useToast();
   const { userData } = useContext(DataContext);
-  const [successful, setSuccessful] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
 
@@ -57,7 +55,6 @@ const Create = () => {
     switch (response.status) {
       // If post was created
       case 201: {
-        setSuccessful(true);
         return toast({
           title: "Post created!",
           status: "success",
@@ -79,23 +76,12 @@ const Create = () => {
 
   return (
     <>
-      {successful && (
-        <Confetti
-          recycle={false}
-          tweenDuration={100}
-          numberOfPieces={1000}
-          width={window.innerWidth}
-          height={window.innerHeight}
-          onConfettiComplete={() => setSuccessful(false)}
-        />
-      )}
-
       <form
         autoComplete={"off"}
         onSubmit={handleCreatePost}
         encType={"multipart/form-data"}
       >
-        <Box m={[4, 3, null, null, null]}>
+        <Box maxW={["sm", "lg", "xl"]} m={[4, 3, null, null, null]}>
           <Box
             p={[2, 3]}
             border={"2px"}

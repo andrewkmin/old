@@ -15,7 +15,6 @@ import {
   Spinner,
   Stack,
   Text,
-  Tooltip,
 } from "@chakra-ui/react";
 import {
   useFetchAccount,
@@ -69,7 +68,6 @@ const Profile = () => {
                 <Box w={["sm", "lg", "full"]}>
                   <Center>
                     <Image
-                      w={["xs", "md", "lg", "full"]}
                       h={"170px"}
                       rounded={"xl"}
                       effect={"blur"}
@@ -82,6 +80,7 @@ const Profile = () => {
                         filter: "brightness(0.9)",
                         transition: "0.2s ease-in",
                       }}
+                      w={["xs", "md", "2xl", "full"]}
                       transition={"filter 0.3s ease-out"}
                       src={"https://picsum.photos/1920/500"}
                       // filter={blur ? "blur(20px)" : "none"}
@@ -97,7 +96,7 @@ const Profile = () => {
                     mt={-14}
                     rounded={"xl"}
                     as={IconButton}
-                    me={[10, null, 2]}
+                    me={[10, 14, 2]}
                     icon={<HiOutlinePencil />}
                     aria-label={"Change cover image"}
                   />
@@ -136,7 +135,6 @@ const Profile = () => {
               <Box>
                 <Stack spacing={1}>
                   <Center>
-                    {/* {isFetching && <Spinner />} */}
                     <Heading fontWeight={"bold"} fontSize={"2xl"}>
                       {userDataResponse?.data.firstName}{" "}
                       {userDataResponse?.data.lastName}
@@ -155,18 +153,16 @@ const Profile = () => {
                             {userDataResponse?.data.id}
                           </Text>
                         ) : (
-                          <Tooltip label={"Yup, this is your account 😄"}>
-                            <Badge
-                              p={[1, 1.2, 1.5]}
-                              rounded={"full"}
-                              fontWeight={"bold"}
-                              color={"green.400"}
-                              userSelect={"none"}
-                              fontFamily={"ubuntu bold"}
-                            >
-                              Your account
-                            </Badge>
-                          </Tooltip>
+                          <Badge
+                            p={1.5}
+                            rounded={"full"}
+                            fontWeight={"bold"}
+                            color={"green.400"}
+                            userSelect={"none"}
+                            fontFamily={"ubuntu bold"}
+                          >
+                            Your account
+                          </Badge>
                         )}
                       </Center>
                     </Box>
@@ -199,26 +195,28 @@ const Profile = () => {
               </Box>
 
               <Box>
-                <Stack spacing={2}>
-                  {accountId === userData?.id && (
-                    <Box>
-                      <Create />
-                    </Box>
-                  )}
+                <Center>
+                  <Stack spacing={2}>
+                    {accountId === userData?.id && (
+                      <Box>
+                        <Create />
+                      </Box>
+                    )}
 
-                  <PostList
-                    noPostsText={`${
-                      accountId === userData?.id
-                        ? "You"
-                        : userDataResponse?.data?.firstName
-                    }{" "}
+                    <PostList
+                      noPostsText={`${
+                        accountId === userData?.id
+                          ? "You"
+                          : userDataResponse?.data?.firstName
+                      }{" "}
                           ${
                             accountId === userData?.id ? "don't" : "doesn't"
                           }{" "}
                           have any posts yet`}
-                    data={posts}
-                  />
-                </Stack>
+                      data={posts}
+                    />
+                  </Stack>
+                </Center>
               </Box>
             </Stack>
           </Box>
