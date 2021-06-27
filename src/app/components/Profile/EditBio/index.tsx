@@ -14,6 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 
+interface EditBioProps {
+  data?: User;
+}
+
 const EditBioControls = () => {
   const {
     isEditing,
@@ -26,10 +30,12 @@ const EditBioControls = () => {
     <ButtonGroup justifyContent={"center"} size={"sm"}>
       <IconButton
         icon={<CheckIcon />}
+        colorScheme={"green"}
         aria-label={"Save bio"}
         {...getSubmitButtonProps()}
       />
       <IconButton
+        colorScheme={"red"}
         icon={<CloseIcon />}
         aria-label={"Discard bio"}
         {...getCancelButtonProps()}
@@ -48,10 +54,6 @@ const EditBioControls = () => {
     </Flex>
   );
 };
-
-interface EditBioProps {
-  data?: User;
-}
 
 const EditBio = ({ data }: EditBioProps) => {
   const toast = useToast();
@@ -98,9 +100,9 @@ const EditBio = ({ data }: EditBioProps) => {
           : "Hmm 🤔, it seems like your account doesn't have a bio..."
       }
     >
-      <Stack spacing={1}>
-        <EditablePreview />
-        <EditableInput name={"bio"} />
+      <Stack spacing={2}>
+        <EditablePreview fontSize={["md", "lg", "xl"]} />
+        <EditableInput />
         <EditBioControls />
       </Stack>
     </Editable>

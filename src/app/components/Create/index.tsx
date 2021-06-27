@@ -1,10 +1,3 @@
-import axios from "../../api/axios";
-import Confetti from "react-confetti";
-import TextInput from "./inputs/TextInput";
-import PostButton from "./buttons/PostButton";
-import DataContext from "../../data/data.context";
-import AttachmentInput from "./inputs/AttachmentInput";
-import { ChangeEvent, useContext, useState } from "react";
 import {
   Box,
   Divider,
@@ -15,7 +8,15 @@ import {
   Avatar,
   useColorModeValue,
   AvatarBadge,
+  Text,
 } from "@chakra-ui/react";
+import axios from "../../api/axios";
+import Confetti from "react-confetti";
+import TextInput from "./inputs/TextInput";
+import PostButton from "./buttons/PostButton";
+import DataContext from "../../data/data.context";
+import AttachmentInput from "./inputs/AttachmentInput";
+import { ChangeEvent, useContext, useState } from "react";
 
 const Create = () => {
   const toast = useToast();
@@ -94,12 +95,12 @@ const Create = () => {
         onSubmit={handleCreatePost}
         encType={"multipart/form-data"}
       >
-        <Box>
+        <Box m={[4, 3, null, null, null]}>
           <Box
             p={[2, 3]}
             border={"2px"}
-            boxShadow={"lg"}
-            borderRadius={"lg"}
+            boxShadow={"md"}
+            borderRadius={"xl"}
             bgColor={useColorModeValue("#FFFFFC", "gray.700")}
             borderColor={useColorModeValue("gray.300", "gray.700")}
           >
@@ -112,7 +113,7 @@ const Create = () => {
                     src={userData?.avatar}
                     name={userData?.firstName}
                   >
-                    <AvatarBadge boxSize="1.15em" bg="green.500" />
+                    <AvatarBadge boxSize={"1.15em"} bg={"green.500"} />
                   </Avatar>
                 </Center>
 
@@ -139,7 +140,7 @@ const Create = () => {
                   variant={useColorModeValue("outline", "solid")}
                   borderColor={useColorModeValue("gray.300", "gray.800")}
                 >
-                  Something Else
+                  <Text fontSize={["sm", "md", "lg"]}>Something</Text>
                 </Button>
                 <Button
                   w={"full"}
@@ -149,7 +150,7 @@ const Create = () => {
                   variant={useColorModeValue("outline", "solid")}
                   borderColor={useColorModeValue("gray.300", "gray.800")}
                 >
-                  Something Else
+                  <Text fontSize={["sm", "md", "lg"]}>Something</Text>
                 </Button>
               </Stack>
             </Stack>

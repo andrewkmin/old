@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent } from "react";
 import { IoMdImages } from "react-icons/io";
-import { Button, Input, useColorModeValue } from "@chakra-ui/react";
+import { Button, Input, Text, useColorModeValue } from "@chakra-ui/react";
 
 /**
  * Post attachment input
@@ -34,14 +34,14 @@ const AttachmentInput = () => {
       boxShadow={"sm"}
       fontWeight={"sm"}
       fontFamily={"ubuntu bold"}
-      leftIcon={<IoMdImages color="green" />}
+      leftIcon={<IoMdImages color={"green"} />}
       variant={useColorModeValue("outline", "solid")}
       borderColor={useColorModeValue("gray.300", "gray.800")}
       // Virtually click the attachment input and select files from there
       onClick={() => AttachmentInputRef.current?.click()}
     >
       {/* Dynamic text */}
-      {attachmentText}
+      <Text fontSize={["sm", "md", "lg"]}>{attachmentText}</Text>
       {/* Invisible attachment input */}
       <Input
         multiple

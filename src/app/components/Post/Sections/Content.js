@@ -1,7 +1,7 @@
-import Carousel from "../../Carousel";
-import { Box, Center } from "@chakra-ui/react";
-import Renderer from "../../../helpers/Renderer";
 import Media from "../../Media";
+import Carousel from "../../Carousel";
+import { Box } from "@chakra-ui/react";
+import Renderer from "../../../helpers/Renderer";
 
 // Post content
 const Content = ({ post }) => {

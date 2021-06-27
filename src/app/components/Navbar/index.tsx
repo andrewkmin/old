@@ -17,8 +17,8 @@ const Navbar = () => {
   return (
     <Flex
       p={2}
-      mb={10}
       top={0}
+      mb={10}
       pos={"sticky"}
       zIndex={"sticky"}
       borderBottom={"1px"}
@@ -28,7 +28,12 @@ const Navbar = () => {
       {/* Logo */}
       <Flex alignItems={"center"}>
         <NavLink to={"/"}>
-          <Text color={"teal.400"} fontSize={"2xl"} fontFamily={"Ubuntu Bold"} fontWeight={"bold"}>
+          <Text
+            color={"teal.400"}
+            fontSize={"2xl"}
+            fontFamily={"Ubuntu Bold"}
+            fontWeight={"bold"}
+          >
             Usocial
           </Text>
         </NavLink>
@@ -44,6 +49,7 @@ const Navbar = () => {
           isRound={true}
           variant={"ghost"}
           borderColor={"gray.400"}
+          aria-label={"Your account"}
           to={`/users/${userData?.id}`}
         >
           <Stack alignItems={"center"} direction={"row"}>

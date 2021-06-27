@@ -1,10 +1,3 @@
-import { useContext, useEffect } from "react";
-import {
-  useFetchAccount,
-  useFetchAccountStatus,
-  useFetchPosts,
-} from "../api/hooks";
-import { useHistory, useParams } from "react-router-dom";
 import {
   Avatar,
   AvatarBadge,
@@ -19,16 +12,26 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
   Stack,
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import Post from "../components/Post";
+import {
+  useFetchAccount,
+  useFetchAccountStatus,
+  useFetchPosts,
+} from "../api/hooks";
 import Create from "../components/Create";
-import DataContext from "../data/data.context";
-import { HiOutlinePencil, HiPencil } from "react-icons/hi";
-import EditBio from "../components/Profile/EditBio";
 import { MdDelete } from "react-icons/md";
+import PostList from "../components/PostList";
+import { useContext, useEffect } from "react";
+import DataContext from "../data/data.context";
+import Stats from "../components/Profile/Stats";
+import EditBio from "../components/Profile/EditBio";
+import { useHistory, useParams } from "react-router-dom";
+import { HiOutlinePencil, HiPencil } from "react-icons/hi";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // The profile page
 const Profile = () => {
@@ -50,38 +53,51 @@ const Profile = () => {
     return () => {};
   });
 
-  return (
+  return userDataResponseIsFetching ||
+    userStatusResponseIsFetching ||
+    postsAreFetching ? (
+    <Center minH={"75vh"}>
+      <Spinner size={"lg"} />
+    </Center>
+  ) : (
     <Box>
       <Box>
         <Center>
-          <Box px={10}>
-            <Box w={"full"}>
-              <Box>
-                <Image
-                  rounded={"xl"}
-                  boxShadow={"lg"}
-                  bgColor={"white"}
-                  objectFit={"cover"}
-                  h={["125px", "170px"]}
-                  _hover={{
-                    boxShadow: "xl",
-                    filter: "brightness(0.9)",
-                    transition: "0.2s ease-in",
-                  }}
-                  transition={"filter 0.3s ease-out"}
-                  src={"https://picsum.photos/1920/500"}
-                  // filter={blur ? "blur(20px)" : "none"}
-                  // transition={blur ? "none" : "filter 0.3 ease-out"}
-                />
-              </Box>
+          <Box pb={10} px={10}>
+            <Box>
+              <Center>
+                <Box w={["sm", "lg", "full"]}>
+                  <Center>
+                    <Image
+                      w={["xs", "md", "lg", "full"]}
+                      h={"170px"}
+                      rounded={"xl"}
+                      effect={"blur"}
+                      boxShadow={"lg"}
+                      bgColor={"white"}
+                      objectFit={"cover"}
+                      as={LazyLoadImage}
+                      _hover={{
+                        boxShadow: "xl",
+                        filter: "brightness(0.9)",
+                        transition: "0.2s ease-in",
+                      }}
+                      transition={"filter 0.3s ease-out"}
+                      src={"https://picsum.photos/1920/500"}
+                      // filter={blur ? "blur(20px)" : "none"}
+                      // transition={blur ? "none" : "filter 0.3 ease-out"}
+                    />
+                  </Center>
+                </Box>
+              </Center>
 
               <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
                 <Menu isLazy>
                   <MenuButton
-                    me={3}
-                    mt={"-14"}
+                    mt={-14}
                     rounded={"xl"}
                     as={IconButton}
+                    me={[10, null, 2]}
                     icon={<HiOutlinePencil />}
                     aria-label={"Change cover image"}
                   />
@@ -94,13 +110,6 @@ const Profile = () => {
                     </MenuItem>
                   </MenuList>
                 </Menu>
-                {/* <IconButton
-                  me={3}
-                  mt={"-14"}
-                  rounded={"xl"}
-                  icon={<HiOutlinePencil />}
-                  aria-label={"Change cover image"}
-                /> */}
               </Flex>
             </Box>
 
@@ -148,7 +157,7 @@ const Profile = () => {
                         ) : (
                           <Tooltip label={"Yup, this is your account 😄"}>
                             <Badge
-                              p={1.5}
+                              p={[1, 1.2, 1.5]}
                               rounded={"full"}
                               fontWeight={"bold"}
                               color={"green.400"}
@@ -162,39 +171,54 @@ const Profile = () => {
                       </Center>
                     </Box>
 
-                    <Box>
-                      <Center
-                        fontSize={"lg"}
-                        color={"gray.500"}
-                        fontFamily={"Ubuntu Bold"}
-                      >
-                        {accountId === userData?.id ? (
-                          <EditBio data={userDataResponse?.data} />
-                        ) : (
-                          <Text>
-                            {userDataResponse?.data.bio.length === 0
-                              ? `Hmm 🤔, it seems like this account doesn't have a bio...`
-                              : userDataResponse?.data.bio}
-                          </Text>
-                        )}
+                    <Stack spacing={3}>
+                      <Box>
+                        <Center
+                          fontSize={"lg"}
+                          color={"gray.500"}
+                          fontFamily={"Ubuntu Bold"}
+                        >
+                          {accountId === userData?.id ? (
+                            <EditBio data={userDataResponse?.data} />
+                          ) : (
+                            <Text>
+                              {userDataResponse?.data.bio.length === 0
+                                ? `Hmm 🤔, it seems like this account doesn't have a bio...`
+                                : userDataResponse?.data.bio}
+                            </Text>
+                          )}
+                        </Center>
+                      </Box>
+
+                      <Center>
+                        <Stats />
                       </Center>
-                    </Box>
+                    </Stack>
                   </Box>
                 </Stack>
               </Box>
 
-              <Box pt={3}>
-                {accountId === userData?.id && (
-                  <Box>
-                    <Create />
-                  </Box>
-                )}
+              <Box>
+                <Stack spacing={2}>
+                  {accountId === userData?.id && (
+                    <Box>
+                      <Create />
+                    </Box>
+                  )}
 
-                <Box>
-                  {posts?.map((post, index) => {
-                    return <Post data={post} key={index} />;
-                  })}
-                </Box>
+                  <PostList
+                    noPostsText={`${
+                      accountId === userData?.id
+                        ? "You"
+                        : userDataResponse?.data?.firstName
+                    }{" "}
+                          ${
+                            accountId === userData?.id ? "don't" : "doesn't"
+                          }{" "}
+                          have any posts yet`}
+                    data={posts}
+                  />
+                </Stack>
               </Box>
             </Stack>
           </Box>
