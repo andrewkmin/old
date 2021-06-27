@@ -16,8 +16,14 @@ import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
 import AttachmentInput from "./inputs/AttachmentInput";
 import { ChangeEvent, useContext, useState } from "react";
+import { Post } from "../../types";
 
-const Create = () => {
+interface CreateProps {
+  posts?: Post[];
+  setPosts?: () => void;
+}
+
+const Create = ({ posts, setPosts }: CreateProps) => {
   const toast = useToast();
   const { userData } = useContext(DataContext);
   const [submitting, setSubmitting] = useState(false);

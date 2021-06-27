@@ -56,6 +56,7 @@ const EditBioControls = () => {
 };
 
 const EditBio = ({ data }: EditBioProps) => {
+  // For toasting
   const toast = useToast();
   // When the user finishes editing
   const handleUpdate = async (value: string) => {
@@ -68,7 +69,7 @@ const EditBio = ({ data }: EditBioProps) => {
         bio: value,
       };
       // Sending the request
-      const response = await axios.patch("/api/accounts/update", payload);
+      const response = await axios.patch<User>("/api/accounts/update", payload);
 
       switch (response.status) {
         case 200: {

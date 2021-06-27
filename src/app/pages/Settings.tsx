@@ -1,14 +1,10 @@
-import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import DataContext from "../data/data.context";
 import Theme from "../components/Settings/Theme";
 import Avatar from "../components/Settings/Avatar";
-import { Box, Center, chakra, Stack, Text } from "@chakra-ui/react";
+import { Box, Center, Stack, Text } from "@chakra-ui/react";
 
 // The settings page
 const Settings = () => {
-  const { userData } = useContext(DataContext);
-
   return (
     <>
       <Helmet>
