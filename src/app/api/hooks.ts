@@ -25,7 +25,7 @@ export const useFetchNotifications = () => {
 };
 
 // Fetching posts hook
-export const useFetchPosts = (accountId: String = "") => {
+export const useFetchPosts = (accountId: String = "", depArray?: any[]) => {
   const FetchPosts = async () => {
     const { data } = await axios.get<Post[]>("/api/posts/fetch", {
       params: {
@@ -35,17 +35,20 @@ export const useFetchPosts = (accountId: String = "") => {
     return data;
   };
 
-  return useQuery("posts", FetchPosts);
+  return useQuery(["posts", depArray], FetchPosts);
 };
 
 // Check friendship hook
-export const useCheckFriendship = (accountId: String) => {
+export const useCheckFriendship = (
+  accountId: String = "",
+  depArray?: any[]
+) => {
   const CheckFriendship = async () => {
     const { data } = await axios.get(`/api/friends/${accountId}/check/`);
     return data;
   };
 
-  return useQuery("friendship status", CheckFriendship);
+  return useQuery(["friendship status", depArray], CheckFriendship);
 };
 
 // Heartbeat hook
@@ -61,7 +64,7 @@ export const useSendHeartbeat = () => {
 };
 
 // Fetch account hook
-export const useFetchAccount = (accountId: String = "") => {
+export const useFetchAccount = (accountId: String = "", depArray?: any[]) => {
   const FetchAccount = async () => {
     const response = await axios.get<User>("/api/accounts/fetch", {
       params: {
@@ -71,10 +74,13 @@ export const useFetchAccount = (accountId: String = "") => {
     return response;
   };
 
-  return useQuery("user data", FetchAccount);
+  return useQuery(["user data", depArray], FetchAccount);
 };
 
-export const useFetchAccountStatus = (accountId: String = "") => {
+export const useFetchAccountStatus = (
+  accountId: String = "",
+  depArray?: any[]
+) => {
   const FetchAccountStatus = async () => {
     const { data } = await axios.get("/api/network/status", {
       params: {
@@ -84,5 +90,5 @@ export const useFetchAccountStatus = (accountId: String = "") => {
     return data;
   };
 
-  return useQuery("user status", FetchAccountStatus);
+  return useQuery(["user status", depArray], FetchAccountStatus);
 };

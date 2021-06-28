@@ -4,39 +4,36 @@ import Navbar from "../components/Navbar";
 import { useToast } from "@chakra-ui/toast";
 import { useSendHeartbeat } from "../api/hooks";
 
-const PlatformLayout = ({ children }) => {
-  const Toast = useToast();
+const PlatformLayout: React.FC = ({ children }) => {
+  const toast = useToast();
   const { data, isError, isFetched } = useSendHeartbeat();
 
   useEffect(() => {
-    if (isFetched) {
-      if (data?.error) {
-        return Toast({
+    if (isFetched)
+      if (data?.error)
+        toast({
           title: "We're having issues connecting you to our servers",
           status: "error",
           duration: 2000,
           isClosable: false,
         });
-      }
-    }
 
-    if (isError) {
-      return Toast({
+    if (isError)
+      toast({
         title: "We're having issues connecting you to our servers",
         status: "error",
         duration: 2000,
         isClosable: false,
       });
-    }
 
     return () => {};
-  }, [Toast, data?.error, isError, isFetched]);
+  }, [data?.error, isError, isFetched, toast]);
 
   return (
     <>
       <Box>
         <Navbar />
-        <Box>{children}</Box>
+        <Box pb={10}>{children}</Box>
       </Box>
     </>
   );

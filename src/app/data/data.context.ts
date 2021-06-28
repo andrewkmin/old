@@ -1,15 +1,10 @@
-import { User } from "../types";
 import { createContext } from "react";
-
-interface ContextProps {
-  loading: boolean;
-  authenticated: boolean;
-  userData?: User | null;
-}
+import { ContextProps } from "../types";
 
 const DataContext = createContext<ContextProps>({
   loading: true,
   userData: null,
+  setState: () => {},
   authenticated: false,
 });
 

@@ -4,8 +4,8 @@ import "@glidejs/glide/dist/css/glide.core.min.css";
 import "@glidejs/glide/dist/css/glide.theme.min.css";
 import { Box } from "@chakra-ui/react";
 
-const Carousel = ({ element = "glide", options, children }) => {
-  const [slider] = useState(new Glide(`.${element}`, options));
+const Carousel = ({ element = "glide", children }) => {
+  const [slider] = useState(new Glide(`.${element}`));
 
   useEffect(() => {
     slider.mount();

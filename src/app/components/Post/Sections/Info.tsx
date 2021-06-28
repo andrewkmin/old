@@ -14,11 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { PostProps } from "../../../types";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DataContext from "../../../data/data.context";
 
-const Top = ({ post }) => {
+const Top = ({ data }: PostProps) => {
   const { userData } = useContext(DataContext);
 
   // TODO: Implement
@@ -37,23 +38,23 @@ const Top = ({ post }) => {
           <Center>
             <Stack spacing={1.5} direction={"row"}>
               {/* Author Image */}
-              <Link to={`/users/${post?.author?._id}`}>
-                <Avatar src={post?.author?.avatar} />
+              <Link to={`/users/${data?.author?._id}`}>
+                <Avatar src={data?.author?.avatar} />
               </Link>
 
               {/* Author name */}
               <Center>
                 <Flex ms={1} direction={"column"}>
                   {/* Link to user's profile */}
-                  <Link to={`/users/${post?.author?._id}`}>
+                  <Link to={`/users/${data?.author?._id}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
-                      {`${post?.author?.firstName} ${post?.author?.lastName}`}
+                      {`${data?.author?.firstName} ${data?.author?.lastName}`}
                     </Text>
                   </Link>
 
                   {/* How much time has passed since the post was published */}
                   <Text fontSize={"xs"}>
-                    {formatDistanceToNow(new Date(post?.createdAt), {
+                    {formatDistanceToNow(new Date(data?.createdAt), {
                       addSuffix: true,
                       includeSeconds: true,
                     })}
@@ -70,7 +71,7 @@ const Top = ({ post }) => {
         <Box>
           {/* The menu */}
           <Menu>
-            <IconButton as={MenuButton} isRound>
+            <IconButton aria-label={"More actions"} as={MenuButton} isRound>
               <Center>
                 {/* The Icon of the menu */}
                 <FiMoreHorizontal />
@@ -79,13 +80,9 @@ const Top = ({ post }) => {
 
             <MenuList>
               {/* If post author's id is the same as the current user's id show delete post button */}
-              {post?.author?._id === userData?._id && (
+              {data?.author?._id === userData?._id && (
                 // For deleting the post
-                <MenuItem
-                  // icon={<FaTimes color={"red"} />}
-                  fontWeight="semibold"
-                  onClick={() => deletePost()}
-                >
+                <MenuItem fontWeight="semibold" onClick={() => deletePost()}>
                   Delete Post
                 </MenuItem>
               )}

@@ -10,17 +10,23 @@ import {
   AvatarBadge,
   Text,
 } from "@chakra-ui/react";
+import { Post } from "../../types";
 import axios from "../../api/axios";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
 import AttachmentInput from "./inputs/AttachmentInput";
-import { ChangeEvent, useContext, useState } from "react";
-import { Post } from "../../types";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 
 interface CreateProps {
   posts?: Post[];
-  setPosts?: () => void;
+  setPosts?: Dispatch<SetStateAction<Post[] | undefined>>;
 }
 
 const Create = ({ posts, setPosts }: CreateProps) => {
@@ -47,7 +53,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
     setCreatePostDisabled(true);
 
     // Sending a request
-    const response = await axios.post(
+    const response = await axios.post<Post>(
       "/api/posts/create",
       new FormData(event.target)
     );
@@ -61,6 +67,9 @@ const Create = ({ posts, setPosts }: CreateProps) => {
     switch (response.status) {
       // If post was created
       case 201: {
+        // Pushing to external posts holder array
+        if (posts && setPosts) setPosts!!(posts.concat([response.data]));
+
         return toast({
           title: "Post created!",
           status: "success",
@@ -87,7 +96,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
         onSubmit={handleCreatePost}
         encType={"multipart/form-data"}
       >
-        <Box maxW={["sm", "lg", "xl"]} m={[4, 3, null, null, null]}>
+        <Box minW={["sm", "lg", "xl"]} m={[4, 3, null, null, null]}>
           <Box
             p={[2, 3]}
             border={"2px"}

@@ -1,10 +1,9 @@
-import { Skeleton, useColorMode } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { ReactQueryDevtools } from "react-query/devtools";
-
 import axios from "./api/axios";
 import Routes from "./routes/routes";
 import DataContext from "./data/data.context";
+import { useEffect, useRef, useState } from "react";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { Skeleton, useColorMode } from "@chakra-ui/react";
 
 /**
  * This is the main file of the app.
@@ -12,14 +11,14 @@ import DataContext from "./data/data.context";
  * determine authentication state etc.
  */
 const App = () => {
-  // A function ref for authenticating the user
-  const authenticate = useRef();
   // Creating a state
   const [state, setState] = useState({
-    userData: {},
     loading: true,
+    userData: null,
     authenticated: false,
   });
+  // A function ref for authenticating the user
+  const authenticate = useRef(null);
   // Getting the color mode and the state to set it
   const { colorMode, setColorMode } = useColorMode();
 
@@ -35,23 +34,24 @@ const App = () => {
          * we are checking if the theme configuration matches
          * the one in their account and setting the theme accordingly
          */
-        if (response?.data?.theme === "light" && colorMode !== "light")
+        if (response?.data?.theme === "light" && colorMode !== "light") {
           setColorMode("light");
-        else if (response?.data?.theme === "dark" && colorMode !== "dark")
+        } else if (response?.data?.theme === "dark" && colorMode !== "dark") {
           setColorMode("dark");
+        }
 
         // Setting the state in the end
         setState({
           loading: false,
           authenticated: true,
-          userData: response?.data,
+          userData: response.data,
         });
         break;
       }
       // If there was some kind of an error
       default: {
         setState({
-          userData: {},
+          userData: null,
           loading: false,
           authenticated: false,
         });

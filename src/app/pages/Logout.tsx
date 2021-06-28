@@ -21,7 +21,7 @@ const Logout = () => {
         // If everything is ok
         case 200: {
           // Clear userData, falsify authenticated and loading values
-          setState({ userData: {}, authenticated: false, loading: false });
+          setState({ userData: null, authenticated: false, loading: false });
           // Return to the main page
           return history.push("/welcome");
         }

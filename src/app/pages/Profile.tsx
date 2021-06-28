@@ -17,6 +17,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
+  useCheckFriendship,
   useFetchAccount,
   useFetchAccountStatus,
   useFetchPosts,
@@ -27,22 +28,28 @@ import PostList from "../components/PostList";
 import { useContext, useEffect } from "react";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
+import Actions from "../components/Profile/Actions";
 import EditBio from "../components/Profile/EditBio";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
 
 // The profile page
 const Profile = () => {
   const history = useHistory();
   const { userData } = useContext(DataContext);
   const { accountId } = useParams<{ accountId?: string }>();
-  const { data: posts, isFetching: postsAreFetching } =
-    useFetchPosts(accountId);
+
+  const { data: posts, isFetching: postsAreFetching } = useFetchPosts(
+    accountId,
+    [accountId]
+  );
+  const { data: friendshipData, isFetching: friendshipDataIsFetching } =
+    useCheckFriendship(accountId, [accountId]);
   const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
-    useFetchAccount(accountId);
+    useFetchAccount(accountId, [accountId]);
   const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
-    useFetchAccountStatus(accountId);
+    useFetchAccountStatus(accountId, [accountId]);
 
   useEffect(() => {
     // Checking if the user exists
@@ -52,40 +59,43 @@ const Profile = () => {
     return () => {};
   });
 
-  return userDataResponseIsFetching ||
+  // Displaying a spinner while data is fetching
+  return friendshipDataIsFetching ||
+    userDataResponseIsFetching ||
     userStatusResponseIsFetching ||
     postsAreFetching ? (
     <Center minH={"75vh"}>
       <Spinner size={"lg"} />
     </Center>
   ) : (
+    // After everything is done fetching, showing user info
     <Box>
       <Box>
         <Center>
-          <Box pb={10} px={10}>
+          <Box px={10}>
             <Box>
               <Center>
                 <Box w={["sm", "lg", "full"]}>
                   <Center>
-                    <Image
-                      h={"170px"}
-                      rounded={"xl"}
-                      effect={"blur"}
-                      boxShadow={"lg"}
-                      bgColor={"white"}
-                      objectFit={"cover"}
-                      as={LazyLoadImage}
-                      _hover={{
-                        boxShadow: "xl",
-                        filter: "brightness(0.9)",
-                        transition: "0.2s ease-in",
-                      }}
-                      w={["xs", "md", "2xl", "full"]}
-                      transition={"filter 0.3s ease-out"}
-                      src={"https://picsum.photos/1920/500"}
-                      // filter={blur ? "blur(20px)" : "none"}
-                      // transition={blur ? "none" : "filter 0.3 ease-out"}
-                    />
+                    <LazyLoadComponent>
+                      <Image
+                        rounded={"xl"}
+                        boxShadow={"lg"}
+                        bgColor={"white"}
+                        objectFit={"cover"}
+                        _hover={{
+                          boxShadow: "xl",
+                          filter: "brightness(0.9)",
+                          transition: "0.2s ease-in",
+                        }}
+                        h={["170px", "190px"]}
+                        w={["xs", "md", "2xl", "full"]}
+                        transition={"filter 0.3s ease-out"}
+                        src={"https://picsum.photos/1920/500"}
+                        // filter={blur ? "blur(20px)" : "none"}
+                        // transition={blur ? "none" : "filter 0.3 ease-out"}
+                      />
+                    </LazyLoadComponent>
                   </Center>
                 </Box>
               </Center>
@@ -167,7 +177,7 @@ const Profile = () => {
                       </Center>
                     </Box>
 
-                    <Stack spacing={3}>
+                    <Stack spacing={4}>
                       <Box>
                         <Center
                           fontSize={"lg"}
@@ -187,6 +197,15 @@ const Profile = () => {
                       </Box>
 
                       <Center>
+                        {accountId !== userData?.id && (
+                          <Actions
+                            user={userDataResponse?.data}
+                            friendshipData={friendshipData}
+                          />
+                        )}
+                      </Center>
+
+                      <Center>
                         <Stats />
                       </Center>
                     </Stack>
@@ -194,12 +213,12 @@ const Profile = () => {
                 </Stack>
               </Box>
 
-              <Box>
+              <Box pt={5}>
                 <Center>
                   <Stack spacing={2}>
                     {accountId === userData?.id && (
                       <Box>
-                        <Create />
+                        <Create posts={posts} />
                       </Box>
                     )}
 
@@ -208,10 +227,8 @@ const Profile = () => {
                         accountId === userData?.id
                           ? "You"
                           : userDataResponse?.data?.firstName
-                      }{" "}
-                          ${
-                            accountId === userData?.id ? "don't" : "doesn't"
-                          }{" "}
+                      }
+                          ${accountId === userData?.id ? "don't" : "doesn't"}
                           have any posts yet`}
                       data={posts}
                     />

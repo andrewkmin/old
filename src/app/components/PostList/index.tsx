@@ -1,7 +1,7 @@
 import React from "react";
 import Post from "../Post";
 import { Post as PostType } from "../../types";
-import { Box, Center, Text } from "@chakra-ui/react";
+import { Box, Center, Stack, Text } from "@chakra-ui/react";
 
 interface PostListProps {
   data?: PostType[];
@@ -22,9 +22,13 @@ const PostList: React.FC<PostListProps> = ({ data: posts, noPostsText }) => {
           </Text>
         </Center>
       ) : (
-        posts?.map((post, index) => {
-          return <Post data={post} key={index} />;
-        })
+        <Center m={[2, 4]}>
+          <Stack spacing={3}>
+            {posts?.map((post, index) => {
+              return <Post data={post} key={index} />;
+            })}
+          </Stack>
+        </Center>
       )}
     </Box>
   );
