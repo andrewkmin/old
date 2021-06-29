@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { Post, User } from "../types";
+import { Post, User } from "../@types";
 import { useQuery } from "react-query";
 
 // Logout hook

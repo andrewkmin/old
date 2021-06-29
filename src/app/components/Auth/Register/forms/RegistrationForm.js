@@ -11,6 +11,7 @@ import PasswordInput from "../inputs/PasswordInput";
 import LastNameInput from "../inputs/name/LastNameInput";
 import FirstNameInput from "../inputs/name/FirstNameInput";
 import CreateAccountButton from "../buttons/CreateAccountButton";
+import UsernameInput from "../inputs/UsernameInput";
 
 const RegistrationForm = () => {
   const Toast = useToast();
@@ -56,9 +57,12 @@ const RegistrationForm = () => {
       }
       // If there's another account with the same email
       case 403: {
+        console.log(response.data);
         // Notifying
         return Toast({
-          title: "That account is taken by someone else",
+          title: `That ${
+            response?.data?.target[0] === "email" ? "account" : "username"
+          } is taken by someone else`,
           status: "error",
           duration: 2000,
           isClosable: false,
@@ -94,6 +98,9 @@ const RegistrationForm = () => {
         encType={"multipart/form-data"}
       >
         <Stack spacing={3}>
+          <Box>
+            <UsernameInput />
+          </Box>
           <Box>
             <Stack direction={"row"}>
               <FirstNameInput />

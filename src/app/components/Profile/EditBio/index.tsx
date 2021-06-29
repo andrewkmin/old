@@ -1,4 +1,4 @@
-import { User } from "../../../types";
+import { User } from "../../../@types";
 import axios from "../../../api/axios";
 import {
   ButtonGroup,
@@ -61,7 +61,7 @@ const EditBio = ({ data }: EditBioProps) => {
   // When the user finishes editing
   const handleUpdate = async (value: string) => {
     // Checking if the bios are the same or note
-    if (value.toLowerCase() === data?.bio.toLowerCase()) return;
+    if (value.toLowerCase() === data?.bio?.toLowerCase()) return;
     // If they're not the same we send a request to the API
     else {
       // Creating a payload
@@ -94,10 +94,10 @@ const EditBio = ({ data }: EditBioProps) => {
     <Editable
       textAlign={"center"}
       onSubmit={handleUpdate}
-      defaultValue={data?.bio}
+      defaultValue={data?.bio!!}
       placeholder={
         data?.bio?.length !== 0
-          ? data?.bio
+          ? data?.bio!!
           : "Hmm 🤔, it seems like your account doesn't have a bio..."
       }
     >

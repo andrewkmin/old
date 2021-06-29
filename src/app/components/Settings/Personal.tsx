@@ -55,8 +55,8 @@ const Personal = () => {
               autoCorrect={"off"}
               autoComplete={"off"}
               autoCapitalize={"off"}
-              placeholder={userData?.bio}
-              defaultValue={userData?.bio}
+              placeholder={userData?.bio!!}
+              defaultValue={userData?.bio!!}
             />
           </FormControl>
 

@@ -1,5 +1,5 @@
 import Info from "./Sections/Info";
-import { PostProps } from "../../types";
+import { PostProps } from "../../@types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
 import Reactions from "./Sections/Reactions";

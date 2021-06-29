@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../../types";
+import { PostProps } from "../../../@types";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DataContext from "../../../data/data.context";
@@ -38,17 +38,17 @@ const Top = ({ data }: PostProps) => {
           <Center>
             <Stack spacing={1.5} direction={"row"}>
               {/* Author Image */}
-              <Link to={`/users/${data?.author?._id}`}>
-                <Avatar src={data?.author?.avatar} />
+              <Link to={`/users/${data?.userId}`}>
+                <Avatar src={data?.user?.avatar} />
               </Link>
 
               {/* Author name */}
               <Center>
                 <Flex ms={1} direction={"column"}>
                   {/* Link to user's profile */}
-                  <Link to={`/users/${data?.author?._id}`}>
+                  <Link to={`/users/${data?.userId}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
-                      {`${data?.author?.firstName} ${data?.author?.lastName}`}
+                      {`${data?.user?.firstName} ${data?.user?.lastName}`}
                     </Text>
                   </Link>
 
@@ -80,7 +80,7 @@ const Top = ({ data }: PostProps) => {
 
             <MenuList>
               {/* If post author's id is the same as the current user's id show delete post button */}
-              {data?.author?._id === userData?._id && (
+              {data?.user?.id === userData?.id && (
                 // For deleting the post
                 <MenuItem fontWeight="semibold" onClick={() => deletePost()}>
                   Delete Post

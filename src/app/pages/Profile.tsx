@@ -17,7 +17,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
-  useCheckFriendship,
   useFetchAccount,
   useFetchAccountStatus,
   useFetchPosts,
@@ -25,31 +24,29 @@ import {
 import Create from "../components/Create";
 import { MdDelete } from "react-icons/md";
 import PostList from "../components/PostList";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
-import Actions from "../components/Profile/Actions";
 import EditBio from "../components/Profile/EditBio";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { Post } from "../@types";
 
 // The profile page
 const Profile = () => {
   const history = useHistory();
   const { userData } = useContext(DataContext);
   const { accountId } = useParams<{ accountId?: string }>();
-
-  const { data: posts, isFetching: postsAreFetching } = useFetchPosts(
+  const { data: fetchedPosts, isFetching: postsAreFetching } = useFetchPosts(
     accountId,
     [accountId]
   );
-  const { data: friendshipData, isFetching: friendshipDataIsFetching } =
-    useCheckFriendship(accountId, [accountId]);
   const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
     useFetchAccount(accountId, [accountId]);
   const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
     useFetchAccountStatus(accountId, [accountId]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     // Checking if the user exists
@@ -59,9 +56,12 @@ const Profile = () => {
     return () => {};
   });
 
+  useEffect(() => {
+    if (fetchedPosts) setPosts(fetchedPosts);
+  }, [fetchedPosts]);
+
   // Displaying a spinner while data is fetching
-  return friendshipDataIsFetching ||
-    userDataResponseIsFetching ||
+  return userDataResponseIsFetching ||
     userStatusResponseIsFetching ||
     postsAreFetching ? (
     <Center minH={"75vh"}>
@@ -188,21 +188,21 @@ const Profile = () => {
                             <EditBio data={userDataResponse?.data} />
                           ) : (
                             <Text>
-                              {userDataResponse?.data.bio.length === 0
+                              {userDataResponse?.data?.bio?.length === 0
                                 ? `Hmm 🤔, it seems like this account doesn't have a bio...`
-                                : userDataResponse?.data.bio}
+                                : userDataResponse?.data?.bio}
                             </Text>
                           )}
                         </Center>
                       </Box>
 
                       <Center>
-                        {accountId !== userData?.id && (
+                        {/* {accountId !== userData?.id && (
                           <Actions
                             user={userDataResponse?.data}
                             friendshipData={friendshipData}
                           />
-                        )}
+                        )} */}
                       </Center>
 
                       <Center>
@@ -218,7 +218,7 @@ const Profile = () => {
                   <Stack spacing={2}>
                     {accountId === userData?.id && (
                       <Box>
-                        <Create posts={posts} />
+                        <Create setPosts={setPosts} posts={posts} />
                       </Box>
                     )}
 
