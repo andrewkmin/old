@@ -7,25 +7,6 @@ const theme = extendTheme({
     heading: "Ubuntu Bold",
     body: "Ubuntu",
   },
-  components: {
-    Button: {
-      baseStyle: {
-        _focus: "none",
-      },
-    },
-    Link: {
-      baseStyle: {
-        _focus: "none",
-      },
-    },
-    Tabs: {
-      baseStyle: {
-        tab: {
-          _focus: "none",
-        },
-      },
-    },
-  },
 });
 
 export default theme;

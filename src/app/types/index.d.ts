@@ -43,10 +43,12 @@ export interface ContextProps {
   userData?: User | null;
 
   setState: React.Dispatch<
-    React.SetStateAction<{
-      loading: boolean;
-      authenticated: boolean;
-      userData?: User | null;
-    }>
+    React.SetStateAction<
+      Partial<{
+        loading: boolean;
+        authenticated: boolean;
+        userData?: User | null;
+      }>
+    >
   >;
 }
