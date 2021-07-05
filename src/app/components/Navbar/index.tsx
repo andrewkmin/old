@@ -7,10 +7,12 @@ import {
   Stack,
   Avatar,
   Box,
+  Button,
 } from "@chakra-ui/react";
 import { useContext } from "react";
+import { IoAdd } from "react-icons/io5"
 import { NavLink } from "react-router-dom";
-import DropdownMenu from "./Menu/DropdownMenu";
+// import DropdownMenu from "./Menu/DropdownMenu";
 import DataContext from "../../data/data.context";
 
 const Navbar = () => {
@@ -23,9 +25,9 @@ const Navbar = () => {
       p={[2, 3]}
       pos={"sticky"}
       zIndex={"sticky"}
-      borderBottom={"1px"}
+      borderBottom={"2px"}
       bg={useColorModeValue("gray.50", "gray.700")}
-      borderColor={useColorModeValue("#FFFFFC", "gray.700")}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
     >
       {/* Logo */}
       <Flex alignItems={"center"}>
@@ -69,7 +71,11 @@ const Navbar = () => {
           </IconButton>
         </Box>
 
-        <DropdownMenu />
+        <Box>
+          <Button leftIcon={<IoAdd />}>New Post</Button>
+        </Box>
+
+        {/* <DropdownMenu /> */}
       </Stack>
     </Flex>
   );
