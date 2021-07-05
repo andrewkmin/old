@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../../types";
+import { PostProps } from "../../../@types";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DataContext from "../../../data/data.context";

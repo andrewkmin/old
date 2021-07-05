@@ -1,7 +1,7 @@
 import Media from "../../Media";
 import Carousel from "../../Carousel";
 import { Box, Text } from "@chakra-ui/react";
-import { PostProps } from "../../../types";
+import { PostProps } from "../../../@types";
 
 // Post content
 const Content = ({ data }: PostProps) => {
