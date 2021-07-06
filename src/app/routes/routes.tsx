@@ -47,7 +47,7 @@ const Routes = () => {
                     <Route
                       exact
                       component={Profile}
-                      path={"/users/:accountId"}
+                      path={"/users/:username"}
                     />
 
                     {/* Not found */}

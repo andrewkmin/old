@@ -24,16 +24,16 @@ const Personal = () => {
               <FormControl>
                 <FormLabel>First Name</FormLabel>
                 <Input
-                  placeholder={userData?.firstName}
-                  defaultValue={userData?.firstName}
+                  placeholder={userData?.first_name}
+                  defaultValue={userData?.first_name}
                 />
               </FormControl>
 
               <FormControl>
                 <FormLabel>Last Name</FormLabel>
                 <Input
-                  placeholder={userData?.lastName}
-                  defaultValue={userData?.lastName}
+                  placeholder={userData?.last_name}
+                  defaultValue={userData?.last_name}
                 />
               </FormControl>
             </Stack>

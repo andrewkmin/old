@@ -96,7 +96,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
         onSubmit={handleCreatePost}
         encType={"multipart/form-data"}
       >
-        <Box minW={["sm", "lg", "xl"]} m={[4, 3, null, null, null]}>
+        <Box minW={["sm", "md", "lg", "xl"]} m={4}>
           <Box
             p={[2, 3]}
             border={"2px"}
@@ -112,7 +112,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
                     size={"md"}
                     boxShadow={"md"}
                     src={userData?.avatar}
-                    name={userData?.firstName}
+                    name={userData?.first_name}
                   >
                     <AvatarBadge boxSize={"1.15em"} bg={"green.500"} />
                   </Avatar>

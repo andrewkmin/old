@@ -25,11 +25,11 @@ export const useFetchNotifications = () => {
 };
 
 // Fetching posts hook
-export const useFetchPosts = (accountId: String = "", depArray?: any[]) => {
+export const useFetchPosts = (username: String = "", depArray?: any[]) => {
   const FetchPosts = async () => {
     const { data } = await axios.get<Post[]>("/api/posts/fetch", {
       params: {
-        accountId,
+        username,
       },
     });
     return data;
@@ -64,11 +64,11 @@ export const useSendHeartbeat = () => {
 };
 
 // Fetch account hook
-export const useFetchAccount = (accountId: String = "", depArray?: any[]) => {
+export const useFetchAccount = (username: String = "", depArray?: any[]) => {
   const FetchAccount = async () => {
     const response = await axios.get<User>("/api/accounts/fetch", {
       params: {
-        accountId,
+        username,
       },
     });
     return response;
@@ -78,13 +78,13 @@ export const useFetchAccount = (accountId: String = "", depArray?: any[]) => {
 };
 
 export const useFetchAccountStatus = (
-  accountId: String = "",
+  username: String = "",
   depArray?: any[]
 ) => {
   const FetchAccountStatus = async () => {
     const { data } = await axios.get("/api/network/status", {
       params: {
-        accountId,
+        username,
       },
     });
     return data;

@@ -38,7 +38,7 @@ const Top = ({ data }: PostProps) => {
           <Center>
             <Stack spacing={1.5} direction={"row"}>
               {/* Author Image */}
-              <Link to={`/users/${data?.userId}`}>
+              <Link to={`/users/${data?.user?.username}`}>
                 <Avatar src={data?.user?.avatar} />
               </Link>
 
@@ -46,15 +46,15 @@ const Top = ({ data }: PostProps) => {
               <Center>
                 <Flex ms={1} direction={"column"}>
                   {/* Link to user's profile */}
-                  <Link to={`/users/${data?.userId}`}>
+                  <Link to={`/users/${data?.user?.username}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
-                      {`${data?.user?.firstName} ${data?.user?.lastName}`}
+                      {`${data?.user?.first_name} ${data?.user?.last_name}`}
                     </Text>
                   </Link>
 
                   {/* How much time has passed since the post was published */}
                   <Text fontSize={"xs"}>
-                    {formatDistanceToNow(new Date(data?.createdAt), {
+                    {formatDistanceToNow(data?.created_at!!, {
                       addSuffix: true,
                       includeSeconds: true,
                     })}

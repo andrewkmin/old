@@ -15,8 +15,8 @@ const Home = () => {
         </Center>
       ) : (
         <Center>
-          <Box w={["sm", "lg", "xl"]}>
-            <Stack spacing={10}>
+          <Box maxW={"xl"}>
+            <Stack spacing={2}>
               <CreatePost />
               <PostList data={posts} noPostsText={"There are no posts yet"} />
             </Stack>

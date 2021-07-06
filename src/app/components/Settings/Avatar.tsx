@@ -23,7 +23,7 @@ const Avatar = () => {
         <ChakraAvatar
           size={"xl"}
           src={userData?.avatar}
-          name={userData?.firstName}
+          name={userData?.first_name}
         />
 
         <Box w={"full"}>

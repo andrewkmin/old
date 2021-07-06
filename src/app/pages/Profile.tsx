@@ -37,15 +37,15 @@ import { Post } from "../@types";
 const Profile = () => {
   const history = useHistory();
   const { userData } = useContext(DataContext);
-  const { accountId } = useParams<{ accountId?: string }>();
+  const { username } = useParams<{ username?: string }>();
   const { data: fetchedPosts, isFetching: postsAreFetching } = useFetchPosts(
-    accountId,
-    [accountId]
+    username,
+    [username]
   );
   const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
-    useFetchAccount(accountId, [accountId]);
+    useFetchAccount(username, [username]);
   const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
-    useFetchAccountStatus(accountId, [accountId]);
+    useFetchAccountStatus(username, [username]);
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const Profile = () => {
                   size={"xl"}
                   boxShadow={"lg"}
                   src={userDataResponse?.data?.avatar}
-                  name={userDataResponse?.data?.firstName}
+                  name={userDataResponse?.data?.first_name}
                 >
                   {userData && (
                     <AvatarBadge
@@ -146,8 +146,8 @@ const Profile = () => {
                 <Stack spacing={1}>
                   <Center>
                     <Heading fontWeight={"bold"} fontSize={"2xl"}>
-                      {userDataResponse?.data.firstName}{" "}
-                      {userDataResponse?.data.lastName}
+                      {userDataResponse?.data.first_name}{" "}
+                      {userDataResponse?.data.last_name}
                     </Heading>
                   </Center>
 
@@ -184,7 +184,7 @@ const Profile = () => {
                           color={"gray.500"}
                           fontFamily={"Ubuntu Bold"}
                         >
-                          {accountId === userData?.id ? (
+                          {username === userData?.username ? (
                             <EditBio data={userDataResponse?.data} />
                           ) : (
                             <Text>
@@ -216,7 +216,7 @@ const Profile = () => {
               <Box pt={5}>
                 <Center>
                   <Stack spacing={2}>
-                    {accountId === userData?.id && (
+                    {username === userData?.username && (
                       <Box>
                         <Create setPosts={setPosts} posts={posts} />
                       </Box>
@@ -224,11 +224,11 @@ const Profile = () => {
 
                     <PostList
                       noPostsText={`${
-                        accountId === userData?.id
+                        username === userData?.username
                           ? "You"
-                          : userDataResponse?.data?.firstName
+                          : userDataResponse?.data?.first_name
                       }
-                          ${accountId === userData?.id ? "don't" : "doesn't"}
+                          ${username === userData?.username ? "don't" : "doesn't"}
                           have any posts yet`}
                       data={posts}
                     />

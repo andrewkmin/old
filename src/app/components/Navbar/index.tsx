@@ -53,17 +53,17 @@ const Navbar = () => {
             variant={"ghost"}
             borderColor={"gray.400"}
             aria-label={"Your account"}
-            to={`/users/${userData?.id}`}
+            to={`/users/${userData?.username}`}
           >
             <Stack px={1} alignItems={"center"} direction={"row"}>
               {/* Account avatar */}
               <Avatar
                 size={"sm"}
                 src={userData?.avatar}
-                name={userData?.firstName}
+                name={userData?.first_name}
               />
               <Text fontSize={["lg", "xl"]} fontWeight={"bold"}>
-                {userData?.firstName}
+                {userData?.first_name}
               </Text>
             </Stack>
           </IconButton>

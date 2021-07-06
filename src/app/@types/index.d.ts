@@ -1,48 +1,46 @@
+enum PrivacyType {
+  PUBLIC,
+  PRIVATE,
+}
+
 export type User = {
   id: string;
-  email: string;
-  roles: Role[];
+  bio: string;
+  email?: string;
   avatar: string;
-  createdAt: Date;
+  posts?: Post[];
   username: string;
-  lastName: string;
-  password: string;
-  firstName: string;
-  bio: string | null;
-  privateAccount: boolean;
-  theme: "light" | "dark";
-};
-
-type AttachmentUrl = {
-  url: string;
-  mimetype: string;
+  prviate: boolean;
+  password?: string;
+  last_name: string;
+  first_name: string;
+  created_at: number;
+  comments?: Comment[];
 };
 
 export type Post = {
   id: string;
+  user?: User;
   body: string;
-  user: ?User;
-  userId: string;
-  createdAt: Date;
+  user_id: string;
+  created_at: number;
+  privacy: PrivacyType;
 };
 
 export type Comment = {
   id: string;
+  user?: User;
   body: string;
-  userId: string;
-  postId: string;
-  createdAt: Date;
+  user_id: string;
+  post_id: string;
+  created_at: number;
 };
 
-export type Notification = {
-  id: string;
-  belongsTo: string | null;
-};
+export type AttachmentUrl = {};
 
 export interface PostProps {
   data: Post;
 }
-
 export interface ContextProps {
   loading: boolean;
   authenticated: boolean;

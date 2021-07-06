@@ -22,13 +22,15 @@ const PostList: React.FC<PostListProps> = ({ data: posts, noPostsText }) => {
           </Text>
         </Center>
       ) : (
-        <Center m={[2, 4]}>
-          <Stack spacing={3}>
-            {posts?.map((post, index) => {
-              return <Post data={post} key={index} />;
-            })}
-          </Stack>
-        </Center>
+        <Box m={[2, 4]}>
+          <Center>
+            <Stack spacing={3}>
+              {posts?.map((post, index) => {
+                return <Post data={post} key={index} />;
+              })}
+            </Stack>
+          </Center>
+        </Box>
       )}
     </Box>
   );
