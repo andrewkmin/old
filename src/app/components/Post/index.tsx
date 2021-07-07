@@ -1,11 +1,13 @@
 import Info from "./Sections/Info";
-import { PostProps } from "../../@types";
+import { PostProps } from "../../types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
-// import Reactions from "./Sections/Reactions";
+import TopComment from "./Sections/TopComment";
 import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 
 const Post = ({ data: post }: PostProps) => {
+  console.log(post);
+
   return (
     <Box
       p={[2, 3]}
@@ -24,6 +26,10 @@ const Post = ({ data: post }: PostProps) => {
         {/* <Reactions /> */}
         {/* Post buttons */}
         <Buttons />
+        {/* Top comment */}
+        {post?.comments?.length === 0 ? null : (
+          <TopComment data={post.comments[0]} />
+        )}
       </Stack>
     </Box>
   );

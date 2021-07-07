@@ -1,52 +1,54 @@
 export type User = {
   id: string;
-  _id: string;
-  __v: number;
   bio: string;
-  email: string;
+  email?: string;
   avatar: string;
-  lastName: string;
-  private: boolean;
-  firstName: string;
-  theme: "light" | "dark";
-};
-
-type AttachmentUrl = {
-  url: string;
-  mimetype: string;
+  posts?: Post[];
+  username: string;
+  prviate: boolean;
+  password?: string;
+  last_name: string;
+  first_name: string;
+  created_at: number;
+  comments?: Comment[];
 };
 
 export type Post = {
   id: string;
-  _id: string;
+  user?: User;
   body: string;
-  comments?: [];
-  private: boolean;
-  attachments: {
-    objects: string[];
-    urls: AttachmentUrl[];
-  };
-  hearts: {
-    count: number;
-  };
-  createdAt: string;
-  author: Partial<User>;
+  user_id: string;
+  created_at: number;
+  comments: Comment[];
+  privacy: "PUBLIC" | "PRIVATE";
 };
+
+export type Comment = {
+  id: string;
+  user?: User;
+  body: string;
+  user_id: string;
+  post_id: string;
+  created_at: number;
+};
+
+export type AttachmentUrl = {};
 
 export interface PostProps {
   data: Post;
 }
-
 export interface ContextProps {
   loading: boolean;
   authenticated: boolean;
   userData?: User | null;
 
   setState: React.Dispatch<
-    React.SetStateAction<{
-      loading: boolean;
-      authenticated: boolean;
-      userData?: User | null;
-    }>
+    React.SetStateAction<
+      Partial<{
+        loading: boolean;
+        authenticated: boolean;
+        userData?: User | null;
+      }>
+    >
   >;
 }

@@ -10,7 +10,7 @@ import {
   AvatarBadge,
   Text,
 } from "@chakra-ui/react";
-import { Post } from "../../@types";
+import { Post } from "../../types";
 import axios from "../../api/axios";
 import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";

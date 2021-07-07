@@ -31,7 +31,7 @@ import EditBio from "../components/Profile/EditBio";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { Post } from "../@types";
+import { Post } from "../types";
 
 // The profile page
 const Profile = () => {

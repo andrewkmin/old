@@ -1,4 +1,4 @@
-import { User } from "../../../@types";
+import { User } from "../../../types";
 import axios from "../../../api/axios";
 import {
   ButtonGroup,

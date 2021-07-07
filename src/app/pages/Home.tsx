@@ -14,14 +14,14 @@ const Home = () => {
           <Spinner size={"lg"} />
         </Center>
       ) : (
-        <Center>
-          <Box maxW={"xl"}>
+        <Box>
+          <Center>
             <Stack spacing={2}>
               <CreatePost />
               <PostList data={posts} noPostsText={"There are no posts yet"} />
             </Stack>
-          </Box>
-        </Center>
+          </Center>
+        </Box>
       )}
     </Box>
   );

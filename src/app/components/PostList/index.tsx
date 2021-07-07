@@ -1,6 +1,6 @@
 import React from "react";
 import Post from "../Post";
-import { Post as PostType } from "../../@types";
+import { Post as PostType } from "../../types";
 import { Box, Center, Stack, Text } from "@chakra-ui/react";
 
 interface PostListProps {

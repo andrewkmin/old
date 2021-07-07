@@ -1,4 +1,4 @@
-import { User } from "../../../@types";
+import { User } from "../../../types";
 import { Box, Button, Stack } from "@chakra-ui/react";
 
 interface ActionsProps {

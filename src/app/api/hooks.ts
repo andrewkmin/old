@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { Post, User } from "../@types";
+import { Post, User } from "../types";
 import { useQuery } from "react-query";
 
 // Logout hook
@@ -13,16 +13,16 @@ export const useLogout = () => {
 };
 
 // Notification fetching hook
-export const useFetchNotifications = () => {
-  const FetchNotifications = async () => {
-    const { data } = await axios.get("/api/notifications/fetch");
-    return data;
-  };
+// export const useFetchNotifications = () => {
+//   const FetchNotifications = async () => {
+//     const { data } = await axios.get("/api/notifications/fetch");
+//     return data;
+//   };
 
-  return useQuery("notifications", FetchNotifications, {
-    refetchInterval: 60 * 1 * 1000, // 1 minute
-  });
-};
+//   return useQuery("notifications", FetchNotifications, {
+//     refetchInterval: 60 * 1 * 1000, // 1 minute
+//   });
+// };
 
 // Fetching posts hook
 export const useFetchPosts = (username: String = "", depArray?: any[]) => {

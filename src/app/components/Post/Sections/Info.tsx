@@ -11,13 +11,18 @@ import {
   Spacer,
   Text,
   Stack,
+  Tooltip,
+  chakra,
 } from "@chakra-ui/react";
 import { useContext } from "react";
+import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../../@types";
+import { MdPublic } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { PostProps } from "../../../types/index.d";
 import DataContext from "../../../data/data.context";
+import { BsFillUnlockFill } from "react-icons/bs";
 
 const Top = ({ data }: PostProps) => {
   const { userData } = useContext(DataContext);
@@ -27,7 +32,9 @@ const Top = ({ data }: PostProps) => {
   // TODO: Implement
   // const unsavePost = async () => {};
   // TODO։ Implement
-  const deletePost = async () => {};
+  const deletePost = async () => {
+    const response = await axios.delete(`/posts/${data?.id}`);
+  };
 
   return (
     // Top section
@@ -52,13 +59,27 @@ const Top = ({ data }: PostProps) => {
                     </Text>
                   </Link>
 
-                  {/* How much time has passed since the post was published */}
-                  <Text fontSize={"xs"}>
-                    {formatDistanceToNow(data?.created_at!!, {
-                      addSuffix: true,
-                      includeSeconds: true,
-                    })}
-                  </Text>
+                  <Box>
+                    <Stack direction={"row"} alignItems={"center"}>
+                      {/* How much time has passed since the post was published */}
+                      <Text fontSize={"xs"}>
+                        {formatDistanceToNow(data?.created_at!!, {
+                          addSuffix: true,
+                          includeSeconds: true,
+                        })}
+                      </Text>
+
+                      <Box>
+                        {data?.privacy!! === "PUBLIC" ? (
+                          <Tooltip label={"Public"}>
+                            <MdPublic />
+                          </Tooltip>
+                        ) : (
+                          <BsFillUnlockFill />
+                        )}
+                      </Box>
+                    </Stack>
+                  </Box>
                 </Flex>
               </Center>
             </Stack>

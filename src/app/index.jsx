@@ -1,9 +1,12 @@
+import {
+  Skeleton,
+  // useColorMode
+} from "@chakra-ui/react";
 import axios from "./api/axios";
 import Routes from "./routes/routes";
 import DataContext from "./data/data.context";
 import { useEffect, useRef, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { Skeleton, useColorMode } from "@chakra-ui/react";
 
 /**
  * This is the main file of the app.
@@ -20,7 +23,7 @@ const App = () => {
   // A function ref for authenticating the user
   const authenticate = useRef(null);
   // Getting the color mode and the state to set it
-  const { colorMode, setColorMode } = useColorMode();
+  // const { colorMode, setColorMode } = useColorMode();
 
   // Fetching current user data and checking if it's valid once
   authenticate.current = async () => {
@@ -34,11 +37,11 @@ const App = () => {
          * we are checking if the theme configuration matches
          * the one in their account and setting the theme accordingly
          */
-        if (response?.data?.theme === "light" && colorMode !== "light") {
-          setColorMode("light");
-        } else if (response?.data?.theme === "dark" && colorMode !== "dark") {
-          setColorMode("dark");
-        }
+        // if (response?.data?.theme === "light" && colorMode !== "light") {
+        //   setColorMode("light");
+        // } else if (response?.data?.theme === "dark" && colorMode !== "dark") {
+        //   setColorMode("dark");
+        // }
 
         // Setting the state in the end
         setState({

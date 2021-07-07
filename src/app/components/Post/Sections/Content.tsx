@@ -1,6 +1,6 @@
 // import Media from "../../Media";
 // import Carousel from "../../Carousel";
-import { PostProps } from "../../../@types";
+import { PostProps } from "../../../types";
 import { Box, Text } from "@chakra-ui/react";
 
 // Post content
