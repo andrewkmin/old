@@ -3,11 +3,9 @@ import { PostProps } from "../../types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
 import TopComment from "./Sections/TopComment";
-import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Box, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 
 const Post = ({ data: post }: PostProps) => {
-  console.log(post);
-
   return (
     <Box
       p={[2, 3]}
@@ -25,7 +23,7 @@ const Post = ({ data: post }: PostProps) => {
         {/* Post reactions */}
         {/* <Reactions /> */}
         {/* Post buttons */}
-        <Buttons />
+        <Buttons data={post} />
         {/* Top comment */}
         {post?.comments?.length === 0 ? null : (
           <TopComment data={post.comments[0]} />
