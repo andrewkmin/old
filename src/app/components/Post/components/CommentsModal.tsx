@@ -25,7 +25,12 @@ interface CommentsModalProps {
 const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
   return (
     <Box>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+        scrollBehavior={"inside"}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Comments on {data?.user?.first_name}'s post</ModalHeader>
