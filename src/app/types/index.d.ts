@@ -32,10 +32,13 @@ export type Comment = {
   created_at: number;
 };
 
-export type AttachmentUrl = {};
-
 export interface PostProps {
   data: Post;
+  setPosts?: () => void;
+}
+
+export interface CommentProps {
+  data: Comment;
 }
 export interface ContextProps {
   loading: boolean;

@@ -66,7 +66,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
     // Checking the response
     switch (response.status) {
       // If post was created
-      case 201: {
+      case 200: {
         // Pushing to external posts holder array
         if (posts && setPosts) setPosts!!(posts.concat([response.data]));
 

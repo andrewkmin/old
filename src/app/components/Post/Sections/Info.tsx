@@ -11,18 +11,17 @@ import {
   Spacer,
   Text,
   Stack,
-  Tooltip,
-  chakra,
+  Icon,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import axios from "../../../api/axios";
+// import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { PostProps } from "../../../types/index.d";
 import DataContext from "../../../data/data.context";
-import { BsFillUnlockFill } from "react-icons/bs";
+import { BsBookmarkFill, BsFillUnlockFill } from "react-icons/bs";
 
 const Top = ({ data }: PostProps) => {
   const { userData } = useContext(DataContext);
@@ -33,7 +32,7 @@ const Top = ({ data }: PostProps) => {
   // const unsavePost = async () => {};
   // TODO։ Implement
   const deletePost = async () => {
-    const response = await axios.delete(`/posts/${data?.id}`);
+    // const response = await axios.delete(`/posts/${data?.id}`);
   };
 
   return (
@@ -45,15 +44,15 @@ const Top = ({ data }: PostProps) => {
           <Center>
             <Stack spacing={1.5} direction={"row"}>
               {/* Author Image */}
-              <Link to={`/users/${data?.user?.username}`}>
-                <Avatar src={data?.user?.avatar} />
+              <Link to={`/@${data?.user?.username}`}>
+                <Avatar name={data?.user?.username} src={data?.user?.avatar} />
               </Link>
 
               {/* Author name */}
               <Center>
                 <Flex ms={1} direction={"column"}>
                   {/* Link to user's profile */}
-                  <Link to={`/users/${data?.user?.username}`}>
+                  <Link to={`/@${data?.user?.username}`}>
                     <Text fontSize={["sm", "md"]} fontWeight={"bold"}>
                       {`${data?.user?.first_name} ${data?.user?.last_name}`}
                     </Text>
@@ -71,9 +70,7 @@ const Top = ({ data }: PostProps) => {
 
                       <Box>
                         {data?.privacy!! === "PUBLIC" ? (
-                          <Tooltip label={"Public"}>
-                            <MdPublic />
-                          </Tooltip>
+                          <MdPublic />
                         ) : (
                           <BsFillUnlockFill />
                         )}
@@ -91,7 +88,7 @@ const Top = ({ data }: PostProps) => {
         {/* Action menu */}
         <Box>
           {/* The menu */}
-          <Menu>
+          <Menu isLazy>
             <IconButton aria-label={"More actions"} as={MenuButton} isRound>
               <Center>
                 {/* The Icon of the menu */}
@@ -109,15 +106,12 @@ const Top = ({ data }: PostProps) => {
               )}
 
               {/* Saving and unsaving the post */}
-              {/* <MenuItem
-                onClick={states.saved ? () => unsavePost() : () => savePost()}
-                fontWeight={"semibold"}
-              >
-                <Box mr={1}>
-                  {states.saved ? <BsBookmarkFill /> : <BsBookmark />}
-                </Box>
-                {states.saved ? "Unsave post" : "Save post"}
-              </MenuItem> */}
+              <MenuItem>
+                <Stack alignItems={"center"} direction={"row"}>
+                  <Icon as={BsBookmarkFill} />
+                  <Text>Save post</Text>
+                </Stack>
+              </MenuItem>
             </MenuList>
           </Menu>
         </Box>

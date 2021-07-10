@@ -7,14 +7,12 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
-  Avatar,
-  Stack,
   Text,
-  IconButton,
 } from "@chakra-ui/react";
-import { Post } from "../../../types/index";
-import { formatDistanceToNow } from "date-fns";
+import Comment from "./Comment";
+import { useState, useMemo } from "react";
+// import CreateCommentForm from "./CreateCommentForm";
+import { Post, Comment as CommentType } from "../../../types/index";
 
 interface CommentsModalProps {
   data: Post;
@@ -23,6 +21,12 @@ interface CommentsModalProps {
 }
 
 const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
+  const [comments, setComments] = useState<CommentType[]>();
+
+  useMemo(() => {
+    setComments(data.comments);
+  }, [data]);
+
   return (
     <Box>
       <Modal
@@ -32,56 +36,21 @@ const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
         scrollBehavior={"inside"}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent m={2}>
           <ModalHeader>Comments on {data?.user?.first_name}'s post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {data?.comments?.map((comment) => {
-              return (
-                <Box
-                  border={"2px"}
-                  p={2}
-                  rounded={"lg"}
-                  borderColor={"gray.300"}
-                >
-                  <Stack>
-                    <Box>
-                      <Stack direction={"row"}>
-                        <Avatar src={comment?.user?.avatar} />
-                        <Stack>
-                          <Stack
-                            fontSize={"md"}
-                            direction={"row"}
-                            alignItems={"center"}
-                            fontWeight={"semibold"}
-                            justifyContent={"space-between"}
-                          >
-                            <Stack direction={"row"}>
-                              <Text>{comment?.user?.first_name}</Text>
-                              <Text>|</Text>
-                              <Text>
-                                {formatDistanceToNow(
-                                  new Date(comment?.created_at),
-                                  { addSuffix: true, includeSeconds: true }
-                                )}
-                              </Text>
-                            </Stack>
-                            <IconButton aria-label={"Like Comment"} />
-                          </Stack>
-                          <Text>{comment?.body}</Text>
-                        </Stack>
-                      </Stack>
-                    </Box>
-                  </Stack>
-                </Box>
-              );
-            })}
+            {comments?.length === 0 ? (
+              <Text>There are no comments yet</Text>
+            ) : (
+              comments?.map((comment) => {
+                return <Comment key={comment.id} data={comment} />;
+              })
+            )}
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme={"blue"} onClick={onClose}>
-              Close
-            </Button>
+          <ModalFooter justifyContent={"space-between"}>
+            {/* <CreateCommentForm setComments={setComments} /> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -1,4 +1,4 @@
-import { BiShare } from "react-icons/bi";
+// import { BiShare } from "react-icons/bi";
 import { PostProps } from "../../../types/index";
 import CommentsModal from "../components/CommentsModal";
 import { AiFillGift, AiOutlineComment } from "react-icons/ai";
@@ -20,8 +20,6 @@ const Bottom = ({ data: post }: PostProps) => {
     <Box>
       {/* Button flex */}
       <Stack spacing={2} direction={["column", "row"]}>
-        {/* Heart button */}
-
         {/* Comment button */}
         <Button
           w={"full"}
@@ -33,15 +31,14 @@ const Bottom = ({ data: post }: PostProps) => {
         </Button>
 
         {/* Share button */}
-        <Button size={"sm"} rightIcon={<BiShare size={"15px"} />} w={"full"}>
-          Share
-        </Button>
-        {/* AiFillGift */}
-
-        {/* Share button */}
         <Button size={"sm"} rightIcon={<AiFillGift size={"15px"} />} w={"full"}>
           Gift
         </Button>
+
+        {/* Share button */}
+        {/* <Button size={"sm"} rightIcon={<BiShare size={"15px"} />} w={"full"}>
+          Share
+        </Button> */}
       </Stack>
 
       <Portal>

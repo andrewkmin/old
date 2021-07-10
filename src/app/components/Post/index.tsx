@@ -2,26 +2,25 @@ import Info from "./Sections/Info";
 import { PostProps } from "../../types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
-import TopComment from "./Sections/TopComment";
-import { Box, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import TopComment from "./components/TopComment";
+import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 
-const Post = ({ data: post }: PostProps) => {
+const Post = ({ data: post, setPosts }: PostProps) => {
   return (
     <Box
       p={[2, 3]}
       rounded={"xl"}
       border={"2px"}
       boxShadow={"md"}
-      minW={["sm", "md", "lg", "xl"]}
-      borderColor={useColorModeValue("gray.300", "gray.700")}
+      w={["sm", "md", "lg", "xl"]}
+      bgColor={useColorModeValue("", "gray.700")}
+      borderColor={useColorModeValue("gray.300", "gray.600")}
     >
       <Stack spacing={2}>
         {/* Post info */}
         <Info data={post} />
         {/* Post content */}
         <Content data={post} />
-        {/* Post reactions */}
-        {/* <Reactions /> */}
         {/* Post buttons */}
         <Buttons data={post} />
         {/* Top comment */}

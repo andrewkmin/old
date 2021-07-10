@@ -53,7 +53,7 @@ const Navbar = () => {
             variant={"ghost"}
             borderColor={"gray.400"}
             aria-label={"Your account"}
-            to={`/users/${userData?.username}`}
+            to={`/@${userData?.username}`}
           >
             <Stack px={1} alignItems={"center"} direction={"row"}>
               {/* Account avatar */}

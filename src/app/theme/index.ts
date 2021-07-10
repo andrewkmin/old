@@ -4,8 +4,8 @@ const theme = extendTheme({
   initialColorMode: "light",
   useSystemColorMode: false,
   fonts: {
-    heading: "Ubuntu Bold",
-    body: "Ubuntu",
+    // heading: "ubuntu bold",
+    // body: "ubuntu",
   },
 });
 

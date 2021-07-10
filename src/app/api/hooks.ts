@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { Post, User } from "../types";
+import { User } from "../types";
 import { useQuery } from "react-query";
 
 // Logout hook
@@ -25,18 +25,18 @@ export const useLogout = () => {
 // };
 
 // Fetching posts hook
-export const useFetchPosts = (username: String = "", depArray?: any[]) => {
-  const FetchPosts = async () => {
-    const { data } = await axios.get<Post[]>("/api/posts/fetch", {
-      params: {
-        username,
-      },
-    });
-    return data;
-  };
+// export const useFetchPosts = (username: String = "", depArray?: any[]) => {
+//   const FetchPosts = async () => {
+//     const { data } = await axios.get<Post[]>("/api/posts/fetch", {
+//       params: {
+//         username,
+//       },
+//     });
+//     return data;
+//   };
 
-  return useQuery(["posts", depArray], FetchPosts);
-};
+//   return useQuery(["posts", depArray], FetchPosts);
+// };
 
 // Check friendship hook
 export const useCheckFriendship = (

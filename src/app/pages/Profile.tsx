@@ -15,38 +15,32 @@ import {
   Spinner,
   Stack,
   Text,
+  useClipboard,
+  Tooltip,
 } from "@chakra-ui/react";
-import {
-  useFetchAccount,
-  useFetchAccountStatus,
-  useFetchPosts,
-} from "../api/hooks";
+import { Post } from "../types";
 import Create from "../components/Create";
 import { MdDelete } from "react-icons/md";
 import PostList from "../components/PostList";
-import { useContext, useEffect, useState } from "react";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
 import EditBio from "../components/Profile/EditBio";
+// import Actions from "../components/Profile/Actions";
+import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { Post } from "../types";
+import { useFetchAccount, useFetchAccountStatus } from "../api/hooks";
 
 // The profile page
 const Profile = () => {
   const history = useHistory();
   const { userData } = useContext(DataContext);
-  const { username } = useParams<{ username?: string }>();
-  const { data: fetchedPosts, isFetching: postsAreFetching } = useFetchPosts(
-    username,
-    [username]
-  );
-  const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
-    useFetchAccount(username, [username]);
-  const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
-    useFetchAccountStatus(username, [username]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const { username } = useParams<{ username?: string }>();
+  const { data: userDataResponse, isFetching: userDataResponseIsFetching } = useFetchAccount(username, [username]);
+  const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } = useFetchAccountStatus(username, [username]);
+  const { hasCopied, onCopy } = useClipboard(userDataResponse?.data?.username!!);
 
   useEffect(() => {
     // Checking if the user exists
@@ -56,14 +50,8 @@ const Profile = () => {
     return () => {};
   });
 
-  useEffect(() => {
-    if (fetchedPosts) setPosts(fetchedPosts);
-  }, [fetchedPosts]);
-
   // Displaying a spinner while data is fetching
-  return userDataResponseIsFetching ||
-    userStatusResponseIsFetching ||
-    postsAreFetching ? (
+  return userDataResponseIsFetching || userStatusResponseIsFetching ? (
     <Center minH={"75vh"}>
       <Spinner size={"lg"} />
     </Center>
@@ -92,8 +80,6 @@ const Profile = () => {
                         w={["xs", "md", "2xl", "full"]}
                         transition={"filter 0.3s ease-out"}
                         src={"https://picsum.photos/1920/500"}
-                        // filter={blur ? "blur(20px)" : "none"}
-                        // transition={blur ? "none" : "filter 0.3 ease-out"}
                       />
                     </LazyLoadComponent>
                   </Center>
@@ -153,28 +139,38 @@ const Profile = () => {
 
                   <Box>
                     <Box>
-                      <Center>
-                        {userDataResponse?.data?.id !== userData?.id ? (
-                          <Text
-                            fontSize={"sm"}
-                            color={"gray.400"}
-                            fontFamily={"ubuntu bold"}
-                          >
-                            {userDataResponse?.data.id}
-                          </Text>
-                        ) : (
-                          <Badge
-                            p={1.5}
-                            rounded={"full"}
-                            fontWeight={"bold"}
-                            color={"green.400"}
-                            userSelect={"none"}
-                            fontFamily={"ubuntu bold"}
-                          >
-                            Your account
-                          </Badge>
-                        )}
-                      </Center>
+                      <Stack>
+                        <Center>
+                          <Tooltip placement={"left"} label={"Copy username"}>
+                            <Text
+                              fontSize={"sm"}
+                              onClick={onCopy}
+                              cursor={"pointer"}
+                              fontFamily={"ubuntu bold"}
+                              color={hasCopied ? "green.300" : "gray.400"}
+                            >
+                              {hasCopied
+                                ? "Copied"
+                                : `@${userDataResponse?.data?.username}`}
+                            </Text>
+                          </Tooltip>
+                        </Center>
+
+                        <Center>
+                          {userDataResponse?.data?.id === userData?.id && (
+                            <Badge
+                              p={1.5}
+                              rounded={"full"}
+                              fontWeight={"bold"}
+                              color={"green.400"}
+                              userSelect={"none"}
+                              fontFamily={"ubuntu bold"}
+                            >
+                              Your account
+                            </Badge>
+                          )}
+                        </Center>
+                      </Stack>
                     </Box>
 
                     <Stack spacing={4}>
@@ -197,12 +193,13 @@ const Profile = () => {
                       </Box>
 
                       <Center>
-                        {/* {accountId !== userData?.id && (
-                          <Actions
-                            user={userDataResponse?.data}
-                            friendshipData={friendshipData}
-                          />
-                        )} */}
+                        {
+                          username !== userData?.username && null
+                          // <Actions
+                          //   user={userDataResponse?.data}
+                          //   friendshipData={friendshipData}
+                          // />
+                        }
                       </Center>
 
                       <Center>
@@ -223,14 +220,18 @@ const Profile = () => {
                     )}
 
                     <PostList
+                      data={posts}
                       noPostsText={`${
                         username === userData?.username
                           ? "You"
                           : userDataResponse?.data?.first_name
                       }
-                          ${username === userData?.username ? "don't" : "doesn't"}
+                          ${
+                            username === userData?.username
+                              ? "don't"
+                              : "doesn't"
+                          }
                           have any posts yet`}
-                      data={posts}
                     />
                   </Stack>
                 </Center>

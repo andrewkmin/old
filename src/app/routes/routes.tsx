@@ -44,11 +44,7 @@ const Routes = () => {
                     {/* Settings page */}
                     <Route exact component={Settings} path={"/settings"} />
                     {/* Profile page */}
-                    <Route
-                      exact
-                      component={Profile}
-                      path={"/users/:username"}
-                    />
+                    <Route exact component={Profile} path={"/@:username"} />
 
                     {/* Not found */}
                     <Route exact path={"*"}>
