@@ -45,7 +45,7 @@ const TopComment = ({ data: comment }: TopCommentProps) => {
               <Avatar size={"sm"} src={comment?.user?.avatar} />
               <Stack direction={"row"}>
                 <Text fontSize={"sm"}>
-                  <Link href={`/user/${comment?.user?.username}`}>
+                  <Link href={`/@${comment?.user?.username}`}>
                     <chakra.span fontWeight={"semibold"}>
                       {comment?.user?.first_name}
                     </chakra.span>
