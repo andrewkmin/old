@@ -29,7 +29,6 @@ import EditBio from "../components/Profile/EditBio";
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { useFetchAccount, useFetchAccountStatus } from "../api/hooks";
 
 // The profile page
@@ -38,9 +37,13 @@ const Profile = () => {
   const { userData } = useContext(DataContext);
   const [posts, setPosts] = useState<Post[]>([]);
   const { username } = useParams<{ username?: string }>();
-  const { data: userDataResponse, isFetching: userDataResponseIsFetching } = useFetchAccount(username, [username]);
-  const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } = useFetchAccountStatus(username, [username]);
-  const { hasCopied, onCopy } = useClipboard(userDataResponse?.data?.username!!);
+  const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
+    useFetchAccount(username, [username]);
+  const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
+    useFetchAccountStatus(username, [username]);
+  const { hasCopied, onCopy } = useClipboard(
+    userDataResponse?.data?.username!!
+  );
 
   useEffect(() => {
     // Checking if the user exists
@@ -65,23 +68,21 @@ const Profile = () => {
               <Center>
                 <Box w={["sm", "lg", "full"]}>
                   <Center>
-                    <LazyLoadComponent>
-                      <Image
-                        rounded={"xl"}
-                        boxShadow={"lg"}
-                        bgColor={"white"}
-                        objectFit={"cover"}
-                        _hover={{
-                          boxShadow: "xl",
-                          filter: "brightness(0.9)",
-                          transition: "0.2s ease-in",
-                        }}
-                        h={["170px", "190px"]}
-                        w={["xs", "md", "2xl", "full"]}
-                        transition={"filter 0.3s ease-out"}
-                        src={"https://picsum.photos/1920/500"}
-                      />
-                    </LazyLoadComponent>
+                    <Image
+                      rounded={"xl"}
+                      boxShadow={"lg"}
+                      bgColor={"white"}
+                      objectFit={"cover"}
+                      _hover={{
+                        boxShadow: "xl",
+                        filter: "brightness(0.9)",
+                        transition: "0.2s ease-in",
+                      }}
+                      h={["170px", "190px"]}
+                      w={["xs", "md", "2xl", "full"]}
+                      transition={"filter 0.3s ease-out"}
+                      src={"https://picsum.photos/1920/500"}
+                    />
                   </Center>
                 </Box>
               </Center>

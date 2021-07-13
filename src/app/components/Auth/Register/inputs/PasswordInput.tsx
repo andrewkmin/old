@@ -8,7 +8,7 @@ import {
 import { MdLock } from "react-icons/md";
 
 const PasswordInput = () => (
-  <FormControl isRequired>
+  <FormControl>
     <FormLabel>Password</FormLabel>
     <InputGroup>
       <InputLeftElement>

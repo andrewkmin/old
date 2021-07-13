@@ -1,5 +1,5 @@
 import axios from "../../../api/axios";
-import { useState, useContext } from "react";
+import { useState, useContext, ChangeEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { MdEmail, MdLock } from "react-icons/md";
 import DataContext from "../../../data/data.context";
@@ -23,22 +23,19 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // For handling the login
-  const handleLogin = async (event) => {
+  const handleLogin = async (event: ChangeEvent<HTMLFormElement>) => {
+    // Enable the loader
+    setIsSubmitting(true);
     // Preventing default behavior
     event.preventDefault();
-    // Creating a payload
-    const PAYLOAD = {
-      email: event.currentTarget.elements.email.value,
-      password: event.currentTarget.elements.password.value,
-    };
-
-    // Loading
-    setIsSubmitting(true);
 
     // Sending the request
-    const authResponse = await axios.post("/auth/login", PAYLOAD);
+    const authResponse = await axios.post("/auth/login", {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    });
 
-    // Not loading
+    // Disable the loader
     setIsSubmitting(false);
 
     // Checking authentication response status
@@ -53,25 +50,22 @@ const Login = () => {
         return History.push("/");
       }
       // If there is no such account
-      case 204: {
-        // Notify
+      case 204:
         return toast({
           title: "That account does not exist",
           status: "error",
           duration: 2000,
           isClosable: false,
         });
-      }
+
       // If there's another status
-      default: {
-        // Notify
+      default:
         return toast({
           title: "Check your credentials",
           status: "error",
           isClosable: false,
           duration: 2000,
         });
-      }
     }
   };
 
@@ -96,6 +90,7 @@ const Login = () => {
                 />
               </InputGroup>
             </FormControl>
+
             {/* Password Input */}
             <FormControl>
               <FormLabel fontWeight={"semibold"}>Password</FormLabel>
@@ -114,6 +109,7 @@ const Login = () => {
               </InputGroup>
             </FormControl>
           </Stack>
+
           {/* Submit */}
           <FormControl>
             <InputGroup>

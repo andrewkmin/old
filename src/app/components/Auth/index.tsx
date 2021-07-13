@@ -1,27 +1,8 @@
 // Components
 import Login from "./Login";
+import OrDivider from "../OrDivider";
 import Registration from "./Register";
-import {
-  Text,
-  Center,
-  Stack,
-  Divider,
-  Box,
-  chakra,
-  Tooltip,
-  Heading,
-} from "@chakra-ui/react";
-
-// Nice "OR" divider
-const OrDivider = () => (
-  <Stack direction={"row"} alignItems={"center"}>
-    <Divider />
-    <chakra.span fontWeight={"semibold"} color={"gray.500"}>
-      OR
-    </chakra.span>
-    <Divider />
-  </Stack>
-);
+import { Text, Center, Stack, Box, Tooltip, Heading } from "@chakra-ui/react";
 
 // Component that holds both registration and login forms
 const Auth = () => {
@@ -40,11 +21,10 @@ const Auth = () => {
         <Login />
         {/* Nice Divider */}
         <OrDivider />
-        <Stack spacing={6}>
-          {/* Registration Form */}
-          <Registration />
-          {/* TODO: Add forgot password form */}
-          <Tooltip label={"We're working on it"}>
+        <Registration />
+        {/* <Stack spacing={6}> */}
+        {/* Registration Form */}
+        {/* <Tooltip label={"We're working on it"}>
             <Text
               color={"gray.500"}
               textAlign={"center"}
@@ -54,8 +34,8 @@ const Auth = () => {
             >
               Forgot your password?
             </Text>
-          </Tooltip>
-        </Stack>
+          </Tooltip> */}
+        {/* </Stack> */}
       </Stack>
     </Stack>
   );

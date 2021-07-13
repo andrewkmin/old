@@ -3,7 +3,6 @@ import React from "react";
 import theme from "./app/theme";
 import ReactDOM from "react-dom";
 import "./app/assets/scss/globals.scss";
-import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
@@ -20,13 +19,11 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <ChakraProvider theme={theme}>
-          {/* This provides support for dark mode */}
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-          <App />
-        </ChakraProvider>
-      </HelmetProvider>
+      <ChakraProvider theme={theme}>
+        {/* This provides support for dark mode */}
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <App />
+      </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

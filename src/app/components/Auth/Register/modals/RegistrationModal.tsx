@@ -10,7 +10,12 @@ import {
 } from "@chakra-ui/react";
 import RegistrationForm from "../forms/RegistrationForm";
 
-const RegistrationModal = ({ isOpen, onClose }) => {
+interface RegistrationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const RegistrationModal = ({ isOpen, onClose }: RegistrationModalProps) => {
   return (
     <>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>

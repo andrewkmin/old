@@ -1,7 +1,11 @@
 import { Button, FormControl, InputGroup } from "@chakra-ui/react";
 
+interface ModalTriggerProps {
+  registrationOnOpen: () => void;
+}
+
 // Modal trigger triggers the registration modal
-const ModalTrigger = ({ registrationOnOpen }) => {
+const ModalTrigger = ({ registrationOnOpen }: ModalTriggerProps) => {
   return (
     <FormControl>
       <InputGroup>

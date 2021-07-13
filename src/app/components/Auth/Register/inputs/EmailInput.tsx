@@ -4,11 +4,12 @@ import {
   FormControl,
   FormLabel,
   Input,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { MdEmail } from "react-icons/md";
 
 const EmailInput = () => (
-  <FormControl isRequired>
+  <FormControl>
     <FormLabel>Email</FormLabel>
     <InputGroup>
       <InputLeftElement>
@@ -22,6 +23,9 @@ const EmailInput = () => (
         placeholder={"Email"}
       />
     </InputGroup>
+    <FormHelperText>
+      We'll use this address to send you a verification email
+    </FormHelperText>
   </FormControl>
 );
 

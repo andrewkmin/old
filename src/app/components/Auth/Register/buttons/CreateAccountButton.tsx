@@ -1,7 +1,11 @@
 import { Button } from "@chakra-ui/react";
 
+interface CreateAccountButtonProps {
+  isSubmitting: boolean;
+}
+
 // Button component used for submitting form and sending the request
-const CreateAccountButton = ({ isSubmitting }) => {
+const CreateAccountButton = ({ isSubmitting }: CreateAccountButtonProps) => {
   return (
     <Button
       colorScheme={"teal"}
