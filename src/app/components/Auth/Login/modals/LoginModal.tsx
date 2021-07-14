@@ -6,28 +6,29 @@ import {
   ModalHeader,
   Text,
   ModalBody,
+  Flex,
 } from "@chakra-ui/react";
-import RegistrationForm from "../forms/RegistrationForm";
+import LoginForm from "../forms/LoginForm";
 
-interface RegistrationModalProps {
+interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const RegistrationModal = ({ isOpen, onClose }: RegistrationModalProps) => {
+const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   return (
     <>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent rounded={"2xl"} m={2}>
           <ModalHeader>
-            <Text fontWeight={"semibold"}>Register for Polygon</Text>
+            <Flex>
+              <Text fontWeight={"semibold"}>Log in to Polygon</Text>
+            </Flex>
           </ModalHeader>
-
           <ModalCloseButton />
-
           <ModalBody py={5}>
-            <RegistrationForm />
+            <LoginForm />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -35,4 +36,4 @@ const RegistrationModal = ({ isOpen, onClose }: RegistrationModalProps) => {
   );
 };
 
-export default RegistrationModal;
+export default LoginModal;

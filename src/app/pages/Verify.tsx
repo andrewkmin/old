@@ -6,7 +6,7 @@ import {
   Input,
   Stack,
   Text,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import axios from "../api/axios";
 import { ChangeEvent, useState } from "react";
@@ -19,35 +19,32 @@ const Verify = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
     setIsSubmitting(true);
+    event.preventDefault();
 
     const { status } = await axios.post(`/auth/register/verify/${sid}`, {
-      password: event.target.password.value
+      password: event.target.password.value,
     });
 
-    setIsSubmitting(false);
-
     toast.closeAll();
+    setIsSubmitting(false);
 
     if (status === 404) {
       toast({
         status: "error",
         isClosable: false,
-        title: "Seems like that handle has expired or does not exist"
+        title: "Seems like that handle has expired or does not exist",
       });
-      return setTimeout(() => history.push("/"), 2000);
-    } else if (status === 401)
+      return history.push("/");
+    } else if (status === 401) {
       toast({ title: "That password is invalid", isClosable: false });
-    else {
+    } else {
       toast({
-        title: "You've successfully verified your account!",
-        description: "Congratulations!!",
         status: "success",
-        isClosable: false
+        isClosable: false,
+        title: "You've successfully verified your account!",
       });
-      history.push("/");
-      return window.location.reload();
+      return history.push("/");
     }
   };
 

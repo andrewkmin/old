@@ -32,11 +32,11 @@ const Navbar = () => {
         <NavLink to={"/"}>
           <Text
             fontSize={["2xl", "3xl"]}
-            color={"teal.400"}
+            color={"purple.500"}
             fontWeight={"bold"}
             fontFamily={"Ubuntu Bold"}
           >
-            Usocial
+            PolyGon
           </Text>
         </NavLink>
       </Flex>

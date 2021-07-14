@@ -7,6 +7,7 @@ const LastNameInput = () => (
       <FormLabel>Last Name</FormLabel>
       <Input
         required
+        size={"lg"}
         type={"text"}
         name={"lastName"}
         placeholder={"Last Name"}

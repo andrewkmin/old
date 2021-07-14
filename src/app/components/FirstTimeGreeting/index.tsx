@@ -37,41 +37,60 @@ const FirstTimeGreeting = () => {
         height={window.innerHeight}
       />
 
-      <Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
+      <Modal isCentered onClose={onClose} size={"xl"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent mx={2} pb={3.5}>
-          <ModalHeader>Greetings from the Usocial team 👋</ModalHeader>
+          <ModalHeader>
+            <Text>
+              Greetings from{" "}
+              <chakra.span color={"purple.400"}>Polygon</chakra.span> team 👋
+            </Text>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody userSelect={"none"}>
             <Stack spacing={3}>
               <Text>
                 Hi and welcome to{" "}
-                <chakra.span fontWeight={"bold"} color={"teal.500"}>
-                  Usocial
+                <chakra.span
+                  fontWeight={"thin"}
+                  color={"purple.500"}
+                  fontFamily={"ubuntu bold"}
+                >
+                  Polygon
                 </chakra.span>
-                , the first social media website aimed for privacy protection on
-                the Internet.
-                {"\n"}
-                We're pleased to have a user like{" "}
-                <chakra.span fontWeight={"bold"}>YOU</chakra.span> and we hope
-                that your experience on our platform will be fantastic. It's not
-                necessary but will be nice if you follow these rules if you join
-                :)
+                , the first social network aimed to be the most private!
+              </Text>
+
+              <Text>
+                We're honored to have a user like{" "}
+                <chakra.span
+                  fontWeight={"thin"}
+                  color={"purple.500"}
+                  fontFamily={"ubuntu bold"}
+                >
+                  you
+                </chakra.span>{" "}
+                and we hope that your experience on our platform will be
+                fantastic.
+              </Text>
+
+              <Text>
+                It's not necessary but will be nice if you follow these rules if
+                you join :)
               </Text>
 
               <List>
                 <ListItem>
-                  <ListIcon as={MdCheckCircle} color={"green.500"} />
+                  <ListIcon as={MdCheckCircle} color={"purple.500"} />
                   Be nice to others
                 </ListItem>
 
                 <ListItem>
-                  <ListIcon as={MdCheckCircle} color={"green.500"} />
+                  <ListIcon as={MdCheckCircle} color={"purple.500"} />
                   Don't harass others based on their opinion
                 </ListItem>
               </List>
 
-              <Text fontWeight={"semibold"}>Thanks for reading 🙌</Text>
               <Text fontWeight={"bold"} fontSize={"sm"}>
                 CEO and Founder, Michael Grigoryan
               </Text>

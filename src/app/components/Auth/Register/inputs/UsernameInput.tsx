@@ -5,7 +5,12 @@ const UsernameInput = () => {
     <FormControl>
       <FormLabel>Username</FormLabel>
       <InputGroup>
-        <Input isRequired name={"username"} placeholder={"Username"} />
+        <Input
+          isRequired
+          size={"lg"}
+          name={"username"}
+          placeholder={"Username"}
+        />
       </InputGroup>
     </FormControl>
   );

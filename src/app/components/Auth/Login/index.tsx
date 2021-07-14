@@ -1,134 +1,15 @@
-import axios from "../../../api/axios";
-import { useState, useContext, ChangeEvent } from "react";
-import { useHistory } from "react-router-dom";
-import { MdEmail, MdLock } from "react-icons/md";
-import DataContext from "../../../data/data.context";
-import {
-  Stack,
-  useToast,
-  Box,
-  FormControl,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  Button,
-  FormLabel,
-} from "@chakra-ui/react";
+import LoginModal from "./modals/LoginModal";
+import { useDisclosure } from "@chakra-ui/react";
+import ModalTriggerButton from "./buttons/ModalTriggerButton";
 
-// Login form component
 const Login = () => {
-  const toast = useToast();
-  const History = useHistory();
-  const { setState } = useContext(DataContext);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // For handling the login
-  const handleLogin = async (event: ChangeEvent<HTMLFormElement>) => {
-    // Enable the loader
-    setIsSubmitting(true);
-    // Preventing default behavior
-    event.preventDefault();
-
-    // Sending the request
-    const authResponse = await axios.post("/auth/login", {
-      email: event.target.email.value,
-      password: event.target.password.value,
-    });
-
-    // Disable the loader
-    setIsSubmitting(false);
-
-    // Checking authentication response status
-    switch (authResponse.status) {
-      // If authentication response suceeds
-      case 200: {
-        // Fetching user data
-        const { data: userData } = await axios.get("/api/accounts/fetch");
-
-        // Setting the state
-        setState({ authenticated: true, userData });
-        return History.push("/");
-      }
-      // If there is no such account
-      case 204:
-        return toast({
-          title: "That account does not exist",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-
-      // If there's another status
-      default:
-        return toast({
-          title: "Check your credentials",
-          status: "error",
-          isClosable: false,
-          duration: 2000,
-        });
-    }
-  };
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
-    <Box>
-      <form autoComplete={"off"} onSubmit={handleLogin}>
-        <Stack spacing={5}>
-          <Stack>
-            {/* Email input */}
-            <FormControl>
-              <FormLabel fontWeight={"semibold"}>Email</FormLabel>
-              <InputGroup>
-                <InputLeftElement>
-                  <MdEmail color={"gray"} />
-                </InputLeftElement>
-                <Input
-                  required
-                  size={"md"}
-                  name={"email"}
-                  type={"email"}
-                  placeholder={"Email"}
-                />
-              </InputGroup>
-            </FormControl>
-
-            {/* Password Input */}
-            <FormControl>
-              <FormLabel fontWeight={"semibold"}>Password</FormLabel>
-              <InputGroup>
-                <InputLeftElement>
-                  <MdLock color={"gray"} />
-                </InputLeftElement>
-                <Input
-                  required
-                  size={"md"}
-                  minLength={8}
-                  name={"password"}
-                  type={"password"}
-                  placeholder={"Password"}
-                />
-              </InputGroup>
-            </FormControl>
-          </Stack>
-
-          {/* Submit */}
-          <FormControl>
-            <InputGroup>
-              <Button
-                w={"full"}
-                size={"md"}
-                type={"submit"}
-                rounded={"full"}
-                colorScheme={"blue"}
-                isLoading={isSubmitting}
-                loadingText={"Logging you In"}
-              >
-                Login
-              </Button>
-            </InputGroup>
-          </FormControl>
-        </Stack>
-      </form>
-    </Box>
+    <>
+      <ModalTriggerButton loginModalOnOpen={onOpen} />
+      <LoginModal onClose={onClose} isOpen={isOpen} />
+    </>
   );
 };
 

@@ -2,9 +2,10 @@ import {
   Route,
   Switch,
   Redirect,
-  BrowserRouter as Router
+  BrowserRouter as Router,
 } from "react-router-dom";
 import Home from "../pages/Home";
+import Verify from "../pages/Verify";
 import Logout from "../pages/Logout";
 import { Box } from "@chakra-ui/react";
 import Welcome from "../pages/Welcome";
@@ -12,7 +13,6 @@ import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import Private from "../helpers/PrivateRoute";
 import PlatformLayout from "../layouts/Platform.layout";
-import Verify from "../pages/Verify";
 
 /**
  * Here we write the code for all the routes.
@@ -25,38 +25,32 @@ const Routes = () => {
      * Making the minimum height 100vh
      * because Chakra UI doesn't do it by default
      */
-    <Box minH={"100vh"} maxH={"100%"}>
+    <Box>
       <Router>
         <Switch>
           {/* Authentication page */}
           <Route exact path={"/welcome"}>
-            {/* When the user is logged in and tries to access this page, private route will redirect him to Home page */}
+            {/**
+             * When the user is logged in and tries to access this page,
+             * private route will redirect him to Home page
+             */}
             <Private swap={true}>
               <Welcome />
             </Private>
           </Route>
 
-          {/* For verification */}
+          {/* For account  verification */}
           <Route exact path={"/verify/:sid"}>
             <Private swap={true}>
               <Verify />
             </Private>
           </Route>
 
-          {/* Logout page */}
-          <Route exact path={"/logout"}>
-            <Logout />
-          </Route>
+          {/* Logout  */}
+          <Route exact path={"/logout"} component={Logout} />
 
           {/* This is the `/`(root) route with all of it's subroutes */}
-          <Route
-            exact
-            // path={"/"}
-            // render={() => {
-            //   return (
-            //   );
-            // }}
-          >
+          <Route path={"/"}>
             {/**
              * Wrapping everything inside of a private route.
              * If the users are logged in then they can access the page,

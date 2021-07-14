@@ -1,7 +1,8 @@
 // import Media from "../../Media";
 // import Carousel from "../../Carousel";
+import { Box } from "@chakra-ui/react";
+import ReactMarkdown from "react-markdown";
 import { PostProps } from "../../../types";
-import { Box, Text } from "@chakra-ui/react";
 
 // Post content
 const Content = ({ data }: PostProps) => {
@@ -9,7 +10,8 @@ const Content = ({ data }: PostProps) => {
     // Middle section
     <Box>
       {/* Rendering post text */}
-      <Text fontSize={["lg", "md"]}>{data.body}</Text>
+      {/* <Text fontSize={["lg", "md"]}>{data.body}</Text> */}
+      <ReactMarkdown>{data.body}</ReactMarkdown>
 
       {/* <Carousel> */}
       {/* Rendering post attachments if there are any */}

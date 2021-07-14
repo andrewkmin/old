@@ -1,9 +1,6 @@
-import {
-  Skeleton,
-  // useColorMode
-} from "@chakra-ui/react";
 import axios from "./api/axios";
 import Routes from "./routes/routes";
+import { Skeleton } from "@chakra-ui/react";
 import DataContext from "./data/data.context";
 import { useEffect, useRef, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -85,8 +82,18 @@ const App = () => {
       }}
     >
       <ReactQueryDevtools initialIsOpen={false} />
+
       {/* Displaying a skeleton if the state changes to loading */}
-      {state?.loading ? <Skeleton h={"100vh"} w={"100vw"} /> : <Routes />}
+      {state?.loading ? (
+        <Skeleton
+          // startColor={"purple.400"}
+          // endColor={"purple.500"}
+          h={"100vh"}
+          w={"100vw"}
+        />
+      ) : (
+        <Routes />
+      )}
     </DataContext.Provider>
   );
 };

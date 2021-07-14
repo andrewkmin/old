@@ -1,29 +1,30 @@
 import { Button, FormControl, InputGroup } from "@chakra-ui/react";
 
-interface ModalTriggerProps {
-  registrationOnOpen: () => void;
+interface LoginButtonProps {
+  isSubmitting: boolean;
 }
 
-// Modal trigger triggers the registration modal
-const ModalTrigger = ({ registrationOnOpen }: ModalTriggerProps) => {
+const LoginButton = ({ isSubmitting }: LoginButtonProps) => {
   return (
     <FormControl>
       <InputGroup>
         <Button
           w={"full"}
           size={"lg"}
+          type={"submit"}
+          rounded={"full"}
           fontWeight={"thin"}
-          variant={"outline"}
-          borderRadius={"full"}
+          fontStyle={"normal"}
           colorScheme={"purple"}
+          isLoading={isSubmitting}
           fontFamily={"ubuntu bold"}
-          onClick={registrationOnOpen}
+          loadingText={"Logging in"}
         >
-          Create an account
+          Log in
         </Button>
       </InputGroup>
     </FormControl>
   );
 };
 
-export default ModalTrigger;
+export default LoginButton;

@@ -7,6 +7,7 @@ const FirstNameInput = () => (
       <FormLabel>First Name</FormLabel>
       <Input
         required
+        size={"lg"}
         type={"text"}
         name={"firstName"}
         placeholder={"First Name"}

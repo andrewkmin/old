@@ -1,11 +1,11 @@
 import { Button, FormControl, InputGroup } from "@chakra-ui/react";
 
 interface ModalTriggerProps {
-  registrationOnOpen: () => void;
+  loginModalOnOpen: () => void;
 }
 
 // Modal trigger triggers the registration modal
-const ModalTrigger = ({ registrationOnOpen }: ModalTriggerProps) => {
+const ModalTrigger = ({ loginModalOnOpen }: ModalTriggerProps) => {
   return (
     <FormControl>
       <InputGroup>
@@ -13,13 +13,14 @@ const ModalTrigger = ({ registrationOnOpen }: ModalTriggerProps) => {
           w={"full"}
           size={"lg"}
           fontWeight={"thin"}
-          variant={"outline"}
+          fontStyle={"normal"}
           borderRadius={"full"}
           colorScheme={"purple"}
+          bgColor={"purple.400"}
           fontFamily={"ubuntu bold"}
-          onClick={registrationOnOpen}
+          onClick={loginModalOnOpen}
         >
-          Create an account
+          Log in
         </Button>
       </InputGroup>
     </FormControl>

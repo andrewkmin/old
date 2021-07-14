@@ -3,8 +3,8 @@ import React from "react";
 import theme from "./app/theme";
 import ReactDOM from "react-dom";
 import "./app/assets/scss/globals.scss";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 // Query Client for react query
 const queryClient = new QueryClient({
@@ -18,13 +18,12 @@ const queryClient = new QueryClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        {/* This provides support for dark mode */}
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
-      </ChakraProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

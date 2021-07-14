@@ -2,29 +2,29 @@
   "title": {
     "en": {
       "translation": {
-        "Welcome to Usocial": "Welcome to Usocial"
+        "Welcome to Polygon": "Welcome to Polygon"
       }
     },
     "fr": {
       "translation": {
-        "Welcome to Usocial": "Bienvenue sur Usocial"
+        "Welcome to Polygon": "Bienvenue sur Polygon"
       }
     },
 
     "ru": {
       "translation": {
-        "Welcome to Usocial": "Добро пожаловать в Usocial"
+        "Welcome to Polygon": "Добро пожаловать в Polygon"
       }
     },
     "am": {
       "translation": {
-        "Welcome to Usocial": "Բարի գալուստ Usocial"
+        "Welcome to Polygon": "Բարի գալուստ Polygon"
       }
     },
 
     "de": {
       "translation": {
-        "Welcome to Usocial": "Willkommen bei Usocial"
+        "Welcome to Polygon": "Willkommen bei Polygon"
       }
     }
   },
@@ -32,27 +32,27 @@
   "description": {
     "en": {
       "translation": {
-        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial is a next-gen privacy oriented social media networking platform"
+        "Polygon is a  privacy oriented social media networking platform": "Polygon is a  privacy oriented social media networking platform"
       }
     },
     "fr": {
       "translation": {
-        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial est une plate-forme de réseautage de médias sociaux de nouvelle génération axée sur la confidentialité"
+        "Polygon is a  privacy oriented social media networking platform": "Polygon est une plate-forme de réseautage de médias sociaux de nouvelle génération axée sur la confidentialité"
       }
     },
     "ru": {
       "translation": {
-        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial - это социальная сетевая платформа нового поколения, ориентированная на конфиденциальность"
+        "Polygon is a  privacy oriented social media networking platform": "Polygon - это социальная сетевая платформа нового поколения, ориентированная на конфиденциальность"
       }
     },
     "am": {
       "translation": {
-        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial- ը հաջորդ սերնդի գաղտնիությանն ուղղված սոցցանցային հարթակ է"
+        "Polygon is a  privacy oriented social media networking platform": "Polygon- ը հաջորդ սերնդի գաղտնիությանն ուղղված սոցցանցային հարթակ է"
       }
     },
     "de": {
       "translation": {
-        "Usocial is a next-gen privacy oriented social media networking platform": "Usocial ist eine datenschutzorientierte Social-Media-Netzwerkplattform der nächsten Generation"
+        "Polygon is a  privacy oriented social media networking platform": "Polygon ist eine datenschutzorientierte Social-Media-Netzwerkplattform der nächsten Generation"
       }
     }
   }

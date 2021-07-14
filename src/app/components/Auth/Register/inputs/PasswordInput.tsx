@@ -1,22 +1,12 @@
-import {
-  FormControl,
-  FormLabel,
-  InputGroup,
-  InputLeftElement,
-  Input,
-} from "@chakra-ui/react";
-import { MdLock } from "react-icons/md";
+import { FormControl, FormLabel, InputGroup, Input } from "@chakra-ui/react";
 
 const PasswordInput = () => (
   <FormControl>
     <FormLabel>Password</FormLabel>
     <InputGroup>
-      <InputLeftElement>
-        <MdLock color="gray" />
-      </InputLeftElement>
       <Input
         required
-        size={"md"}
+        size={"lg"}
         minLength={8}
         type={"password"}
         name={"password"}

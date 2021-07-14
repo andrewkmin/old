@@ -8,16 +8,19 @@ interface CreateAccountButtonProps {
 const CreateAccountButton = ({ isSubmitting }: CreateAccountButtonProps) => {
   return (
     <Button
-      colorScheme={"teal"}
-      type={"submit"}
-      mt={2}
-      mb={2}
       w={"full"}
+      size={"lg"}
+      type={"submit"}
       rounded={"full"}
+      fontWeight={"thin"}
+      fontStyle={"normal"}
+      colorScheme={"purple"}
+      bgColor={"purple.400"}
       isLoading={isSubmitting}
+      fontFamily={"ubuntu bold"}
       loadingText={"Creating an account"}
     >
-      Create Account
+      Create your account
     </Button>
   );
 };
