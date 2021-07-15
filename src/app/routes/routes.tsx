@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Home from "../pages/Home";
-import Verify from "../pages/Verify";
 import Logout from "../pages/Logout";
 import { Box } from "@chakra-ui/react";
 import Welcome from "../pages/Welcome";
@@ -36,13 +35,6 @@ const Routes = () => {
              */}
             <Private swap={true}>
               <Welcome />
-            </Private>
-          </Route>
-
-          {/* For account  verification */}
-          <Route exact path={"/verify/:sid"}>
-            <Private swap={true}>
-              <Verify />
             </Private>
           </Route>
 

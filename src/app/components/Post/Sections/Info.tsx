@@ -30,6 +30,7 @@ const Top = ({ data }: PostProps) => {
   // TODO: Implement
   const reportPost = async () => {};
   // TODO: Implement
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const unsavePost = async () => {};
   // TODO։ Implement
   const deletePost = async () => {};

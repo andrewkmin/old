@@ -11,10 +11,16 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Auth from "../components/Auth/index";
+import Verification from "../components/Verification";
 import FirstTimeGreeting from "../components/FirstTimeGreeting";
 
 // The welcome/authentication page
 const Welcome = () => {
+  // For rendering verification component on demand
+  const params = new URLSearchParams(window.location.search);
+  // Getting the `verify` parameter
+  const verification = params.get("verification");
+
   // Random photo
   const photo =
     // "https://images.unsplash.com/photo-1535478044878-3ed83d5456ef?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=769&q=1080"
@@ -40,8 +46,8 @@ const Welcome = () => {
         <Text
           color={"gray.700"}
           fontWeight={"thin"}
-          fontSize={["sm", "lg"]}
           fontFamily={"ubuntu bold"}
+          fontSize={["sm", "md", "lg"]}
         >
           We're still launching, if there are any issues please contact our
           support team at{" "}
@@ -95,7 +101,7 @@ const Welcome = () => {
         >
           <Box h={"100%"}>
             <Center>
-              <Stack mt={14} spacing={5} px={[5, null, null, 0]}>
+              <Stack mt={16} spacing={5} px={[5, null, null, 0]}>
                 {/* <Image w={"60px"} /> */}
 
                 <Stack>
@@ -111,13 +117,13 @@ const Welcome = () => {
                       fontWeight={"thin"}
                       fontFamily={"ubuntu bold"}
                     >
-                      Private Gate to global network
+                      Private gate to global network
                       {/* {"™"} */}
                     </Text>
                   </Center>
                 </Stack>
 
-                <Auth />
+                {!verification ? <Auth /> : <Verification />}
               </Stack>
             </Center>
           </Box>
