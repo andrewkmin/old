@@ -38,7 +38,7 @@ const Welcome = () => {
     <Box minH={"100vh"}>
       <Alert bgColor={"purple.300"} pos={"absolute"}>
         <Text
-          color={"white"}
+          color={"gray.700"}
           fontWeight={"thin"}
           fontSize={["sm", "lg"]}
           fontFamily={"ubuntu bold"}
@@ -71,7 +71,6 @@ const Welcome = () => {
             zIndex={-1}
             src={photo}
             border={"none"}
-            // objectFit={"cover"}
             bgColor={"purple.400"}
             filter={"brightness(60%)"}
             borderColor={"transparent"}
@@ -96,24 +95,19 @@ const Welcome = () => {
         >
           <Box h={"100%"}>
             <Center>
-              <Stack
-                mt={14}
-                spacing={5}
-                // w={["sm", "md"]}
-                px={[5, null, null, 0]}
-              >
+              <Stack mt={14} spacing={5} px={[5, null, null, 0]}>
                 {/* <Image w={"60px"} /> */}
 
                 <Stack>
                   <Center>
                     <Heading fontWeight={"semibold"} fontSize={"5xl"}>
-                      PolyGon
+                      Polygon
                     </Heading>
                   </Center>
 
                   <Center>
                     <Text
-                      fontSize={"2xl"}
+                      fontSize={["xl", "2xl"]}
                       fontWeight={"thin"}
                       fontFamily={"ubuntu bold"}
                     >

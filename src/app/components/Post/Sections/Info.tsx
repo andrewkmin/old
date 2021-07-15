@@ -11,29 +11,28 @@ import {
   Spacer,
   Text,
   Stack,
-  Icon,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 // import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
+import { BsFillUnlockFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { PostProps } from "../../../types/index.d";
 import DataContext from "../../../data/data.context";
-import { BsBookmarkFill, BsFillUnlockFill } from "react-icons/bs";
 
 const Top = ({ data }: PostProps) => {
   const { userData } = useContext(DataContext);
 
   // TODO: Implement
-  // const savePost = async () => {};
+  const savePost = async () => {};
   // TODO: Implement
-  // const unsavePost = async () => {};
+  const reportPost = async () => {};
+  // TODO: Implement
+  const unsavePost = async () => {};
   // TODO։ Implement
-  const deletePost = async () => {
-    // const response = await axios.delete(`/posts/${data?.id}`);
-  };
+  const deletePost = async () => {};
 
   return (
     // Top section
@@ -85,13 +84,16 @@ const Top = ({ data }: PostProps) => {
 
         <Spacer />
 
-        {/* Action menu */}
         <Box>
-          {/* The menu */}
+          {/* Action menu */}
           <Menu isLazy>
-            <IconButton aria-label={"More actions"} as={MenuButton} isRound>
+            <IconButton
+              isRound
+              size={"sm"}
+              as={MenuButton}
+              aria-label={"Actions"}
+            >
               <Center>
-                {/* The Icon of the menu */}
                 <FiMoreHorizontal />
               </Center>
             </IconButton>
@@ -101,16 +103,25 @@ const Top = ({ data }: PostProps) => {
               {data?.user?.id === userData?.id && (
                 // For deleting the post
                 <MenuItem fontWeight="semibold" onClick={() => deletePost()}>
-                  Delete Post
+                  <Text fontFamily={"ubuntu bold"} fontWeight={"thin"}>
+                    Delete post
+                  </Text>
                 </MenuItem>
               )}
 
               {/* Saving and unsaving the post */}
-              <MenuItem>
-                <Stack alignItems={"center"} direction={"row"}>
-                  <Icon as={BsBookmarkFill} />
-                  <Text>Save post</Text>
-                </Stack>
+              {/* TODO: Make the execution of the function dynamic */}
+              <MenuItem onClick={() => savePost()}>
+                <Text fontFamily={"ubuntu bold"} fontWeight={"thin"}>
+                  Save post
+                </Text>
+              </MenuItem>
+
+              {/* For reporting a post */}
+              <MenuItem onClick={() => reportPost()}>
+                <Text fontFamily={"ubuntu bold"} fontWeight={"thin"}>
+                  Report post
+                </Text>
               </MenuItem>
             </MenuList>
           </Menu>

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Comment from "./Comment";
 import { useState, useMemo } from "react";
-// import CreateCommentForm from "./CreateCommentForm";
+import CreateCommentForm from "./CreateCommentForm";
 import { Post, Comment as CommentType } from "../../../types/index";
 
 interface CommentsModalProps {
@@ -36,7 +36,7 @@ const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
         scrollBehavior={"inside"}
       >
         <ModalOverlay />
-        <ModalContent m={2}>
+        <ModalContent rounded={"2xl"} m={2}>
           <ModalHeader>Comments on {data?.user?.first_name}'s post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -50,7 +50,7 @@ const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
           </ModalBody>
 
           <ModalFooter justifyContent={"space-between"}>
-            {/* <CreateCommentForm setComments={setComments} /> */}
+            <CreateCommentForm setComments={setComments} />
           </ModalFooter>
         </ModalContent>
       </Modal>

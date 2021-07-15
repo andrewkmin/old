@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { FetchPosts } from "../api/functions";
 import PostList from "../components/PostList";
 import CreatePost from "../components/Create";
-import { Box, Center, Spinner, Stack } from "@chakra-ui/react";
+import { Box, Center, Spinner, Stack, Text } from "@chakra-ui/react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 // The homepage
@@ -32,7 +32,9 @@ const Home = () => {
           <Center>
             <Stack spacing={2}>
               <CreatePost />
+
               <PostList data={data!!} noPostsText={"There are no posts yet"} />
+
               {isFetching ? (
                 <Center>
                   <Spinner />

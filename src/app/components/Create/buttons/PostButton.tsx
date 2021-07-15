@@ -15,12 +15,13 @@ const PostButton = ({
   return (
     <Center>
       <Button
-        size={"md"}
+        size={"lg"}
         type={"submit"}
         rounded={"full"}
+        fontWeight={"thin"}
         colorScheme={"blue"}
         isLoading={submitting}
-        fontWeight={"semibold"}
+        fontFamily={"ubuntu bold"}
         disabled={createPostDisabled}
       >
         Post

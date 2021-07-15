@@ -14,12 +14,12 @@ const TextInput = ({ handleInput }: TextInputProps) => (
   <FormControl>
     <Center>
       <Input
-        size={"md"}
+        size={"lg"}
         name={"text"}
         rounded={"full"}
         boxShadow={"sm"}
         variant={"outline"}
-        placeholder={"Write something..."}
+        placeholder={"Got any ideas to share?"}
         onChange={(event) => handleInput(event)}
       />
     </Center>

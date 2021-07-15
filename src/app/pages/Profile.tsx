@@ -160,11 +160,11 @@ const Profile = () => {
                         <Center>
                           {userDataResponse?.data?.id === userData?.id && (
                             <Badge
-                              p={1.5}
+                              p={2}
                               rounded={"full"}
                               fontWeight={"bold"}
-                              color={"green.400"}
                               userSelect={"none"}
+                              color={"purple.400"}
                               fontFamily={"ubuntu bold"}
                             >
                               Your account

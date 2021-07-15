@@ -23,9 +23,9 @@ const Navbar = () => {
       p={[2, 3]}
       pos={"sticky"}
       zIndex={"sticky"}
-      borderBottom={"1px"}
+      borderBottom={"2px"}
       bg={useColorModeValue("gray.50", "gray.700")}
-      borderColor={useColorModeValue("#FFFFFC", "gray.700")}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
     >
       {/* Logo */}
       <Flex alignItems={"center"}>
@@ -36,7 +36,7 @@ const Navbar = () => {
             fontWeight={"bold"}
             fontFamily={"Ubuntu Bold"}
           >
-            PolyGon
+            Polygon
           </Text>
         </NavLink>
       </Flex>

@@ -15,6 +15,7 @@ const LoginButton = ({ isSubmitting }: LoginButtonProps) => {
           rounded={"full"}
           fontWeight={"thin"}
           fontStyle={"normal"}
+          bgColor={"purple.400"}
           colorScheme={"purple"}
           isLoading={isSubmitting}
           fontFamily={"ubuntu bold"}

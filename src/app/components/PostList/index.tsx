@@ -25,6 +25,16 @@ const PostList: React.FC<PostListProps> = ({ data: posts, noPostsText }) => {
         <Box m={[2, 4]}>
           <Center>
             <Stack spacing={5}>
+              {/* <Text
+                // mx={[2, 4]}
+                fontSize={"3xl"}
+                fontWeight={"thin"}
+                color={"purple.500"}
+                fontFamily={"ubuntu bold"}
+              >
+                Timeline
+              </Text> */}
+
               {posts?.map((post, index) => {
                 return <Post data={post} key={index} />;
               })}
