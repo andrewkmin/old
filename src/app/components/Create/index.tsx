@@ -134,22 +134,24 @@ const Create = ({ posts, setPosts }: CreateProps) => {
                 <AttachmentInput />
                 <Button
                   w={"full"}
+                  size={"lg"}
                   border={"2px"}
                   boxShadow={"xs"}
                   fontWeight={"sm"}
                   fontFamily={"ubuntu bold"}
                   variant={useColorModeValue("outline", "solid")}
-                  borderColor={useColorModeValue("gray.300", "gray.800")}
+                  borderColor={useColorModeValue("gray.200", "gray.800")}
                 >
                   <Text fontSize={["sm", "md"]}>Something</Text>
                 </Button>
                 <Button
                   w={"full"}
+                  size={"lg"}
                   border={"2px"}
                   fontWeight={"sm"}
                   fontFamily={"ubuntu bold"}
                   variant={useColorModeValue("outline", "solid")}
-                  borderColor={useColorModeValue("gray.300", "gray.800")}
+                  borderColor={useColorModeValue("gray.200", "gray.800")}
                 >
                   <Text fontSize={["sm", "md"]}>Something</Text>
                 </Button>

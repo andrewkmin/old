@@ -6,16 +6,18 @@ import {
   Center,
   IconButton,
   MenuDivider,
+  Box,
+  Button,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
-import LogoutButton from "../Buttons/LogoutButton";
+import { Link, NavLink } from "react-router-dom";
 import { BsFillCaretDownFill } from "react-icons/bs";
 
 const DropdownMenu = () => {
   return (
     <Menu>
       <IconButton
+        aria-label={"Open dropdown"}
         as={MenuButton}
         ms={2}
         isRound
@@ -26,7 +28,7 @@ const DropdownMenu = () => {
         }
       />
 
-      <MenuList mt={2} me={2}>
+      <MenuList mt={5} me={2}>
         <MenuItem
           icon={<IoMdSettings fontSize={"20px"} />}
           as={NavLink}
@@ -37,7 +39,17 @@ const DropdownMenu = () => {
 
         <MenuDivider />
 
-        <LogoutButton />
+        <Box px={2} py={1}>
+          <Button
+            as={Link}
+            w={"full"}
+            to={"/logout"}
+            colorScheme={"purple"}
+            bgColor={"purple.500"}
+          >
+            Logout
+          </Button>
+        </Box>
       </MenuList>
     </Menu>
   );

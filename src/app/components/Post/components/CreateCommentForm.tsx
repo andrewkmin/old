@@ -24,7 +24,11 @@ const CreateCommentForm = ({ setComments }: CreateCommentFormProps) => {
 
             <Spacer />
 
-            <Button type={"submit"} colorScheme={"blue"}>
+            <Button
+              type={"submit"}
+              colorScheme={"purple"}
+              bgColor={"purple.400"}
+            >
               Comment
             </Button>
           </Stack>

@@ -148,7 +148,7 @@ const Profile = () => {
                               onClick={onCopy}
                               cursor={"pointer"}
                               fontFamily={"ubuntu bold"}
-                              color={hasCopied ? "green.300" : "gray.400"}
+                              color={hasCopied ? "purple.500" : "gray.400"}
                             >
                               {hasCopied
                                 ? "Copied"

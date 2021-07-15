@@ -10,20 +10,26 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../api/axios";
+import { useContext } from "react";
 import { ChangeEvent, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import DataContext from "../../data/data.context";
 
-const Verification = () => {
+interface VerificationProps {
+  sid: string;
+}
+
+const Verification = ({ sid }: VerificationProps) => {
   const toast = useToast();
   const history = useHistory();
-  const { sid } = useParams<{ sid: string }>();
+  const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     setIsSubmitting(true);
     event.preventDefault();
 
-    const { status } = await axios.post(`/auth/register/verify/${sid}`, {
+    const { data, status } = await axios.post(`/auth/register/verify/${sid}`, {
       password: event.target.password.value,
     });
 
@@ -43,6 +49,10 @@ const Verification = () => {
         status: "error",
       });
     } else {
+      setState({
+        userData: data,
+        authenticated: true,
+      });
       toast({
         status: "success",
         isClosable: false,

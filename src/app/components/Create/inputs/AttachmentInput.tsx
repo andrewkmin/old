@@ -29,19 +29,20 @@ const AttachmentInput = () => {
   return (
     <Button
       w={"full"}
-      size={"md"}
+      size={"lg"}
       border={"2px"}
       boxShadow={"sm"}
       fontWeight={"sm"}
       fontFamily={"ubuntu bold"}
-      leftIcon={<IoMdImages color={"green"} />}
       variant={useColorModeValue("outline", "solid")}
-      borderColor={useColorModeValue("gray.300", "gray.800")}
       // Virtually click the attachment input and select files from there
       onClick={() => AttachmentInputRef.current?.click()}
+      borderColor={useColorModeValue("gray.200", "gray.800")}
+      leftIcon={<IoMdImages fontSize={"21px"} color={"purple"} />}
     >
       {/* Dynamic text */}
       <Text fontSize={["sm", "md"]}>{attachmentText}</Text>
+
       {/* Invisible attachment input */}
       <Input
         multiple

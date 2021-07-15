@@ -10,8 +10,12 @@ const Actions = ({ user, friendshipData }: ActionsProps) => {
   return (
     <Box>
       <Stack direction={["column", "row"]}>
-        <Button colorScheme={"blue"}>Follow</Button>
-        <Button colorScheme={"teal"}>Add friend</Button>
+        <Button bgColor={"purple.400"} colorScheme={"purple"}>
+          Follow
+        </Button>
+        <Button bgColor={"purple.300"} colorScheme={"purple"}>
+          Add friend
+        </Button>
       </Stack>
     </Box>
   );

@@ -29,13 +29,14 @@ const EditBioControls = () => {
   return isEditing ? (
     <ButtonGroup justifyContent={"center"} size={"sm"}>
       <IconButton
+        isRound
         icon={<CheckIcon />}
-        colorScheme={"green"}
+        colorScheme={"purple"}
         aria-label={"Save bio"}
         {...getSubmitButtonProps()}
       />
       <IconButton
-        colorScheme={"red"}
+        isRound
         icon={<CloseIcon />}
         aria-label={"Discard bio"}
         {...getCancelButtonProps()}
@@ -45,7 +46,7 @@ const EditBioControls = () => {
     <Flex justifyContent={"center"}>
       <Tooltip label={"Edit bio"} placement={"right"}>
         <IconButton
-          size={"sm"}
+          isRound
           icon={<EditIcon />}
           aria-label={"Edit bio"}
           {...getEditButtonProps()}

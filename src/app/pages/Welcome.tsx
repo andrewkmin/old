@@ -123,7 +123,7 @@ const Welcome = () => {
                   </Center>
                 </Stack>
 
-                {!verification ? <Auth /> : <Verification />}
+                {!verification ? <Auth /> : <Verification sid={verification} />}
               </Stack>
             </Center>
           </Box>
