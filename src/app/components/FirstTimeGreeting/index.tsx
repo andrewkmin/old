@@ -1,8 +1,6 @@
 import {
   chakra,
-  List,
-  ListIcon,
-  ListItem,
+  Divider,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Confetti from "react-confetti";
-import { MdCheckCircle } from "react-icons/md";
 
 const FirstTimeGreeting = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
@@ -74,22 +71,7 @@ const FirstTimeGreeting = () => {
                 fantastic.
               </Text>
 
-              <Text>
-                It's not necessary but will be nice if you follow these rules if
-                you join :)
-              </Text>
-
-              <List>
-                <ListItem>
-                  <ListIcon as={MdCheckCircle} color={"purple.500"} />
-                  Be nice to others
-                </ListItem>
-
-                <ListItem>
-                  <ListIcon as={MdCheckCircle} color={"purple.500"} />
-                  Don't harass others based on their opinion
-                </ListItem>
-              </List>
+              <Divider borderColor={"purple.200"} border={"1.5px"} />
 
               <Text fontWeight={"bold"} fontSize={"sm"}>
                 CEO and Founder, Michael Grigoryan
