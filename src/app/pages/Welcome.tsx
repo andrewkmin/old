@@ -51,8 +51,8 @@ const Welcome = () => {
         >
           We're still launching, if there are any issues please contact our
           support team at{" "}
-          <chakra.a textDecor={"underline"} href={"mailto:support@polygon.am"}>
-            support@polygon.am
+          <chakra.a textDecor={"underline"} href={"mailto:hi@polygon.am"}>
+            hi@polygon.am
           </chakra.a>
         </Text>
       </Alert>

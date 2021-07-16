@@ -1,5 +1,5 @@
 import { User } from "../../../types";
-import { Box, Button, Stack } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 interface ActionsProps {
   user: User;
@@ -7,7 +7,7 @@ interface ActionsProps {
 }
 
 const Actions = ({ user, friendshipData }: ActionsProps) => {
-  const followRequest = async () => {};
+  // const followRequest = async () => {};
 
   return (
     <Button
