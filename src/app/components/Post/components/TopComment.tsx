@@ -42,7 +42,11 @@ const TopComment = ({ data: comment }: TopCommentProps) => {
             direction={"row"}
           >
             <Stack alignItems={"center"} direction={"row"}>
-              <Avatar size={"sm"} src={comment?.user?.avatar} />
+              <Avatar
+                size={"sm"}
+                src={comment?.user?.avatar}
+                name={comment?.user?.username}
+              />
               <Stack direction={"row"}>
                 <Text fontSize={"sm"}>
                   <Link href={`/@${comment?.user?.username}`}>

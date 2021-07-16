@@ -60,7 +60,7 @@ const Navbar = () => {
               <Avatar
                 size={"sm"}
                 src={userData?.avatar}
-                name={userData?.first_name}
+                name={userData?.username}
               />
               <Text fontSize={["lg", "xl"]} fontWeight={"bold"}>
                 {userData?.first_name}

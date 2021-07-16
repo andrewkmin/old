@@ -116,7 +116,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
                   size={"md"}
                   boxShadow={"md"}
                   src={userData?.avatar}
-                  name={userData?.first_name}
+                  name={userData?.username}
                 >
                   <AvatarBadge boxSize={"1.15em"} bg={"green.500"} />
                 </Avatar>

@@ -132,7 +132,7 @@ const Profile = () => {
                   size={"xl"}
                   boxShadow={"lg"}
                   src={user?.data?.avatar}
-                  name={user?.data?.first_name}
+                  name={user?.data?.username}
                 >
                   {userData && (
                     <AvatarBadge

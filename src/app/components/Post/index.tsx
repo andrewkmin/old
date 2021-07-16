@@ -2,7 +2,6 @@ import Info from "./Sections/Info";
 import { PostProps } from "../../types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
-import TopComment from "./components/TopComment";
 import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 
 const Post = ({ data: post, setPosts }: PostProps) => {
@@ -24,7 +23,7 @@ const Post = ({ data: post, setPosts }: PostProps) => {
         {/* Post buttons */}
         <Buttons data={post} />
         {/* Top comment */}
-        {post?.comments[0] !== null && <TopComment data={post?.comments[0]} />}
+        {/* {post?.comments[0] !== null && <TopComment data={post?.comments[0]} />} */}
       </Stack>
     </Box>
   );
