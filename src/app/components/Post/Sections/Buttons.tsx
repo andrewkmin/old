@@ -36,9 +36,13 @@ const Bottom = ({ data: post }: PostProps) => {
         </Button>
 
         {/* Share button */}
-        {/* <Button size={"sm"} rightIcon={<BiShare size={"15px"} />} w={"full"}>
+        <Button
+          size={"sm"}
+          // rightIcon={<BiShare size={"15px"} />}
+          w={"full"}
+        >
           Share
-        </Button> */}
+        </Button>
       </Stack>
 
       <Portal>

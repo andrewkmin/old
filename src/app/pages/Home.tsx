@@ -33,7 +33,7 @@ const Home = () => {
             <Stack spacing={2}>
               <CreatePost />
 
-              <PostList data={data!!} noPostsText={"There are no posts yet"} />
+              <PostList data={data} noPostsText={"There are no posts yet"} />
 
               {isFetching ? (
                 <Center>

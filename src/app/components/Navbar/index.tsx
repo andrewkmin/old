@@ -31,10 +31,10 @@ const Navbar = () => {
       <Flex alignItems={"center"}>
         <NavLink to={"/"}>
           <Text
-            fontSize={["2xl", "3xl"]}
-            color={"purple.500"}
             fontWeight={"bold"}
+            fontSize={["2xl", "3xl"]}
             fontFamily={"Ubuntu Bold"}
+            color={useColorModeValue("purple.500", "purple.400")}
           >
             Polygon
           </Text>

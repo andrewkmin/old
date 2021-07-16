@@ -47,6 +47,9 @@ const Create = ({ posts, setPosts }: CreateProps) => {
     // Preventing default behaviour
     event.preventDefault();
 
+    // Closing all toasts
+    toast.closeAll();
+
     // Loading
     setSubmitting(true);
     // Disabling create post button
@@ -68,9 +71,10 @@ const Create = ({ posts, setPosts }: CreateProps) => {
       // If post was created
       case 200: {
         // Pushing to external posts holder array
-        if (posts && setPosts) setPosts!!(posts.concat([response.data]));
+        if (posts && setPosts) setPosts!!([response.data].concat(posts));
 
         return toast({
+          position: "bottom-left",
           title: "Post created!",
           status: "success",
           isClosable: false,
@@ -81,8 +85,9 @@ const Create = ({ posts, setPosts }: CreateProps) => {
       default: {
         return toast({
           title: "There was an error",
-          status: "error",
+          position: "bottom-left",
           isClosable: false,
+          status: "error",
           duration: 2000,
         });
       }
@@ -95,7 +100,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
       onSubmit={handleCreatePost}
       encType={"multipart/form-data"}
     >
-      <Box px={4} py={2} w={["sm", "md", "lg", "xl"]} m={4}>
+      <Box py={2} w={["sm", "md", "lg", "xl"]} m={4}>
         <Box
           p={[2, 3]}
           border={"2px"}
