@@ -103,26 +103,28 @@ const Profile = () => {
                 </Box>
               </Center>
 
-              <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
-                <Menu isLazy>
-                  <MenuButton
-                    mt={[-12, -14]}
-                    rounded={"xl"}
-                    as={IconButton}
-                    me={[16, 12, 2]}
-                    icon={<HiOutlinePencil />}
-                    aria-label={"Change cover image"}
-                  />
-                  <MenuList>
-                    <MenuItem icon={<HiPencil fontSize={"20px"} />}>
-                      Change cover
-                    </MenuItem>
-                    <MenuItem icon={<MdDelete fontSize={"20px"} />}>
-                      Remove cover
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </Flex>
+              {user?.data?.id === userData?.id && (
+                <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
+                  <Menu isLazy>
+                    <MenuButton
+                      mt={[-12, -14]}
+                      rounded={"xl"}
+                      as={IconButton}
+                      me={[16, 12, 2]}
+                      icon={<HiOutlinePencil />}
+                      aria-label={"Change cover image"}
+                    />
+                    <MenuList>
+                      <MenuItem icon={<HiPencil fontSize={"20px"} />}>
+                        Change cover
+                      </MenuItem>
+                      <MenuItem icon={<MdDelete fontSize={"20px"} />}>
+                        Remove cover
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Flex>
+              )}
             </Box>
 
             <Stack>
@@ -207,13 +209,14 @@ const Profile = () => {
                       </Box>
 
                       <Center>
-                        {username !== userData?.username && (
-                          <Actions user={user?.data} friendshipData={0} />
-                        )}
-                      </Center>
-
-                      <Center>
-                        <Stats />
+                        <Stack direction={["column", "row"]}>
+                          <Stats />
+                          {username !== userData?.username && (
+                            <Box>
+                              <Actions user={user?.data!!} friendshipData={0} />
+                            </Box>
+                          )}
+                        </Stack>
                       </Center>
                     </Stack>
                   </Box>

@@ -10,12 +10,6 @@ import {
   AvatarBadge,
   Text,
 } from "@chakra-ui/react";
-import { Post } from "../../types";
-import axios from "../../api/axios";
-import TextInput from "./inputs/TextInput";
-import PostButton from "./buttons/PostButton";
-import DataContext from "../../data/data.context";
-import AttachmentInput from "./inputs/AttachmentInput";
 import {
   ChangeEvent,
   Dispatch,
@@ -23,6 +17,12 @@ import {
   useContext,
   useState,
 } from "react";
+import { Post } from "../../types";
+import axios from "../../api/axios";
+import TextInput from "./inputs/TextInput";
+import PostButton from "./buttons/PostButton";
+import DataContext from "../../data/data.context";
+import AttachmentInput from "./inputs/AttachmentInput";
 
 interface CreateProps {
   posts?: Post[];
@@ -152,6 +152,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
                 w={"full"}
                 size={"lg"}
                 border={"2px"}
+                boxShadow={"xs"}
                 fontWeight={"sm"}
                 fontFamily={"ubuntu bold"}
                 variant={useColorModeValue("outline", "solid")}

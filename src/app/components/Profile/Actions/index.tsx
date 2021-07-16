@@ -2,22 +2,23 @@ import { User } from "../../../types";
 import { Box, Button, Stack } from "@chakra-ui/react";
 
 interface ActionsProps {
-  user?: User;
+  user: User;
   friendshipData: number;
 }
 
 const Actions = ({ user, friendshipData }: ActionsProps) => {
+  const followRequest = async () => {};
+
   return (
-    <Box>
-      <Stack direction={["column", "row"]}>
-        <Button bgColor={"purple.400"} colorScheme={"purple"}>
-          Follow
-        </Button>
-        <Button bgColor={"purple.300"} colorScheme={"purple"}>
-          Add friend
-        </Button>
-      </Stack>
-    </Box>
+    <Button
+      w={"full"}
+      size={"lg"}
+      rounded={"full"}
+      bgColor={"purple.400"}
+      colorScheme={"purple"}
+    >
+      Follow
+    </Button>
   );
 };
 
