@@ -38,7 +38,12 @@ const AttachmentInput = () => {
       // Virtually click the attachment input and select files from there
       onClick={() => AttachmentInputRef.current?.click()}
       borderColor={useColorModeValue("gray.200", "gray.800")}
-      leftIcon={<IoMdImages fontSize={"21px"} color={"purple"} />}
+      leftIcon={
+        <IoMdImages
+          fontSize={"21px"}
+          // color={useColorModeValue("purple.400", "purple.500")}
+        />
+      }
     >
       {/* Dynamic text */}
       <Text fontSize={["sm", "md"]}>{attachmentText}</Text>

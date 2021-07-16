@@ -1,14 +1,21 @@
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Spinner,
+  Stack,
+  useToast,
+} from "@chakra-ui/react";
 import axios from "../api/axios";
 import { useHistory } from "react-router";
 import { useContext, useEffect } from "react";
 import DataContext from "../data/data.context";
-import { Box, Center, Spinner, Text, useToast } from "@chakra-ui/react";
 
 // The logout page
 const Logout = () => {
   const toast = useToast();
   const history = useHistory();
-  // For updating global user state
   const { setState } = useContext(DataContext);
 
   useEffect(() => {
@@ -26,17 +33,8 @@ const Logout = () => {
           return history.push("/welcome");
         }
         // If something goes wrong
-        default: {
-          // Notify
-          toast({
-            title: "There was an error",
-            status: "error",
-            duration: 2000,
-            isClosable: false,
-          });
-          // Redirect back
+        default:
           return history.push("/");
-        }
       }
     };
 
@@ -45,16 +43,21 @@ const Logout = () => {
   }, [history, setState, toast]);
 
   return (
-    <Box>
-      <Center>
-        <Text fontWeight="bold" fontSize="xl">
-          Logging you out
-        </Text>
-      </Center>
-      <Center>
-        <Spinner />
-      </Center>
-    </Box>
+    <Flex alignItems={"center"} justifyContent={"center"} minH={"100vh"}>
+      <Box>
+        <Stack spacing={6}>
+          <Center>
+            <Heading color={"purple.500"} fontWeight={"thin"} fontSize={"2xl"}>
+              Logging you out
+            </Heading>
+          </Center>
+
+          <Center>
+            <Spinner size={"lg"} thickness={"3px"} color={"purple.400"} />
+          </Center>
+        </Stack>
+      </Box>
+    </Flex>
   );
 };
 

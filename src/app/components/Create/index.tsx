@@ -90,77 +90,75 @@ const Create = ({ posts, setPosts }: CreateProps) => {
   };
 
   return (
-    <>
-      <form
-        autoComplete={"off"}
-        onSubmit={handleCreatePost}
-        encType={"multipart/form-data"}
-      >
-        <Box minW={["sm", "md", "lg", "xl"]} m={4}>
-          <Box
-            p={[2, 3]}
-            border={"2px"}
-            boxShadow={"md"}
-            borderRadius={"xl"}
-            bgColor={useColorModeValue("#FFFFFC", "gray.700")}
-            borderColor={useColorModeValue("gray.300", "gray.700")}
-          >
-            <Stack spacing={2}>
-              <Stack direction={"row"}>
-                <Center>
-                  <Avatar
-                    size={"md"}
-                    boxShadow={"md"}
-                    src={userData?.avatar}
-                    name={userData?.first_name}
-                  >
-                    <AvatarBadge boxSize={"1.15em"} bg={"green.500"} />
-                  </Avatar>
-                </Center>
-
-                <Center w={"full"}>
-                  <TextInput handleInput={handleInput} />
-                </Center>
-
-                <PostButton
-                  submitting={submitting}
-                  createPostDisabled={createPostDisabled}
-                />
-              </Stack>
-
-              <Divider />
-
-              <Stack direction={"row"}>
-                <AttachmentInput />
-                <Button
-                  w={"full"}
-                  size={"lg"}
-                  border={"2px"}
-                  boxShadow={"xs"}
-                  fontWeight={"sm"}
-                  fontFamily={"ubuntu bold"}
-                  variant={useColorModeValue("outline", "solid")}
-                  borderColor={useColorModeValue("gray.200", "gray.800")}
+    <form
+      autoComplete={"off"}
+      onSubmit={handleCreatePost}
+      encType={"multipart/form-data"}
+    >
+      <Box px={4} py={2} w={["sm", "md", "lg", "xl"]} m={4}>
+        <Box
+          p={[2, 3]}
+          border={"2px"}
+          boxShadow={"md"}
+          borderRadius={"xl"}
+          bgColor={useColorModeValue("#FFFFFC", "gray.700")}
+          borderColor={useColorModeValue("gray.300", "gray.700")}
+        >
+          <Stack spacing={2}>
+            <Stack direction={"row"}>
+              <Center>
+                <Avatar
+                  size={"md"}
+                  boxShadow={"md"}
+                  src={userData?.avatar}
+                  name={userData?.first_name}
                 >
-                  <Text fontSize={["sm", "md"]}>Something</Text>
-                </Button>
-                <Button
-                  w={"full"}
-                  size={"lg"}
-                  border={"2px"}
-                  fontWeight={"sm"}
-                  fontFamily={"ubuntu bold"}
-                  variant={useColorModeValue("outline", "solid")}
-                  borderColor={useColorModeValue("gray.200", "gray.800")}
-                >
-                  <Text fontSize={["sm", "md"]}>Something</Text>
-                </Button>
-              </Stack>
+                  <AvatarBadge boxSize={"1.15em"} bg={"green.500"} />
+                </Avatar>
+              </Center>
+
+              <Center w={"full"}>
+                <TextInput handleInput={handleInput} />
+              </Center>
+
+              <PostButton
+                submitting={submitting}
+                createPostDisabled={createPostDisabled}
+              />
             </Stack>
-          </Box>
+
+            <Divider />
+
+            <Stack direction={"row"}>
+              <AttachmentInput />
+              <Button
+                w={"full"}
+                size={"lg"}
+                border={"2px"}
+                boxShadow={"xs"}
+                fontWeight={"sm"}
+                fontFamily={"ubuntu bold"}
+                variant={useColorModeValue("outline", "solid")}
+                borderColor={useColorModeValue("gray.200", "gray.800")}
+              >
+                <Text fontSize={["sm", "md"]}>Something</Text>
+              </Button>
+              <Button
+                w={"full"}
+                size={"lg"}
+                border={"2px"}
+                fontWeight={"sm"}
+                fontFamily={"ubuntu bold"}
+                variant={useColorModeValue("outline", "solid")}
+                borderColor={useColorModeValue("gray.200", "gray.800")}
+              >
+                <Text fontSize={["sm", "md"]}>Something</Text>
+              </Button>
+            </Stack>
+          </Stack>
         </Box>
-      </form>
-    </>
+      </Box>
+    </form>
   );
 };
 

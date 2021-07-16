@@ -102,8 +102,6 @@ const Welcome = () => {
           <Box h={"100%"}>
             <Center>
               <Stack mt={16} spacing={5} px={[5, null, null, 0]}>
-                {/* <Image w={"60px"} /> */}
-
                 <Stack>
                   <Center>
                     <Heading fontWeight={"semibold"} fontSize={"5xl"}>

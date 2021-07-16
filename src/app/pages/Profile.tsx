@@ -19,17 +19,19 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { Post } from "../types";
+import { useQuery } from "react-query";
 import Create from "../components/Create";
 import { MdDelete } from "react-icons/md";
 import PostList from "../components/PostList";
+import { FetchPosts } from "../api/functions";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
 import EditBio from "../components/Profile/EditBio";
-// import Actions from "../components/Profile/Actions";
+import Actions from "../components/Profile/Actions";
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
-import { useFetchAccount, useFetchAccountStatus } from "../api/hooks";
+import { useFetchUser, useFetchUserStatus } from "../api/hooks";
 
 // The profile page
 const Profile = () => {
@@ -37,24 +39,38 @@ const Profile = () => {
   const { userData } = useContext(DataContext);
   const [posts, setPosts] = useState<Post[]>([]);
   const { username } = useParams<{ username?: string }>();
-  const { data: userDataResponse, isFetching: userDataResponseIsFetching } =
-    useFetchAccount(username, [username]);
-  const { data: userStatusResponse, isFetching: userStatusResponseIsFetching } =
-    useFetchAccountStatus(username, [username]);
-  const { hasCopied, onCopy } = useClipboard(
-    userDataResponse?.data?.username!!
+
+  // Fetching
+  const { data: user, isLoading: userIsLoading } = useFetchUser(username, [
+    username,
+  ]);
+  const { data: status, isLoading: statusIsLoading } = useFetchUserStatus(
+    username,
+    [username]
   );
+  const { data: staticPosts, isLoading: postsAreLoading } = useQuery(
+    ["user posts", username],
+    () => FetchPosts(),
+    {
+      keepPreviousData: true,
+    }
+  );
+
+  const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
 
   useEffect(() => {
     // Checking if the user exists
-    const exists = userDataResponse?.status !== 404;
+    const exists = user?.status !== 404;
     // If it doesn't exist then redirect back to the homepage
     if (!exists) history.push("/");
     return () => {};
   });
 
+  // Setting dynamic post state
+  useEffect(() => setPosts(staticPosts!!), [staticPosts]);
+
   // Displaying a spinner while data is fetching
-  return userDataResponseIsFetching || userStatusResponseIsFetching ? (
+  return userIsLoading || statusIsLoading || postsAreLoading ? (
     <Center minH={"75vh"}>
       <Spinner size={"lg"} />
     </Center>
@@ -78,7 +94,7 @@ const Profile = () => {
                         filter: "brightness(0.9)",
                         transition: "0.2s ease-in",
                       }}
-                      h={["170px", "190px"]}
+                      h={["150px", "170px", "190px"]}
                       w={["xs", "md", "2xl", "full"]}
                       transition={"filter 0.3s ease-out"}
                       src={"https://picsum.photos/1920/500"}
@@ -90,10 +106,10 @@ const Profile = () => {
               <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
                 <Menu isLazy>
                   <MenuButton
-                    mt={-14}
+                    mt={[-12, -14]}
                     rounded={"xl"}
                     as={IconButton}
-                    me={[10, 14, 2]}
+                    me={[16, 12, 2]}
                     icon={<HiOutlinePencil />}
                     aria-label={"Change cover image"}
                   />
@@ -115,15 +131,13 @@ const Profile = () => {
                   mt={-12}
                   size={"xl"}
                   boxShadow={"lg"}
-                  src={userDataResponse?.data?.avatar}
-                  name={userDataResponse?.data?.first_name}
+                  src={user?.data?.avatar}
+                  name={user?.data?.first_name}
                 >
                   {userData && (
                     <AvatarBadge
                       boxSize={"1em"}
-                      bg={
-                        userStatusResponse?.connected ? "green.500" : "gray.300"
-                      }
+                      bg={status?.connected ? "green.500" : "gray.300"}
                     />
                   )}
                 </Avatar>
@@ -133,8 +147,7 @@ const Profile = () => {
                 <Stack spacing={1}>
                   <Center>
                     <Heading fontWeight={"bold"} fontSize={"2xl"}>
-                      {userDataResponse?.data.first_name}{" "}
-                      {userDataResponse?.data.last_name}
+                      {user?.data.first_name} {user?.data.last_name}
                     </Heading>
                   </Center>
 
@@ -152,13 +165,13 @@ const Profile = () => {
                             >
                               {hasCopied
                                 ? "Copied"
-                                : `@${userDataResponse?.data?.username}`}
+                                : `@${user?.data?.username}`}
                             </Text>
                           </Tooltip>
                         </Center>
 
                         <Center>
-                          {userDataResponse?.data?.id === userData?.id && (
+                          {user?.data?.id === userData?.id && (
                             <Badge
                               p={2}
                               rounded={"full"}
@@ -182,25 +195,21 @@ const Profile = () => {
                           fontFamily={"Ubuntu Bold"}
                         >
                           {username === userData?.username ? (
-                            <EditBio data={userDataResponse?.data} />
+                            <EditBio data={user?.data} />
                           ) : (
                             <Text>
-                              {userDataResponse?.data?.bio?.length === 0
+                              {user?.data?.bio?.length === 0
                                 ? `Hmm 🤔, it seems like this account doesn't have a bio...`
-                                : userDataResponse?.data?.bio}
+                                : user?.data?.bio}
                             </Text>
                           )}
                         </Center>
                       </Box>
 
                       <Center>
-                        {
-                          username !== userData?.username && null
-                          // <Actions
-                          //   user={userDataResponse?.data}
-                          //   friendshipData={friendshipData}
-                          // />
-                        }
+                        {username !== userData?.username && (
+                          <Actions user={user?.data} friendshipData={0} />
+                        )}
                       </Center>
 
                       <Center>
@@ -225,7 +234,7 @@ const Profile = () => {
                       noPostsText={`${
                         username === userData?.username
                           ? "You"
-                          : userDataResponse?.data?.first_name
+                          : user?.data?.first_name
                       }
                           ${
                             username === userData?.username

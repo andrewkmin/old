@@ -25,24 +25,30 @@ const Verification = ({ sid }: VerificationProps) => {
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // For submitting verification query
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     setIsSubmitting(true);
     event.preventDefault();
 
+    // Sending the password
     const { data, status } = await axios.post(`/auth/register/verify/${sid}`, {
       password: event.target.password.value,
     });
 
+    // Closing all toasts
     toast.closeAll();
     setIsSubmitting(false);
 
+    // If the token has expired
     if (status === 404) {
       return toast({
         status: "error",
         isClosable: false,
         title: "Token has expired or doesn't exist",
       });
-    } else if (status === 401) {
+    }
+    // If the password is incorrect
+    else if (status === 401) {
       return toast({
         title: "That password is invalid",
         isClosable: false,

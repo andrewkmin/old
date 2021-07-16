@@ -24,7 +24,7 @@ const App = () => {
 
   // Fetching current user data and checking if it's valid once
   authenticate.current = async () => {
-    const response = await axios.get("/api/accounts/fetch");
+    const response = await axios.get("/auth");
 
     // Checking the status of the response
     switch (response.status) {

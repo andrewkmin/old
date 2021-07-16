@@ -1,5 +1,5 @@
 // For detecting a URL
-export const URL = new RegExp(
+export const url = new RegExp(
   "^(https?:\\/\\/)?" + // protocol
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
     "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
@@ -10,7 +10,7 @@ export const URL = new RegExp(
 );
 
 // For detecing hashtags
-export const Hashtag = new RegExp(/\B(#[a-zA-Z]+\b)(?!;)/);
+export const hashtag = new RegExp(/\B(#[a-zA-Z]+\b)(?!;)/);
 
 // For detecting user mentions
-export const Mention = new RegExp(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i);
+export const mention = new RegExp(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i);

@@ -24,9 +24,7 @@ const Post = ({ data: post, setPosts }: PostProps) => {
         {/* Post buttons */}
         <Buttons data={post} />
         {/* Top comment */}
-        {post?.comments?.length === 0 ? null : (
-          <TopComment data={post.comments[0]} />
-        )}
+        {post?.comments[0] !== null && <TopComment data={post?.comments[0]} />}
       </Stack>
     </Box>
   );

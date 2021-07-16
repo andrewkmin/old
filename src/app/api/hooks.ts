@@ -12,31 +12,6 @@ export const useLogout = () => {
   return useQuery("logout", Logout);
 };
 
-// Notification fetching hook
-// export const useFetchNotifications = () => {
-//   const FetchNotifications = async () => {
-//     const { data } = await axios.get("/api/notifications/fetch");
-//     return data;
-//   };
-
-//   return useQuery("notifications", FetchNotifications, {
-//     refetchInterval: 60 * 1 * 1000, // 1 minute
-//   });
-// };
-
-// Fetching posts hook
-// export const useFetchPosts = (username: String = "", depArray?: any[]) => {
-//   const FetchPosts = async () => {
-//     const { data } = await axios.get<Post[]>("/api/posts/fetch", {
-//       params: {
-//         username,
-//       },
-//     });
-//     return data;
-//   };
-
-//   return useQuery(["posts", depArray], FetchPosts);
-// };
 
 // Check friendship hook
 export const useCheckFriendship = (
@@ -64,20 +39,20 @@ export const useSendHeartbeat = () => {
 };
 
 // Fetch account hook
-export const useFetchAccount = (username: String = "", depArray?: any[]) => {
+export const useFetchUser = (username: String = "", depArray?: any[]) => {
   const FetchAccount = async () => {
-    const response = await axios.get<User>("/api/accounts/fetch", {
+    const { data, status } = await axios.get<User>("/api/accounts/fetch", {
       params: {
         username,
       },
     });
-    return response;
+    return { data, status };
   };
 
   return useQuery(["user data", depArray], FetchAccount);
 };
 
-export const useFetchAccountStatus = (
+export const useFetchUserStatus = (
   username: String = "",
   depArray?: any[]
 ) => {

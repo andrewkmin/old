@@ -103,7 +103,7 @@ const EditBio = ({ data }: EditBioProps) => {
       }
     >
       <Stack spacing={2}>
-        <EditablePreview fontSize={["md", "lg", "xl"]} />
+        <EditablePreview maxW={["xs", "sm", "md"]} fontSize={["md", "lg"]} />
         <EditableInput />
         <EditBioControls />
       </Stack>
