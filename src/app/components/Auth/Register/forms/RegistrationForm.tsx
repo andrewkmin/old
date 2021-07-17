@@ -1,75 +1,70 @@
-import { ChangeEvent, useState } from "react";
-import { Stack, Box, useToast } from "@chakra-ui/react";
-
+import {
+  Stack,
+  Box,
+  useToast,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  Button,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from "../../../../api/axios";
-// import { useForm } from "react-hook-form";
-import EmailInput from "../inputs/EmailInput";
-import UsernameInput from "../inputs/UsernameInput";
-import PasswordInput from "../inputs/PasswordInput";
+import { FieldErrorResponse } from "../../../../types";
 import EmailSentView from "../components/EmailSentView";
-import LastNameInput from "../inputs/name/LastNameInput";
-import FirstNameInput from "../inputs/name/FirstNameInput";
-import CreateAccountButton from "../buttons/CreateAccountButton";
 
-// type Inputs = {
-//   email: string;
-//   password: string;
-//   username: string;
-//   lastName: string;
-//   firstName: string;
-// };
+type Inputs = {
+  email: string;
+  password: string;
+  username: string;
+  lastName: string;
+  firstName: string;
+};
 
 const RegistrationForm = () => {
-  // const {
-  //   watch,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<Inputs>();
+  const {
+    register,
+    setError,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const toast = useToast();
   const [emailWasSent, setEmailWasSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // For registering
-  const handleRegistration = async (event: ChangeEvent<HTMLFormElement>) => {
-    // Prevent default behavior
-    event.preventDefault();
+  const handleRegistration = async (payload: Inputs) => {
     // Loading
     setIsSubmitting(true);
-    // Creating a payload
-    const payload = {
-      email: event.target.email.value,
-      password: event.target.password.value,
-      username: event.target.username.value,
-      lastName: event.target.lastName.value,
-      firstName: event.target.firstName.value,
-    };
-
     // Sending the response
     const response = await axios.post("/auth/register", payload);
+    // Stopping the loader
+    setIsSubmitting(false);
 
     // Closing all toasts
     toast.closeAll();
 
-    // Not loading anymore
-    setIsSubmitting(false);
-
     // Checking response status
     if (response.status !== 204) {
-      const { status } = response;
-      const title =
-        status === 403
-          ? "There's an account with that email or username"
-          : status === 400
-          ? "There are invalid fields"
-          : "There was an error";
+      const { status, data } = response;
 
-      return toast({
-        title: title,
-        status: "error",
-        duration: 2000,
-        isClosable: false,
-      });
+      if (status === 400) {
+        const errorResponse = data as FieldErrorResponse;
+        errorResponse.errors?.forEach((error) =>
+          setError(error.param as any, { message: error.msg })
+        );
+      } else if (status === 403) {
+        setError("email", { message: "Email is taken" });
+        setError("username", { message: "Username is taken" });
+      } else {
+        toast({
+          status: "error",
+          isClosable: false,
+          title: "There was an error",
+        });
+      }
     } else return setEmailWasSent(true);
   };
 
@@ -77,21 +72,105 @@ const RegistrationForm = () => {
     <EmailSentView />
   ) : (
     <Box>
-      <form autoComplete={"off"} onSubmit={handleRegistration}>
+      <form autoComplete={"off"} onSubmit={handleSubmit(handleRegistration)}>
         <Stack spacing={5}>
           <Stack>
-            <UsernameInput />
+            <FormControl isInvalid={errors.username && true}>
+              <FormLabel>Username</FormLabel>
+              <Input
+                size={"lg"}
+                type={"text"}
+                placeholder={"Username"}
+                {...register("username", {
+                  required: true,
+                  pattern: /^[a-z0-9_.]+$/g,
+                })}
+                isInvalid={errors.username && true}
+              />
+              <FormErrorMessage>
+                {errors?.username?.message || "Invalid username"}
+              </FormErrorMessage>
+            </FormControl>
 
             <Stack direction={"row"}>
-              <FirstNameInput />
-              <LastNameInput />
+              <Box>
+                <FormControl isInvalid={errors.firstName && true}>
+                  <FormLabel>First Name</FormLabel>
+                  <Input
+                    size={"lg"}
+                    type={"text"}
+                    placeholder={"First Name"}
+                    {...register("firstName", { required: true })}
+                  />
+                  <FormErrorMessage>
+                    {errors.lastName && "Invalid name"}
+                  </FormErrorMessage>
+                </FormControl>
+              </Box>
+
+              <Box>
+                <FormControl isInvalid={errors.lastName && true}>
+                  <FormLabel>Last Name</FormLabel>
+                  <Input
+                    size={"lg"}
+                    type={"text"}
+                    placeholder={"Last Name"}
+                    {...register("lastName", { required: true })}
+                  />
+                  <FormErrorMessage>
+                    {errors.lastName && "Invalid name"}
+                  </FormErrorMessage>
+                </FormControl>
+              </Box>
             </Stack>
 
-            <EmailInput />
-            <PasswordInput />
+            <FormControl isInvalid={errors?.email && true}>
+              <FormLabel>Email</FormLabel>
+              <Input
+                size={"lg"}
+                type={"email"}
+                placeholder={"Email"}
+                {...register("email", { required: true })}
+              />
+
+              <FormErrorMessage>
+                {errors?.email?.message || "Invalid email"}
+              </FormErrorMessage>
+
+              <FormHelperText>
+                Will be used to send you a verification email
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl isInvalid={errors.password && true}>
+              <FormLabel>Password</FormLabel>
+              <Input
+                size={"lg"}
+                type={"password"}
+                placeholder={"Password"}
+                {...register("password", { required: true, minLength: 8 })}
+              />
+              <FormErrorMessage>
+                {errors.password && "Should be at least 8 characters long"}
+              </FormErrorMessage>
+            </FormControl>
           </Stack>
 
-          <CreateAccountButton isSubmitting={isSubmitting} />
+          <Button
+            w={"full"}
+            size={"lg"}
+            type={"submit"}
+            rounded={"full"}
+            fontWeight={"thin"}
+            fontStyle={"normal"}
+            colorScheme={"purple"}
+            bgColor={"purple.400"}
+            isLoading={isSubmitting}
+            fontFamily={"ubuntu bold"}
+            loadingText={"Creating an account"}
+          >
+            Create your account
+          </Button>
         </Stack>
       </form>
     </Box>

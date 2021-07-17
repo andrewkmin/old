@@ -55,3 +55,14 @@ export interface ContextProps {
     >
   >;
 }
+
+export type FieldError = {
+  msg: string;
+  value: string;
+  param: [Inputs];
+  location: string;
+};
+
+export type FieldErrorResponse = {
+  errors?: FieldError[];
+};

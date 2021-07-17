@@ -3,57 +3,71 @@ import {
   useToast,
   Box,
   FormControl,
-  InputGroup,
   Input,
   FormLabel,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import axios from "../../../../api/axios";
+import { useForm } from "react-hook-form";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import LoginButton from "../buttons/LoginButton";
 import DataContext from "../../../../data/data.context";
-import { useState, useContext, ChangeEvent } from "react";
+import { FieldErrorResponse } from "../../../../types";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 // Login form component
 const LoginForm = () => {
   const toast = useToast();
+  const {
+    register,
+    setError,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const History = useHistory();
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // For handling the login
-  const handleLogin = async (event: ChangeEvent<HTMLFormElement>) => {
-    // Enable the loader
+  const handleLogin = async (payload: Inputs) => {
+    // Enable loader
     setIsSubmitting(true);
-    // Preventing default behavior
-    event.preventDefault();
-
     // Sending the request
-    const authResponse = await axios.post("/auth/login", {
-      email: event.target.email.value,
-      password: event.target.password.value,
-    });
-
-    // Disable the loader
+    const authResponse = await axios.post("/auth/login", payload);
+    // Disable loader
     setIsSubmitting(false);
 
     // Checking response status
     if (authResponse.status !== 200) {
-      const { status } = authResponse;
-      const title =
-        status === 404
-          ? "That account does not exist"
-          : status === 403
-          ? "Invalid credentials"
-          : status === 400
-          ? "There are invalid fields"
-          : "There was an error";
+      const { status, data } = authResponse;
 
-      return toast({
-        title,
-        duration: 2000,
-        status: "error",
-        isClosable: false,
-      });
+      // If there are invalid fields
+      if (status === 400) {
+        const errorResponse = data as FieldErrorResponse;
+        errorResponse?.errors?.forEach((error) =>
+          setError(error.param as any, { message: error.msg })
+        );
+      }
+      // If the credentials are invalid
+      else if (status === 403) {
+        setError("password", { message: "Incorrect password" });
+      }
+      // If it's another error
+      else {
+        toast({
+          status: "error",
+          isClosable: false,
+          title:
+            status === 404
+              ? "That account doesn't exist"
+              : "There was an error",
+        });
+      }
     } else {
       // Fetching user data
       const { data: userData } = await axios.get("/api/accounts/fetch");
@@ -65,36 +79,36 @@ const LoginForm = () => {
 
   return (
     <Box>
-      <form autoComplete={"off"} onSubmit={handleLogin}>
+      <form autoComplete={"off"} onSubmit={handleSubmit(handleLogin)}>
         <Stack spacing={5}>
           <Stack>
             {/* Email input */}
-            <FormControl>
+            <FormControl isInvalid={errors?.email && true}>
               <FormLabel>Email</FormLabel>
-              <InputGroup>
-                <Input
-                  required
-                  size={"lg"}
-                  name={"email"}
-                  type={"email"}
-                  placeholder={"Email"}
-                />
-              </InputGroup>
+              <Input
+                size={"lg"}
+                type={"email"}
+                placeholder={"Email"}
+                {...register("email", { required: true })}
+              />
+              <FormErrorMessage>
+                {errors?.email?.message || "Invalid email"}
+              </FormErrorMessage>
             </FormControl>
 
             {/* Password Input */}
-            <FormControl>
+            <FormControl isInvalid={errors?.password && true}>
               <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input
-                  required
-                  size={"lg"}
-                  minLength={8}
-                  name={"password"}
-                  type={"password"}
-                  placeholder={"Password"}
-                />
-              </InputGroup>
+              <Input
+                size={"lg"}
+                type={"password"}
+                placeholder={"Password"}
+                {...register("password", { minLength: 8, required: true })}
+              />
+              <FormErrorMessage>
+                {errors?.password?.message ||
+                  "Should be at least 8 characters long"}
+              </FormErrorMessage>
             </FormControl>
           </Stack>
 
