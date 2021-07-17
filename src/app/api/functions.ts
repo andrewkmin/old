@@ -9,7 +9,7 @@ export const Logout = async () => {
 
 // Will be used for fetching posts at the homepage
 export const FetchPosts = async (page?: number) => {
-  const { data } = await axios.get<Post[]>("/api/posts/fetch", {
+  const { data } = await axios.get<Post[]>("/api/posts", {
     params: {
       page,
     },

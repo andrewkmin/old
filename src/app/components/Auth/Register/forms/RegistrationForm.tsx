@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { Stack, Box, useToast } from "@chakra-ui/react";
 
 import axios from "../../../../api/axios";
+// import { useForm } from "react-hook-form";
 import EmailInput from "../inputs/EmailInput";
 import UsernameInput from "../inputs/UsernameInput";
 import PasswordInput from "../inputs/PasswordInput";
@@ -10,7 +11,21 @@ import LastNameInput from "../inputs/name/LastNameInput";
 import FirstNameInput from "../inputs/name/FirstNameInput";
 import CreateAccountButton from "../buttons/CreateAccountButton";
 
+// type Inputs = {
+//   email: string;
+//   password: string;
+//   username: string;
+//   lastName: string;
+//   firstName: string;
+// };
+
 const RegistrationForm = () => {
+  // const {
+  //   watch,
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<Inputs>();
   const toast = useToast();
   const [emailWasSent, setEmailWasSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,6 +48,9 @@ const RegistrationForm = () => {
     // Sending the response
     const response = await axios.post("/auth/register", payload);
 
+    // Closing all toasts
+    toast.closeAll();
+
     // Not loading anymore
     setIsSubmitting(false);
 
@@ -52,7 +70,7 @@ const RegistrationForm = () => {
         });
 
       // If there are invalid fields
-      case 401:
+      case 400:
         return toast({
           title: "There must be some invalid fields",
           status: "error",
