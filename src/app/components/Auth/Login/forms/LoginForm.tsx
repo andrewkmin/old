@@ -29,7 +29,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const History = useHistory();
+  const history = useHistory();
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -73,7 +73,7 @@ const LoginForm = () => {
       const { data: userData } = await axios.get("/api/accounts/fetch");
       // Setting the state
       setState({ authenticated: true, userData });
-      return History.push("/");
+      return history.push("/");
     }
   };
 
