@@ -57,9 +57,25 @@ const LoginForm = () => {
         });
 
       // If there's another status
-      default:
+      case 403:
         return toast({
           title: "Check your credentials",
+          status: "error",
+          isClosable: false,
+          duration: 2000,
+        });
+
+      case 400:
+        return toast({
+          title: "There are invalid fields",
+          status: "error",
+          isClosable: false,
+          duration: 2000,
+        });
+
+      default:
+        return toast({
+          title: "There was an error",
           status: "error",
           isClosable: false,
           duration: 2000,
