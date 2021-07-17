@@ -95,7 +95,7 @@ const Profile = () => {
                         transition: "0.2s ease-in",
                       }}
                       h={["150px", "170px", "190px"]}
-                      w={["xs", "md", "2xl", "full"]}
+                      w={["xs", "md", "2xl"]}
                       transition={"filter 0.3s ease-out"}
                       src={"https://picsum.photos/1920/500"}
                     />
@@ -107,10 +107,10 @@ const Profile = () => {
                 <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
                   <Menu isLazy>
                     <MenuButton
-                      mt={[-12, -14]}
                       rounded={"xl"}
+                      mt={[-12, -14]}
                       as={IconButton}
-                      me={[16, 12, 2]}
+                      ms={[16, 12, 2]}
                       icon={<HiOutlinePencil />}
                       aria-label={"Change cover image"}
                     />
