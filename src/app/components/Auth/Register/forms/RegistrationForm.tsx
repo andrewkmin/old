@@ -54,39 +54,23 @@ const RegistrationForm = () => {
     // Not loading anymore
     setIsSubmitting(false);
 
-    // Checking the response status
-    switch (response.status) {
-      // Created successfully
-      case 204:
-        return setEmailWasSent(true);
+    // Checking response status
+    if (response.status !== 204) {
+      const { status } = response;
+      const title =
+        status === 403
+          ? "There's an account with that email or username"
+          : status === 400
+          ? "There are invalid fields"
+          : "There was an error";
 
-      // If there's another account with the same email
-      case 403:
-        return toast({
-          title: `That account is taken by someone else`,
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-
-      // If there are invalid fields
-      case 400:
-        return toast({
-          title: "There must be some invalid fields",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-
-      // If another code was returned
-      default:
-        return toast({
-          title: "There was an error",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-    }
+      return toast({
+        title: title,
+        status: "error",
+        duration: 2000,
+        isClosable: false,
+      });
+    } else return setEmailWasSent(true);
   };
 
   return emailWasSent ? (

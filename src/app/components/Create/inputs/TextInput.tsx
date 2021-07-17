@@ -15,7 +15,7 @@ const TextInput = ({ handleInput }: TextInputProps) => (
     <Center>
       <Input
         size={"lg"}
-        name={"text"}
+        name={"body"}
         rounded={"full"}
         boxShadow={"sm"}
         variant={"outline"}

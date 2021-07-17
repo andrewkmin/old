@@ -36,50 +36,30 @@ const LoginForm = () => {
     // Disable the loader
     setIsSubmitting(false);
 
-    // Checking authentication response status
-    switch (authResponse.status) {
-      // If authentication response suceeds
-      case 200: {
-        // Fetching user data
-        const { data: userData } = await axios.get("/api/accounts/fetch");
+    // Checking response status
+    if (authResponse.status !== 200) {
+      const { status } = authResponse;
+      const title =
+        status === 404
+          ? "That account does not exist"
+          : status === 403
+          ? "Invalid credentials"
+          : status === 400
+          ? "There are invalid fields"
+          : "There was an error";
 
-        // Setting the state
-        setState({ authenticated: true, userData });
-        return History.push("/");
-      }
-      // If there is no such account
-      case 204:
-        return toast({
-          title: "That account does not exist",
-          status: "error",
-          duration: 2000,
-          isClosable: false,
-        });
-
-      // If there's another status
-      case 403:
-        return toast({
-          title: "Check your credentials",
-          status: "error",
-          isClosable: false,
-          duration: 2000,
-        });
-
-      case 400:
-        return toast({
-          title: "There are invalid fields",
-          status: "error",
-          isClosable: false,
-          duration: 2000,
-        });
-
-      default:
-        return toast({
-          title: "There was an error",
-          status: "error",
-          isClosable: false,
-          duration: 2000,
-        });
+      return toast({
+        title,
+        duration: 2000,
+        status: "error",
+        isClosable: false,
+      });
+    } else {
+      // Fetching user data
+      const { data: userData } = await axios.get("/api/accounts/fetch");
+      // Setting the state
+      setState({ authenticated: true, userData });
+      return History.push("/");
     }
   };
 
