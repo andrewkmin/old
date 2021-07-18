@@ -7,6 +7,7 @@ import {
   Stack,
   Avatar,
   Box,
+  // Input,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
@@ -45,6 +46,9 @@ const Navbar = () => {
 
       {/* Actions */}
       <Stack spacing={4} alignItems={"center"} direction={"row"}>
+        {/* <Flex alignItems={"center"}>
+          <Input variant={"filled"} placeholder={"Search..."} />
+        </Flex> */}
         <Box>
           {/* Current account link */}
           <IconButton

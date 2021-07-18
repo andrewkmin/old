@@ -14,11 +14,23 @@ export const FetchPosts = async (page?: number) => {
       page,
     },
   });
+
+  return data;
+};
+
+// Will be used for fetching the posts of an account
+export const FetchUserPosts = async (username: string) => {
+  const { data } = await axios.get<Post[]>("/api/posts", {
+    params: {
+      username,
+    },
+  });
+
   return data;
 };
 
 // Will be used for fetching account information
-export const FetchAccount = async (username: string) => {
+export const FetchUser = async (username: string) => {
   const response = await axios.get<User>("/api/accounts/fetch", {
     params: {
       username,
@@ -27,11 +39,14 @@ export const FetchAccount = async (username: string) => {
   return response;
 };
 
-export const CheckFriendship = async (username: string) => {
-  // TODO: Implement
+// For fetching relations between accounts
+export const FetchRelation = async (id: string) => {
+  const { data } = await axios.get(`/api/relations/${id}`);
+  return data;
 };
 
-export const FetchAccountStatus = async (username: string) => {
+// For fetching online/offline status
+export const FetchUserStatus = async (username: string) => {
   const { data } = await axios.get("/api/network/status", {
     params: {
       username,

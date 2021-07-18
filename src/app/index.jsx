@@ -1,8 +1,9 @@
 import axios from "./api/axios";
+import "./assets/scss/globals.scss";
 import Routes from "./routes/routes";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@chakra-ui/react";
 import DataContext from "./data/data.context";
-import { useEffect, useRef, useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 /**
@@ -17,48 +18,6 @@ const App = () => {
     userData: null,
     authenticated: false,
   });
-  // A function ref for authenticating the user
-  const authenticate = useRef(null);
-  // Getting the color mode and the state to set it
-  // const { colorMode, setColorMode } = useColorMode();
-
-  // Fetching current user data and checking if it's valid once
-  authenticate.current = async () => {
-    const response = await axios.get("/auth");
-
-    // Checking the status of the response
-    switch (response.status) {
-      case 200: {
-        /**
-         * After we're done fetching user's data
-         * we are checking if the theme configuration matches
-         * the one in their account and setting the theme accordingly
-         */
-        // if (response?.data?.theme === "light" && colorMode !== "light") {
-        //   setColorMode("light");
-        // } else if (response?.data?.theme === "dark" && colorMode !== "dark") {
-        //   setColorMode("dark");
-        // }
-
-        // Setting the state in the end
-        setState({
-          loading: false,
-          authenticated: true,
-          userData: response.data,
-        });
-        break;
-      }
-      // If there was some kind of an error
-      default: {
-        setState({
-          userData: null,
-          loading: false,
-          authenticated: false,
-        });
-        break;
-      }
-    }
-  };
 
   /**
    * Checking the auth state in use effect because
@@ -66,10 +25,32 @@ const App = () => {
    * get expired or some error may happen and we'll need to authenticate them again
    */
   useEffect(() => {
+    // Fetching current user data and checking if it's valid once
+    const authenticate = async () => {
+      const response = await axios.get("/auth");
+
+      // Checking the status of the response
+      switch (response.status) {
+        case 200: {
+          // Setting the state in the end
+          return setState({
+            loading: false,
+            authenticated: true,
+            userData: response.data,
+          });
+        }
+        // If there was some kind of an error
+        default: {
+          return setState({
+            userData: null,
+            loading: false,
+            authenticated: false,
+          });
+        }
+      }
+    };
     // Only invoking the check function if the user is not authenticated
-    if (!state?.authenticated) authenticate.current();
-    // Cleanup
-    return () => {};
+    if (!state?.authenticated) authenticate();
   }, [state?.authenticated]);
 
   return (

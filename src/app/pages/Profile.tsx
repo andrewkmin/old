@@ -18,12 +18,17 @@ import {
   useClipboard,
   Tooltip,
 } from "@chakra-ui/react";
+import {
+  FetchUser,
+  FetchRelation,
+  FetchUserPosts,
+  FetchUserStatus,
+} from "../api/functions";
 import { Post } from "../types";
 import { useQuery } from "react-query";
 import Create from "../components/Create";
 import { MdDelete } from "react-icons/md";
 import PostList from "../components/PostList";
-import { FetchPosts } from "../api/functions";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
 import EditBio from "../components/Profile/EditBio";
@@ -31,31 +36,32 @@ import Actions from "../components/Profile/Actions";
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { HiOutlinePencil, HiPencil } from "react-icons/hi";
-import { useFetchUser, useFetchUserStatus } from "../api/hooks";
 
-// The profile page
+// Profile page
 const Profile = () => {
   const history = useHistory();
   const { userData } = useContext(DataContext);
   const [posts, setPosts] = useState<Post[]>([]);
-  const { username } = useParams<{ username?: string }>();
+  const { username } = useParams<{ username: string }>();
 
-  // Fetching
-  const { data: user, isLoading: userIsLoading } = useFetchUser(username, [
-    username,
-  ]);
-  const { data: status, isLoading: statusIsLoading } = useFetchUserStatus(
-    username,
-    [username]
+  // User data
+  const { data: user = null, isLoading: userLoading } = useQuery(
+    ["user", username],
+    () => FetchUser(username!!)
   );
-  const { data: staticPosts, isLoading: postsAreLoading } = useQuery(
-    ["user posts", username],
-    () => FetchPosts(),
-    {
-      keepPreviousData: true,
-    }
+  const { data: status, isLoading: statusLoading } = useQuery(
+    ["status", username],
+    () => FetchUserStatus(username!!)
   );
-
+  const { data: staticPosts, isLoading: postsLoading } = useQuery(
+    ["posts", username],
+    () => FetchUserPosts(username!!)
+  );
+  const { data: relationStatus, isLoading: relationLoading } = useQuery(
+    ["user relations", user],
+    () => FetchRelation(user?.data?.id!!),
+    { enabled: user !== null }
+  );
   const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
 
   useEffect(() => {
@@ -67,10 +73,13 @@ const Profile = () => {
   });
 
   // Setting dynamic post state
-  useEffect(() => setPosts(staticPosts!!), [staticPosts]);
+  useEffect(() => {
+    setPosts(staticPosts!!);
+    return () => setPosts([]);
+  }, [staticPosts]);
 
   // Displaying a spinner while data is fetching
-  return userIsLoading || statusIsLoading || postsAreLoading ? (
+  return userLoading || statusLoading || postsLoading || relationLoading ? (
     <Center minH={"75vh"}>
       <Spinner size={"lg"} />
     </Center>
@@ -94,23 +103,27 @@ const Profile = () => {
                         filter: "brightness(0.9)",
                         transition: "0.2s ease-in",
                       }}
-                      h={["150px", "170px", "190px"]}
                       w={["xs", "md", "2xl"]}
+                      h={["150px", "170px", "190px"]}
+                      src={"/assets/placeholder.webp"}
                       transition={"filter 0.3s ease-out"}
-                      src={"https://picsum.photos/1920/500"}
                     />
                   </Center>
                 </Box>
               </Center>
 
               {user?.data?.id === userData?.id && (
-                <Flex w={"full"} alignItems={"center"} justifyContent={"right"}>
+                <Flex
+                  w={"full"}
+                  alignItems={"center"}
+                  justifyContent={"flex-end"}
+                >
                   <Menu isLazy>
                     <MenuButton
                       rounded={"xl"}
                       mt={[-12, -14]}
                       as={IconButton}
-                      ms={[16, 12, 2]}
+                      me={["14", "12", "2"]}
                       icon={<HiOutlinePencil />}
                       aria-label={"Change cover image"}
                     />
@@ -213,7 +226,10 @@ const Profile = () => {
                           <Stats />
                           {username !== userData?.username && (
                             <Box>
-                              <Actions user={user?.data!!} friendshipData={0} />
+                              <Actions
+                                user={user?.data!!}
+                                status={relationStatus!!}
+                              />
                             </Box>
                           )}
                         </Stack>

@@ -101,7 +101,7 @@ const Welcome = () => {
         >
           <Box h={"100%"}>
             <Center>
-              <Stack mt={16} spacing={5} px={[5, null, null, 0]}>
+              <Stack mt={16} spacing={5} px={[9, null, null, 0]}>
                 <Stack>
                   <Center>
                     <Heading fontWeight={"semibold"} fontSize={"5xl"}>

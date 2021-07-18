@@ -5,7 +5,7 @@ import { Stack } from "@chakra-ui/react";
 // Component that holds both registration and login forms
 const Auth = () => {
   return (
-    <Stack spacing={6} h={"full"} minW={["xs", "sm", null, "sm"]}>
+    <Stack p={2} spacing={6} h={"full"} minW={["xs", "sm", null, "sm"]}>
       <Stack direction={["column", "row", null, "column"]}>
         <Login />
         <Registration />

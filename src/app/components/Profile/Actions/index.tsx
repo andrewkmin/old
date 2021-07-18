@@ -1,23 +1,74 @@
 import { User } from "../../../types";
-import { Button } from "@chakra-ui/react";
+import axios from "../../../api/axios";
+import { useEffect, useState } from "react";
+import { Button, useToast } from "@chakra-ui/react";
 
+type Status = "FOLLOWING" | "BLOCKED" | "REQUESTED";
 interface ActionsProps {
   user: User;
-  friendshipData: number;
+  status: Status;
 }
 
-const Actions = ({ user, friendshipData }: ActionsProps) => {
-  // const followRequest = async () => {};
+const Actions = ({ user, status: staticStatus }: ActionsProps) => {
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
+  const [buttonText, setButtonText] = useState("");
+  const [status, setStatus] = useState<Status | null>(staticStatus);
+
+  // For sending a follow request
+  const followRequest = async () => {
+    setLoading(true);
+    const { status, data } = await axios.post(
+      `/api/relations/${user?.id!!}/follow`
+    );
+    setLoading(false);
+    if (status === 200) setStatus(data);
+    else toast();
+  };
+
+  // For unfollowing a user
+  const unfollowRequest = async () => {
+    setLoading(true);
+    const { status, data } = await axios.post(
+      `/api/relations/${user?.id!!}/unfollow`
+    );
+    setLoading(false);
+    if (status === 200) setStatus(data);
+    else toast();
+  };
+
+  // Button trigger based on status
+  const triggerAction = () => {
+    if (status === "FOLLOWING") unfollowRequest();
+    else if (status === null) followRequest();
+  };
+
+  useEffect(() => {
+    // Setting initial button text
+    if (status === null) setButtonText("Follow");
+    else if (status === "FOLLOWING") setButtonText("Following");
+    else if (status === "REQUESTED") setButtonText("Requested");
+
+    return () => setButtonText("");
+  }, [status]);
 
   return (
     <Button
       w={"full"}
       size={"lg"}
       rounded={"full"}
-      bgColor={"purple.400"}
+      isLoading={loading}
       colorScheme={"purple"}
+      bgColor={
+        status === "FOLLOWING"
+          ? "purple.300"
+          : status === "REQUESTED"
+          ? "orange.400"
+          : "purple.400"
+      }
+      onClick={() => triggerAction()}
     >
-      Follow
+      {buttonText}
     </Button>
   );
 };

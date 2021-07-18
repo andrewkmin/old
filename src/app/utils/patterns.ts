@@ -1,16 +1,12 @@
 // For detecting a URL
-export const url = new RegExp(
-  "^(https?:\\/\\/)?" + // protocol
-    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-    "(\\#[-a-z\\d_]*)?$",
-  "i"
-);
+export const url =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 
 // For detecing hashtags
 export const hashtag = new RegExp(/\B(#[a-zA-Z]+\b)(?!;)/);
 
 // For detecting user mentions
 export const mention = new RegExp(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i);
+
+// For detecting an email
+export const email = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;

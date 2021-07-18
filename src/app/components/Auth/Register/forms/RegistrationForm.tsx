@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import axios from "../../../../api/axios";
 import { FieldErrorResponse } from "../../../../types";
 import EmailSentView from "../components/EmailSentView";
+import { email as emailPattern } from "../../../../utils/patterns";
 
 type Inputs = {
   email: string;
@@ -130,7 +131,10 @@ const RegistrationForm = () => {
                 size={"lg"}
                 type={"email"}
                 placeholder={"Email"}
-                {...register("email", { required: true })}
+                {...register("email", {
+                  required: true,
+                  pattern: emailPattern,
+                })}
               />
 
               <FormErrorMessage>

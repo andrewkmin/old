@@ -4,14 +4,15 @@ import {
   Center,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   Input,
   Stack,
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../api/axios";
-import { useContext } from "react";
-import { ChangeEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import DataContext from "../../data/data.context";
 
@@ -19,52 +20,58 @@ interface VerificationProps {
   sid: string;
 }
 
+// For the form
+type Inputs = {
+  password: string;
+};
+
 const Verification = ({ sid }: VerificationProps) => {
   const toast = useToast();
   const history = useHistory();
+  const {
+    register,
+    setError,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const { setState } = useContext(DataContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // For submitting verification query
-  const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+  const handleVerification = async (payload: Inputs) => {
+    // Enabling the loader
     setIsSubmitting(true);
-    event.preventDefault();
 
     // Sending the password
-    const { data, status } = await axios.post(`/auth/register/verify/${sid}`, {
-      password: event.target.password.value,
-    });
+    const { data, status } = await axios.post(
+      `/auth/register/verify/${sid}`,
+      payload
+    );
 
     // Closing all toasts
     toast.closeAll();
+    // Stopping the loader
     setIsSubmitting(false);
 
     // If the token has expired
     if (status === 404) {
-      return toast({
-        status: "error",
-        isClosable: false,
-        title: "Token has expired or doesn't exist",
-      });
+      setError("password", { message: "That token has expired" });
     }
     // If the password is incorrect
     else if (status === 401) {
-      return toast({
-        title: "That password is invalid",
-        isClosable: false,
-        status: "error",
-      });
-    } else {
+      setError("password", { message: "Incorrect password" });
+    }
+    // If the field is somehow invalid
+    else if (status === 400) {
+      setError("password", { message: "Invalid password" });
+    }
+    // If it's correct
+    else {
       setState({
         userData: data,
         authenticated: true,
       });
-      toast({
-        status: "success",
-        isClosable: false,
-        title: "You've successfully verified your account!",
-      });
-      return history.push("/");
+      history.push("/");
     }
   };
 
@@ -73,19 +80,26 @@ const Verification = ({ sid }: VerificationProps) => {
       <Center>
         <Flex alignItems={"center"} justifyContent={"center"}>
           <Stack spacing={5}>
-            <form autoComplete={"off"} onSubmit={handleSubmit}>
+            <form
+              autoComplete={"off"}
+              onSubmit={handleSubmit(handleVerification)}
+            >
               <Stack spacing={5}>
                 <Center>
-                  <FormControl>
+                  <FormControl isInvalid={errors?.password && true}>
                     <Input
                       autoFocus
-                      isRequired
                       size={"lg"}
-                      minLength={8}
-                      name={"password"}
                       type={"password"}
                       placeholder={"Account password"}
+                      {...register("password", {
+                        required: true,
+                        minLength: 8,
+                      })}
                     />
+                    <FormErrorMessage>
+                      {errors?.password?.message || "Invalid password"}
+                    </FormErrorMessage>
                     <FormHelperText>
                       Please enter the password of your account to activate it
                     </FormHelperText>

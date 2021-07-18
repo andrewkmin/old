@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import LoginButton from "../buttons/LoginButton";
 import DataContext from "../../../../data/data.context";
 import { FieldErrorResponse } from "../../../../types";
+import { email as emailPattern } from "../../../../utils/patterns";
 
 type Inputs = {
   email: string;
@@ -57,15 +58,16 @@ const LoginForm = () => {
       else if (status === 403) {
         setError("password", { message: "Incorrect password" });
       }
+      // If user doesn't exist
+      else if (status === 404) {
+        setError("email", { message: "That account doesn't exist" });
+      }
       // If it's another error
       else {
         toast({
           status: "error",
           isClosable: false,
-          title:
-            status === 404
-              ? "That account doesn't exist"
-              : "There was an error",
+          title: "There was an error",
         });
       }
     } else {
@@ -89,7 +91,10 @@ const LoginForm = () => {
                 size={"lg"}
                 type={"email"}
                 placeholder={"Email"}
-                {...register("email", { required: true })}
+                {...register("email", {
+                  required: true,
+                  pattern: emailPattern,
+                })}
               />
               <FormErrorMessage>
                 {errors?.email?.message || "Invalid email"}

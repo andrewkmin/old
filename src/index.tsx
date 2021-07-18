@@ -2,9 +2,8 @@ import App from "./app";
 import React from "react";
 import theme from "./app/theme";
 import ReactDOM from "react-dom";
-import "./app/assets/scss/globals.scss";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
 // Query Client for react query
 const queryClient = new QueryClient({

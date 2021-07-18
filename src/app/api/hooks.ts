@@ -1,6 +1,7 @@
 import axios from "./axios";
 import { User } from "../types";
 import { useQuery } from "react-query";
+import { FetchRelation, FetchUserPosts } from "./functions";
 
 // Logout hook
 export const useLogout = () => {
@@ -11,7 +12,6 @@ export const useLogout = () => {
 
   return useQuery("logout", Logout);
 };
-
 
 // Check friendship hook
 export const useCheckFriendship = (
@@ -52,10 +52,7 @@ export const useFetchUser = (username: String = "", depArray?: any[]) => {
   return useQuery(["user data", depArray], FetchAccount);
 };
 
-export const useFetchUserStatus = (
-  username: String = "",
-  depArray?: any[]
-) => {
+export const useFetchUserStatus = (username: String = "", depArray?: any[]) => {
   const FetchAccountStatus = async () => {
     const { data } = await axios.get("/api/network/status", {
       params: {
@@ -66,4 +63,12 @@ export const useFetchUserStatus = (
   };
 
   return useQuery(["user status", depArray], FetchAccountStatus);
+};
+
+export const useFetchUserPosts = (username?: string, depArray?: any[]) => {
+  return useQuery(["user posts", depArray], () => FetchUserPosts(username!!));
+};
+
+export const useFetchRelation = (id?: string, depArray?: any[]) => {
+  return useQuery(["user relations", depArray], () => FetchRelation(id!!));
 };
