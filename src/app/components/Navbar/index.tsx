@@ -6,13 +6,12 @@ import {
   IconButton,
   Stack,
   Avatar,
-  Box,
-  // Input,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import DropdownMenu from "./Menu/DropdownMenu";
 import DataContext from "../../data/data.context";
+import OtherOptionsMenu from "./Menu/OtherOptionsMenu";
 
 const Navbar = () => {
   const { userData } = useContext(DataContext);
@@ -45,12 +44,9 @@ const Navbar = () => {
       <Spacer />
 
       {/* Actions */}
-      <Stack spacing={4} alignItems={"center"} direction={"row"}>
-        {/* <Flex alignItems={"center"}>
-          <Input variant={"filled"} placeholder={"Search..."} />
-        </Flex> */}
-        <Box>
-          {/* Current account link */}
+      <Stack alignItems={"center"} direction={"row"}>
+        {/* Current account link */}
+        <Tooltip label={"My account"}>
           <IconButton
             as={NavLink}
             isRound={true}
@@ -59,21 +55,16 @@ const Navbar = () => {
             aria-label={"Your account"}
             to={`/@${userData?.username}`}
           >
-            <Stack px={1} alignItems={"center"} direction={"row"}>
-              {/* Account avatar */}
-              <Avatar
-                size={"sm"}
-                src={userData?.avatar}
-                name={userData?.username}
-              />
-              <Text fontSize={["lg", "xl"]} fontWeight={"bold"}>
-                {userData?.first_name}
-              </Text>
-            </Stack>
+            {/* Account avatar */}
+            <Avatar
+              boxSize={"2em"}
+              src={userData?.avatar}
+              name={userData?.username}
+            />
           </IconButton>
-        </Box>
+        </Tooltip>
 
-        <DropdownMenu />
+        <OtherOptionsMenu />
       </Stack>
     </Flex>
   );

@@ -41,11 +41,7 @@ export const useSendHeartbeat = () => {
 // Fetch account hook
 export const useFetchUser = (username: String = "", depArray?: any[]) => {
   const FetchAccount = async () => {
-    const { data, status } = await axios.get<User>("/api/accounts/fetch", {
-      params: {
-        username,
-      },
-    });
+    const { data, status } = await axios.get<User>(`/api/accounts/${username}`);
     return { data, status };
   };
 

@@ -5,26 +5,20 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
-  Flex,
   IconButton,
   Stack,
-  Tooltip,
   useEditableControls,
   useToast,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 interface EditBioProps {
   data?: User;
 }
 
 const EditBioControls = () => {
-  const {
-    isEditing,
-    getEditButtonProps,
-    getSubmitButtonProps,
-    getCancelButtonProps,
-  } = useEditableControls();
+  const { isEditing, getSubmitButtonProps, getCancelButtonProps } =
+    useEditableControls();
 
   return isEditing ? (
     <ButtonGroup justifyContent={"center"} size={"sm"}>
@@ -42,23 +36,14 @@ const EditBioControls = () => {
         {...getCancelButtonProps()}
       />
     </ButtonGroup>
-  ) : (
-    <Flex justifyContent={"center"}>
-      <Tooltip label={"Edit bio"} placement={"right"}>
-        <IconButton
-          isRound
-          icon={<EditIcon />}
-          aria-label={"Edit bio"}
-          {...getEditButtonProps()}
-        />
-      </Tooltip>
-    </Flex>
-  );
+  ) : null;
 };
 
 const EditBio = ({ data }: EditBioProps) => {
   // For toasting
   const toast = useToast();
+  // const { getEditButtonProps } = useEditableControls();
+
   // When the user finishes editing
   const handleUpdate = async (value: string) => {
     // Checking if the bios are the same or note
@@ -69,31 +54,24 @@ const EditBio = ({ data }: EditBioProps) => {
       const payload = {
         bio: value,
       };
-      // Sending the request
-      const response = await axios.patch<User>("/api/accounts/update", payload);
 
-      switch (response.status) {
-        case 200: {
-          return toast({
-            title: "Successfully updated!",
-            status: "success",
-            position: "bottom-right",
-          });
-        }
-        default: {
-          return toast({
-            title: "Something went wrong",
-            status: "error",
-            position: "bottom-right",
-          });
-        }
-      }
+      // Sending the request
+      const { status } = await axios.patch<User>(
+        "/api/accounts/update",
+        payload
+      );
+
+      // Notifying the user about the change
+      return toast({
+        title:
+          status === 200 ? "Successfully updated!" : "Something went wrong",
+        status: status === 200 ? "success" : "error",
+      });
     }
   };
 
   return (
     <Editable
-      textAlign={"center"}
       onSubmit={handleUpdate}
       defaultValue={data?.bio!!}
       placeholder={
@@ -103,7 +81,7 @@ const EditBio = ({ data }: EditBioProps) => {
       }
     >
       <Stack spacing={2}>
-        <EditablePreview maxW={["xs", "sm", "md"]} fontSize={["md", "lg"]} />
+        <EditablePreview />
         <EditableInput />
         <EditBioControls />
       </Stack>

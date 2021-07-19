@@ -1,6 +1,6 @@
 import { Comment as CommentType } from "../../../types";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { Stack, Button, Input, Box, Center, Spacer } from "@chakra-ui/react";
+import { Stack, Button, Input, Box, Center } from "@chakra-ui/react";
 
 interface CreateCommentFormProps {
   setComments: Dispatch<SetStateAction<CommentType[] | undefined>>;
@@ -15,21 +15,19 @@ const CreateCommentForm = ({ setComments }: CreateCommentFormProps) => {
     <Box>
       <Center>
         <form onSubmit={createComment}>
-          <Stack alignItems={"center"} spacing={1} direction={"row"}>
+          <Stack spacing={3} alignItems={"center"} direction={"row"}>
             <Input
               size={"lg"}
               type={"text"}
               name={"body"}
-              rounded={"full"}
+              rounded={"xl"}
               placeholder={"Tell them what you think..."}
             />
 
-            <Spacer />
-
             <Button
               size={"lg"}
+              rounded={"xl"}
               type={"submit"}
-              rounded={"full"}
               colorScheme={"purple"}
               bgColor={"purple.400"}
             >

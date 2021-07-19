@@ -30,6 +30,7 @@ const AttachmentInput = () => {
     <Button
       w={"full"}
       size={"lg"}
+      rounded={"xl"}
       border={"2px"}
       boxShadow={"sm"}
       fontWeight={"sm"}

@@ -3,13 +3,20 @@ import { useQuery } from "react-query";
 import { FetchPosts } from "../api/functions";
 import PostList from "../components/PostList";
 import CreatePost from "../components/Create";
-import { Box, Center, Spinner, Stack } from "@chakra-ui/react";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import {
+  Box,
+  // Button,
+  Center,
+  Container,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 
 // The homepage
 const Home = () => {
   const [page, setPage] = useState(0);
-  const { data, isPreviousData, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching } = useQuery(
     ["posts", page],
     () => FetchPosts(page),
     {
@@ -17,32 +24,57 @@ const Home = () => {
     }
   );
 
-  useBottomScrollListener(() => {
-    if (!isPreviousData && data) setPage(page + 1);
-  });
-
   return (
-    <Box px={10}>
+    <Box>
       {isLoading ? (
-        <Center minH={"75vh"}>
-          <Spinner size={"lg"} />
-        </Center>
-      ) : (
-        <Box>
-          <Center>
-            <Stack spacing={2}>
-              <CreatePost />
-
-              <PostList data={data} noPostsText={"There are no posts yet"} />
-
-              {isFetching ? (
-                <Center>
-                  <Spinner />
-                </Center>
-              ) : null}
-            </Stack>
+        <Container>
+          <Center minH={"80vh"}>
+            <Spinner size={"lg"} />
           </Center>
-        </Box>
+        </Container>
+      ) : (
+        <Container>
+          <Stack spacing={5}>
+            <CreatePost />
+
+            <PostList
+              state={{
+                data,
+                noPostsText: "There are no posts yet",
+              }}
+            />
+
+            <Stack spacing={6}>
+              {/* <Center>
+                <Button
+                  size={"lg"}
+                  rounded={"full"}
+                  colorScheme={"purple"}
+                  bgColor={"purple.400"}
+                >
+                  Load more
+                </Button>
+              </Center> */}
+
+              {isFetching && (
+                <Center>
+                  <Stack>
+                    <Text
+                      fontSize={"lg"}
+                      fontWeight={"thin"}
+                      fontFamily={"ubuntu bold"}
+                    >
+                      Loading more
+                    </Text>
+                    <Center>
+                      <Spinner />
+                    </Center>
+                  </Stack>
+                </Center>
+              )}
+            </Stack>
+          </Stack>
+        </Container>
       )}
     </Box>
   );

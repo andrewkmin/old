@@ -72,7 +72,7 @@ const LoginForm = () => {
       }
     } else {
       // Fetching user data
-      const { data: userData } = await axios.get("/api/accounts/fetch");
+      const { data: userData } = await axios.get("/api/accounts/me");
       // Setting the state
       setState({ authenticated: true, userData });
       return history.push("/");

@@ -1,63 +1,70 @@
 import millify from "millify";
-import {
-  Box,
-  Button,
-  chakra,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { User } from "../../../types";
+import StatsModal from "./components/StatsModal";
+import { Box, Button, Stack, useDisclosure } from "@chakra-ui/react";
 
-const Stats = () => {
-  const data = {
-    friends: 1000,
-    followers: 1000,
-  };
+interface StatsProps {
+  state: StatsStateProps;
+}
+
+interface StatsStateProps {
+  user: Partial<User>;
+  followers: Partial<User>[];
+  following: Partial<User>[];
+}
+
+const Stats = ({ state: { followers, following, user } }: StatsProps) => {
+  const [activeTab, setActiveTab] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box>
-      <Stack fontSize={"xl"} direction={"row"}>
+      <Stack spacing={4} direction={"row"}>
+        {/* Followers trigger */}
         <Button
           size={"lg"}
-          border={"2px"}
-          rounded={"full"}
-          variant={"unstyled"}
-          transition={"all 0.1s ease-in"}
-          _hover={{
-            transition: "all 0.1s ease-out",
-            bgColor: useColorModeValue("gray.200", "gray.700"),
-            borderColor: useColorModeValue("gray.200", "gray.700"),
+          rounded={"xl"}
+          onClick={() => {
+            setActiveTab(0);
+            onOpen();
           }}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
         >
-          <Text p={2} fontSize={["sm", "md", "lg"]} userSelect={"none"}>
-            <chakra.span fontFamily={"ubuntu bold"}>
-              {millify(data.followers)}
-            </chakra.span>{" "}
-            followers
-          </Text>
+          {followers?.length === 0 && "No"}
+          {followers?.length !== 0 && (
+            <>
+              {millify(followers?.length)}{" "}
+              {followers?.length > 1 ? "followers" : "follower"}
+            </>
+          )}{" "}
+          {followers?.length === 0 && "followers"}
         </Button>
 
-        {/* <chakra.button
-          p={2}
-          border={"2px"}
+        <Button
+          size={"lg"}
           rounded={"xl"}
-          transition={"all 0.1s ease-in"}
-          _hover={{
-            transition: "all 0.1s ease-out",
-            bgColor: useColorModeValue("gray.200", "gray.700"),
-            borderColor: useColorModeValue("gray.200", "gray.700"),
+          onClick={() => {
+            setActiveTab(1);
+            onOpen();
           }}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
         >
-          <Text fontSize={["sm", "md", "lg"]} userSelect={"none"}>
-            <chakra.span fontFamily={"ubuntu bold"}>
-              {millify(data.friends)}
-            </chakra.span>{" "}
-            friends
-          </Text>
-        </chakra.button> */}
+          {following?.length === 0 && "Not following anyone"}
+          {following?.length !== 0 && (
+            <>Following {millify(following?.length)}</>
+          )}
+        </Button>
       </Stack>
+
+      <StatsModal
+        state={{
+          user,
+          isOpen,
+          onClose,
+          activeTab,
+          followers,
+          following,
+        }}
+      />
     </Box>
   );
 };

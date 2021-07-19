@@ -31,11 +31,7 @@ export const FetchUserPosts = async (username: string) => {
 
 // Will be used for fetching account information
 export const FetchUser = async (username: string) => {
-  const response = await axios.get<User>("/api/accounts/fetch", {
-    params: {
-      username,
-    },
-  });
+  const response = await axios.get<User>(`/api/accounts/${username}`);
   return response;
 };
 
@@ -52,5 +48,16 @@ export const FetchUserStatus = async (username: string) => {
       username,
     },
   });
+  return data;
+};
+
+// For fetching user's followers
+export const FetchFollowers = async (id: string) => {
+  const { data } = await axios.get(`/api/relations/${id}/followers`);
+  return data;
+};
+
+export const FetchFollowing = async (id: string) => {
+  const { data } = await axios.get(`/api/relations/${id}/following`);
   return data;
 };

@@ -25,12 +25,21 @@ import DataContext from "../../data/data.context";
 import AttachmentInput from "./inputs/AttachmentInput";
 
 interface CreateProps {
+  state?: CreateStateProps;
+}
+
+interface CreateStateProps {
   posts?: Post[];
   setPosts?: Dispatch<SetStateAction<Post[]>>;
 }
 
-const Create = ({ posts, setPosts }: CreateProps) => {
+const Create = ({ state }: CreateProps) => {
   const toast = useToast();
+
+  // TODO: Maybe update this part
+  const posts = state?.posts;
+  const setPosts = state?.setPosts;
+
   const { userData } = useContext(DataContext);
   const [submitting, setSubmitting] = useState(false);
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
@@ -100,7 +109,11 @@ const Create = ({ posts, setPosts }: CreateProps) => {
       onSubmit={handleCreatePost}
       encType={"multipart/form-data"}
     >
-      <Box py={2} w={["sm", "md", "lg", "xl"]} m={4}>
+      <Box
+      // m={4}
+      // py={2}
+      // w={["sm", "md", "lg", "xl"]}
+      >
         <Box
           p={[2, 3]}
           border={"2px"}
@@ -139,6 +152,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
               <Button
                 w={"full"}
                 size={"lg"}
+                rounded={"xl"}
                 border={"2px"}
                 boxShadow={"xs"}
                 fontWeight={"sm"}
@@ -151,6 +165,7 @@ const Create = ({ posts, setPosts }: CreateProps) => {
               <Button
                 w={"full"}
                 size={"lg"}
+                rounded={"xl"}
                 border={"2px"}
                 boxShadow={"xs"}
                 fontWeight={"sm"}

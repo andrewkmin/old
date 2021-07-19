@@ -17,12 +17,15 @@ import {
   Text,
   useClipboard,
   Tooltip,
+  Container,
 } from "@chakra-ui/react";
 import {
   FetchUser,
   FetchRelation,
   FetchUserPosts,
   FetchUserStatus,
+  FetchFollowers,
+  FetchFollowing,
 } from "../api/functions";
 import { Post } from "../types";
 import { useQuery } from "react-query";
@@ -44,32 +47,59 @@ const Profile = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const { username } = useParams<{ username: string }>();
 
-  // User data
+  // Getting user's data with their username
   const { data: user = null, isLoading: userLoading } = useQuery(
     ["user", username],
     () => FetchUser(username!!)
   );
+  // To copy user's username to clipboard
+  const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
+  // Whether other queries should trigger
+  const hooksEnabled = user?.data?.id !== null && user?.data?.id !== undefined;
+
+  // Getting their status
   const { data: status, isLoading: statusLoading } = useQuery(
     ["status", username],
     () => FetchUserStatus(username!!)
   );
+  // Fetching their posts
   const { data: staticPosts, isLoading: postsLoading } = useQuery(
     ["posts", username],
     () => FetchUserPosts(username!!)
   );
+  // Fetching relations between current account and other account
   const { data: relationStatus, isLoading: relationLoading } = useQuery(
     ["user relations", user],
     () => FetchRelation(user?.data?.id!!),
-    { enabled: user !== null }
+    { enabled: hooksEnabled }
   );
-  const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
+  // Getting user's followers
+  const { data: followers, isLoading: followersLoading } = useQuery(
+    ["user followers", user],
+    () => FetchFollowers(user?.data?.id!!),
+    { enabled: hooksEnabled }
+  );
+  // Getting the users that this user follows
+  const { data: following, isLoading: followingLoading } = useQuery(
+    ["user following", user],
+    () => FetchFollowing(user?.data?.id!!),
+    { enabled: hooksEnabled }
+  );
 
+  // Loading state
+  const loading =
+    userLoading ||
+    statusLoading ||
+    postsLoading ||
+    relationLoading ||
+    followersLoading ||
+    followingLoading;
+
+  // Checking if the user exists
   useEffect(() => {
-    // Checking if the user exists
     const exists = user?.status !== 404;
     // If it doesn't exist then redirect back to the homepage
     if (!exists) history.push("/");
-    return () => {};
   });
 
   // Setting dynamic post state
@@ -79,7 +109,7 @@ const Profile = () => {
   }, [staticPosts]);
 
   // Displaying a spinner while data is fetching
-  return userLoading || statusLoading || postsLoading || relationLoading ? (
+  return loading ? (
     <Center minH={"75vh"}>
       <Spinner size={"lg"} />
     </Center>
@@ -103,7 +133,7 @@ const Profile = () => {
                         filter: "brightness(0.9)",
                         transition: "0.2s ease-in",
                       }}
-                      w={["xs", "md", "2xl"]}
+                      w={["full", "md", "2xl"]}
                       h={["150px", "170px", "190px"]}
                       src={"/assets/placeholder.webp"}
                       transition={"filter 0.3s ease-out"}
@@ -123,7 +153,7 @@ const Profile = () => {
                       rounded={"xl"}
                       mt={[-12, -14]}
                       as={IconButton}
-                      me={["14", "12", "2"]}
+                      me={["8", "12", "2"]}
                       icon={<HiOutlinePencil />}
                       aria-label={"Change cover image"}
                     />
@@ -150,10 +180,15 @@ const Profile = () => {
                   name={user?.data?.username}
                 >
                   {userData && (
-                    <AvatarBadge
-                      boxSize={"1em"}
-                      bg={status?.connected ? "green.500" : "gray.300"}
-                    />
+                    <Tooltip
+                      placement={"right"}
+                      label={status?.connected ? "Online" : "Offline"}
+                    >
+                      <AvatarBadge
+                        boxSize={"1em"}
+                        bg={status?.connected ? "green.500" : "gray.300"}
+                      />
+                    </Tooltip>
                   )}
                 </Avatar>
               </Center>
@@ -185,8 +220,8 @@ const Profile = () => {
                           </Tooltip>
                         </Center>
 
-                        <Center>
-                          {user?.data?.id === userData?.id && (
+                        {user?.data?.id === userData?.id && (
+                          <Center>
                             <Badge
                               p={2}
                               rounded={"full"}
@@ -197,18 +232,14 @@ const Profile = () => {
                             >
                               Your account
                             </Badge>
-                          )}
-                        </Center>
+                          </Center>
+                        )}
                       </Stack>
                     </Box>
 
                     <Stack spacing={4}>
                       <Box>
-                        <Center
-                          fontSize={"lg"}
-                          color={"gray.500"}
-                          fontFamily={"Ubuntu Bold"}
-                        >
+                        <Center color={"gray.500"} fontFamily={"Ubuntu Bold"}>
                           {username === userData?.username ? (
                             <EditBio data={user?.data} />
                           ) : (
@@ -222,15 +253,22 @@ const Profile = () => {
                       </Box>
 
                       <Center>
-                        <Stack direction={["column", "row"]}>
-                          <Stats />
+                        <Stack spacing={4} direction={["column", "row"]}>
+                          <Stats
+                            state={{
+                              followers,
+                              following,
+                              user: user?.data!!,
+                            }}
+                          />
+
                           {username !== userData?.username && (
-                            <Box>
-                              <Actions
-                                user={user?.data!!}
-                                status={relationStatus!!}
-                              />
-                            </Box>
+                            <Actions
+                              state={{
+                                user: user?.data!!,
+                                status: relationStatus,
+                              }}
+                            />
                           )}
                         </Stack>
                       </Center>
@@ -239,32 +277,39 @@ const Profile = () => {
                 </Stack>
               </Box>
 
-              <Box pt={5}>
-                <Center>
-                  <Stack spacing={2}>
-                    {username === userData?.username && (
-                      <Box>
-                        <Create setPosts={setPosts} posts={posts} />
-                      </Box>
-                    )}
+              <Center pt={5}>
+                <Container>
+                  <Center>
+                    <Stack spacing={5}>
+                      {username === userData?.username && (
+                        <Create
+                          state={{
+                            posts,
+                            setPosts,
+                          }}
+                        />
+                      )}
 
-                    <PostList
-                      data={posts}
-                      noPostsText={`${
-                        username === userData?.username
-                          ? "You"
-                          : user?.data?.first_name
-                      }
+                      <PostList
+                        state={{
+                          data: posts,
+                          noPostsText: `${
+                            username === userData?.username
+                              ? "You"
+                              : user?.data?.first_name
+                          }
                           ${
                             username === userData?.username
                               ? "don't"
                               : "doesn't"
                           }
-                          have any posts yet`}
-                    />
-                  </Stack>
-                </Center>
-              </Box>
+                          have any posts yet`,
+                        }}
+                      />
+                    </Stack>
+                  </Center>
+                </Container>
+              </Center>
             </Stack>
           </Box>
         </Center>

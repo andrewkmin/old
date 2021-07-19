@@ -4,12 +4,17 @@ import { useEffect, useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 
 type Status = "FOLLOWING" | "BLOCKED" | "REQUESTED";
+
 interface ActionsProps {
+  state: ActionStateProps;
+}
+
+interface ActionStateProps {
   user: User;
   status: Status;
 }
 
-const Actions = ({ user, status: staticStatus }: ActionsProps) => {
+const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("");

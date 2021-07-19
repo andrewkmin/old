@@ -1,7 +1,7 @@
-// import { BiShare } from "react-icons/bi";
+import { AiFillGift } from "react-icons/ai";
 import { PostProps } from "../../../types/index";
 import CommentsModal from "../components/CommentsModal";
-import { AiFillGift, AiOutlineComment } from "react-icons/ai";
+import { BiRepost, BiConversation } from "react-icons/bi";
 import { Box, Button, Stack, useDisclosure, Portal } from "@chakra-ui/react";
 
 const Bottom = ({ data: post }: PostProps) => {
@@ -23,25 +23,21 @@ const Bottom = ({ data: post }: PostProps) => {
         {/* Comment button */}
         <Button
           w={"full"}
-          size={"sm"}
+          size={"md"}
           onClick={onCommentsModalOpen}
-          rightIcon={<AiOutlineComment size={"15px"} />}
+          rightIcon={<BiConversation size={"16px"} />}
         >
           Comment
         </Button>
 
         {/* Share button */}
-        <Button size={"sm"} rightIcon={<AiFillGift size={"15px"} />} w={"full"}>
+        <Button size={"md"} rightIcon={<AiFillGift size={"16px"} />} w={"full"}>
           Gift
         </Button>
 
         {/* Share button */}
-        <Button
-          size={"sm"}
-          // rightIcon={<BiShare size={"15px"} />}
-          w={"full"}
-        >
-          Share
+        <Button size={"md"} w={"full"} rightIcon={<BiRepost size={"18px"} />}>
+          Repost
         </Button>
       </Stack>
 
