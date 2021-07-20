@@ -23,21 +23,30 @@ const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
   // For sending a follow request
   const followRequest = async () => {
     setLoading(true);
+
     const { status, data } = await axios.post(
       `/api/relations/${user?.id!!}/follow`
     );
     setLoading(false);
+
     if (status === 200) setStatus(data);
-    else toast();
+    else {
+      if (status === 409) {
+        toast({ title: "You already follow this user", status: "warning" });
+      }
+    }
   };
 
   // For unfollowing a user
   const unfollowRequest = async () => {
     setLoading(true);
+
     const { status, data } = await axios.post(
       `/api/relations/${user?.id!!}/unfollow`
     );
+
     setLoading(false);
+
     if (status === 200) setStatus(data);
     else toast();
   };

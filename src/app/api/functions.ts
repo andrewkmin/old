@@ -7,25 +7,19 @@ export const Logout = async () => {
   return data;
 };
 
-// Will be used for fetching posts at the homepage
-export const FetchPosts = async (page?: number) => {
-  const { data } = await axios.get<Post[]>("/api/posts", {
+// Will be used for fetching random posts
+export const FetchPosts = async (cursor?: number) => {
+  const { data } = await axios.get("/api/discover/posts", {
     params: {
-      page,
+      cursor,
     },
   });
-
   return data;
 };
 
 // Will be used for fetching the posts of an account
 export const FetchUserPosts = async (username: string) => {
-  const { data } = await axios.get<Post[]>("/api/posts", {
-    params: {
-      username,
-    },
-  });
-
+  const { data } = await axios.get<Post[]>(`/api/${username}/posts`);
   return data;
 };
 
@@ -57,6 +51,7 @@ export const FetchFollowers = async (id: string) => {
   return data;
 };
 
+// Will be used for fetching the users that a user follows
 export const FetchFollowing = async (id: string) => {
   const { data } = await axios.get(`/api/relations/${id}/following`);
   return data;

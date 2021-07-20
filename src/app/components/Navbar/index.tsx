@@ -7,8 +7,10 @@ import {
   Stack,
   Avatar,
   Tooltip,
+  Button,
 } from "@chakra-ui/react";
 import { useContext } from "react";
+import { CgAddR } from "react-icons/cg";
 import { NavLink } from "react-router-dom";
 import DataContext from "../../data/data.context";
 import OtherOptionsMenu from "./Menu/OtherOptionsMenu";
@@ -18,7 +20,6 @@ const Navbar = () => {
 
   return (
     <Flex
-      mb={8}
       top={0}
       p={[2, 3]}
       pos={"sticky"}
@@ -45,6 +46,14 @@ const Navbar = () => {
 
       {/* Actions */}
       <Stack alignItems={"center"} direction={"row"}>
+        <Button
+          rounded={"xl"}
+          leftIcon={<CgAddR />}
+          colorScheme={"purple"}
+          bgColor={useColorModeValue("purple.300", "purple.400")}
+        >
+          Create post
+        </Button>
         {/* Current account link */}
         <Tooltip label={"My account"}>
           <IconButton
@@ -58,6 +67,7 @@ const Navbar = () => {
             {/* Account avatar */}
             <Avatar
               boxSize={"2em"}
+              rounded={"xl"}
               src={userData?.avatar}
               name={userData?.username}
             />

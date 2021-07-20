@@ -24,6 +24,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
         {/* Followers trigger */}
         <Button
           size={"lg"}
+          filter={"brightness(105%)"}
           rounded={"xl"}
           onClick={() => {
             setActiveTab(0);
@@ -43,6 +44,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
         <Button
           size={"lg"}
           rounded={"xl"}
+          filter={"brightness(105%)"}
           onClick={() => {
             setActiveTab(1);
             onOpen();
@@ -50,7 +52,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
         >
           {following?.length === 0 && "Not following anyone"}
           {following?.length !== 0 && (
-            <>Following {millify(following?.length)}</>
+            <>{millify(following?.length)} following</>
           )}
         </Button>
       </Stack>

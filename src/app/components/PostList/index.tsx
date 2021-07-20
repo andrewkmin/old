@@ -2,20 +2,21 @@ import React from "react";
 import Post from "../Post";
 import { Post as PostType } from "../../types";
 import { Box, Center, Stack, Text } from "@chakra-ui/react";
+import { InfiniteData } from "react-query";
 
 interface PostListProps {
   state: PostListStateProps;
 }
 
 interface PostListStateProps {
-  data?: PostType[];
   noPostsText?: string;
+  pages?: InfiniteData<PostType[]>["pages"];
 }
 
-const PostList = ({ state: { data: posts, noPostsText } }: PostListProps) => {
+const PostList = ({ state: { pages, noPostsText } }: PostListProps) => {
   return (
     <Box>
-      {posts?.length === 0 ? (
+      {pages?.length === 0 ? (
         <Center>
           <Text
             fontSize={"lg"}
@@ -28,8 +29,10 @@ const PostList = ({ state: { data: posts, noPostsText } }: PostListProps) => {
       ) : (
         <Box>
           <Stack spacing={5}>
-            {posts?.map((post, index) => {
-              return <Post data={post} key={index} />;
+            {pages?.map((page: any) => {
+              return page?.data?.map((post: PostType) => {
+                return <Post data={post} key={post.id} />;
+              });
             })}
           </Stack>
         </Box>

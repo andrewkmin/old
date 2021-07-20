@@ -7,7 +7,7 @@ const Content = ({ data }: PostProps) => {
     // Middle section
     <Box>
       {/* Rendering post text */}
-      <Text fontSize={["lg", "md"]}>{data.body}</Text>
+      <Text fontSize={"lg"}>{data.body}</Text>
 
       {/* TODO: Also include the attachments */}
     </Box>

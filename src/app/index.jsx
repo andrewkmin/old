@@ -27,29 +27,18 @@ const App = () => {
   useEffect(() => {
     // Fetching current user data and checking if it's valid once
     const authenticate = async () => {
-      const response = await axios.get("/auth");
+      // Authenticating
+      const { data, status } = await axios.get("/auth");
 
       // Checking the status of the response
-      switch (response.status) {
-        case 200: {
-          // Setting the state in the end
-          return setState({
-            loading: false,
-            authenticated: true,
-            userData: response.data,
-          });
-        }
-        // If there was some kind of an error
-        default: {
-          return setState({
-            userData: null,
-            loading: false,
-            authenticated: false,
-          });
-        }
-      }
+      return setState({
+        loading: false,
+        userData: status === 200 ? data : null,
+        authenticated: status === 200 ? true : false,
+      });
     };
-    // Only invoking the check function if the user is not authenticated
+
+    // Invoking the check function only when the user is not authenticated
     if (!state?.authenticated) authenticate();
   }, [state?.authenticated]);
 
@@ -62,19 +51,11 @@ const App = () => {
         authenticated: state?.authenticated,
       }}
     >
+      {/* Dev tools for React Query */}
       <ReactQueryDevtools initialIsOpen={false} />
 
       {/* Displaying a skeleton if the state changes to loading */}
-      {state?.loading ? (
-        <Skeleton
-          // startColor={"purple.400"}
-          // endColor={"purple.500"}
-          h={"100vh"}
-          w={"100vw"}
-        />
-      ) : (
-        <Routes />
-      )}
+      {state?.loading ? <Skeleton h={"100vh"} w={"100vw"} /> : <Routes />}
     </DataContext.Provider>
   );
 };

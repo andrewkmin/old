@@ -2,7 +2,7 @@ import { AiFillGift } from "react-icons/ai";
 import { PostProps } from "../../../types/index";
 import CommentsModal from "../components/CommentsModal";
 import { BiRepost, BiConversation } from "react-icons/bi";
-import { Box, Button, Stack, useDisclosure, Portal } from "@chakra-ui/react";
+import { Box, Button, Stack, useDisclosure } from "@chakra-ui/react";
 
 const Bottom = ({ data: post }: PostProps) => {
   // TODO: Implement
@@ -41,13 +41,11 @@ const Bottom = ({ data: post }: PostProps) => {
         </Button>
       </Stack>
 
-      <Portal>
-        <CommentsModal
-          data={post}
-          isOpen={commentsModalIsOpen}
-          onClose={commentsModalOnClose}
-        />
-      </Portal>
+      <CommentsModal
+        data={post}
+        isOpen={commentsModalIsOpen}
+        onClose={commentsModalOnClose}
+      />
     </Box>
   );
 };

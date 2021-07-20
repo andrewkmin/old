@@ -68,10 +68,6 @@ const Routes = () => {
               </PlatformLayout>
             </Private>
           </Route>
-
-          {/* <Route exact path={"*"}>
-            <Redirect to={"/"} />
-          </Route> */}
         </Switch>
       </Router>
     </Box>

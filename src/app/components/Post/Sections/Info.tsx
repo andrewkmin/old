@@ -11,16 +11,17 @@ import {
   Spacer,
   Text,
   Stack,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 // import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
-import { formatDistanceToNow } from "date-fns";
 import { BsFillUnlockFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { PostProps } from "../../../types/index.d";
 import DataContext from "../../../data/data.context";
+import { formatDistanceToNow, formatISO } from "date-fns";
 
 const Top = ({ data }: PostProps) => {
   const { userData } = useContext(DataContext);
@@ -61,20 +62,32 @@ const Top = ({ data }: PostProps) => {
                   <Box>
                     <Stack direction={"row"} alignItems={"center"}>
                       {/* How much time has passed since the post was published */}
-                      <Text fontSize={"xs"}>
-                        {formatDistanceToNow(data?.created_at!!, {
-                          addSuffix: true,
-                          includeSeconds: true,
-                        })}
-                      </Text>
+                      <Tooltip
+                        placement={"bottom-start"}
+                        label={formatISO(data?.created_at!!)}
+                      >
+                        <Text fontSize={"xs"}>
+                          {formatDistanceToNow(data?.created_at!!, {
+                            addSuffix: true,
+                            includeSeconds: true,
+                          })}
+                        </Text>
+                      </Tooltip>
 
-                      <Box>
-                        {data?.privacy!! === "PUBLIC" ? (
-                          <MdPublic />
-                        ) : (
-                          <BsFillUnlockFill />
-                        )}
-                      </Box>
+                      <Tooltip
+                        placement={"right"}
+                        label={
+                          data?.privacy!! === "PUBLIC" ? "Public" : "Private"
+                        }
+                      >
+                        <Box>
+                          {data?.privacy!! === "PUBLIC" ? (
+                            <MdPublic />
+                          ) : (
+                            <BsFillUnlockFill />
+                          )}
+                        </Box>
+                      </Tooltip>
                     </Stack>
                   </Box>
                 </Flex>

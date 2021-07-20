@@ -21,21 +21,15 @@ const Logout = () => {
   useEffect(() => {
     const logout = async () => {
       // Sending the logout request
-      const response = await axios.post("/auth/logout");
+      const { status } = await axios.post("/auth/logout");
 
       // Checking response status
-      switch (response.status) {
-        // If everything is ok
-        case 200: {
-          // Clear userData, falsify authenticated and loading values
-          setState({ userData: null, authenticated: false, loading: false });
-          // Return to the main page
-          return history.push("/welcome");
-        }
-        // If something goes wrong
-        default:
-          return history.push("/");
-      }
+      if (status === 200) {
+        // Clear userData, falsify authenticated and loading values
+        setState({ userData: null, authenticated: false, loading: false });
+        // Return to the main page
+        return history.push("/welcome");
+      } else return history.push("/");
     };
 
     logout();

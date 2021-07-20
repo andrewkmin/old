@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { Box } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { useToast } from "@chakra-ui/toast";
 import { useSendHeartbeat } from "../api/hooks";
+import { Box, Flex, Spacer, useColorModeValue } from "@chakra-ui/react";
 
 const PlatformLayout: React.FC = ({ children }) => {
   const toast = useToast();
@@ -30,12 +30,10 @@ const PlatformLayout: React.FC = ({ children }) => {
   }, [data?.error, isError, isFetched, toast]);
 
   return (
-    <>
-      <Box>
-        <Navbar />
-        <Box pb={10}>{children}</Box>
-      </Box>
-    </>
+    <Box bgColor={useColorModeValue("gray.200", "gray.800")} minH={"100vh"}>
+      <Navbar />
+      <Box>{children}</Box>
+    </Box>
   );
 };
 

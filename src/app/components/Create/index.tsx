@@ -1,14 +1,16 @@
 import {
   Box,
-  Divider,
+  // Divider,
   useToast,
   Stack,
   Center,
-  Button,
+  // Button,
   Avatar,
   useColorModeValue,
   AvatarBadge,
-  Text,
+  // Text,
+  FormControl,
+  Input,
 } from "@chakra-ui/react";
 import {
   ChangeEvent,
@@ -19,10 +21,9 @@ import {
 } from "react";
 import { Post } from "../../types";
 import axios from "../../api/axios";
-import TextInput from "./inputs/TextInput";
 import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
-import AttachmentInput from "./inputs/AttachmentInput";
+// import AttachmentInput from "./inputs/AttachmentInput";
 
 interface CreateProps {
   state?: CreateStateProps;
@@ -109,25 +110,17 @@ const Create = ({ state }: CreateProps) => {
       onSubmit={handleCreatePost}
       encType={"multipart/form-data"}
     >
-      <Box
-      // m={4}
-      // py={2}
-      // w={["sm", "md", "lg", "xl"]}
-      >
+      <Box>
         <Box
           p={[2, 3]}
-          border={"2px"}
-          boxShadow={"md"}
           borderRadius={"xl"}
           bgColor={useColorModeValue("#FFFFFC", "gray.700")}
-          borderColor={useColorModeValue("gray.300", "gray.700")}
         >
           <Stack spacing={2}>
             <Stack direction={"row"}>
               <Center>
                 <Avatar
-                  size={"md"}
-                  boxShadow={"md"}
+                  rounded={"xl"}
                   src={userData?.avatar}
                   name={userData?.username}
                 >
@@ -136,7 +129,19 @@ const Create = ({ state }: CreateProps) => {
               </Center>
 
               <Center w={"full"}>
-                <TextInput handleInput={handleInput} />
+                <FormControl>
+                  <Center>
+                    <Input
+                      size={"lg"}
+                      name={"body"}
+                      rounded={"xl"}
+                      boxShadow={"sm"}
+                      variant={"filled"}
+                      placeholder={"Got any ideas to share?"}
+                      onChange={(event) => handleInput(event)}
+                    />
+                  </Center>
+                </FormControl>
               </Center>
 
               <PostButton
@@ -145,7 +150,7 @@ const Create = ({ state }: CreateProps) => {
               />
             </Stack>
 
-            <Divider />
+            {/* <Divider />
 
             <Stack direction={"row"}>
               <AttachmentInput />
@@ -175,7 +180,7 @@ const Create = ({ state }: CreateProps) => {
               >
                 <Text fontSize={["sm", "md"]}>Something</Text>
               </Button>
-            </Stack>
+            </Stack> */}
           </Stack>
         </Box>
       </Box>

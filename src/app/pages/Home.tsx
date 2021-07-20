@@ -1,81 +1,88 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { FetchPosts } from "../api/functions";
-import PostList from "../components/PostList";
-import CreatePost from "../components/Create";
 import {
   Box,
-  // Button,
+  Button,
   Center,
   Container,
   Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { FetchPosts } from "../api/functions";
+import PostList from "../components/PostList";
+import CreatePost from "../components/Create";
+import { useInfiniteQuery } from "react-query";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 // The homepage
 const Home = () => {
-  const [page, setPage] = useState(0);
-  const { data, isLoading, isFetching } = useQuery(
-    ["posts", page],
-    () => FetchPosts(page),
+  // Infinite scroll implementation
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    isPreviousData,
+  } = useInfiniteQuery(
+    "posts",
+    async ({ pageParam = 0 }) => await FetchPosts(pageParam),
     {
-      keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage?.next ?? false,
+      getPreviousPageParam: (firstPage) => firstPage?.prev ?? false,
     }
   );
 
+  useBottomScrollListener(() => {
+    if (hasNextPage && !isPreviousData) fetchNextPage();
+  });
+
   return (
     <Box>
-      {isLoading ? (
+      {/* <SideInfo /> */}
+      <Box pb={10} pt={10}>
         <Container>
-          <Center minH={"80vh"}>
-            <Spinner size={"lg"} />
-          </Center>
-        </Container>
-      ) : (
-        <Container>
-          <Stack spacing={5}>
-            <CreatePost />
+          {isLoading ? (
+            <Center minH={"80vh"}>
+              <Spinner size={"lg"} />
+            </Center>
+          ) : (
+            <Stack spacing={5}>
+              <CreatePost />
 
-            <PostList
-              state={{
-                data,
-                noPostsText: "There are no posts yet",
-              }}
-            />
+              <PostList
+                state={{
+                  pages: data?.pages,
+                  noPostsText: "There are no posts yet",
+                }}
+              />
 
-            <Stack spacing={6}>
-              {/* <Center>
-                <Button
-                  size={"lg"}
-                  rounded={"full"}
-                  colorScheme={"purple"}
-                  bgColor={"purple.400"}
-                >
-                  Load more
-                </Button>
-              </Center> */}
+              <Stack spacing={6}>
+                {!hasNextPage && (
+                  <Center>
+                    <Text>Looks like you have reached the end 🎉</Text>
+                  </Center>
+                )}
 
-              {isFetching && (
-                <Center>
-                  <Stack>
-                    <Text
-                      fontSize={"lg"}
-                      fontWeight={"thin"}
-                      fontFamily={"ubuntu bold"}
+                {hasNextPage && (
+                  <Center>
+                    <Button
+                      size={"md"}
+                      rounded={"xl"}
+                      colorScheme={"purple"}
+                      bgColor={"purple.400"}
+                      isLoading={isFetchingNextPage}
+                      onClick={() => fetchNextPage()}
+                      isDisabled={isFetchingNextPage}
                     >
-                      Loading more
-                    </Text>
-                    <Center>
-                      <Spinner />
-                    </Center>
-                  </Stack>
-                </Center>
-              )}
+                      Load more
+                    </Button>
+                  </Center>
+                )}
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Container>
-      )}
+      </Box>
     </Box>
   );
 };

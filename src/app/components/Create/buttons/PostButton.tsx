@@ -17,7 +17,7 @@ const PostButton = ({
       <Button
         size={"lg"}
         type={"submit"}
-        rounded={"full"}
+        rounded={"xl"}
         fontWeight={"thin"}
         bgColor={"purple.500"}
         colorScheme={"purple"}

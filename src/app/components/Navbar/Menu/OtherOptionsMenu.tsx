@@ -8,11 +8,8 @@ import {
   MenuDivider,
   Box,
   Button,
-  Tooltip,
   Switch,
   useColorMode,
-  FormControl,
-  FormLabel,
   chakra,
 } from "@chakra-ui/react";
 import { IoMdSettings } from "react-icons/io";
@@ -24,19 +21,17 @@ const OtherOptionsMenu = () => {
 
   return (
     <Menu>
-      <Tooltip label={"More options"}>
-        <IconButton
-          ms={2}
-          isRound
-          icon={
-            <Center>
-              <BsFillCaretDownFill />
-            </Center>
-          }
-          as={MenuButton}
-          aria-label={"Open menu"}
-        />
-      </Tooltip>
+      <IconButton
+        ms={2}
+        isRound
+        icon={
+          <Center>
+            <BsFillCaretDownFill />
+          </Center>
+        }
+        as={MenuButton}
+        aria-label={"Open menu"}
+      />
 
       <MenuList mt={5} me={2}>
         <MenuItem
@@ -53,7 +48,11 @@ const OtherOptionsMenu = () => {
           <chakra.span>
             Color mode: {colorMode === "light" ? "🌞" : "🌚"}
           </chakra.span>
-          <Switch ms={3} onChange={toggleColorMode} />
+          <Switch
+            ms={3}
+            onChange={toggleColorMode}
+            isChecked={colorMode === "dark"}
+          />
         </Box>
 
         <MenuDivider />

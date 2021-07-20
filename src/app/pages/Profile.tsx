@@ -1,6 +1,5 @@
 import {
   Avatar,
-  AvatarBadge,
   Badge,
   Box,
   Center,
@@ -52,8 +51,6 @@ const Profile = () => {
     ["user", username],
     () => FetchUser(username!!)
   );
-  // To copy user's username to clipboard
-  const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
   // Whether other queries should trigger
   const hooksEnabled = user?.data?.id !== null && user?.data?.id !== undefined;
 
@@ -69,22 +66,25 @@ const Profile = () => {
   );
   // Fetching relations between current account and other account
   const { data: relationStatus, isLoading: relationLoading } = useQuery(
-    ["user relations", user],
+    ["user relations", username],
     () => FetchRelation(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
   // Getting user's followers
   const { data: followers, isLoading: followersLoading } = useQuery(
-    ["user followers", user],
+    ["user followers", username],
     () => FetchFollowers(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
   // Getting the users that this user follows
   const { data: following, isLoading: followingLoading } = useQuery(
-    ["user following", user],
+    ["user following", username],
     () => FetchFollowing(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
+
+  // To copy user's username to clipboard
+  const { hasCopied, onCopy } = useClipboard(user?.data?.username!!);
 
   // Loading state
   const loading =
@@ -116,12 +116,12 @@ const Profile = () => {
   ) : (
     // After everything is done fetching, showing user info
     <Box>
-      <Box>
+      <Box pb={10} pt={10}>
         <Center>
           <Box px={10}>
             <Box>
               <Center>
-                <Box w={["sm", "lg", "full"]}>
+                <Box px={4} w={["sm", "lg", "full"]}>
                   <Center>
                     <Image
                       rounded={"xl"}
@@ -148,16 +148,17 @@ const Profile = () => {
                   alignItems={"center"}
                   justifyContent={"flex-end"}
                 >
-                  <Menu isLazy>
+                  <Menu>
                     <MenuButton
                       rounded={"xl"}
                       mt={[-12, -14]}
                       as={IconButton}
-                      me={["8", "12", "2"]}
+                      me={["8", "12", "8"]}
                       icon={<HiOutlinePencil />}
                       aria-label={"Change cover image"}
                     />
-                    <MenuList>
+
+                    <MenuList mt={5} zIndex={1000}>
                       <MenuItem icon={<HiPencil fontSize={"20px"} />}>
                         Change cover
                       </MenuItem>
@@ -175,22 +176,14 @@ const Profile = () => {
                 <Avatar
                   mt={-12}
                   size={"xl"}
+                  zIndex={10}
+                  border={"4px"}
                   boxShadow={"lg"}
+                  userSelect={"none"}
                   src={user?.data?.avatar}
                   name={user?.data?.username}
-                >
-                  {userData && (
-                    <Tooltip
-                      placement={"right"}
-                      label={status?.connected ? "Online" : "Offline"}
-                    >
-                      <AvatarBadge
-                        boxSize={"1em"}
-                        bg={status?.connected ? "green.500" : "gray.300"}
-                      />
-                    </Tooltip>
-                  )}
-                </Avatar>
+                  borderColor={status?.connected ? "green.500" : "gray.600"}
+                />
               </Center>
 
               <Box>
@@ -238,8 +231,12 @@ const Profile = () => {
                     </Box>
 
                     <Stack spacing={4}>
-                      <Box>
-                        <Center color={"gray.500"} fontFamily={"Ubuntu Bold"}>
+                      <Container>
+                        <Center
+                          color={"gray.500"}
+                          textAlign={"center"}
+                          fontFamily={"Ubuntu Bold"}
+                        >
                           {username === userData?.username ? (
                             <EditBio data={user?.data} />
                           ) : (
@@ -250,7 +247,7 @@ const Profile = () => {
                             </Text>
                           )}
                         </Center>
-                      </Box>
+                      </Container>
 
                       <Center>
                         <Stack spacing={4} direction={["column", "row"]}>
@@ -279,8 +276,8 @@ const Profile = () => {
 
               <Center pt={5}>
                 <Container>
-                  <Center>
-                    <Stack spacing={5}>
+                  <Center w={"full"}>
+                    <Stack w={"full"} spacing={5}>
                       {username === userData?.username && (
                         <Create
                           state={{
@@ -290,7 +287,7 @@ const Profile = () => {
                         />
                       )}
 
-                      <PostList
+                      {/* <PostList
                         state={{
                           data: posts,
                           noPostsText: `${
@@ -305,7 +302,7 @@ const Profile = () => {
                           }
                           have any posts yet`,
                         }}
-                      />
+                      /> */}
                     </Stack>
                   </Center>
                 </Container>

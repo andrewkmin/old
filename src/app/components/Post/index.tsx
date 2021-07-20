@@ -8,12 +8,12 @@ import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 const Post = ({ data: post, setPosts }: PostProps) => {
   return (
     <Box
-      p={[2, 3]}
+      p={3}
       rounded={"xl"}
-      border={"2px"}
-      boxShadow={"sm"}
+      // border={"2px"}
+      boxShadow={"md"}
       bgColor={useColorModeValue("white", "gray.700")}
-      borderColor={useColorModeValue("gray.300", "gray.600")}
+      // borderColor={useColorModeValue("gray.300", "gray.600")}
     >
       <Stack spacing={2}>
         {/* Post info */}

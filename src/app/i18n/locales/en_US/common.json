@@ -1,0 +1,31 @@
+{
+  "translation": {
+    "accountTakenError": "That account is taken by someone else",
+
+    "createAnAccount": "Create an account",
+    "createYourAccount": "Create your account",
+    "credentialsError": "Check your credentials",
+
+    "email": "Email",
+    "error": "There was an error",
+    "emailVerificationNotice": "We'll use this address to send you a verification email",
+
+    "invalidFieldsError": "There are invalid fields",
+
+    "login": "Log in",
+    "loginText": "Log in to Polygon",
+    "lastName": "Last Name",
+    "launchingMessage": "We're still launching, if there are any issues please contact our support team at ",
+
+    "noAccountError": "That account does not exist",
+
+    "password": "Password",
+
+    "registrationText": "Register for Polygon",
+
+    "signup": "Sign up",
+    "slogan": "Private gate to global network",
+
+    "firstName": "First Name"
+  }
+}
