@@ -23,7 +23,7 @@ type Inputs = {
 
 // Login form component
 const LoginForm = () => {
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const {
     register,
     setError,

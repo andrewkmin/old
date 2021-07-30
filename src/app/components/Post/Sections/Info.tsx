@@ -12,35 +12,60 @@ import {
   Text,
   Stack,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-// import axios from "../../../api/axios";
+import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
 import { BsFillUnlockFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { PostProps } from "../../../types/index.d";
 import DataContext from "../../../data/data.context";
+import { Post as PostType } from "../../../types/index";
+import PostContext from "../../../contexts/post.context";
 import { formatDistanceToNow, formatISO } from "date-fns";
+import PostListContext from "../../../contexts/post.list.context";
 
-const Top = ({ data }: PostProps) => {
+const Top = () => {
   const { userData } = useContext(DataContext);
+  const { post: data, setPost: setPostData } = useContext(PostContext);
+  const toast = useToast({ position: "bottom-left" });
+  const { data: allPosts, setData: setAllPosts } = useContext(PostListContext);
 
-  // TODO: Implement
-  const savePost = async () => {};
-  // TODO: Implement
-  const reportPost = async () => {};
-  // TODO: Implement
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const unsavePost = async () => {};
-  // TODO։ Implement
-  const deletePost = async () => {};
+  // For deleting this post
+  const deletePost = async () => {
+    // Updating the state of current post
+    setPostData({ ...data, isBeingDeleted: true });
+    // Sending the request
+    const { status } = await axios.delete(`/api/posts/${data.id}/delete`);
+
+    // If successfully removed
+    if (status === 204) {
+      // Filtering the posts
+      const newState = allPosts?.filter(
+        (post: Partial<PostType>) => post.id !== data.id
+      );
+
+      // Updating the post array
+      setAllPosts(newState);
+
+      // Notifying the user
+      return toast({
+        title: "Post deleted!",
+      });
+    }
+    // On error
+    else {
+      return toast({
+        title: "There was an error",
+        status: "error",
+      });
+    }
+  };
 
   return (
-    // Top section
     <Box>
       <Flex>
-        {/* Author data container */}
         <Box>
           <Center>
             <Stack spacing={1.5} direction={"row"}>
@@ -64,10 +89,10 @@ const Top = ({ data }: PostProps) => {
                       {/* How much time has passed since the post was published */}
                       <Tooltip
                         placement={"bottom-start"}
-                        label={formatISO(data?.created_at!!)}
+                        label={formatISO(data?.created_at)}
                       >
                         <Text fontSize={"xs"}>
-                          {formatDistanceToNow(data?.created_at!!, {
+                          {formatDistanceToNow(data?.created_at, {
                             addSuffix: true,
                             includeSeconds: true,
                           })}
@@ -77,11 +102,11 @@ const Top = ({ data }: PostProps) => {
                       <Tooltip
                         placement={"right"}
                         label={
-                          data?.privacy!! === "PUBLIC" ? "Public" : "Private"
+                          data?.privacy === "PUBLIC" ? "Public" : "Private"
                         }
                       >
                         <Box>
-                          {data?.privacy!! === "PUBLIC" ? (
+                          {data?.privacy === "PUBLIC" ? (
                             <MdPublic />
                           ) : (
                             <BsFillUnlockFill />
@@ -100,7 +125,7 @@ const Top = ({ data }: PostProps) => {
 
         <Box>
           {/* Action menu */}
-          <Menu isLazy>
+          <Menu>
             <IconButton
               isRound
               size={"sm"}
@@ -125,14 +150,14 @@ const Top = ({ data }: PostProps) => {
 
               {/* Saving and unsaving the post */}
               {/* TODO: Make the execution of the function dynamic */}
-              <MenuItem onClick={() => savePost()}>
+              <MenuItem>
                 <Text fontFamily={"ubuntu bold"} fontWeight={"thin"}>
                   Save post
                 </Text>
               </MenuItem>
 
               {/* For reporting a post */}
-              <MenuItem onClick={() => reportPost()}>
+              <MenuItem>
                 <Text fontFamily={"ubuntu bold"} fontWeight={"thin"}>
                   Report post
                 </Text>

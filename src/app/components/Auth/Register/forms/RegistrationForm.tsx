@@ -31,7 +31,7 @@ const RegistrationForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const [emailWasSent, setEmailWasSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

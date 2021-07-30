@@ -1,49 +1,27 @@
 import {
   Box,
-  // Divider,
   useToast,
   Stack,
   Center,
-  // Button,
   Avatar,
   useColorModeValue,
   AvatarBadge,
-  // Text,
   FormControl,
   Input,
+  Button,
 } from "@chakra-ui/react";
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
 import { Post } from "../../types";
 import axios from "../../api/axios";
-import PostButton from "./buttons/PostButton";
 import DataContext from "../../data/data.context";
-// import AttachmentInput from "./inputs/AttachmentInput";
+import { ChangeEvent, useContext, useState } from "react";
+import PostListContext from "../../contexts/post.list.context";
 
-interface CreateProps {
-  state?: CreateStateProps;
-}
-
-interface CreateStateProps {
-  posts?: Post[];
-  setPosts?: Dispatch<SetStateAction<Post[]>>;
-}
-
-const Create = ({ state }: CreateProps) => {
-  const toast = useToast();
-
-  // TODO: Maybe update this part
-  const posts = state?.posts;
-  const setPosts = state?.setPosts;
-
+const Create = () => {
   const { userData } = useContext(DataContext);
   const [submitting, setSubmitting] = useState(false);
+  const toast = useToast({ position: "bottom-left" });
   const [createPostDisabled, setCreatePostDisabled] = useState(true);
+  const { setData: setAllPosts, data: allPosts } = useContext(PostListContext);
 
   // For handling input and enabling/disabling the post button based on it
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +32,7 @@ const Create = ({ state }: CreateProps) => {
 
   // For creating a post
   const handleCreatePost = async (event: ChangeEvent<HTMLFormElement>) => {
-    // Preventing default behaviour
+    // Preventing default behavior
     event.preventDefault();
 
     // Closing all toasts
@@ -66,9 +44,11 @@ const Create = ({ state }: CreateProps) => {
     setCreatePostDisabled(true);
 
     // Sending a request
-    const response = await axios.post<Post>(
+    const { data: response, status } = await axios.post<Post>(
       "/api/posts/create",
-      new FormData(event.target)
+      {
+        body: event.target.body.value,
+      }
     );
 
     // Not loading
@@ -76,40 +56,23 @@ const Create = ({ state }: CreateProps) => {
     // Enabling create post button
     setCreatePostDisabled(false);
 
-    // Checking the response
-    switch (response.status) {
-      // If post was created
-      case 200: {
-        // Pushing to external posts holder array
-        if (posts && setPosts) setPosts!!([response.data].concat(posts));
+    // If there's an error
+    if (status !== 200) {
+      return toast({
+        title: "There was an error",
+        status: "error",
+      });
+    } else {
+      // Updating the post list
+      setAllPosts([response as any].concat(allPosts as any));
 
-        return toast({
-          position: "bottom-left",
-          title: "Post created!",
-          status: "success",
-          isClosable: false,
-          duration: 2000,
-        });
-      }
-      // If there was an error and the status wasn't 201
-      default: {
-        return toast({
-          title: "There was an error",
-          position: "bottom-left",
-          isClosable: false,
-          status: "error",
-          duration: 2000,
-        });
-      }
+      // Emptying the input
+      event.target.body.value = "";
     }
   };
 
   return (
-    <form
-      autoComplete={"off"}
-      onSubmit={handleCreatePost}
-      encType={"multipart/form-data"}
-    >
+    <form autoComplete={"off"} onSubmit={handleCreatePost}>
       <Box>
         <Box
           p={[2, 3]}
@@ -118,6 +81,7 @@ const Create = ({ state }: CreateProps) => {
         >
           <Stack spacing={2}>
             <Stack direction={"row"}>
+              {/* Avatar view */}
               <Center>
                 <Avatar
                   rounded={"xl"}
@@ -137,17 +101,28 @@ const Create = ({ state }: CreateProps) => {
                       rounded={"xl"}
                       boxShadow={"sm"}
                       variant={"filled"}
+                      onChange={handleInput}
                       placeholder={"Got any ideas to share?"}
-                      onChange={(event) => handleInput(event)}
                     />
                   </Center>
                 </FormControl>
               </Center>
 
-              <PostButton
-                submitting={submitting}
-                createPostDisabled={createPostDisabled}
-              />
+              <Center>
+                <Button
+                  size={"lg"}
+                  type={"submit"}
+                  rounded={"xl"}
+                  fontWeight={"thin"}
+                  colorScheme={"purple"}
+                  isLoading={submitting}
+                  fontFamily={"ubuntu bold"}
+                  disabled={createPostDisabled}
+                  bgColor={useColorModeValue("purple.400", "purple.300")}
+                >
+                  Post
+                </Button>
+              </Center>
             </Stack>
 
             {/* <Divider />

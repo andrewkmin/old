@@ -40,9 +40,7 @@ const EditBioControls = () => {
 };
 
 const EditBio = ({ data }: EditBioProps) => {
-  // For toasting
-  const toast = useToast();
-  // const { getEditButtonProps } = useEditableControls();
+  const toast = useToast({ position: "bottom-left" });
 
   // When the user finishes editing
   const handleUpdate = async (value: string) => {

@@ -77,6 +77,7 @@ const Welcome = () => {
             zIndex={-1}
             src={photo}
             border={"none"}
+            objectFit={"cover"}
             bgColor={"purple.400"}
             filter={"brightness(60%)"}
             borderColor={"transparent"}
@@ -116,7 +117,6 @@ const Welcome = () => {
                       fontFamily={"ubuntu bold"}
                     >
                       Private gate to global network
-                      {/* {"™"} */}
                     </Text>
                   </Center>
                 </Stack>

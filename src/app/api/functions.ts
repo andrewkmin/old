@@ -1,5 +1,9 @@
 import axios from "./axios";
-import { Post, User } from "../types";
+import {
+  Post,
+  // PostResponse,
+  User,
+} from "../types";
 
 // Will be used for logging out
 export const Logout = async () => {
@@ -14,12 +18,13 @@ export const FetchPosts = async (cursor?: number) => {
       cursor,
     },
   });
+
   return data;
 };
 
 // Will be used for fetching the posts of an account
 export const FetchUserPosts = async (username: string) => {
-  const { data } = await axios.get<Post[]>(`/api/${username}/posts`);
+  const { data } = await axios.get<Post[]>(`/api/posts/${username}`);
   return data;
 };
 

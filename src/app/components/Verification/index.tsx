@@ -26,7 +26,7 @@ type Inputs = {
 };
 
 const Verification = ({ sid }: VerificationProps) => {
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const history = useHistory();
   const {
     register,

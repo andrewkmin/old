@@ -14,7 +14,7 @@ import DataContext from "../data/data.context";
 
 // The logout page
 const Logout = () => {
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const history = useHistory();
   const { setState } = useContext(DataContext);
 

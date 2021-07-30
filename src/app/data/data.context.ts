@@ -1,5 +1,21 @@
+import { User } from "../types";
 import { createContext } from "react";
-import { ContextProps } from "../types";
+
+interface ContextProps {
+  loading: boolean;
+  authenticated: boolean;
+  userData?: User | null;
+
+  setState: React.Dispatch<
+    React.SetStateAction<
+      Partial<{
+        loading: ContextProps["loading"];
+        userData?: ContextProps["userData"];
+        authenticated: ContextProps["authenticated"];
+      }>
+    >
+  >;
+}
 
 const DataContext = createContext<ContextProps>({
   loading: true,

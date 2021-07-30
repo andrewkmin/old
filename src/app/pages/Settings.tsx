@@ -1,5 +1,5 @@
 import { Box, Stack } from "@chakra-ui/react";
-import Avatar from "../components/Settings/Avatar";
+import Avatar from "../components/Settings/Sections/Avatar";
 
 // The settings page
 const Settings = () => {

@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useToast } from "@chakra-ui/toast";
 import { useSendHeartbeat } from "../api/hooks";
-import { Box, Flex, Spacer, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 
 const PlatformLayout: React.FC = ({ children }) => {
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const { data, isError, isFetched } = useSendHeartbeat();
 
   useEffect(() => {

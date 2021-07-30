@@ -1,15 +1,8 @@
-import { AiFillGift } from "react-icons/ai";
-import { PostProps } from "../../../types/index";
 import CommentsModal from "../components/CommentsModal";
 import { BiRepost, BiConversation } from "react-icons/bi";
 import { Box, Button, Stack, useDisclosure } from "@chakra-ui/react";
 
-const Bottom = ({ data: post }: PostProps) => {
-  // TODO: Implement
-  // const heartPost = async () => {};
-  // TODO: Implement
-  // const unheartPost = async () => {};
-
+const Bottom = () => {
   const {
     onOpen: onCommentsModalOpen,
     isOpen: commentsModalIsOpen,
@@ -31,18 +24,12 @@ const Bottom = ({ data: post }: PostProps) => {
         </Button>
 
         {/* Share button */}
-        <Button size={"md"} rightIcon={<AiFillGift size={"16px"} />} w={"full"}>
-          Gift
-        </Button>
-
-        {/* Share button */}
         <Button size={"md"} w={"full"} rightIcon={<BiRepost size={"18px"} />}>
           Repost
         </Button>
       </Stack>
 
       <CommentsModal
-        data={post}
         isOpen={commentsModalIsOpen}
         onClose={commentsModalOnClose}
       />

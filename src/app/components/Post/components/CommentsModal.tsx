@@ -10,22 +10,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Comment from "./Comment";
-import { useState, useMemo } from "react";
+import { useContext } from "react";
 import CreateCommentForm from "./CreateCommentForm";
-import { Post, Comment as CommentType } from "../../../types/index";
+import PostContext from "../../../contexts/post.context";
+import { Comment as CommentType } from "../../../types/index";
 
 interface CommentsModalProps {
-  data: Post;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
-  const [comments, setComments] = useState<CommentType[]>();
-
-  useMemo(() => {
-    setComments(data.comments);
-  }, [data]);
+const CommentsModal = ({ isOpen, onClose }: CommentsModalProps) => {
+  const { post: data } = useContext(PostContext);
+  const { comments } = data;
 
   return (
     <Box>
@@ -43,14 +40,14 @@ const CommentsModal = ({ data, isOpen, onClose }: CommentsModalProps) => {
             {comments?.length === 0 ? (
               <Text>There are no comments yet</Text>
             ) : (
-              comments?.map((comment) => {
+              comments?.map((comment: CommentType) => {
                 return <Comment key={comment.id} data={comment} />;
               })
             )}
           </ModalBody>
 
           <ModalFooter justifyContent={"space-between"}>
-            <CreateCommentForm setComments={setComments} />
+            <CreateCommentForm />
           </ModalFooter>
         </ModalContent>
       </Modal>

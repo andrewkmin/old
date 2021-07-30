@@ -1,32 +1,46 @@
+import { useState } from "react";
 import Info from "./Sections/Info";
 import { PostProps } from "../../types";
 import Buttons from "./Sections/Buttons";
 import Content from "./Sections/Content";
-import TopComment from "./components/TopComment";
-import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
+import PostContext from "../../contexts/post.context";
+import { Box, Progress, Stack, useColorModeValue } from "@chakra-ui/react";
 
-const Post = ({ data: post, setPosts }: PostProps) => {
+const Post = ({ data }: PostProps) => {
+  const [post, setPost] = useState({ ...data, isBeingDeleted: false });
+
   return (
     <Box
       p={3}
       rounded={"xl"}
-      // border={"2px"}
       boxShadow={"md"}
+      style={{
+        opacity: post.isBeingDeleted ? "0.8" : "initial",
+      }}
       bgColor={useColorModeValue("white", "gray.700")}
-      // borderColor={useColorModeValue("gray.300", "gray.600")}
+      userSelect={post.isBeingDeleted ? "none" : "initial"}
+      pointerEvents={post.isBeingDeleted ? "none" : "initial"}
     >
-      <Stack spacing={2}>
-        {/* Post info */}
-        <Info data={post} />
-        {/* Post content */}
-        <Content data={post} />
-        {/* Post buttons */}
-        <Buttons data={post} />
-        {/* Top comment */}
-        {post?.comments?.length !== 0 && (
-          <TopComment data={post?.comments[0]} />
-        )}
-      </Stack>
+      <PostContext.Provider value={{ post, setPost }}>
+        <Stack spacing={2}>
+          {/* Post info */}
+          <Info />
+          {/* Post content */}
+          <Content />
+          {/* Post buttons */}
+          <Buttons />
+          {/* Deletion indicator */}
+          {post?.isBeingDeleted && (
+            <Progress
+              my={2}
+              size={"xs"}
+              rounded={"xl"}
+              isIndeterminate
+              colorScheme={"red"}
+            />
+          )}
+        </Stack>
+      </PostContext.Provider>
     </Box>
   );
 };

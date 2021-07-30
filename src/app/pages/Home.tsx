@@ -3,42 +3,45 @@ import {
   Button,
   Center,
   Container,
+  Flex,
   Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { FetchPosts } from "../api/functions";
+import { useState } from "react";
 import PostList from "../components/PostList";
 import CreatePost from "../components/Create";
-import { useInfiniteQuery } from "react-query";
+import { useFetchInfiniteResource } from "../utils/hooks";
+import PostListContext from "../contexts/post.list.context";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import { Post } from "../types";
 
 // The homepage
 const Home = () => {
-  // Infinite scroll implementation
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-    isPreviousData,
-  } = useInfiniteQuery(
-    "posts",
-    async ({ pageParam = 0 }) => await FetchPosts(pageParam),
+  const [cursor, setCursor] = useState(0);
+  // Setting the cursor
+  const { data, hasNextPage, isFetchingNextPage, isLoading, setData, next } =
+    useFetchInfiniteResource<Partial<Post>>({
+      cursor,
+      config: {
+        enabled: true,
+      },
+      queryParam: "cursor",
+      nextPageParam: "next",
+      url: "/api/discover/posts",
+    });
+
+  useBottomScrollListener(
+    () => {
+      if (hasNextPage && next) setCursor(next!!);
+    },
     {
-      getNextPageParam: (lastPage) => lastPage?.next ?? false,
-      getPreviousPageParam: (firstPage) => firstPage?.prev ?? false,
+      offset: 500,
     }
   );
 
-  useBottomScrollListener(() => {
-    if (hasNextPage && !isPreviousData) fetchNextPage();
-  });
-
   return (
     <Box>
-      {/* <SideInfo /> */}
       <Box pb={10} pt={10}>
         <Container>
           {isLoading ? (
@@ -47,38 +50,59 @@ const Home = () => {
             </Center>
           ) : (
             <Stack spacing={5}>
-              <CreatePost />
+              <PostListContext.Provider value={{ data, setData }}>
+                {/* For creating a post */}
+                <CreatePost />
 
-              <PostList
-                state={{
-                  pages: data?.pages,
-                  noPostsText: "There are no posts yet",
-                }}
-              />
+                <Box>
+                  <Flex alignItems={"center"} justifyContent={"space-between"}>
+                    <Box>
+                      <Text
+                        fontSize={"3xl"}
+                        fontWeight={"thin"}
+                        fontFamily={"ubuntu bold"}
+                      >
+                        Timeline
+                      </Text>
+                    </Box>
+                  </Flex>
+                </Box>
 
-              <Stack spacing={6}>
-                {!hasNextPage && (
-                  <Center>
-                    <Text>Looks like you have reached the end 🎉</Text>
-                  </Center>
-                )}
+                {/* List of the posts */}
+                <PostList />
 
-                {hasNextPage && (
-                  <Center>
-                    <Button
-                      size={"md"}
-                      rounded={"xl"}
-                      colorScheme={"purple"}
-                      bgColor={"purple.400"}
-                      isLoading={isFetchingNextPage}
-                      onClick={() => fetchNextPage()}
-                      isDisabled={isFetchingNextPage}
-                    >
-                      Load more
-                    </Button>
-                  </Center>
-                )}
-              </Stack>
+                {/* Misc */}
+                <Stack spacing={5}>
+                  {!hasNextPage && (
+                    <Center mt={5}>
+                      <Text
+                        fontWeight={"semibold"}
+                        fontSize={["md", null, "lg"]}
+                      >
+                        Looks like you have reached the end 🎉
+                      </Text>
+                    </Center>
+                  )}
+
+                  {hasNextPage && (
+                    <Center>
+                      <Button
+                        size={"md"}
+                        rounded={"xl"}
+                        colorScheme={"purple"}
+                        bgColor={"purple.400"}
+                        isLoading={isFetchingNextPage}
+                        isDisabled={isFetchingNextPage}
+                        onClick={() => {
+                          if (hasNextPage && next) setCursor(next);
+                        }}
+                      >
+                        Load more
+                      </Button>
+                    </Center>
+                  )}
+                </Stack>
+              </PostListContext.Provider>
             </Stack>
           )}
         </Container>

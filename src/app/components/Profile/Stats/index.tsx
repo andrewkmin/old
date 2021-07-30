@@ -20,8 +20,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
 
   return (
     <Box>
-      <Stack spacing={4} direction={"row"}>
-        {/* Followers trigger */}
+      <Stack spacing={4} direction={["column", "row"]}>
         <Button
           size={"lg"}
           filter={"brightness(105%)"}

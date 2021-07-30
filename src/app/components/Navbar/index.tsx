@@ -45,15 +45,16 @@ const Navbar = () => {
       <Spacer />
 
       {/* Actions */}
-      <Stack alignItems={"center"} direction={"row"}>
+      <Stack ms={7} alignItems={"center"} direction={"row"}>
         <Button
           rounded={"xl"}
           leftIcon={<CgAddR />}
           colorScheme={"purple"}
-          bgColor={useColorModeValue("purple.300", "purple.400")}
+          bgColor={useColorModeValue("purple.400", "purple.300")}
         >
           Create post
         </Button>
+
         {/* Current account link */}
         <Tooltip label={"My account"}>
           <IconButton

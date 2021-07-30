@@ -15,22 +15,28 @@ interface ActionStateProps {
 }
 
 const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
-  const toast = useToast();
+  const toast = useToast({ position: "bottom-left" });
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("");
   const [status, setStatus] = useState<Status | null>(staticStatus);
 
   // For sending a follow request
   const followRequest = async () => {
+    // Enabling the loader
     setLoading(true);
 
+    // Sending the request
     const { status, data } = await axios.post(
       `/api/relations/${user?.id!!}/follow`
     );
+
+    // Disabling the loader
     setLoading(false);
 
-    if (status === 200) setStatus(data);
-    else {
+    // If everything's fine
+    if (status === 200) {
+      setStatus(data);
+    } else {
       if (status === 409) {
         toast({ title: "You already follow this user", status: "warning" });
       }
