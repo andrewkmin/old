@@ -1,3 +1,4 @@
+// TODO: Refactor and split the code
 import {
   Avatar,
   Badge,
@@ -18,11 +19,16 @@ import {
   Tooltip,
   Container,
   Button,
+  chakra,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 import {
   FetchUser,
   FetchRelation,
-  FetchUserPosts,
   FetchUserStatus,
   FetchFollowers,
   FetchFollowing,
@@ -44,13 +50,52 @@ import { useFetchInfiniteResource } from "../utils/hooks";
 import PostListContext from "../contexts/post.list.context";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
+const PostsTab = ({
+  postsHaveNextPage,
+  nextCursor,
+  setCursor,
+  fetchingPosts,
+}: any) => {
+  return (
+    <Stack spacing={5}>
+      <PostList />
+
+      {postsHaveNextPage && (
+        <Center>
+          <Button
+            size={"md"}
+            rounded={"xl"}
+            colorScheme={"purple"}
+            bgColor={"purple.400"}
+            isLoading={fetchingPosts}
+            isDisabled={fetchingPosts}
+            onClick={() => {
+              if (postsHaveNextPage && nextCursor) setCursor(nextCursor);
+            }}
+          >
+            Load more
+          </Button>
+        </Center>
+      )}
+
+      {!postsHaveNextPage && (
+        <Center mt={5}>
+          <Text fontWeight={"semibold"} fontSize={["md", null, "lg"]}>
+            Looks like you have reached the end 🎉
+          </Text>
+        </Center>
+      )}
+    </Stack>
+  );
+};
+
 // Profile page
 const Profile = () => {
   const history = useHistory();
   const [state, setState] = useState({});
-  const [cursor, setCursor] = useState(0);
   const { userData } = useContext(DataContext);
   const { username } = useParams<{ username: string }>();
+  const [cursor, setCursor] = useState<string | null>(null);
 
   // Getting user's data with their username
   const { data: user = null, isLoading: userLoading } = useQuery(
@@ -118,7 +163,7 @@ const Profile = () => {
     const exists = user?.status !== 404;
     // If it doesn't exist then redirect back to the homepage
     if (!exists) return history.push("/");
-  });
+  }, [history, user?.status]);
 
   useBottomScrollListener(
     () => {
@@ -176,14 +221,17 @@ const Profile = () => {
                       justifyContent={"flex-end"}
                     >
                       <Menu>
-                        <MenuButton
-                          rounded={"xl"}
-                          mt={[-12, -14]}
-                          as={IconButton}
-                          me={["8", "12", "8"]}
-                          icon={<HiOutlinePencil />}
-                          aria-label={"Change cover image"}
-                        />
+                        <Tooltip label={"Work in progress"}>
+                          <MenuButton
+                            rounded={"xl"}
+                            mt={[-12, -14]}
+                            as={IconButton}
+                            isDisabled={true}
+                            me={["8", "12", "8"]}
+                            icon={<HiOutlinePencil />}
+                            aria-label={"Change cover image"}
+                          />
+                        </Tooltip>
 
                         <MenuList mt={5} zIndex={1000}>
                           <MenuItem icon={<HiPencil fontSize={"20px"} />}>
@@ -219,6 +267,18 @@ const Profile = () => {
                         </Heading>
                       </Center>
 
+                      <Center>
+                        <Badge
+                          rounded={"lg"}
+                          fontSize={"md"}
+                          fontWeight={"thin"}
+                          fontFamily={"ubuntu bold"}
+                          colorScheme={status?.connected ? "purple" : "gray"}
+                        >
+                          {status?.connected ? "Online" : "Offline"}
+                        </Badge>
+                      </Center>
+
                       <Box>
                         <Box>
                           <Stack>
@@ -240,21 +300,6 @@ const Profile = () => {
                                 </Text>
                               </Tooltip>
                             </Center>
-
-                            {user?.data?.id === userData?.id && (
-                              <Center>
-                                <Badge
-                                  p={2}
-                                  rounded={"full"}
-                                  fontWeight={"bold"}
-                                  userSelect={"none"}
-                                  color={"purple.400"}
-                                  fontFamily={"ubuntu bold"}
-                                >
-                                  Your account
-                                </Badge>
-                              </Center>
-                            )}
                           </Stack>
                         </Box>
 
@@ -302,45 +347,44 @@ const Profile = () => {
                     </Stack>
                   </Box>
 
-                  <Center pt={5}>
+                  <Center>
                     <Container>
-                      <Center w={"full"}>
-                        <Stack w={"full"} spacing={5}>
-                          {username === userData?.username && <Create />}
+                      {username === userData?.username && <Create />}
 
-                          <PostList />
-
-                          {postsHaveNextPage && (
-                            <Center>
-                              <Button
-                                size={"md"}
-                                rounded={"xl"}
-                                colorScheme={"purple"}
-                                bgColor={"purple.400"}
-                                isLoading={fetchingPosts}
-                                isDisabled={fetchingPosts}
-                                onClick={() => {
-                                  if (postsHaveNextPage && nextCursor)
-                                    setCursor(nextCursor);
-                                }}
-                              >
-                                Load more
-                              </Button>
-                            </Center>
+                      <Tabs
+                        pt={5}
+                        colorScheme={"purple"}
+                        variant={"soft-rounded"}
+                      >
+                        <TabList>
+                          <Tab>Posts</Tab>
+                          {username === userData?.username && (
+                            <>
+                              <Tab>Saved</Tab>
+                              <Tab>Hearted</Tab>
+                            </>
                           )}
+                        </TabList>
 
-                          {!postsHaveNextPage && (
-                            <Center mt={5}>
-                              <Text
-                                fontWeight={"semibold"}
-                                fontSize={["md", null, "lg"]}
-                              >
-                                Looks like you have reached the end 🎉
-                              </Text>
-                            </Center>
+                        <TabPanels>
+                          {/* Posts */}
+                          <TabPanel>
+                            <PostsTab
+                              setCursor={setCursor}
+                              nextCursor={nextCursor}
+                              fetchingPosts={fetchingPosts}
+                              postsHaveNextPage={postsHaveNextPage}
+                            />
+                          </TabPanel>
+
+                          {username === userData?.username && (
+                            <>
+                              <TabPanel>Saved</TabPanel>
+                              <TabPanel>Hearted</TabPanel>
+                            </>
                           )}
-                        </Stack>
-                      </Center>
+                        </TabPanels>
+                      </Tabs>
                     </Container>
                   </Center>
                 </Stack>

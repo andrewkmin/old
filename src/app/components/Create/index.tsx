@@ -63,11 +63,14 @@ const Create = () => {
         status: "error",
       });
     } else {
+      toast({
+        title: "Post created",
+        status: "success",
+      });
       // Updating the post list
       setAllPosts([response as any].concat(allPosts as any));
-
-      // Emptying the input
       event.target.body.value = "";
+      return setCreatePostDisabled(true);
     }
   };
 

@@ -2,7 +2,7 @@ import { extendTheme, Theme } from "@chakra-ui/react";
 
 const customTheme: Theme = extendTheme({
   initialColorMode: "light",
-  useSystemColorMode: false,
+  useSystemColorMode: true,
 
   fonts: {
     heading: "ubuntu bold",

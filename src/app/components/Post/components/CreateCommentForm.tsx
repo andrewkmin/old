@@ -1,10 +1,9 @@
-import { ChangeEvent } from "react";
-import { useForm } from "react-hook-form";
-import { Stack, Button, Input, Box, Center } from "@chakra-ui/react";
-import axios from "../../../api/axios";
 import { useContext } from "react";
-import PostContext from "../../../contexts/post.context";
+import axios from "../../../api/axios";
+import { useForm } from "react-hook-form";
 import DataContext from "../../../data/data.context";
+import PostContext from "../../../contexts/post.context";
+import { Stack, Button, Input, Box, Center, useToast } from "@chakra-ui/react";
 
 type Inputs = {
   body: string;
@@ -12,13 +11,13 @@ type Inputs = {
 
 const CreateCommentForm = () => {
   const {
-    setError,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
   const { userData } = useContext(DataContext);
   const { post, setPost } = useContext(PostContext);
+  const toast = useToast({ position: "bottom-left" });
 
   const createComment = async (payload: Inputs) => {
     const { data, status } = await axios.post(
@@ -27,12 +26,16 @@ const CreateCommentForm = () => {
     );
 
     if (status === 200) {
-      console.log({ data });
-      setPost({
+      return setPost({
         ...post,
         comments: post.comments.concat([{ ...data, user: userData }]),
       });
-    } else if (status === 400) {
+    } else {
+      return toast({
+        title:
+          status === 400 ? "There are invalid fields" : "There was an error",
+        status: "error",
+      });
     }
   };
 

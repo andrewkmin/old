@@ -28,8 +28,8 @@ import PostListContext from "../../../contexts/post.list.context";
 
 const Top = () => {
   const { userData } = useContext(DataContext);
-  const { post: data, setPost: setPostData } = useContext(PostContext);
   const toast = useToast({ position: "bottom-left" });
+  const { post: data, setPost: setPostData } = useContext(PostContext);
   const { data: allPosts, setData: setAllPosts } = useContext(PostListContext);
 
   // For deleting this post
@@ -125,7 +125,7 @@ const Top = () => {
 
         <Box>
           {/* Action menu */}
-          <Menu>
+          <Menu isLazy>
             <IconButton
               isRound
               size={"sm"}

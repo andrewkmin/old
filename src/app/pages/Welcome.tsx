@@ -5,20 +5,21 @@ import {
   chakra,
   Flex,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Auth from "../components/Auth/index";
+import { useLocation } from "react-router-dom";
 import Verification from "../components/Verification";
 import FirstTimeGreeting from "../components/FirstTimeGreeting";
 
 // The welcome/authentication page
 const Welcome = () => {
+  const { search } = useLocation();
   // For rendering verification component on demand
-  const params = new URLSearchParams(window.location.search);
-  // Getting the `verify` parameter
+  const params = new URLSearchParams(search);
+  // Getting the `verify` parameter from the URL
   const verification = params.get("verification");
 
   // Random photo
@@ -72,7 +73,7 @@ const Welcome = () => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Image
+          {/* <Image
             w={"100%"}
             zIndex={-1}
             src={photo}
@@ -82,14 +83,36 @@ const Welcome = () => {
             filter={"brightness(60%)"}
             borderColor={"transparent"}
             h={["50vh", null, null, "100vh"]}
-          />
+          /> */}
+          {/* <Box
+            w={"100%"}
+            zIndex={-1}
+            // src={photo}
+            border={"none"}
+            objectFit={"fill"}
+            bgColor={"purple.400"}
+            filter={"brightness(60%)"}
+            borderColor={"transparent"}
+            h={["50vh", null, null, "100vh"]}
+          >
+            <video
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              loop
+              autoPlay
+              src={"/assets/polygon-welcome-loop.mp4"}
+            ></video>
+          </Box> */}
 
-          <Image
+          {/* <Image
             w={"15%"}
             zIndex={1}
             pos={"absolute"}
             filter={"brightness(0) invert(1)"}
-          />
+          /> */}
         </Flex>
 
         <Flex

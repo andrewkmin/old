@@ -1,6 +1,14 @@
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { FiHeart } from "react-icons/fi";
+import { BiConversation } from "react-icons/bi";
 import CommentsModal from "../components/CommentsModal";
-import { BiRepost, BiConversation } from "react-icons/bi";
-import { Box, Button, Stack, useDisclosure } from "@chakra-ui/react";
 
 const Bottom = () => {
   const {
@@ -13,6 +21,19 @@ const Bottom = () => {
     <Box>
       {/* Button flex */}
       <Stack spacing={2} direction={["column", "row"]}>
+        {/* Heart button */}
+        <Button
+          w={"full"}
+          size={"md"}
+          rightIcon={
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Icon fontSize={"15px"} as={FiHeart} alignItems={"center"} />
+            </Flex>
+          }
+        >
+          Heart
+        </Button>
+
         {/* Comment button */}
         <Button
           w={"full"}
@@ -21,11 +42,6 @@ const Bottom = () => {
           rightIcon={<BiConversation size={"16px"} />}
         >
           Comment
-        </Button>
-
-        {/* Share button */}
-        <Button size={"md"} w={"full"} rightIcon={<BiRepost size={"18px"} />}>
-          Repost
         </Button>
       </Stack>
 

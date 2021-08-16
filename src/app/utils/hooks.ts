@@ -5,7 +5,7 @@ interface FetchInfiniteResourceProps {
   // The URL of the API endpoint
   url: string;
   // Cursor of the page
-  cursor: number;
+  cursor: string | null;
   // Parameter with which the backend accepts the cursor number
   queryParam: string;
   // The property on the response which will indicate if the next page exists
@@ -22,7 +22,7 @@ interface StateProps<T> {
   data: T[];
   isLoading: boolean;
   hasNextPage: boolean;
-  next?: number | null;
+  next?: string | null;
   isFetchingNextPage: boolean;
 }
 
@@ -67,10 +67,10 @@ export const useFetchInfiniteResource = <T>({
       setState({
         // If it's the first time that this request is invoked
         isLoading: state?.isLoading && false,
-        // Merging the data
-        data: state?.data?.concat(response?.data),
-        // Checking if the next page exists
+        // Checking if the next page exists.
         hasNextPage: response[nextPageParam] !== null,
+        // Merging data
+        data: state?.data?.concat(response?.data),
         // If it's not the first time that the request is invoked then set it to false
         isFetchingNextPage: !state?.isLoading && false,
         // Setting the next page
@@ -84,7 +84,6 @@ export const useFetchInfiniteResource = <T>({
     // Only sending the request when the hook is enabled
     if (enabled) request();
 
-    return () => setState({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursor, enabled]);
 

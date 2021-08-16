@@ -47,6 +47,7 @@ const Navbar = () => {
       {/* Actions */}
       <Stack ms={7} alignItems={"center"} direction={"row"}>
         <Button
+          isDisabled
           rounded={"xl"}
           leftIcon={<CgAddR />}
           colorScheme={"purple"}

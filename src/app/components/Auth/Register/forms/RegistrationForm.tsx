@@ -16,7 +16,7 @@ import { FieldErrorResponse } from "../../../../types";
 import EmailSentView from "../components/EmailSentView";
 import { email as emailPattern } from "../../../../utils/patterns";
 
-type Inputs = {
+export type Inputs = {
   email: string;
   password: string;
   username: string;
@@ -30,6 +30,7 @@ const RegistrationForm = () => {
     setError,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<Inputs>();
   const toast = useToast({ position: "bottom-left" });
   const [emailWasSent, setEmailWasSent] = useState(false);
@@ -70,7 +71,7 @@ const RegistrationForm = () => {
   };
 
   return emailWasSent ? (
-    <EmailSentView />
+    <EmailSentView payload={getValues()} />
   ) : (
     <Box>
       <form autoComplete={"off"} onSubmit={handleSubmit(handleRegistration)}>
@@ -173,7 +174,7 @@ const RegistrationForm = () => {
             fontFamily={"ubuntu bold"}
             loadingText={"Creating an account"}
           >
-            Create your account
+            Create an account
           </Button>
         </Stack>
       </form>

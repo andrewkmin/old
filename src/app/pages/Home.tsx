@@ -18,7 +18,7 @@ import { Post } from "../types";
 
 // The homepage
 const Home = () => {
-  const [cursor, setCursor] = useState(0);
+  const [cursor, setCursor] = useState<string | null>(null);
   // Setting the cursor
   const { data, hasNextPage, isFetchingNextPage, isLoading, setData, next } =
     useFetchInfiniteResource<Partial<Post>>({
@@ -33,7 +33,7 @@ const Home = () => {
 
   useBottomScrollListener(
     () => {
-      if (hasNextPage && next) setCursor(next!!);
+      if (hasNextPage && next !== null) setCursor(next!!);
     },
     {
       offset: 500,
@@ -74,8 +74,9 @@ const Home = () => {
                 {/* Misc */}
                 <Stack spacing={5}>
                   {!hasNextPage && (
-                    <Center mt={5}>
+                    <Center p={5} bgColor={"gray.300"} rounded={"lg"}>
                       <Text
+                        textAlign={"center"}
                         fontWeight={"semibold"}
                         fontSize={["md", null, "lg"]}
                       >
