@@ -37,13 +37,13 @@ const CommentsModal = ({ isOpen, onClose }: CommentsModalProps) => {
           <ModalHeader>Comments on {data?.user?.first_name}'s post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {comments?.length === 0 ? (
+            {/* {comments?.length === 0 ? (
               <Text>There are no comments yet</Text>
             ) : (
               comments?.map((comment: CommentType) => {
                 return <Comment key={comment.id} data={comment} />;
               })
-            )}
+            )} */}
           </ModalBody>
 
           <ModalFooter justifyContent={"space-between"}>

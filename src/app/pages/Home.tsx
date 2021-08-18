@@ -18,6 +18,7 @@ import { Post } from "../types";
 
 // The homepage
 const Home = () => {
+  // Keeping track of the cursor
   const [cursor, setCursor] = useState<string | null>(null);
   // Setting the cursor
   const { data, hasNextPage, isFetchingNextPage, isLoading, setData, next } =

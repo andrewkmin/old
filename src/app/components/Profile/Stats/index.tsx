@@ -22,7 +22,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
     <Box>
       <Stack spacing={4} direction={["column", "row"]}>
         <Button
-          size={"lg"}
+          size={"md"}
           filter={"brightness(105%)"}
           rounded={"xl"}
           onClick={() => {
@@ -41,7 +41,7 @@ const Stats = ({ state: { followers, following, user } }: StatsProps) => {
         </Button>
 
         <Button
-          size={"lg"}
+          size={"md"}
           rounded={"xl"}
           filter={"brightness(105%)"}
           onClick={() => {

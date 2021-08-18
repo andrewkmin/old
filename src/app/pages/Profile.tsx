@@ -19,7 +19,6 @@ import {
   Tooltip,
   Container,
   Button,
-  chakra,
   Tabs,
   TabList,
   TabPanels,
@@ -34,6 +33,7 @@ import {
   FetchFollowing,
 } from "../api/functions";
 import { Post } from "../types";
+import { format } from "date-fns";
 import { useQuery } from "react-query";
 import Create from "../components/Create";
 import { MdDelete } from "react-icons/md";
@@ -247,101 +247,111 @@ const Profile = () => {
                 </Box>
 
                 <Stack>
-                  <Center>
-                    <Avatar
-                      mt={-12}
-                      size={"xl"}
-                      zIndex={10}
-                      boxShadow={"lg"}
-                      userSelect={"none"}
-                      src={user?.data?.avatar}
-                      name={user?.data?.username}
-                    />
-                  </Center>
-
-                  <Box>
-                    <Stack spacing={1}>
-                      <Center>
-                        <Heading fontWeight={"bold"} fontSize={"2xl"}>
-                          {user?.data.first_name} {user?.data.last_name}
-                        </Heading>
-                      </Center>
-
-                      <Center>
-                        <Badge
-                          rounded={"lg"}
-                          fontSize={"md"}
-                          fontWeight={"thin"}
-                          fontFamily={"ubuntu bold"}
-                          colorScheme={status?.connected ? "purple" : "gray"}
-                        >
-                          {status?.connected ? "Online" : "Offline"}
-                        </Badge>
-                      </Center>
+                  <Box mt={-4}>
+                    <Stack spacing={3}>
+                      <Avatar
+                        mt={-12}
+                        size={"xl"}
+                        zIndex={10}
+                        boxShadow={"lg"}
+                        userSelect={"none"}
+                        src={user?.data?.avatar}
+                        name={user?.data?.username}
+                      />
 
                       <Box>
-                        <Box>
-                          <Stack>
-                            <Center>
-                              <Tooltip
-                                placement={"left"}
-                                label={"Copy username"}
-                              >
-                                <Text
-                                  fontSize={"sm"}
-                                  onClick={onCopy}
-                                  cursor={"pointer"}
-                                  fontFamily={"ubuntu bold"}
-                                  color={hasCopied ? "purple.500" : "gray.400"}
-                                >
-                                  {hasCopied
-                                    ? "Copied"
-                                    : `@${user?.data?.username}`}
-                                </Text>
-                              </Tooltip>
-                            </Center>
-                          </Stack>
-                        </Box>
+                        <Stack spacing={1}>
+                          <Stack direction={"row"} alignItems={"center"}>
+                            <Heading fontWeight={"bold"} fontSize={"2xl"}>
+                              {user?.data.first_name} {user?.data.last_name}
+                            </Heading>
 
-                        <Stack spacing={4}>
-                          <Container>
-                            <Center
-                              color={"gray.500"}
-                              textAlign={"center"}
-                              fontFamily={"Ubuntu Bold"}
+                            <Badge
+                              border={"2px"}
+                              rounded={"lg"}
+                              fontSize={"md"}
+                              boxShadow={"md"}
+                              fontWeight={"thin"}
+                              fontFamily={"ubuntu bold"}
+                              colorScheme={
+                                status?.connected ? "purple" : "gray"
+                              }
                             >
-                              {username === userData?.username ? (
-                                <EditBio data={user?.data} />
-                              ) : (
-                                <Text>
-                                  {user?.data?.bio?.length === 0
-                                    ? `Hmm 🤔, it seems like this account doesn't have a bio...`
-                                    : user?.data?.bio}
-                                </Text>
-                              )}
-                            </Center>
-                          </Container>
+                              {status?.connected ? "Online" : "Offline"}
+                            </Badge>
+                          </Stack>
 
-                          <Center>
-                            <Stack spacing={4} direction={["column", "row"]}>
-                              <Stats
-                                state={{
-                                  followers,
-                                  following,
-                                  user: user?.data!!,
-                                }}
-                              />
+                          <Stack alignItems={"center"} direction={"row"}>
+                            <Text
+                              color={"gray.500"}
+                              fontWeight={"thin"}
+                              fontFamily={"ubuntu bold"}
+                            >
+                              Member since{" "}
+                              {format(user?.data?.created_at!!, "dd MMM yyyy")}
+                            </Text>
 
-                              {username !== userData?.username && (
-                                <Actions
+                            <Text color={"gray.500"}>•</Text>
+
+                            <Tooltip
+                              placement={"right"}
+                              label={"Copy username"}
+                            >
+                              <Text
+                                fontSize={"sm"}
+                                onClick={onCopy}
+                                cursor={"pointer"}
+                                fontFamily={"ubuntu bold"}
+                                color={hasCopied ? "purple.500" : "gray.500"}
+                              >
+                                {hasCopied
+                                  ? "Copied"
+                                  : `@${user?.data?.username}`}
+                              </Text>
+                            </Tooltip>
+                          </Stack>
+
+                          <Box>
+                            <Stack pb={5} spacing={2}>
+                              <Container>
+                                <Center
+                                  color={"gray.500"}
+                                  textAlign={"center"}
+                                  fontFamily={"Ubuntu Bold"}
+                                >
+                                  {username === userData?.username ? (
+                                    // <EditBio data={user?.data} />
+                                    <></>
+                                  ) : (
+                                    <Text>
+                                      {user?.data?.bio?.length === 0
+                                        ? `Hmm 🤔, it seems like this account doesn't have a bio...`
+                                        : user?.data?.bio}
+                                    </Text>
+                                  )}
+                                </Center>
+                              </Container>
+
+                              <Stack spacing={4} direction={["column", "row"]}>
+                                <Stats
                                   state={{
+                                    followers,
+                                    following,
                                     user: user?.data!!,
-                                    status: relationStatus,
                                   }}
                                 />
-                              )}
+
+                                {username !== userData?.username && (
+                                  <Actions
+                                    state={{
+                                      user: user?.data!!,
+                                      status: relationStatus,
+                                    }}
+                                  />
+                                )}
+                              </Stack>
                             </Stack>
-                          </Center>
+                          </Box>
                         </Stack>
                       </Box>
                     </Stack>
@@ -367,7 +377,6 @@ const Profile = () => {
                         </TabList>
 
                         <TabPanels>
-                          {/* Posts */}
                           <TabPanel>
                             <PostsTab
                               setCursor={setCursor}

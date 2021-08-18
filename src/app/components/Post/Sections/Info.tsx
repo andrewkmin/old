@@ -13,12 +13,13 @@ import {
   Stack,
   Tooltip,
   useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
-import { BsFillUnlockFill } from "react-icons/bs";
+import { IoPeopleCircle, IoPeopleCircleSharp } from "react-icons/io5";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DataContext from "../../../data/data.context";
 import { Post as PostType } from "../../../types/index";
@@ -105,13 +106,14 @@ const Top = () => {
                           data?.privacy === "PUBLIC" ? "Public" : "Private"
                         }
                       >
-                        <Box>
-                          {data?.privacy === "PUBLIC" ? (
-                            <MdPublic />
-                          ) : (
-                            <BsFillUnlockFill />
-                          )}
-                        </Box>
+                        <Icon
+                          as={
+                            data?.privacy === "PUBLIC"
+                              ? MdPublic
+                              : IoPeopleCircleSharp
+                          }
+                          fontSize={"lg"}
+                        />
                       </Tooltip>
                     </Stack>
                   </Box>

@@ -58,19 +58,17 @@ const Create = () => {
 
     // If there's an error
     if (status !== 200) {
-      return toast({
+      toast({
         title: "There was an error",
         status: "error",
       });
+      return;
     } else {
-      toast({
-        title: "Post created",
-        status: "success",
-      });
       // Updating the post list
       setAllPosts([response as any].concat(allPosts as any));
       event.target.body.value = "";
-      return setCreatePostDisabled(true);
+      setCreatePostDisabled(true);
+      return;
     }
   };
 
