@@ -1,7 +1,8 @@
 import { User } from "../../../types";
 import axios from "../../../api/axios";
-import { useEffect, useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
+import { useEffect, useState, useContext } from "react";
+import ProfileContext from "../../../contexts/profile.context";
 
 type Status = "FOLLOWING" | "BLOCKED" | "REQUESTED";
 
@@ -15,9 +16,10 @@ interface ActionStateProps {
 }
 
 const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
-  const toast = useToast({ position: "bottom-left" });
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("");
+  const toast = useToast({ position: "bottom-left" });
+  const { state, setState } = useContext(ProfileContext);
   const [status, setStatus] = useState<Status | null>(staticStatus);
 
   // For sending a follow request
@@ -34,16 +36,13 @@ const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
     setLoading(false);
 
     // If everything's fine
-    if (status === 200) {
-      setStatus(data);
-    } else {
-      if (status === 409) {
-        toast({ title: "You already follow this user", status: "warning" });
-      }
+    if (status === 200) setStatus(data);
+    else if (status === 409) {
+      toast({ title: "You already follow this user", status: "warning" });
     }
   };
 
-  // For unfollowing a user
+  // For un-following a user
   const unfollowRequest = async () => {
     setLoading(true);
 
@@ -74,9 +73,8 @@ const Actions = ({ state: { status: staticStatus, user } }: ActionsProps) => {
 
   return (
     <Button
-      w={"full"}
-      size={"lg"}
-      rounded={"full"}
+      size={"md"}
+      rounded={"xl"}
       isLoading={loading}
       colorScheme={"purple"}
       bgColor={

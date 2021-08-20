@@ -9,7 +9,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 0,
+      // cacheTime: 0,
       refetchOnWindowFocus: false,
       refetchIntervalInBackground: true,
     },

@@ -40,7 +40,7 @@ import { MdDelete } from "react-icons/md";
 import PostList from "../components/PostList";
 import DataContext from "../data/data.context";
 import Stats from "../components/Profile/Stats";
-import EditBio from "../components/Profile/EditBio";
+// import EditBio from "../components/Profile/EditBio";
 import Actions from "../components/Profile/Actions";
 import ProfileContext from "../contexts/profile.context";
 import { useContext, useEffect, useState } from "react";
@@ -127,21 +127,24 @@ const Profile = () => {
     queryParam: "cursor",
     url: `/api/posts/${username}`,
   });
+
   // Fetching relations between current account and other account
   const { data: relationStatus, isLoading: relationLoading } = useQuery(
-    ["user relations", username],
+    [`user-${username}-relations`, username],
     () => FetchRelation(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
+
   // Getting user's followers
   const { data: followers, isLoading: followersLoading } = useQuery(
-    ["user followers", username],
+    [`user-${username}-followers`, username],
     () => FetchFollowers(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
+
   // Getting the users that this user follows
   const { data: following, isLoading: followingLoading } = useQuery(
-    ["user following", username],
+    [`user-${username}-following`, username],
     () => FetchFollowing(user?.data?.id!!),
     { enabled: hooksEnabled }
   );
@@ -257,6 +260,11 @@ const Profile = () => {
                         userSelect={"none"}
                         src={user?.data?.avatar}
                         name={user?.data?.username}
+                        _hover={{
+                          filter: "brightness(90%)",
+                          boxShadow: "xl",
+                        }}
+                        transition={"150ms all"}
                       />
 
                       <Box>
@@ -313,26 +321,27 @@ const Profile = () => {
 
                           <Box>
                             <Stack pb={5} spacing={2}>
-                              <Container>
-                                <Center
-                                  color={"gray.500"}
-                                  textAlign={"center"}
-                                  fontFamily={"Ubuntu Bold"}
-                                >
-                                  {username === userData?.username ? (
-                                    // <EditBio data={user?.data} />
-                                    <></>
-                                  ) : (
-                                    <Text>
-                                      {user?.data?.bio?.length === 0
-                                        ? `Hmm 🤔, it seems like this account doesn't have a bio...`
-                                        : user?.data?.bio}
-                                    </Text>
-                                  )}
-                                </Center>
-                              </Container>
+                              <Box
+                                color={"gray.500"}
+                                fontFamily={"Ubuntu Bold"}
+                              >
+                                {username === userData?.username ? (
+                                  // <EditBio data={user?.data} />
+                                  <></>
+                                ) : (
+                                  <Text>
+                                    {user?.data?.bio?.length === 0
+                                      ? `Hmm 🤔, it seems like this account doesn't have a bio...`
+                                      : user?.data?.bio}
+                                  </Text>
+                                )}
+                              </Box>
 
-                              <Stack spacing={4} direction={["column", "row"]}>
+                              <Stack
+                                spacing={4}
+                                alignItems={"center"}
+                                direction={["column", "row"]}
+                              >
                                 <Stats
                                   state={{
                                     followers,

@@ -75,15 +75,13 @@ const Home = () => {
                 {/* Misc */}
                 <Stack spacing={5}>
                   {!hasNextPage && (
-                    <Center p={5} bgColor={"gray.300"} rounded={"lg"}>
-                      <Text
-                        textAlign={"center"}
-                        fontWeight={"semibold"}
-                        fontSize={["md", null, "lg"]}
-                      >
-                        Looks like you have reached the end 🎉
-                      </Text>
-                    </Center>
+                    <Text
+                      textAlign={"center"}
+                      fontWeight={"semibold"}
+                      fontSize={["md", null, "lg"]}
+                    >
+                      Looks like you have reached the end 🎉
+                    </Text>
                   )}
 
                   {hasNextPage && (

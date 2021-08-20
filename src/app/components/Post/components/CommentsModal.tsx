@@ -8,12 +8,19 @@ import {
   ModalBody,
   ModalCloseButton,
   Text,
+  Flex,
+  Spinner,
+  Center,
 } from "@chakra-ui/react";
 import Comment from "./Comment";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CreateCommentForm from "./CreateCommentForm";
+import { Comment as CommentType } from "../../../types";
 import PostContext from "../../../contexts/post.context";
-import { Comment as CommentType } from "../../../types/index";
+import { useFetchInfiniteResource } from "../../../utils/hooks";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import { useEffect } from "react";
+import { useInfiniteQuery } from "react-query";
 
 interface CommentsModalProps {
   isOpen: boolean;
@@ -21,8 +28,9 @@ interface CommentsModalProps {
 }
 
 const CommentsModal = ({ isOpen, onClose }: CommentsModalProps) => {
-  const { post: data } = useContext(PostContext);
-  const { comments } = data;
+  const { post } = useContext(PostContext);
+  const [enabled, setEnabled] = useState(false);
+  const [cursor, setCursor] = useState<string | null>(null);
 
   return (
     <Box>
@@ -34,15 +42,34 @@ const CommentsModal = ({ isOpen, onClose }: CommentsModalProps) => {
       >
         <ModalOverlay />
         <ModalContent rounded={"2xl"} m={2}>
-          <ModalHeader>Comments on {data?.user?.first_name}'s post</ModalHeader>
+          <ModalHeader>Comments on {post?.user?.first_name}'s post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* {comments?.length === 0 ? (
+            {/* {isLoading && (
+              <Box>
+                <Flex
+                  h={"100%"}
+                  w={"100%"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
+                  <Spinner />
+                </Flex>
+              </Box>
+            )}
+
+            {data?.length === 0 ? (
               <Text>There are no comments yet</Text>
             ) : (
-              comments?.map((comment: CommentType) => {
+              data?.map((comment) => {
                 return <Comment key={comment.id} data={comment} />;
               })
+            )}
+
+            {isFetchingNextPage && (
+              <Center p={2}>
+                <Spinner />
+              </Center>
             )} */}
           </ModalBody>
 

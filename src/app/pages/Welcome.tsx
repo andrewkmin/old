@@ -5,6 +5,7 @@ import {
   chakra,
   Flex,
   Heading,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -73,7 +74,7 @@ const Welcome = () => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          {/* <Image
+          <Image
             w={"100%"}
             zIndex={-1}
             src={photo}
@@ -83,7 +84,7 @@ const Welcome = () => {
             filter={"brightness(60%)"}
             borderColor={"transparent"}
             h={["50vh", null, null, "100vh"]}
-          /> */}
+          />
           {/* <Box
             w={"100%"}
             zIndex={-1}
