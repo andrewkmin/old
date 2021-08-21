@@ -37,7 +37,7 @@ const Home = () => {
       if (hasNextPage && next !== null) setCursor(next!!);
     },
     {
-      offset: 500,
+      offset: 1000,
     }
   );
 

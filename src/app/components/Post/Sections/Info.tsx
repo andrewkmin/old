@@ -13,15 +13,15 @@ import {
   Stack,
   Tooltip,
   useToast,
-  Icon,
+  chakra,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import { MdPublic } from "react-icons/md";
-import { IoPeopleCircle, IoPeopleCircleSharp } from "react-icons/io5";
 import { FiMoreHorizontal } from "react-icons/fi";
 import DataContext from "../../../data/data.context";
+import { IoPeopleCircleSharp } from "react-icons/io5";
 import { Post as PostType } from "../../../types/index";
 import PostContext from "../../../contexts/post.context";
 import { formatDistanceToNow, formatISO } from "date-fns";
@@ -101,21 +101,20 @@ const Top = () => {
                         </Text>
                       </Tooltip>
 
-                      <Tooltip
+                      {/* <Tooltip
                         placement={"right"}
                         label={
                           data?.privacy === "PUBLIC" ? "Public" : "Private"
                         }
                       >
-                        <Icon
-                          as={
-                            data?.privacy === "PUBLIC"
-                              ? MdPublic
-                              : IoPeopleCircleSharp
-                          }
-                          fontSize={"lg"}
-                        />
-                      </Tooltip>
+                        <chakra.span ms={-0.5} fontSize={"xl"}>
+                          {data?.privacy === "PUBLIC" ? (
+                            <MdPublic />
+                          ) : (
+                            <IoPeopleCircleSharp />
+                          )}
+                        </chakra.span>
+                      </Tooltip> */}
                     </Stack>
                   </Box>
                 </Flex>
