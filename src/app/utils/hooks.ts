@@ -74,10 +74,7 @@ export const useFetchInfiniteResource = <T>({
         // If it's not the first time that the request is invoked then set it to false
         isFetchingNextPage: !state?.isLoading && false,
         // Setting the next page
-        next:
-          state?.next !== response[nextPageParam]
-            ? response[nextPageParam]
-            : null,
+        next: response[nextPageParam],
       });
     };
 

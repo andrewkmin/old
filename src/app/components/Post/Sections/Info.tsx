@@ -90,13 +90,14 @@ const Top = () => {
                       {/* How much time has passed since the post was published */}
                       <Tooltip
                         placement={"bottom-start"}
-                        label={formatISO(data?.created_at)}
+                        label={formatISO(Date.parse(data?.created_at))}
                       >
                         <Text fontSize={"xs"}>
-                          {formatDistanceToNow(data?.created_at, {
-                            addSuffix: true,
-                            includeSeconds: true,
-                          })}
+                          {data?.created_at &&
+                            formatDistanceToNow(Date.parse(data?.created_at), {
+                              addSuffix: true,
+                              includeSeconds: true,
+                            })}
                         </Text>
                       </Tooltip>
 
